@@ -3,7 +3,7 @@ package model;
 public abstract class DateBase implements Date {
 
 	@Override
-	public abstract boolean setDate(int day, int month, int year);
+	public abstract boolean setDate(int day, int month, int year) throws Exception;
 
 	@Override
 	public abstract String getFormatAmerican();
@@ -12,17 +12,20 @@ public abstract class DateBase implements Date {
 	public abstract String getFormatEuropean();
 
 	@Override
-	public abstract boolean smallerThan(Date d);
+	public abstract boolean smallerThan(Date d) throws Exception;
 
 	@Override
-	public abstract int differenceInYears(Date d);
+	public abstract int differenceInYears(Date d) throws Exception;
 
 	@Override
-	public abstract int differenceInMonths(Date d);
+	public abstract int differenceInMonths(Date d) throws Exception;
 
 	@Override
-	public abstract int differenceInDays(Date d);
+	public abstract int differenceInDays(Date d) throws Exception;
 
+	@Override
+	public abstract int totalDaysSinceJesus() throws Exception;
+	
 	@Override
 	public abstract Date changeDate(int aantalDagen);
 
