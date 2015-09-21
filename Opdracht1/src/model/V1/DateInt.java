@@ -1,55 +1,54 @@
 package model.V1;
 
-import model.DatumBase;
+import model.Date;
+import model.DateBase;
 
-public class Datum extends DatumBase {
-	
-	//Dit is de datum klasse met op basis van 3 int privates
+public class DateInt extends DateBase {
 
 	@Override
-	public boolean setDatum(int dag, int maand, int jaar) {
+	public boolean setDate(int day, int month, int year) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public String getDatumInAmerikaansFormaat() {
+	public String getFormatAmerican() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getDatumInEuropeesFormaat() {
+	public String getFormatEuropean() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean kleinerDan(model.Datum d) {
+	public boolean smallerThan(Date d) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int verschilInJaren(model.Datum d) {
+	public int differenceInYears(Date d) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int verschilInMaanden(model.Datum d) {
+	public int differenceInMonths(Date d) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int verschilInDagen(model.Datum d) {
+	public int differenceInDays(Date d) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public model.Datum veranderDatum(int aantalDagen) {
+	public Date changeDate(int aantalDagen) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -67,7 +66,7 @@ public class Datum extends DatumBase {
 	}
 
 	@Override
-	public int compareTo(model.Datum otherDate) {
+	public int compareTo(Date otherDate) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

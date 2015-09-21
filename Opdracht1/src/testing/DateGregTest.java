@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class DatumTestV2 {
+public class DateGregTest {
 
 	@Test
 	public void test() {
