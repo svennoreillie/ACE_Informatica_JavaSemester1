@@ -6,32 +6,20 @@ import model.DateBase;
 public class DateInt extends DateBase {
 
 	private int day = 1;
+	private int month = 1;
+	private int year = 1;
+	
 	protected int getDay() {
 		return day;
-	}
-
-	protected void setDay(int day) {
-		this.day = day;
 	}
 
 	protected int getMonth() {
 		return month;
 	}
 
-	protected void setMonth(int month) {
-		this.month = month;
-	}
-
 	protected int getYear() {
 		return year;
 	}
-
-	protected void setYear(int year) {
-		this.year = year;
-	}
-
-	private int month = 1;
-	private int year = 1;
 	
 	
 	public DateInt() {
