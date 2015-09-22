@@ -1,14 +1,15 @@
 package model;
 
 public interface Date {
-	public boolean setDate(int day, int month, int year);
+	public boolean setDate(int day, int month, int year) throws Exception;
 	
 	public String getFormatAmerican();
 	public String getFormatEuropean();
 	
-	public boolean smallerThan(Date d);
-	public int differenceInYears (Date d);
-	public int differenceInMonths (Date d);
-	public int differenceInDays (Date d);
+	public boolean smallerThan(Date d) throws Exception;
+	public int differenceInYears (Date d) throws Exception;
+	public int differenceInMonths (Date d) throws Exception;
+	public int differenceInDays (Date d) throws Exception;
+	public int totalDaysSinceJesus() throws Exception;
 	public Date changeDate(int aantalDagen);
 }

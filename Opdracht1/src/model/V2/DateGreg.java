@@ -6,7 +6,7 @@ import model.DateBase;
 public class DateGreg extends DateBase {
 
 	@Override
-	public boolean setDate(int day, int month, int year) {
+	public boolean setDate(int day, int month, int year) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -24,25 +24,31 @@ public class DateGreg extends DateBase {
 	}
 
 	@Override
-	public boolean smallerThan(Date d) {
+	public boolean smallerThan(Date d) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int differenceInYears(Date d) {
+	public int differenceInYears(Date d) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int differenceInMonths(Date d) {
+	public int differenceInMonths(Date d) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int differenceInDays(Date d) {
+	public int differenceInDays(Date d) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int totalDaysSinceJesus() throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -70,5 +76,7 @@ public class DateGreg extends DateBase {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 }
