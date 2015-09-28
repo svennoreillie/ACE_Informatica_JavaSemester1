@@ -27,7 +27,10 @@ public abstract class DateBase implements Date {
 	public abstract int totalDaysSinceJesus() throws Exception;
 	
 	@Override
-	public abstract Date changeDate(int aantalDagen);
+	public abstract Date changeDate(int aantalDagen) throws Exception;
+	
+	@Override
+	public abstract void alterDate(int aantalDagen) throws Exception;
 
 	//Extra methods
 	@Override
@@ -36,5 +39,5 @@ public abstract class DateBase implements Date {
 	@Override
 	public abstract boolean equals(Object o);
 	
-	public abstract int compareTo(Date otherDate);
+	public abstract int compareTo(Date otherDate) throws Exception;
 }

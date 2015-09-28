@@ -8,6 +8,7 @@ public class DateInt extends DateBase {
 	private int day = 1;
 	private int month = 1;
 	private int year = 1;
+
 	
 	protected int getDay() {
 		return day;
@@ -180,27 +181,52 @@ public class DateInt extends DateBase {
 	}
 
 	@Override
-	public Date changeDate(int aantalDagen) {
-		// TODO Auto-generated method stub
-		return null;
+	public Date changeDate(int aantalDagen) throws Exception {
+		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
+		if (nieuwAantalDagen < 0) {
+			throw new Exception("Date can't go below 01/01/0001");
+		}
+	    return this.createDate(nieuwAantalDagen);
+	}
+	
+	@Override
+	public void alterDate(int aantalDagen) throws Exception {
+		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
+		if (nieuwAantalDagen < 0) {
+			throw new Exception("Date can't go below 01/01/0001");
+		}
+		DateInt newDate = this.createDate(nieuwAantalDagen);
+	    this.setDate(newDate.day, newDate.month, newDate.year);
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
 	}
 
+	
 	@Override
-	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean equals(Object obj) {
+       if (!(obj instanceof DateInt))
+            return false;
+        if (obj == this)
+            return true;
+
+        DateInt other = (DateInt) obj;
+        return Integer.compare(this.day, other.day) == 0
+	        && Integer.compare(this.month, other.month) == 0
+	        && Integer.compare(this.year, other.year) == 0;
+        
+    }
+
 
 	@Override
-	public int compareTo(Date otherDate) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int compareTo(Date otherDate) throws Exception {
+		if (otherDate == null) throw new NullPointerException("otherDate is null");
+		
+		int thisDays = this.totalDaysSinceJesus();
+		int otherDays = otherDate.totalDaysSinceJesus();
+		return Integer.compare(thisDays, otherDays);
 	}
 
 }

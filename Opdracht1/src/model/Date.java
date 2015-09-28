@@ -11,5 +11,6 @@ public interface Date {
 	public int differenceInMonths (Date d) throws Exception;
 	public int differenceInDays (Date d) throws Exception;
 	public int totalDaysSinceJesus() throws Exception;
-	public Date changeDate(int aantalDagen);
+	public Date changeDate(int aantalDagen) throws Exception;
+	public void alterDate(int aantalDagen) throws Exception;
 }

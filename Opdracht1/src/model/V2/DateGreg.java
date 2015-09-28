@@ -77,6 +77,12 @@ public class DateGreg extends DateBase {
 		return 0;
 	}
 
+	@Override
+	public void alterDate(int aantalDagen) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }
