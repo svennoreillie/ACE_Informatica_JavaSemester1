@@ -160,29 +160,7 @@ public class DateInt extends DateBase {
 		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
 	}
 	
-	@Override
-    public boolean equals(Object obj) {
-       if (!(obj instanceof DateInt))
-            return false;
-        if (obj == this)
-            return true;
-
-        DateInt other = (DateInt) obj;
-        return Integer.compare(this.day, other.day) == 0
-	        && Integer.compare(this.month, other.month) == 0
-	        && Integer.compare(this.year, other.year) == 0;
-        
-    }
-
-	@Override
-	public int compareTo(Date otherDate) throws Exception {
-		if (otherDate == null) throw new NullPointerException("otherDate is null");
-		
-		int thisDays = this.totalDaysSinceJesus();
-		int otherDays = otherDate.totalDaysSinceJesus();
-		return Integer.compare(thisDays, otherDays);
-	}
-
+	
 	
 	
 	
