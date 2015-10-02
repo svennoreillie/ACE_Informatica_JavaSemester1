@@ -15,7 +15,7 @@ public class DateInt extends DateBase {
 	
 	//Region contructors
 	public DateInt() {
-		//This is the default constructor, nothing needs to happen heres
+		//This is the standard constructor, nothing needs to happen heres
 	}
 	
 	public DateInt(int day, int month, int year) throws Exception {
