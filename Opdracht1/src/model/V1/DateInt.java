@@ -13,7 +13,7 @@ public class DateInt extends DateBase {
 	
 	
 	
-	//Region contructors
+	//Region constructors
 	public DateInt() {
 	}
 	
@@ -44,15 +44,16 @@ public class DateInt extends DateBase {
 	
 	
 	//Region properties
-	protected int getDay() {
+	//No getDateInt available so I changed these to public PVE
+	public int getDay() {
 		return day;
 	}
 
-	protected int getMonth() {
+	public int getMonth() {
 		return month;
 	}
 
-	protected int getYear() {
+	public int getYear() {
 		return year;
 	}
 	
