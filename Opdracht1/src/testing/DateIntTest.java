@@ -57,7 +57,7 @@ public class DateIntTest {
 
 	@Test
 	public void testSetDate_day1Till28_allMonths() throws Exception {
-		for(int i = 1; i < 28; i++){
+		for(int i = 1; i < 29; i++){
 			for( int j = 1; j < 13; j++) {
 				ctorDate.setDate(i, j, 2000);
 			}
@@ -126,6 +126,7 @@ public class DateIntTest {
 	}
 	
 	//SetDate() | Month testing
+	@Test
 	public void testSetDate_zeroAsMonth() throws Exception {
 		//arrange
 	    thrown.expectMessage("Month is not in a valid range");
@@ -133,6 +134,7 @@ public class DateIntTest {
 		ctorDate.setDate(1, 0, 2000);
 	}
 	
+	@Test
 	public void testSetDate_negativeAsMonth() throws Exception {
 		//arrange
 	    thrown.expectMessage("Month is not in a valid range");
@@ -140,12 +142,14 @@ public class DateIntTest {
 		ctorDate.setDate(1, -1, 2000);
 	}
 	
+	@Test
 	public void testSetDate_month1Till12() throws Exception {
 		for(int i = 1; i < 13; i++){
 			ctorDate.setDate(1, i, 2000);
 		}
 	}
 	
+	@Test
 	public void testSetDate_month13() throws Exception {
 		//arrange
 	    thrown.expectMessage("Month is not in a valid range");
@@ -154,6 +158,7 @@ public class DateIntTest {
 	}
 	
 	//SetDate() | Month testing
+	@Test
 	public void testSetDate_zeroAsYear() throws Exception {
 		//arrange
 	    thrown.expectMessage("Year is not in a valid range");
@@ -161,6 +166,7 @@ public class DateIntTest {
 		ctorDate.setDate(1, 1, 0);
 	}
 	
+	@Test
 	public void testSetDate_negativeAsYear() throws Exception {
 		//arrange
 	    thrown.expectMessage("Year is not in a valid range");
@@ -168,6 +174,7 @@ public class DateIntTest {
 		ctorDate.setDate(1, 1, -1);
 	}
 	
+	@Test
 	public void testSetDate_positiveAsYear() throws Exception {
 		ctorDate.setDate(1, 1, 2000);
 	}
