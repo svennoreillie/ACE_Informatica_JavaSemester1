@@ -134,16 +134,6 @@ public class DateGreg extends DateBase {
 	}
 
 	@Override
-	public Date changeDate(int aantalDagen) throws Exception{
-		
-		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
-		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
-		
-		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
-		return this;
-	}
-
-	@Override
 	public String toString() {
 		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
 	}
@@ -156,16 +146,33 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public int compareTo(Date otherDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		GregorianCalendar thisDate = new GregorianCalendar(this.year, this.month, this.day);
+		GregorianCalendar toCompare = new GregorianCalendar(otherDate);
+		//constructor GregorianCalendar(Date) alweer niet herkend
+		
+		return thisDate.compareTo(toCompare);
 	}
 
 	@Override
 	public void alterDate(int aantalDagen) throws Exception {
-		// TODO Auto-generated method stub
+		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
+		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
 		
+		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
 	}
 
+	@Override
+	public Date changeDate(int aantalDagen) throws Exception{
+		
+		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
+		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
+		
+		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
+		return this;
+		
+		//moeten we een nieuw Date-object geven, of de bestaande wijzigen?
+	}
+	
 	//Region helper
 	
 	private int getNumberOfDays(int month, int year){
