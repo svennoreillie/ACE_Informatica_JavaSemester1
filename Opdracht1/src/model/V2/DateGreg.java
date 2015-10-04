@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 
 // Opdracht: maak een wrapper class aan voor GregorianCalendar, met dezelfde functionaliteiten als DateInt in package model.V1
-// maw, we zetten een string (de user input) om naar een GregorianCalendar object
+// maw, we zetten een primitive (de user input) om naar een GregorianCalendar object
 
 public class DateGreg extends DateBase {
 	
@@ -170,13 +170,15 @@ public class DateGreg extends DateBase {
 	
 	private int getNumberOfDays(int month, int year){
 		int numberOfDays = 0; 
+		GregorianCalendar nOD = new GregorianCalendar(year, month, 1);
+		
 		final int[] daysPerMonth =
 			{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 		numberOfDays = daysPerMonth[month];
 		
 		if (month == 2){
-			if  (isLeapYear(year)){
-				numberOfDays = 29;
+			if (nOD.isLeapYear(year)){	
+			numberOfDays = 29;
 			}
 			else{
 				numberOfDays = 28;
@@ -185,11 +187,4 @@ public class DateGreg extends DateBase {
 		
 		return numberOfDays;
 	}
-
-	private boolean isLeapYear(int year){
-		if ((year % 4) != 0) return false;
-		if ((year % 100) != 0) return false;
-		return true;
-	};
-
 }
