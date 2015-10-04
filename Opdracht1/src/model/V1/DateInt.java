@@ -72,17 +72,31 @@ public class DateInt extends DateBase {
 		
 		return true;
 	}
-
+	/**
+	 * Converts a date to American format
+	 * 
+	 * @return a string of a date in MM/DD/YY format
+	 */
 	@Override
 	public String getFormatAmerican() {
 		return String.format("%i4/%i2/%i2", this.year, this.month, this.day);
 	}
 
+	/**
+	 * Converts a date to European format
+	 * 
+	 * @return a string of a date in DD/MM/YY format
+	 */
 	@Override
 	public String getFormatEuropean() {
 		return String.format("%i2/%i2/%i4", this.day, this.month, this.year);
 	}
 	
+	/**
+	 * Counts the number of days elapsed between 01/01/0001 and the present date.
+	 * 
+	 * @return an integer representing the number of days since 01/01/0001
+	 */
 	public int totalDaysSinceJesus() throws Exception {
 		try {
 			int total = 0;
