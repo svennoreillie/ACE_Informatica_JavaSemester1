@@ -3,6 +3,7 @@ package model;
 public abstract class DateBase implements Date {
 	
 	
+	
 	@Override
 	public abstract boolean setDate(int day, int month, int year) throws Exception;
 

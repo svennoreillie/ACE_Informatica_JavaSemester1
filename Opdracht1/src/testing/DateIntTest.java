@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import model.V1.DateInt;
 
 public class DateIntTest {
@@ -21,6 +22,7 @@ public class DateIntTest {
 	@Before
 	public void setUp() throws Exception{
 		ctorDateIII = new DateInt (1,1,2000);
+		
 		sysDate = Calendar.getInstance();
 		ctorDate = new DateInt ();
 		europeString = new String ("01/01/2000");
@@ -67,7 +69,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_day29feb_inLeapYear() throws Exception {
 		int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
-		for (int i = 0; i <= leapYears.length; i ++){
+		for (int i = 0; i < leapYears.length; i ++){
 			ctorDate.setDate(29, 2, leapYears[i]);
 		}
 	}
