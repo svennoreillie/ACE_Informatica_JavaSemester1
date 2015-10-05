@@ -6,34 +6,25 @@ import model.V1.Months;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-
-// Opdracht: maak een wrapper class aan voor GregorianCalendar, met dezelfde functionaliteiten als DateInt in package model.V1
-// maw, we zetten een primitive (de user input) om naar een GregorianCalendar object
-
 public class DateGreg extends DateBase {
 	
 	//private variable instances
 	
 	private int day = 1;
 	private int month = 1;
-	private int year = 1; 
+	private int year = 1;
+	private GregorianCalendar Greg = new GregorianCalendar();
 	
 	//CONSTRUCTORS
-	public void GregorianCalendar() throws Exception{
-		GregorianCalendar Greg = new GregorianCalendar();
-		day = Greg.get(Calendar.DAY_OF_MONTH);
-		month = Greg.get(Calendar.MONTH);
-		year = Greg.get(Calendar.YEAR);
+	public DateGreg() throws Exception{
+		this.day = Greg.get(Calendar.DAY_OF_MONTH);
+		this.month = Greg.get(Calendar.MONTH);
+		this.year = Greg.get(Calendar.YEAR);
 		
 		this.setDate(day, month, year);
 	};
 	
-	public void GregorianCalendar(Date date) throws Exception{
-		String dateToSet = date.getFormatEuropean();
-		this.GregorianCalendar(dateToSet);
-	};
-	
-	public void GregorianCalendar(int year, int month, int dayOfMonth) throws Exception{
+	public DateGreg(int year, int month, int dayOfMonth) throws Exception{
 		this.day = dayOfMonth;
 		this.month = month;
 		this.year = year;
@@ -41,7 +32,7 @@ public class DateGreg extends DateBase {
 		this.setDate(dayOfMonth, month, year);
 	};
 	
-	public void GregorianCalendar(String date) throws Exception
+	public DateGreg(String date) throws Exception
 	{
 		if (date == null) throw new Exception("Date was null");
 		if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
@@ -60,6 +51,9 @@ public class DateGreg extends DateBase {
 		//wat als het om Amerikaans formaat gaat?
 	}
 	
+	public DateGreg(Date date) throws Exception{
+		this(date.getFormatEuropean());
+	};
 	
 	//Overrides
 	@Override
@@ -88,28 +82,39 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public boolean smallerThan(Date d) throws Exception {
-		GregorianCalendar thisDate = new GregorianCalendar(this.year, this.month, this.day);
-		GregorianCalendar toCompare = new GregorianCalendar(d);
-		//hier stuit ik op een foutmelding, ook al is er een contructor voor GregorianCalendar(Date)
+		Greg.set(this.year, this.month, this.day);
 		
-		if ((thisDate.compareTo(toCompare)) < 0){
+		DateGreg convertToCompare = new DateGreg(d);
+		GregorianCalendar toCompare = new GregorianCalendar(convertToCompare.year, convertToCompare.month, convertToCompare.year);
+		
+		if ((Greg.compareTo(toCompare)) < 0){
 			return false;
 		}
 		else{
 			return true;
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Greg.set(this.year, this.month, this.day);
 		
+		if (Greg.equals(o)){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	@Override
 	public int differenceInYears(Date d) throws Exception {
-		int difference = 0;
-		GregorianCalendar presentDate = new GregorianCalendar(this.year, this.month, this.day);
-		GregorianCalendar toCompare = new GregorianCalendar(d);
+		Greg.set(this.year, this.month, this.day);
 		
-		difference = presentDate.compareTo(toCompare);
+		DateGreg convertToCompare = new DateGreg(d);
+		GregorianCalendar toCompare = new GregorianCalendar(convertToCompare.year, convertToCompare.month, convertToCompare.year);
 		
-		return difference;
+		return Greg.compareTo(toCompare);
 		
 		// 2 opmerkingen: het is niet duidelijk wat voor int je terug krijgt van compareTo();
 		// en de constructor GregorianCalendar(Date) doet het nog steeds niet
@@ -129,8 +134,28 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public int totalDaysSinceJesus() throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			int total = 0;
+			total += ((this.year - 1) * 365);
+			
+			//calculate leapDays
+			int numberOfLeapYears = this.year / 4;
+			//subtract centuries (no leap years)
+			int numberOfCenturies = this.year / 100;
+			int totalLeapDays = numberOfLeapYears - numberOfCenturies;
+			
+			total += totalLeapDays;
+			
+			for (int i = 1; i < this.month; i++) {
+				total += getNumberOfDays(i, this.year);
+			}
+			
+			total += this.day;
+			
+			return total;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
@@ -139,18 +164,13 @@ public class DateGreg extends DateBase {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int compareTo(Date otherDate) {
-		GregorianCalendar thisDate = new GregorianCalendar(this.year, this.month, this.day);
-		GregorianCalendar toCompare = new GregorianCalendar(otherDate);
-		//constructor GregorianCalendar(Date) alweer niet herkend
+	public int compareTo(Date otherDate) throws Exception {
+		Greg.set(this.year, this.month, this.day);
 		
-		return thisDate.compareTo(toCompare);
+		DateGreg toConvert = new DateGreg(otherDate);
+		GregorianCalendar toCompare = new GregorianCalendar(toConvert.year, toConvert.month, toConvert.day);
+		
+		return Greg.compareTo(toCompare);
 	}
 
 	@Override
