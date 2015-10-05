@@ -2,6 +2,8 @@ package model.V1;
 
 import model.Date;
 import model.DateBase;
+import model.Months;
+import java.util.Calendar;
 
 public class DateInt extends DateBase {
 
@@ -14,8 +16,10 @@ public class DateInt extends DateBase {
 	
 	
 	//Region constructors
-	public DateInt() {
+	public DateInt() throws Exception {
 		//This is the standard constructor, nothing needs to happen here because privates have defaults of 1
+		Calendar currentDate = Calendar.getInstance();
+		this.setDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
 	}
 	
 	public DateInt(int day, int month, int year) throws Exception {
@@ -35,9 +39,9 @@ public class DateInt extends DateBase {
 		
 		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
 		
-		int day = Integer.parseInt(strings[1]);
-		int month = Integer.parseInt(strings[2]);
-		int year = Integer.parseInt(strings[3]);
+		int day = Integer.parseInt(strings[0]);
+		int month = Integer.parseInt(strings[1]);
+		int year = Integer.parseInt(strings[2]);
 		
 		this.setDate(day, month, year);
 	}
@@ -81,7 +85,8 @@ public class DateInt extends DateBase {
 	 */
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%i4/%i2/%i2", this.year, this.month, this.day);
+		String format = String.format("%04d/%02d/%02d", this.year, this.month, this.day);
+		return format;
 	}
 
 	/**
@@ -91,7 +96,7 @@ public class DateInt extends DateBase {
 	 */
 	@Override
 	public String getFormatEuropean() {
-		return String.format("%i2/%i2/%i4", this.day, this.month, this.year);
+		return String.format("%02d/%02d/%04d", this.day, this.month, this.year);
 	}
 	
 	/**
@@ -108,7 +113,9 @@ public class DateInt extends DateBase {
 			int numberOfLeapYears = this.year / 4;
 			//subtract centuries (no leapyears)
 			int numberOfCenturies = this.year / 100;
-			int totalLeapDays = numberOfLeapYears - numberOfCenturies;
+			//subtract 400's (exception on the centuries leapyears)
+			int numberOf400s = this.year / 400;
+			int totalLeapDays = numberOfLeapYears - numberOfCenturies + numberOf400s;
 			
 			total += totalLeapDays;
 			
@@ -173,7 +180,7 @@ public class DateInt extends DateBase {
 	//Region publics from base
 	@Override
 	public String toString() {
-		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
+		return String.format("%02d %s %04d", this.day, Months.getMonthName(this.month), this.year);
 	}
 	
 	
@@ -211,8 +218,10 @@ public class DateInt extends DateBase {
 	}
 
 	private boolean isLeapYear(int year) {
-		if ((year % 4) != 0) return false;
+		if ((year % 400) != 0) return true;
 		if ((year % 100) != 0) return false;
+		if ((year % 4) != 0) return false;	
+		
 		return true;
 	}
 	

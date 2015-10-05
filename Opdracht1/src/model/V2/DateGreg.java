@@ -2,7 +2,8 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
-import model.V1.Months;
+import model.Months;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
