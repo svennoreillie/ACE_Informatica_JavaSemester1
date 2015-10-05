@@ -8,6 +8,8 @@ import java.util.GregorianCalendar;
 
 public class DateGreg extends DateBase {
 	
+	//TODO: difference in years/months/days
+	
 	//private variable instances
 	
 	private int day = 1;
@@ -17,9 +19,14 @@ public class DateGreg extends DateBase {
 	
 	//CONSTRUCTORS
 	public DateGreg() throws Exception{
-		this.day = Greg.get(Calendar.DAY_OF_MONTH);
-		this.month = Greg.get(Calendar.MONTH);
-		this.year = Greg.get(Calendar.YEAR);
+		try{
+			this.day = Greg.get(Calendar.DAY_OF_MONTH);
+			this.month = Greg.get(Calendar.MONTH);
+			this.year = Greg.get(Calendar.YEAR);
+		}
+		catch (Exception e){
+			throw e;
+		}
 		
 		this.setDate(day, month, year);
 	};
