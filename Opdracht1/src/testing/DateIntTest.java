@@ -14,7 +14,12 @@ public class DateIntTest {
 	DateInt ctorDateIII;
 	Calendar sysDate;
 	DateInt ctorDate;
-	String europeString, usString;
+	final int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
+	final int[] notLeapYears = new int [] {1900, 2001, 2002, 2003, 2005, 2006, 2007};
+	final int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
+	final String euString = new String ("01/01/2000");
+	final String usString = new String ("2000/01/01");
+
 	
 	@Rule
     public ExpectedException thrown= ExpectedException.none();
@@ -25,14 +30,7 @@ public class DateIntTest {
 		
 		sysDate = Calendar.getInstance();
 		ctorDate = new DateInt ();
-		europeString = new String ("01/01/2000");
-		usString = new String ("2000/01/01");
-		//int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
-		//int[] notLeapYears = new int [] {1900, 2001, 2002, 2003, 2005, 2006, 2007};
-		//int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
-		
 	}
-	
 	
 	//SetDate()
 	@Test
@@ -68,7 +66,6 @@ public class DateIntTest {
 	
 	@Test
 	public void testSetDate_day29feb_inLeapYear() throws Exception {
-		int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
 		for (int i = 0; i < leapYears.length; i ++){
 			ctorDate.setDate(29, 2, leapYears[i]);
 		}
@@ -79,7 +76,6 @@ public class DateIntTest {
 		//arrange
 	    thrown.expectMessage("Day is not in a valid range");
 		//act
-	    int[] notLeapYears = new int [] {1900, 2001, 2002, 2003, 2005, 2006, 2007};
 		for (int i = 0; i < notLeapYears.length; i ++){
 			ctorDate.setDate(29, 2, notLeapYears[i]);
 		}   
@@ -110,7 +106,6 @@ public class DateIntTest {
 
 	@Test
 	public void testSetDate_day31InAllLongMonths() throws Exception {
-		int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
 		for(int i = 0; i< longMonths.length; i++){
 			ctorDate.setDate(31, longMonths[i], 2000);
 		}
@@ -121,7 +116,6 @@ public class DateIntTest {
 		//arrange
 	    thrown.expectMessage("Day is not in a valid range");
 		//act
-		int[] longMonths = new int[] { 2 , 4 , 6 , 9 , 11 };
 		for(int i = 0; i< longMonths.length; i++){
 			ctorDate.setDate(31, longMonths[i], 2000);
 		}
@@ -186,14 +180,12 @@ public class DateIntTest {
 	@Test
 	public void testGetFormatAmerican() {
 		assertEquals(usString,ctorDateIII.getFormatAmerican());
-		//String.format("%i4/%i2/%i2", this.year, this.month, this.day)
 	}
 
 	//GetFormatEuropean()
 	@Test
 	public void testGetFormatEuropean() {
-		assertEquals("01/01/2000",ctorDateIII.getFormatEuropean());
-		//String.format("%i2/%i2/%i4", this.day, this.month, this.year);
+		assertEquals(euString,ctorDateIII.getFormatEuropean());
 	}
 
 	@Test
@@ -241,8 +233,7 @@ public class DateIntTest {
 
 	@Test
 	public void testToString() {
-		europeString = new String ("01 januari 2000");
-		assertEquals(europeString ,ctorDateIII.toString());
+		assertEquals(euString,ctorDateIII.toString());
 		//String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year)
 	}
 
