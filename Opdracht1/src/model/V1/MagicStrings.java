@@ -2,19 +2,17 @@ package model.V1;
 
 public final class MagicStrings {
 	
-	private static String 	dateNull,dateLengthWrong,dateSeperatorWrong,dateFormatWrong,
-							yearRangeWrong,monthRangeWrong,dayRangeWrong,dateZero;
+	public final String dateNull = "Date was null";
+	public final String dateLengthWrong = "Incorrect date length, you must supply date in following format DD/MM/YYYY";
+	public final String dateSeperatorWrong = "Date does not contain the correct separator";
+	public final String dateFormatWrong = "Did not find all datesegments. Check if date is in following format DD/MM/YYYY";
+	public final String yearRangeWrong = "Year is not in a valid range";
+	public final String monthRangeWrong = "Month is not in a valid range";
+	public final String dayRangeWrong = "Day is not in a valid range";
+	public final String dateZero = "Date can't go below 01/01/0001";
 	
 	// constructor
 	public MagicStrings() {
-		dateNull = new String("Date was null");
-		dateLengthWrong = new String("Incorrect date length, you must supply date in following format DD/MM/YYYY");
-		dateSeperatorWrong = new String("Date does not contain the correct separator");
-		dateFormatWrong = new String("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
-		yearRangeWrong = new String("Year is not in a valid range");
-		monthRangeWrong = new String("Month is not in a valid range");
-		dayRangeWrong = new String("Day is not in a valid range");
-		dateZero = new String("Date can't go below 01/01/0001");
 	}
 	
 	public String getDateNull() {
