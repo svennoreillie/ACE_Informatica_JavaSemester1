@@ -3,12 +3,14 @@ package model.V1;
 import model.Date;
 import model.DateBase;
 
+
 public class DateInt extends DateBase {
 
 	//Region privates
 	private int day = 1;
 	private int month = 1;
 	private int year = 1;
+	private MagicStrings magicString = new MagicStrings(); 
 
 	
 	
@@ -27,13 +29,13 @@ public class DateInt extends DateBase {
 	}
 	
 	public DateInt(String date) throws Exception {
-		if (date == null) throw new Exception("Date was null");
-		if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
-		if (!date.contains("/")) throw new Exception("Date does not contain the correct separator");
+		if (date == null) throw new Exception(magicString.getDateNull());
+		if (date.length() != 10) throw new Exception(magicString.getDateLengthWrong());
+		if (!date.contains("/")) throw new Exception(magicString.getDateSeperatorWrong());
 		
 		String[] strings=  date.split("/");
 		
-		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
+		if (strings.length != 3) throw new Exception(magicString.getDateFormatWrong());
 		
 		int day = Integer.parseInt(strings[1]);
 		int month = Integer.parseInt(strings[2]);
@@ -64,9 +66,9 @@ public class DateInt extends DateBase {
 	//Region public methods from Date interface
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
-		if (year < 1) throw new Exception("Year is not in a valid range");
-		if (month < 1 || month > 12) throw new Exception("Month is not in a valid range");
-		if (day < 1 || day > getNumberOfDays(month, year)) throw new Exception("Day is not in a valid range");
+		if (year < 1) throw new Exception(magicString.getYearRangeWrong());
+		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
+		if (day < 1 || day > getNumberOfDays(month, year)) throw new Exception(magicString.getDayRangeWrong());
 		
 		this.day = day;
 		this.month = month;
@@ -152,7 +154,7 @@ public class DateInt extends DateBase {
 	public Date changeDate(int aantalDagen) throws Exception {
 		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
 		if (nieuwAantalDagen < 0) {
-			throw new Exception("Date can't go below 01/01/0001");
+			throw new Exception(magicString.getDateZero());
 		}
 	    return this.createDate(nieuwAantalDagen);
 	}
@@ -161,7 +163,7 @@ public class DateInt extends DateBase {
 	public void alterDate(int aantalDagen) throws Exception {
 		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
 		if (nieuwAantalDagen < 0) {
-			throw new Exception("Date can't go below 01/01/0001");
+			throw new Exception(magicString.getDateZero());
 		}
 		DateInt newDate = this.createDate(nieuwAantalDagen);
 	    this.setDate(newDate.day, newDate.month, newDate.year);
@@ -182,8 +184,8 @@ public class DateInt extends DateBase {
 	
 	//Region helpers
 	private int getNumberOfDays(int month, int year) throws Exception {
-		if (month < 1 || month > 12) throw new Exception("Month is not in a valid range");
-		if (month == 2 && year < 1) throw new Exception("Year is not in a valid range");
+		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
+		if (month == 2 && year < 1) throw new Exception(magicString.getYearRangeWrong());
 		
 		int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
 		
@@ -205,7 +207,7 @@ public class DateInt extends DateBase {
 	}
 	
 	private int getNumberOfDays(int year) throws Exception {
-		if (year < 1) throw new Exception("Year is not in a valid range");
+		if (year < 1) throw new Exception(magicString.getYearRangeWrong());
 		if (isLeapYear(year)) return 366;
 		return 365;
 	}
