@@ -2,7 +2,7 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
-import model.V1.Months;
+import model.V2.Months;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,11 +11,12 @@ public class DateGreg extends DateBase {
 	// TODO difference in years/months/days
 	// TODO rework class by removing private day/month/year ints
 	// TODO add proper gets/sets 
+	// TODO use the Exception strings
 	
-	//private variable instances
+	// PRIVATE VARIABLE INSTANCES //
 	private GregorianCalendar Greg;
 	
-	//CONSTRUCTORS
+	// CONSTRUCTORS //
 	public DateGreg() throws Exception{
 		try{
 			Greg = new GregorianCalendar();
@@ -70,7 +71,24 @@ public class DateGreg extends DateBase {
 		Greg = new GregorianCalendar(year, month, day);
 	};
 	
-	//Overrides
+	// GETTERS //
+	public int getDay() throws Exception{
+		return this.Greg.get(GregorianCalendar.DATE);
+	}
+	
+	public int getMonth() throws Exception{
+		int month = this.Greg.get(GregorianCalendar.MONTH);
+		return month +1;
+		
+		// It is necessary to add +1 to the Calendar's month, since it's zero-based. E.g.: April = 3 instead of 4 
+		// PS: WHY?!!!?11!?
+	}
+	
+	public int getYear() throws Exception{
+		return this.Greg.get(GregorianCalendar.YEAR);
+	}
+	
+	// OVERRIDES //
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
 		Greg.set(year, month, day);
@@ -124,7 +142,8 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public int differenceInMonths(Date d) throws Exception {
-		DateGreg toCompare = new DateGreg(d);
+		//DateGreg toCompare = new DateGreg(d);
+		// TODO differenceInMonths
 		
 		//int diff = (differenceInYears(d) * 12) + ();
 		
@@ -152,60 +171,32 @@ public class DateGreg extends DateBase {
 		return 0;
 	}
 
+	// TO DO fix the toString() method
 	@Override
 	public String toString() {
-		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
+		//return String.format("%i2 %s %i4", this.getDay(), Months.getMonthName(this.getMonth()), this.getYear());
+		
+		return "STATUS: FUBAR!!!";
 	}
 
 	@Override
 	public int compareTo(Date otherDate) throws Exception {
-		Greg.set(this.year, this.month, this.day);
+		DateGreg toCompare = new DateGreg(otherDate);
 		
-		DateGreg toConvert = new DateGreg(otherDate);
-		GregorianCalendar toCompare = new GregorianCalendar(toConvert.year, toConvert.month, toConvert.day);
-		
-		return Greg.compareTo(toCompare);
+		return Greg.compareTo(toCompare.Greg);
 	}
 
 	@Override
 	public void alterDate(int aantalDagen) throws Exception {
-		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
-		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
-		
-		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
+		this.Greg.add(Calendar.DATE, aantalDagen);
 	}
 
 	@Override
 	public Date changeDate(int aantalDagen) throws Exception{
-		
-		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
-		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
-		
-		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
+		// TODO Check if changeDate() method is correct
+		this.Greg.add(Calendar.DATE, aantalDagen);
 		return this;
-		
-		//moeten we een nieuw Date-object geven, of de bestaande wijzigen?
 	}
 	
-	//Region helper
 	
-	private int getNumberOfDays(int month, int year){
-		int numberOfDays = 0; 
-		GregorianCalendar nOD = new GregorianCalendar(year, month, 1);
-		
-		final int[] daysPerMonth =
-			{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-		numberOfDays = daysPerMonth[month];
-		
-		if (month == 2){
-			if (nOD.isLeapYear(year)){	
-			numberOfDays = 29;
-			}
-			else{
-				numberOfDays = 28;
-			}
-		}
-		
-		return numberOfDays;
-	}
 }
