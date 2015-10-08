@@ -1,7 +1,9 @@
 package model;
 
 public abstract class DateBase implements Date {
-
+	
+	
+	
 	@Override
 	public abstract boolean setDate(int day, int month, int year) throws Exception;
 
@@ -36,8 +38,31 @@ public abstract class DateBase implements Date {
 	@Override
 	public abstract String toString();
 	
-	@Override
-	public abstract boolean equals(Object o);
 	
-	public abstract int compareTo(Date otherDate) throws Exception;
+	@Override
+    public boolean equals(Object obj)  {
+       if (!DateBase.class.isAssignableFrom(obj.getClass()))
+            return false;
+        if (obj == this)
+            return true;
+
+        Date other = (Date) obj;
+        try {
+			return Integer.compare(this.totalDaysSinceJesus(), other.totalDaysSinceJesus()) == 0;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+        
+    }
+
+	public int compareTo(Date otherDate) throws Exception {
+		if (otherDate == null) throw new NullPointerException("otherDate is null");
+		
+		int thisDays = this.totalDaysSinceJesus();
+		int otherDays = otherDate.totalDaysSinceJesus();
+		return Integer.compare(thisDays, otherDays);
+	}
+	
 }

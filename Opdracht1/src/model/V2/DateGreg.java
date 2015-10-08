@@ -2,7 +2,9 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
-import model.V2.Months;
+
+import model.Months;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,7 +13,7 @@ public class DateGreg extends DateBase {
 	// TODO difference in years/months/days
 	// TODO rework class by removing private day/month/year ints
 	// TODO add proper gets/sets 
-	// TODO use the Exception strings
+	// TODO implement the Exception strings
 	
 	// PRIVATE VARIABLE INSTANCES //
 	private GregorianCalendar Greg;
