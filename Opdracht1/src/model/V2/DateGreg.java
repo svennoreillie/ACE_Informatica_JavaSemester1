@@ -48,13 +48,13 @@ public class DateGreg extends DateBase {
 			
 			if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
 			
-			int day = Integer.parseInt(strings[1]);
-			int month = Integer.parseInt(strings[2]);
-			int year = Integer.parseInt(strings[3]);
+			int day = Integer.parseInt(strings[0]);
+			int month = Integer.parseInt(strings[1]);
+			int year = Integer.parseInt(strings[2]);
+			// Array starts with 0 index value!
 			
 			Greg = new GregorianCalendar(year, month, day);
-			
-			//wat als het om Amerikaans formaat gaat?
+
 		}
 		catch (Exception e){
 			throw e;
@@ -66,9 +66,9 @@ public class DateGreg extends DateBase {
 		String[] strings=  dateString.split("/");
 		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
 		
-		int day = Integer.parseInt(strings[1]);
-		int month = Integer.parseInt(strings[2]);
-		int year = Integer.parseInt(strings[3]);
+		int day = Integer.parseInt(strings[0]);
+		int month = Integer.parseInt(strings[1]);
+		int year = Integer.parseInt(strings[2]);
 		
 		Greg = new GregorianCalendar(year, month, day);
 	};
@@ -100,33 +100,38 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%i4/%i2/%i2", Greg.get(Calendar.YEAR), Greg.get(Calendar.MONTH), Greg.get(Calendar.DAY_OF_MONTH));
+		return String.format("%1$tY/%1$tm/%1$te", this.Greg);
+		
 	}
 
 	@Override
 	public String getFormatEuropean() {
-		return String.format("%i2/%i2/%i4", Greg.get(Calendar.DAY_OF_MONTH), Greg.get(Calendar.MONTH), Greg.get(Calendar.YEAR));
+
+		return String.format("%1$te/%1$tm/%1$tY", this.Greg);
+		
 	}
 
 	@Override
 	public boolean smallerThan(Date d) throws Exception {
 		DateGreg otherDate = new DateGreg(d);
-		if ((Greg.compareTo(otherDate.Greg)) < 0){
-			return false;
-		}
-		else{
+		if ((Greg.compareTo(otherDate.Greg)) == -1){
 			return true;
 		}
+		else{
+			return false;
+		}
+		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd)
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		if (Greg.equals(o)){
+		if (this.Greg.equals(o)){
 			return true;
 		}
 		else{
 			return false;
 		}
+		// Geeft telkens een FALSE terug; ook al vergelijk je een object met zichzelf
 	}
 
 	@Override
@@ -176,9 +181,22 @@ public class DateGreg extends DateBase {
 	// TO DO fix the toString() method
 	@Override
 	public String toString() {
-		//return String.format("%i2 %s %i4", this.getDay(), Months.getMonthName(this.getMonth()), this.getYear());
+		//return String.format("%i2 %s %i4", this.Greg.get(Calendar.DATE), Months.getMonthName(this.Greg.get(Calendar.MONTH)), this.Greg.get(Calendar.YEAR));
+		// Geeft blijkbaar problemen met het converteren van Int naar String
 		
-		return "STATUS: FUBAR!!!";
+		/*
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.Greg.get(Calendar.DATE) + " ");
+		sb.append(Months.getMonthName(this.Greg.get(Calendar.MONTH) + 1) + " ");
+		sb.append(this.Greg.get(Calendar.YEAR));
+		
+		String dateToString = new String(sb);
+		return dateToString;
+		*/
+		// Werkt degelijk, maar maakt 2 variabelen aan
+		
+		return String.format("%1$te %1$tB %1$tY", this.Greg);
+		// Geeft maand terug volgens systeemtaal 	
 	}
 
 	@Override
