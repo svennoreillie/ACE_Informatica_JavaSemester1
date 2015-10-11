@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import model.V1.DateInt;
-import model.V2.DateGreg;
 
 public class DateIntTest {
  
