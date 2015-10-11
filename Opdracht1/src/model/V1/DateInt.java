@@ -2,6 +2,9 @@ package model.V1;
 
 import model.Date;
 import model.DateBase;
+import model.Months;
+import java.util.Calendar;
+
 
 public class DateInt extends DateBase {
 
@@ -9,13 +12,16 @@ public class DateInt extends DateBase {
 	private int day = 1;
 	private int month = 1;
 	private int year = 1;
+	private MagicStrings magicString = new MagicStrings(); 
 
 	
 	
 	
 	//Region constructors
-	public DateInt() {
+	public DateInt() throws Exception {
 		//This is the standard constructor, nothing needs to happen here because privates have defaults of 1
+		Calendar currentDate = Calendar.getInstance();
+		this.setDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
 	}
 	
 	public DateInt(int day, int month, int year) throws Exception {
@@ -27,17 +33,17 @@ public class DateInt extends DateBase {
 	}
 	
 	public DateInt(String date) throws Exception {
-		if (date == null) throw new Exception("Date was null");
-		if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
-		if (!date.contains("/")) throw new Exception("Date does not contain the correct separator");
+		if (date == null) throw new Exception(magicString.getDateNull());
+		if (date.length() != 10) throw new Exception(magicString.getDateLengthWrong());
+		if (!date.contains("/")) throw new Exception(magicString.getDateSeperatorWrong());
 		
 		String[] strings=  date.split("/");
 		
-		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
+		if (strings.length != 3) throw new Exception(magicString.getDateFormatWrong());
 		
-		int day = Integer.parseInt(strings[1]);
-		int month = Integer.parseInt(strings[2]);
-		int year = Integer.parseInt(strings[3]);
+		int day = Integer.parseInt(strings[0]);
+		int month = Integer.parseInt(strings[1]);
+		int year = Integer.parseInt(strings[2]);
 		
 		this.setDate(day, month, year);
 	}
@@ -64,9 +70,9 @@ public class DateInt extends DateBase {
 	//Region public methods from Date interface
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
-		if (year < 1) throw new Exception("Year is not in a valid range");
-		if (month < 1 || month > 12) throw new Exception("Month is not in a valid range");
-		if (day < 1 || day > getNumberOfDays(month, year)) throw new Exception("Day is not in a valid range");
+		if (year < 1) throw new Exception(magicString.getYearRangeWrong());
+		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
+		if (day < 1 || day > getNumberOfDays(month, year)) throw new Exception(magicString.getDayRangeWrong());
 		
 		this.day = day;
 		this.month = month;
@@ -74,17 +80,32 @@ public class DateInt extends DateBase {
 		
 		return true;
 	}
-
+	/**
+	 * Converts a date to American format
+	 * 
+	 * @return a string of a date in MM/DD/YY format
+	 */
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%i4/%i2/%i2", this.year, this.month, this.day);
+		String format = String.format("%04d/%02d/%02d", this.year, this.month, this.day);
+		return format;
 	}
 
+	/**
+	 * Converts a date to European format
+	 * 
+	 * @return a string of a date in DD/MM/YY format
+	 */
 	@Override
 	public String getFormatEuropean() {
-		return String.format("%d2/%d2/%d4", this.day, this.month, this.year);
+		return String.format("%02d/%02d/%04d", this.day, this.month, this.year);
 	}
 	
+	/**
+	 * Counts the number of days elapsed between 01/01/0001 and the present date.
+	 * 
+	 * @return an integer representing the number of days since 01/01/0001
+	 */
 	public int totalDaysSinceJesus() throws Exception {
 		try {
 			int total = 0;
@@ -94,7 +115,9 @@ public class DateInt extends DateBase {
 			int numberOfLeapYears = this.year / 4;
 			//subtract centuries (no leapyears)
 			int numberOfCenturies = this.year / 100;
-			int totalLeapDays = numberOfLeapYears - numberOfCenturies;
+			//subtract 400's (exception on the centuries leapyears)
+			int numberOf400s = this.year / 400;
+			int totalLeapDays = numberOfLeapYears - numberOfCenturies + numberOf400s;
 			
 			total += totalLeapDays;
 			
@@ -138,7 +161,7 @@ public class DateInt extends DateBase {
 	public Date changeDate(int aantalDagen) throws Exception {
 		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
 		if (nieuwAantalDagen < 0) {
-			throw new Exception("Date can't go below 01/01/0001");
+			throw new Exception(magicString.getDateZero());
 		}
 	    return this.createDate(nieuwAantalDagen);
 	}
@@ -147,7 +170,7 @@ public class DateInt extends DateBase {
 	public void alterDate(int aantalDagen) throws Exception {
 		int nieuwAantalDagen = this.totalDaysSinceJesus() + aantalDagen;
 		if (nieuwAantalDagen < 0) {
-			throw new Exception("Date can't go below 01/01/0001");
+			throw new Exception(magicString.getDateZero());
 		}
 		DateInt newDate = this.createDate(nieuwAantalDagen);
 	    this.setDate(newDate.day, newDate.month, newDate.year);
@@ -159,7 +182,7 @@ public class DateInt extends DateBase {
 	//Region publics from base
 	@Override
 	public String toString() {
-		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
+		return String.format("%02d %s %04d", this.day, Months.getMonthName(this.month), this.year);
 	}
 	
 	
@@ -168,8 +191,8 @@ public class DateInt extends DateBase {
 	
 	//Region helpers
 	private int getNumberOfDays(int month, int year) throws Exception {
-		if (month < 1 || month > 12) throw new Exception("Month is not in a valid range");
-		if (month == 2 && year < 1) throw new Exception("Year is not in a valid range");
+		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
+		if (month == 2 && year < 1) throw new Exception(magicString.getYearRangeWrong());
 		
 		int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
 		
@@ -191,14 +214,16 @@ public class DateInt extends DateBase {
 	}
 	
 	private int getNumberOfDays(int year) throws Exception {
-		if (year < 1) throw new Exception("Year is not in a valid range");
+		if (year < 1) throw new Exception(magicString.getYearRangeWrong());
 		if (isLeapYear(year)) return 366;
 		return 365;
 	}
 
 	private boolean isLeapYear(int year) {
-		if ((year % 4) != 0) return false;
+		if ((year % 400) != 0) return true;
 		if ((year % 100) != 0) return false;
+		if ((year % 4) != 0) return false;	
+		
 		return true;
 	}
 	

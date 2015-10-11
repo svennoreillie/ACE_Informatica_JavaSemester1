@@ -1,4 +1,4 @@
-package model.V1;
+package model;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,18 +14,18 @@ public final class Months {
 
 	static {
 	    Map<Integer, String> months = new HashMap<Integer, String>();
-	    months.put(1, "januari");
-		months.put(2, "februari");
-		months.put(3, "maart");
-		months.put(4, "april");
-		months.put(5, "mei");
-		months.put(6, "juni");
-		months.put(7, "juli");
-		months.put(8, "augustus");
-		months.put(9, "september");
-		months.put(10, "oktober");
-		months.put(11, "november");
-		months.put(12, "december");
+	    months.put(1, "January");
+		months.put(2, "February");
+		months.put(3, "March");
+		months.put(4, "April");
+		months.put(5, "May");
+		months.put(6, "June");
+		months.put(7, "July");
+		months.put(8, "August");
+		months.put(9, "September");
+		months.put(10, "October");
+		months.put(11, "November");
+		months.put(12, "December");
 		
 	    monthDictionary = Collections.unmodifiableMap(months);
 	}

@@ -3,6 +3,8 @@ package model;
 public interface Date {
 	public boolean setDate(int day, int month, int year) throws Exception;
 	
+
+	
 	public String getFormatAmerican();
 	public String getFormatEuropean();
 	
