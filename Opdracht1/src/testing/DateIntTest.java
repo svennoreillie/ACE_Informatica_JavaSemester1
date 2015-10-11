@@ -27,7 +27,6 @@ public class DateIntTest {
 	@Before
 	public void setUp() throws Exception{
 		ctorDateIII = new DateInt (1,1,2000);
-		
 		sysDate = Calendar.getInstance();
 		ctorDate = new DateInt ();
 	}
@@ -153,7 +152,7 @@ public class DateIntTest {
 	    ctorDate.setDate(1, 13, 2000);
 	}
 	
-	//SetDate() | Month testing
+	//SetDate() | Year testing
 	@Test
 	public void testSetDate_zeroAsYear() throws Exception {
 		//arrange
@@ -199,21 +198,41 @@ public class DateIntTest {
 	public void testSmallerThan_sameDate() throws Exception {
 		ctorDateIII.smallerThan(ctorDateIII);
 	}
+
+	@Test
+	public void testDifferenceInYearsOneYear() throws Exception {
+		DateInt testDate = new DateInt(1,1,2001);
+		assertEquals(1,ctorDateIII.differenceInYears(testDate));
+		assertEquals(1,testDate.differenceInYears(ctorDateIII));
+	}
+
+	@Test
+	public void testDifferenceInYearsSameYear() throws Exception {
+		assertEquals(0,ctorDateIII.differenceInYears(ctorDateIII));
+	}
 	
-
 	@Test
-	public void testDifferenceInYears() {
-		fail("Not yet implemented");
+	public void testDifferenceInMonthsOneMonth() throws Exception {
+		DateInt testDate = new DateInt(1,2,2000);
+		assertEquals(1,ctorDateIII.differenceInMonths(testDate));
+		assertEquals(1,testDate.differenceInMonths(ctorDateIII));
+	}
+	
+	@Test
+	public void testDifferenceInMonthsSameMonth() throws Exception {
+		assertEquals(1,ctorDateIII.differenceInMonths(ctorDateIII));
 	}
 
 	@Test
-	public void testDifferenceInMonths() {
-		fail("Not yet implemented");
+	public void testDifferenceInDaysOneDay() throws Exception {
+		DateInt testDate = new DateInt(2,1,2000);
+		assertEquals(1,ctorDateIII.differenceInDays(testDate));
+		assertEquals(1,testDate.differenceInDays(ctorDateIII));
 	}
-
+	
 	@Test
-	public void testDifferenceInDays() {
-		fail("Not yet implemented");
+	public void testDifferenceInDaysSameDay() throws Exception {
+		assertEquals(1,ctorDateIII.differenceInDays(ctorDateIII));
 	}
 
 	@Test
@@ -234,7 +253,6 @@ public class DateIntTest {
 	@Test
 	public void testToString() {
 		assertEquals(euString,ctorDateIII.toString());
-		//String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year)
 	}
 
 	@Test
