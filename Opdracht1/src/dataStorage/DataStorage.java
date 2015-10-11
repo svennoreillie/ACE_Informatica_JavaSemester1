@@ -1,6 +1,6 @@
 package dataStorage;
 
-public interface dataStorage {
+public interface DataStorage {
 
 	/**
 	 * Gets the data from the data file
