@@ -32,7 +32,7 @@ public class App {
 		System.out.print(test2.equals(test2) + "\n");
 		System.out.print(test2.equals(test3) + "\n");
 		
-		test.alterDate(aantalDagen);
+		//test.alterDate(aantalDagen);
 		
 	}
 }
