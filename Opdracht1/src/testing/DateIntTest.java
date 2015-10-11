@@ -241,10 +241,40 @@ public class DateIntTest {
 	}
 
 	@Test
-	public void testChangeDate() {
-		fail("Not yet implemented");
+	public void testChangeDateOneDate() throws Exception {
+		ctorDateIII.changeDate(1);
+		assertEquals(2,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateMinusOneDate() throws Exception {
+		ctorDateIII.changeDate(-1);
+		assertEquals(31,ctorDateIII.getDay());
+		assertEquals(12,ctorDateIII.getMonth());
+		assertEquals(1999,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testChangeDateZeroDate() throws Exception {
+		ctorDateIII.changeDate(0);
+		assertEquals(1,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(61);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
 	}
 
+	@Test
+	public void testChangeDateNotOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(425);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2001,ctorDateIII.getYear());
+	}
+	
 	@Test
 	public void testAlterDate() {
 		fail("Not yet implemented");

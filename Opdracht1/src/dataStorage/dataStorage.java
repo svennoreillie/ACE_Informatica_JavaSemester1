@@ -1,24 +1,13 @@
 package dataStorage;
 
+import java.util.List;
+
 public interface dataStorage {
 
-	/**
-	 * Gets the data from the data file
-	 * 
-	 */
 	public StringBuffer getData();
-	
-	/**
-	 * Sets the data in to the data file
-	 * 
-	 */
+	public List<StringBuffer> getReservationList();
 	public void setData(StringBuffer data);
-	
-	
-	/**
-	 * Checks if the format of the data is correct
-	 * 
-	 */
+	public void setReservationList (List<StringBuffer>reservationList);
 	public void dataFormatCheck (StringBuffer data);
 	
 }
