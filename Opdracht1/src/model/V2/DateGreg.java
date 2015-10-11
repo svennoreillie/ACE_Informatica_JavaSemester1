@@ -2,6 +2,7 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
+
 import model.Months;
 
 import java.util.Calendar;
@@ -9,128 +10,159 @@ import java.util.GregorianCalendar;
 
 public class DateGreg extends DateBase {
 	
-	//TODO: difference in years/months/days
+	// TODO difference in years/months/days
+	// TODO rework class by removing private day/month/year ints
+	// TODO add proper gets/sets 
+	// TODO implement the Exception strings
 	
-	//private variable instances
+	// PRIVATE VARIABLE INSTANCES //
+	private GregorianCalendar Greg;
 	
-	private int day = 1;
-	private int month = 1;
-	private int year = 1;
-	private GregorianCalendar Greg = new GregorianCalendar();
-	
-	//CONSTRUCTORS
+	// CONSTRUCTORS //
 	public DateGreg() throws Exception{
 		try{
-			this.day = Greg.get(Calendar.DAY_OF_MONTH);
-			this.month = Greg.get(Calendar.MONTH);
-			this.year = Greg.get(Calendar.YEAR);
+			Greg = new GregorianCalendar();
 		}
 		catch (Exception e){
 			throw e;
 		}
-		
-		this.setDate(day, month, year);
 	};
 	
-	public DateGreg(int year, int month, int dayOfMonth) throws Exception{
-		this.day = dayOfMonth;
-		this.month = month;
-		this.year = year;
-		
-		this.setDate(dayOfMonth, month, year);
+	public DateGreg(int day, int month, int year) throws Exception{
+		try{
+			Greg = new GregorianCalendar(year, month, day);
+		}
+		catch (Exception e){
+			throw e;
+		}
 	};
 	
 	public DateGreg(String date) throws Exception
 	{
-		if (date == null) throw new Exception("Date was null");
-		if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
-		if (!date.contains("/")) throw new Exception("Date does not contain the correct separator");
-		
-		String[] strings=  date.split("/");
-		
-		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
-		
-		int day = Integer.parseInt(strings[1]);
-		int month = Integer.parseInt(strings[2]);
-		int year = Integer.parseInt(strings[3]);
-		
-		this.setDate(day, month, year);
-		
-		//wat als het om Amerikaans formaat gaat?
+		try{
+			if (date == null) throw new Exception("Date was null");
+			if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
+			if (!date.contains("/")) throw new Exception("Date does not contain the correct separator");
+			
+			String[] strings=  date.split("/");
+			
+			if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
+			
+			int day = Integer.parseInt(strings[0]);
+			int month = Integer.parseInt(strings[1]);
+			int year = Integer.parseInt(strings[2]);
+			// Array starts with 0 index value!
+			
+			Greg = new GregorianCalendar(year, month, day);
+
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
 	
 	public DateGreg(Date date) throws Exception{
-		this(date.getFormatEuropean());
+		String dateString = date.getFormatEuropean();
+		String[] strings=  dateString.split("/");
+		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
+		
+		int day = Integer.parseInt(strings[0]);
+		int month = Integer.parseInt(strings[1]);
+		int year = Integer.parseInt(strings[2]);
+		
+		Greg = new GregorianCalendar(year, month, day);
 	};
 	
-	//Overrides
+	// GETTERS //
+	public int getDay() throws Exception{
+		return this.Greg.get(GregorianCalendar.DATE);
+	}
+	
+	public int getMonth() throws Exception{
+		int month = this.Greg.get(GregorianCalendar.MONTH);
+		return month +1;
+		
+		// It is necessary to add +1 to the Calendar's month, since it's zero-based. E.g.: April = 3 instead of 4 
+		// PS: WHY?!!!?11!?
+	}
+	
+	public int getYear() throws Exception{
+		return this.Greg.get(GregorianCalendar.YEAR);
+	}
+	
+	// OVERRIDES //
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
-		if (year < 1 || year > 9999) throw new Exception("Year is not in a valid range");
-		if (month < 1 || month > 12) throw new Exception("Month is not in a valid range");
-		if (day < 1 || day > getNumberOfDays(month, year)) throw new Exception("Day is not in a valid range");
-		
-		
-		this.day = day;
-		this.month = month;
-		this.year = year;
+		Greg.set(year, month, day);
 		
 		return true;
 	}
 
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%i4/%i2/%i2", this.year, this.month, this.day);
+		return String.format("%1$tY/%1$tm/%1$te", this.Greg);
+		
 	}
 
 	@Override
 	public String getFormatEuropean() {
-		return String.format("%i2/%i2/%i4", this.day, this.month, this.year);
+
+		return String.format("%1$te/%1$tm/%1$tY", this.Greg);
+		
 	}
 
 	@Override
 	public boolean smallerThan(Date d) throws Exception {
-		Greg.set(this.year, this.month, this.day);
-		
-		DateGreg convertToCompare = new DateGreg(d);
-		GregorianCalendar toCompare = new GregorianCalendar(convertToCompare.year, convertToCompare.month, convertToCompare.year);
-		
-		if ((Greg.compareTo(toCompare)) < 0){
-			return false;
-		}
-		else{
+		DateGreg otherDate = new DateGreg(d);
+		if ((Greg.compareTo(otherDate.Greg)) == -1){
 			return true;
 		}
+		else{
+			return false;
+		}
+		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd)
 	}
 	
 	@Override
 	public boolean equals(Object o) {
-		Greg.set(this.year, this.month, this.day);
-		
-		if (Greg.equals(o)){
+		if (this.Greg.equals(o)){
 			return true;
 		}
 		else{
 			return false;
 		}
+		// Geeft telkens een FALSE terug; ook al vergelijk je een object met zichzelf
 	}
 
 	@Override
 	public int differenceInYears(Date d) throws Exception {
-		Greg.set(this.year, this.month, this.day);
+		DateGreg toCompare = new DateGreg(d);
 		
-		DateGreg convertToCompare = new DateGreg(d);
-		GregorianCalendar toCompare = new GregorianCalendar(convertToCompare.year, convertToCompare.month, convertToCompare.year);
-		
-		return Greg.compareTo(toCompare);
-		
-		// 2 opmerkingen: het is niet duidelijk wat voor int je terug krijgt van compareTo();
-		// en de constructor GregorianCalendar(Date) doet het nog steeds niet
+		int diff = toCompare.Greg.get(Calendar.YEAR) - this.Greg.get(Calendar.YEAR);
+		if (this.Greg.get(Calendar.MONTH) > toCompare.Greg.get(Calendar.MONTH) ||
+				(this.Greg.get(Calendar.MONTH) == toCompare.Greg.get(Calendar.MONTH) && this.Greg.get(Calendar.DATE) > toCompare.Greg.get(Calendar.DATE))){
+			diff--;
+		}		
+				
+		return diff;
 	}
 
 	@Override
 	public int differenceInMonths(Date d) throws Exception {
-		// TODO Auto-generated method stub
+		//DateGreg toCompare = new DateGreg(d);
+		// TODO differenceInMonths
+		
+		//int diff = (differenceInYears(d) * 12) + ();
+		
+		/*
+		if (this.Greg.get(Calendar.MONTH) > toCompare.Greg.get(Calendar.MONTH) ||
+				(this.Greg.get(Calendar.MONTH) == toCompare.Greg.get(Calendar.MONTH) && this.Greg.get(Calendar.DATE) > toCompare.Greg.get(Calendar.DATE))){
+			diff--;
+		}
+		*/
+		
+		//return diff;
+		
 		return 0;
 	}
 
@@ -142,84 +174,49 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public int totalDaysSinceJesus() throws Exception {
-		try {
-			int total = 0;
-			total += ((this.year - 1) * 365);
-			
-			//calculate leapDays
-			int numberOfLeapYears = this.year / 4;
-			//subtract centuries (no leap years)
-			int numberOfCenturies = this.year / 100;
-			int totalLeapDays = numberOfLeapYears - numberOfCenturies;
-			
-			total += totalLeapDays;
-			
-			for (int i = 1; i < this.month; i++) {
-				total += getNumberOfDays(i, this.year);
-			}
-			
-			total += this.day;
-			
-			return total;
-		} catch (Exception e) {
-			throw e;
-		}
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
+	// TO DO fix the toString() method
 	@Override
 	public String toString() {
-		return String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year);
+		//return String.format("%i2 %s %i4", this.Greg.get(Calendar.DATE), Months.getMonthName(this.Greg.get(Calendar.MONTH)), this.Greg.get(Calendar.YEAR));
+		// Geeft blijkbaar problemen met het converteren van Int naar String
+		
+		/*
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.Greg.get(Calendar.DATE) + " ");
+		sb.append(Months.getMonthName(this.Greg.get(Calendar.MONTH) + 1) + " ");
+		sb.append(this.Greg.get(Calendar.YEAR));
+		
+		String dateToString = new String(sb);
+		return dateToString;
+		*/
+		// Werkt degelijk, maar maakt 2 variabelen aan
+		
+		return String.format("%1$te %1$tB %1$tY", this.Greg);
+		// Geeft maand terug volgens systeemtaal 	
 	}
 
 	@Override
 	public int compareTo(Date otherDate) throws Exception {
-		Greg.set(this.year, this.month, this.day);
+		DateGreg toCompare = new DateGreg(otherDate);
 		
-		DateGreg toConvert = new DateGreg(otherDate);
-		GregorianCalendar toCompare = new GregorianCalendar(toConvert.year, toConvert.month, toConvert.day);
-		
-		return Greg.compareTo(toCompare);
+		return Greg.compareTo(toCompare.Greg);
 	}
 
 	@Override
 	public void alterDate(int aantalDagen) throws Exception {
-		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
-		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
-		
-		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
+		this.Greg.add(Calendar.DATE, aantalDagen);
 	}
 
 	@Override
 	public Date changeDate(int aantalDagen) throws Exception{
-		
-		GregorianCalendar dateToChange = new GregorianCalendar(this.year, this.month, this.day);
-		dateToChange.add(dateToChange.DAY_OF_MONTH, aantalDagen);
-		
-		setDate(dateToChange.get(day), dateToChange.get(month), dateToChange.get(year));
+		// TODO Check if changeDate() method is correct
+		this.Greg.add(Calendar.DATE, aantalDagen);
 		return this;
-		
-		//moeten we een nieuw Date-object geven, of de bestaande wijzigen?
 	}
 	
-	//Region helper
 	
-	private int getNumberOfDays(int month, int year){
-		int numberOfDays = 0; 
-		GregorianCalendar nOD = new GregorianCalendar(year, month, 1);
-		
-		final int[] daysPerMonth =
-			{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-		numberOfDays = daysPerMonth[month];
-		
-		if (month == 2){
-			if (nOD.isLeapYear(year)){	
-			numberOfDays = 29;
-			}
-			else{
-				numberOfDays = 28;
-			}
-		}
-		
-		return numberOfDays;
-	}
 }
