@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import model.V1.DateInt;
+import model.V2.DateGreg;
 
 public class DateIntTest {
  
@@ -241,18 +242,73 @@ public class DateIntTest {
 	}
 
 	@Test
-	public void testChangeDate() {
-		fail("Not yet implemented");
+	public void testChangeDateOneDay() throws Exception {
+		ctorDateIII.changeDate(1);
+		assertEquals(2,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateMinusOneDay() throws Exception {
+		ctorDateIII.changeDate(-1);
+		assertEquals(31,ctorDateIII.getDay());
+		assertEquals(12,ctorDateIII.getMonth());
+		assertEquals(1999,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testChangeDateZeroDay() throws Exception {
+		ctorDateIII.changeDate(0);
+		assertEquals(1,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(61);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
 	}
 
 	@Test
-	public void testAlterDate() {
-		fail("Not yet implemented");
+	public void testChangeDateNotOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(425);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2001,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testAlterDateOneDay() throws Exception {
+		ctorDateIII.alterDate(1);
+		assertEquals(2,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testAlterDateMinusOneDay() throws Exception {
+		ctorDateIII.alterDate(-1);
+		assertEquals(31,ctorDateIII.getDay());
+		assertEquals(12,ctorDateIII.getMonth());
+		assertEquals(1999,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testAlterDateZeroDay() throws Exception {
+		ctorDateIII.alterDate(0);
+		assertEquals(1,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testAlterDateOverLeapYear() throws Exception {
+		ctorDateIII.alterDate(61);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
 	}
 
 	@Test
-	public void testToString() {
-		assertEquals(euString,ctorDateIII.toString());
+	public void testToStringNotOverLeapYear() throws Exception {
+		ctorDateIII.alterDate(425);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2001,ctorDateIII.getYear());
 	}
 
 	@Test
