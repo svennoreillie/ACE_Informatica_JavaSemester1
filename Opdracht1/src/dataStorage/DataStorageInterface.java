@@ -2,7 +2,7 @@ package dataStorage;
 
 import java.util.List;
 
-public interface dataStorage {
+public interface DataStorageInterface {
 
 	public StringBuffer getData();
 	public List<StringBuffer> getReservationList();
