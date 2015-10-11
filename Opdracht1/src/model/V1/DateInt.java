@@ -82,7 +82,7 @@ public class DateInt extends DateBase {
 
 	@Override
 	public String getFormatEuropean() {
-		return String.format("%i2/%i2/%i4", this.day, this.month, this.year);
+		return String.format("%d2/%d2/%d4", this.day, this.month, this.year);
 	}
 	
 	public int totalDaysSinceJesus() throws Exception {
