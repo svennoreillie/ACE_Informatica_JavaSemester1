@@ -27,7 +27,6 @@ public class DateIntTest {
 	@Before
 	public void setUp() throws Exception{
 		ctorDateIII = new DateInt (1,1,2000);
-		
 		sysDate = Calendar.getInstance();
 		ctorDate = new DateInt ();
 	}
@@ -153,7 +152,7 @@ public class DateIntTest {
 	    ctorDate.setDate(1, 13, 2000);
 	}
 	
-	//SetDate() | Month testing
+	//SetDate() | Year testing
 	@Test
 	public void testSetDate_zeroAsYear() throws Exception {
 		//arrange
@@ -199,21 +198,41 @@ public class DateIntTest {
 	public void testSmallerThan_sameDate() throws Exception {
 		ctorDateIII.smallerThan(ctorDateIII);
 	}
+
+	@Test
+	public void testDifferenceInYearsOneYear() throws Exception {
+		DateInt testDate = new DateInt(1,1,2001);
+		assertEquals(1,ctorDateIII.differenceInYears(testDate));
+		assertEquals(1,testDate.differenceInYears(ctorDateIII));
+	}
+
+	@Test
+	public void testDifferenceInYearsSameYear() throws Exception {
+		assertEquals(0,ctorDateIII.differenceInYears(ctorDateIII));
+	}
 	
-
 	@Test
-	public void testDifferenceInYears() {
-		fail("Not yet implemented");
+	public void testDifferenceInMonthsOneMonth() throws Exception {
+		DateInt testDate = new DateInt(1,2,2000);
+		assertEquals(1,ctorDateIII.differenceInMonths(testDate));
+		assertEquals(1,testDate.differenceInMonths(ctorDateIII));
+	}
+	
+	@Test
+	public void testDifferenceInMonthsSameMonth() throws Exception {
+		assertEquals(1,ctorDateIII.differenceInMonths(ctorDateIII));
 	}
 
 	@Test
-	public void testDifferenceInMonths() {
-		fail("Not yet implemented");
+	public void testDifferenceInDaysOneDay() throws Exception {
+		DateInt testDate = new DateInt(2,1,2000);
+		assertEquals(1,ctorDateIII.differenceInDays(testDate));
+		assertEquals(1,testDate.differenceInDays(ctorDateIII));
 	}
-
+	
 	@Test
-	public void testDifferenceInDays() {
-		fail("Not yet implemented");
+	public void testDifferenceInDaysSameDay() throws Exception {
+		assertEquals(1,ctorDateIII.differenceInDays(ctorDateIII));
 	}
 
 	@Test
@@ -222,19 +241,73 @@ public class DateIntTest {
 	}
 
 	@Test
-	public void testChangeDate() {
-		fail("Not yet implemented");
+	public void testChangeDateOneDay() throws Exception {
+		ctorDateIII.changeDate(1);
+		assertEquals(2,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateMinusOneDay() throws Exception {
+		ctorDateIII.changeDate(-1);
+		assertEquals(31,ctorDateIII.getDay());
+		assertEquals(12,ctorDateIII.getMonth());
+		assertEquals(1999,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testChangeDateZeroDay() throws Exception {
+		ctorDateIII.changeDate(0);
+		assertEquals(1,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testChangeDateOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(61);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
 	}
 
 	@Test
-	public void testAlterDate() {
-		fail("Not yet implemented");
+	public void testChangeDateNotOverLeapYear() throws Exception {
+		ctorDateIII.changeDate(425);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2001,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testAlterDateOneDay() throws Exception {
+		ctorDateIII.alterDate(1);
+		assertEquals(2,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testAlterDateMinusOneDay() throws Exception {
+		ctorDateIII.alterDate(-1);
+		assertEquals(31,ctorDateIII.getDay());
+		assertEquals(12,ctorDateIII.getMonth());
+		assertEquals(1999,ctorDateIII.getYear());
+	}
+	
+	@Test
+	public void testAlterDateZeroDay() throws Exception {
+		ctorDateIII.alterDate(0);
+		assertEquals(1,ctorDateIII.getDay());
+	}
+	
+	@Test
+	public void testAlterDateOverLeapYear() throws Exception {
+		ctorDateIII.alterDate(61);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
 	}
 
 	@Test
-	public void testToString() {
-		assertEquals(euString,ctorDateIII.toString());
-		//String.format("%i2 %s %i4", this.day, Months.getMonthName(this.month), this.year)
+	public void testToStringNotOverLeapYear() throws Exception {
+		ctorDateIII.alterDate(425);
+		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2001,ctorDateIII.getYear());
 	}
 
 	@Test

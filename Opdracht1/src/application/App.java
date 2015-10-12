@@ -43,6 +43,8 @@ public class App {
 		//System.out.print(test2.equals(test2) + "\n");
 		//System.out.print(test2.equals(test3) + "\n");
 		
+
+		//test.alterDate(aantalDagen);
 		
 		DateGreg test5 = new DateGreg(29, 02, 2016);
 		DateGreg test6 = new DateGreg("29/02/2016");

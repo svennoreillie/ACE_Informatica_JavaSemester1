@@ -131,7 +131,6 @@ public class DateInt extends DateBase {
 		} catch (Exception e) {
 			throw e;
 		}
-		//test 
 	}
 
 	@Override
@@ -177,18 +176,11 @@ public class DateInt extends DateBase {
 	    this.setDate(newDate.day, newDate.month, newDate.year);
 	}
 	
-	
-
-	
 	//Region publics from base
 	@Override
 	public String toString() {
 		return String.format("%02d %s %04d", this.day, Months.getMonthName(this.month), this.year);
 	}
-	
-	
-	
-	
 	
 	//Region helpers
 	private int getNumberOfDays(int month, int year) throws Exception {
@@ -211,7 +203,6 @@ public class DateInt extends DateBase {
 		}
 		
 		return 30;
-		
 	}
 	
 	private int getNumberOfDays(int year) throws Exception {
