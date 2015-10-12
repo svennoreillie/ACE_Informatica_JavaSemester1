@@ -2,23 +2,33 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
-
-import model.Months;
+import model.V1.MagicStrings;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * DateGreg is a subclass of Date, serving as a wrapper class for the GregorianCalendar class. The provided dates are to be manipulated using GregorianCalendar functions wherever possible.
+ * 
+ * @author André Nóbrega
+ * @author Bart Janssens
+ */
 public class DateGreg extends DateBase {
 	
 	// TODO difference in years/months/days
-	// TODO rework class by removing private day/month/year ints
-	// TODO add proper gets/sets 
 	// TODO implement the Exception strings
 	
 	// PRIVATE VARIABLE INSTANCES //
 	private GregorianCalendar Greg;
+	private MagicStrings magicString = new MagicStrings();
 	
 	// CONSTRUCTORS //
+	
+	/**
+	 * Instantiates a new DateGreg object using the current system time.
+	 * 
+	 * @throws Exception
+	 */
 	public DateGreg() throws Exception{
 		try{
 			Greg = new GregorianCalendar();
@@ -28,31 +38,42 @@ public class DateGreg extends DateBase {
 		}
 	};
 	
+	/**
+	 * Instantiates a new DateGreg object using the provided integers as parameters.
+	 * 
+	 * @param day Defines day of the month.
+	 * @param month Defines the month.
+	 * @param year Defines the year.
+	 * @throws Exception
+	 */
 	public DateGreg(int day, int month, int year) throws Exception{
-		try{
-			Greg = new GregorianCalendar(year, month, day);
-		}
-		catch (Exception e){
-			throw e;
-		}
+		checkDate(day, month, year);		
+		Greg = new GregorianCalendar(year, month, day);
 	};
 	
+	/**
+	 * Instantiates a new DateGreg object by using a string in the "DD/MM/YY" format.
+	 * 
+	 * @param date A string defining the date, in "DD/MM/YY" format.
+	 * @throws Exception Should the provided string contain formatting errors, an error message is pulled from the MagicString class.
+	 */
 	public DateGreg(String date) throws Exception
 	{
 		try{
-			if (date == null) throw new Exception("Date was null");
-			if (date.length() != 10) throw new Exception("Incorrect date length, you must supply date in following format DD/MM/YYYY");
-			if (!date.contains("/")) throw new Exception("Date does not contain the correct separator");
+			if (date == null) throw new Exception(magicString.getDateNull());
+			if (date.length() != 10) throw new Exception(magicString.getDateLengthWrong());
+			if (!date.contains("/")) throw new Exception(magicString.getDateSeperatorWrong());
 			
 			String[] strings=  date.split("/");
 			
-			if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
+			if (strings.length != 3) throw new Exception(magicString.getDateFormatWrong());
 			
 			int day = Integer.parseInt(strings[0]);
 			int month = Integer.parseInt(strings[1]);
 			int year = Integer.parseInt(strings[2]);
 			// Array starts with 0 index value!
 			
+			checkDate(day, month, year);
 			Greg = new GregorianCalendar(year, month, day);
 
 		}
@@ -61,56 +82,98 @@ public class DateGreg extends DateBase {
 		}
 	}
 	
+	/**
+	 * Instantiates a new DateGreg object by using an existing Date object.
+	 * 
+	 * @param date The Date object to base the new DateGregg off of.
+	 * @throws Exception Throws an exception if the provided Date cannot provide a correct string from the getFormatEuropean(); should not be technically possible.
+	 */
 	public DateGreg(Date date) throws Exception{
-		String dateString = date.getFormatEuropean();
-		String[] strings=  dateString.split("/");
-		if (strings.length != 3) throw new Exception("Did not find all datesegments. Check if date is in following format DD/MM/YYYY");
-		
-		int day = Integer.parseInt(strings[0]);
-		int month = Integer.parseInt(strings[1]);
-		int year = Integer.parseInt(strings[2]);
-		
-		Greg = new GregorianCalendar(year, month, day);
+		try{
+			String dateString = date.getFormatEuropean();
+			String[] strings=  dateString.split("/");
+			if (strings.length != 3) throw new Exception(magicString.getDateFormatWrong());
+			
+			int day = Integer.parseInt(strings[0]);
+			int month = Integer.parseInt(strings[1]);
+			int year = Integer.parseInt(strings[2]);
+			
+			checkDate(day, month, year);
+			Greg = new GregorianCalendar(year, month, day);
+		}
+		catch (Exception e){
+			throw e;
+		}
 	};
 	
 	// GETTERS //
+	/**
+	 * Provides public access to the current object's day field.
+	 * 
+	 * @return An integer representing this object's day
+	 * @throws Exception
+	 */
 	public int getDay() throws Exception{
 		return this.Greg.get(GregorianCalendar.DATE);
 	}
 	
+	/**
+	 * Provides public access to the current object's month field. Note that months in Calendar are kept in a zero-based array, hence the need to add +1 to the integer it returns.
+	 * 
+	 * @return An integer representing this object's month
+	 * @throws Exception
+	 */
 	public int getMonth() throws Exception{
-		int month = this.Greg.get(GregorianCalendar.MONTH);
-		return month +1;
-		
-		// It is necessary to add +1 to the Calendar's month, since it's zero-based. E.g.: April = 3 instead of 4 
-		// PS: WHY?!!!?11!?
+		return (this.Greg.get(GregorianCalendar.MONTH) + 1);
 	}
 	
+	/**
+	 * Provides public access to the current object's year field.
+	 * 
+	 * @return An integer representing this object's year
+	 * @throws Exception
+	 */
 	public int getYear() throws Exception{
 		return this.Greg.get(GregorianCalendar.YEAR);
 	}
 	
 	// OVERRIDES //
+	/**
+	 * Changes the current object's date fields. 
+	 */
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
-		Greg.set(year, month, day);
-		
-		return true;
+		try{
+			checkDate(day, month, year);
+			Greg.set(year, month, day);
+			
+			return true;
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
 
+	/**
+	 * Returns the current date as a string in the YY/MM/DD format.
+	 */
 	@Override
 	public String getFormatAmerican() {
 		return String.format("%1$tY/%1$tm/%1$te", this.Greg);
-		
 	}
 
+	/**
+	 * Returns the current date as a string in the DD/MM/YY format.
+	 */
 	@Override
 	public String getFormatEuropean() {
 
 		return String.format("%1$te/%1$tm/%1$tY", this.Greg);
-		
 	}
 
+	/**
+	 * Compares the current date object to the provided Date parameter. If the Date precedes DateGreg, this method returns a true statement.
+	 */
 	@Override
 	public boolean smallerThan(Date d) throws Exception {
 		DateGreg otherDate = new DateGreg(d);
@@ -120,9 +183,12 @@ public class DateGreg extends DateBase {
 		else{
 			return false;
 		}
-		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd)
+		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd?)
 	}
 	
+	/**
+	 * Compares the current date object to the provided Object. If both are equal, this method returns a true statement.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this.Greg.equals(o)){
@@ -138,13 +204,18 @@ public class DateGreg extends DateBase {
 	public int differenceInYears(Date d) throws Exception {
 		DateGreg toCompare = new DateGreg(d);
 		
+		/*
 		int diff = toCompare.Greg.get(Calendar.YEAR) - this.Greg.get(Calendar.YEAR);
 		if (this.Greg.get(Calendar.MONTH) > toCompare.Greg.get(Calendar.MONTH) ||
 				(this.Greg.get(Calendar.MONTH) == toCompare.Greg.get(Calendar.MONTH) && this.Greg.get(Calendar.DATE) > toCompare.Greg.get(Calendar.DATE))){
 			diff--;
 		}		
-				
+		
 		return diff;
+		*/
+		
+		
+		return 0;
 	}
 
 	@Override
@@ -177,8 +248,10 @@ public class DateGreg extends DateBase {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	// TO DO fix the toString() method
+	
+	/**
+	 * Returns this object's current date as a string; e.g. "24 July 2006".
+	 */
 	@Override
 	public String toString() {
 		//return String.format("%i2 %s %i4", this.Greg.get(Calendar.DATE), Months.getMonthName(this.Greg.get(Calendar.MONTH)), this.Greg.get(Calendar.YEAR));
@@ -206,6 +279,9 @@ public class DateGreg extends DateBase {
 		return Greg.compareTo(toCompare.Greg);
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public void alterDate(int aantalDagen) throws Exception {
 		this.Greg.add(Calendar.DATE, aantalDagen);
@@ -213,10 +289,21 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public Date changeDate(int aantalDagen) throws Exception{
-		// TODO Check if changeDate() method is correct
+		// TODO Check if changeDate() method gives desired result
 		this.Greg.add(Calendar.DATE, aantalDagen);
 		return this;
 	}
 	
+	// HELPER
+	public void checkDate(int day, int month, int year) throws Exception{
+		if (day < 1 || day > 31) throw new Exception(magicString.getDayRangeWrong());
+		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
+		if (year < 1) throw new Exception(magicString.getDateZero());
+		if (year > 9999) throw new Exception(magicString.getYearRangeWrong());
+	}
 	
+	// for testing purposes
+	public Boolean leapTest() throws Exception{
+		return this.Greg.isLeapYear(this.getYear());
+	}
 }
