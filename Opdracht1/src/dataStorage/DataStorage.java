@@ -16,7 +16,8 @@ public class DataStorage implements DataStorageInterface {
 	private String fullList = new String();
 	private List<String> reservationList = new ArrayList<String>();
 	private File file = new File("bestanden\\werknemers.txt");
-	
+	private DataStorage storage = new DataStorage();
+	private MagicStrings ms = new MagicStrings ();
 	
 	@Override
 	public String getData() throws Throwable {
@@ -38,14 +39,12 @@ public class DataStorage implements DataStorageInterface {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
-		
 	}
 
 	//List van Strings met elke reservatie in vorm: 111,5/11/2015,4>Adams,Chloe
 	@Override
 	public List<String> getReservationList() throws Throwable {
 		try{
-			DataStorage storage = new DataStorage();
 			fullList = storage.getData();
 			String fullStringList = fullList.toString();
 			String [] splitList = fullStringList.split(";");
@@ -57,23 +56,36 @@ public class DataStorage implements DataStorageInterface {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
-		
 	}
 
 	//Schrijvt volledige string (overschrijft hard)
 	@Override
 	public void setData(String data) throws Throwable {
-		try{
-			PrintWriter writer = new PrintWriter(file);
-			writer.print(data);
-			writer.close();
+		String [] splitList = data.split(";");
+		boolean b = true;
+		for (String s : splitList){
+			if(!storage.dataFormatCheck(s)&& b){
+				b = false;
+			}
 		}
-		catch(FileNotFoundException ex){
-			MagicStrings s = new MagicStrings ();
-			throw new Exception(s.getFileNotfound());
-		  }
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		if(b){
+			try{
+				PrintWriter writer = new PrintWriter(file);
+				for (String s : splitList){
+					writer.print(s);
+					writer.println();
+				}
+				writer.close();
+			}
+			catch(FileNotFoundException ex){
+				throw new Exception(ms.getFileNotfound());
+			  }
+			catch(Exception ex){
+				throw new Exception(ex.getMessage());
+			}
+		}
+		else{
+			throw new Exception(ms.getDateFormatWrong());
 		}
 	}
 
@@ -89,8 +101,7 @@ public class DataStorage implements DataStorageInterface {
 			storage.setData(fullList);
 		}
 		catch(Exception ex){
-			throw new Exception(ex.getMessage());
-			
+			throw new Exception(ex.getMessage());	
 		}
 	}
 
@@ -99,8 +110,6 @@ public class DataStorage implements DataStorageInterface {
 	public void addReservation(String reservation) throws Throwable {
 		
 		try{
-			DataStorage storage = new DataStorage();
-			MagicStrings s = new MagicStrings();
 			if(storage.dataFormatCheck(reservation)){
 				fullList = storage.getData();
 				fullList += ";";
@@ -108,7 +117,7 @@ public class DataStorage implements DataStorageInterface {
 				storage.setData(fullList);
 			}
 			else{
-				throw new Exception(s.getDateFormatWrong());
+				throw new Exception(ms.getDateFormatWrong());
 			}
 		}
 		catch(Exception ex){
@@ -130,26 +139,22 @@ public class DataStorage implements DataStorageInterface {
 		String [] splitName = splitList[1].split(",");
 		if(splitList.length == 2 || splitReservationNumberDateNight.length == 3 || splitName.length == 2){
 			try{
-				houseNumber = Integer.parseInt(splitReservationNumberDateNight[0]);
-				new DateInt(splitReservationNumberDateNight[1]);
-				nights = Integer.parseInt(splitReservationNumberDateNight[3]);
-			}
+					houseNumber = Integer.parseInt(splitReservationNumberDateNight[0]);
+					new DateInt(splitReservationNumberDateNight[1]);
+					nights = Integer.parseInt(splitReservationNumberDateNight[3]);
+				}
 			catch(Exception ex){
-				b = false;
-			}
+					b = false;
+				}
 			if(houseNumber > 999 || nights == 0 )
-			{
-				b = false;
+				{
+					b = false;
+				}
 			}
-		}
-		return b;
 		}
 		catch(Exception ex){
 			b = false;
-			return b;
 		}
-		
-		
+		return b;
 	}
-
 }
