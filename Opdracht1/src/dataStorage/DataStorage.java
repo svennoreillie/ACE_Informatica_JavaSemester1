@@ -19,7 +19,6 @@ public class DataStorage implements DataStorageInterface {
 	private DataStorage storage = new DataStorage();
 	private MagicStrings ms = new MagicStrings ();
 	
-	
 	@Override
 	public String getData() throws Throwable {
 		try{
