@@ -21,7 +21,7 @@ public class DateInt extends DateBase {
 	public DateInt() throws Exception {
 		//This is the standard constructor, nothing needs to happen here because privates have defaults of 1
 		Calendar currentDate = Calendar.getInstance();
-		this.setDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
+		this.setDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH)+1, currentDate.get(Calendar.YEAR));
 	}
 	
 	public DateInt(int day, int month, int year) throws Exception {
