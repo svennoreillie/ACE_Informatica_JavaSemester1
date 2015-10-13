@@ -347,7 +347,14 @@ public class DateGreg extends DateBase {
 		if (year < 1) throw new Exception(magicString.getDateZero());
 		if (year > 9999) throw new Exception(magicString.getYearRangeWrong());
 		
-		// what about leap years? Should we let GregorianCalendar sort that out, or throw an exception?
+		GregorianCalendar leapTest = new GregorianCalendar(year, (month-1), 1);
+		
+		System.out.println(leapTest.get(Calendar.DAY_OF_MONTH) + " " + (leapTest.get(Calendar.MONTH)+1) + " " + leapTest.get(Calendar.YEAR));
+		System.out.println("Max days? " + leapTest.getActualMaximum(Calendar.DATE));
+		
+		if (day > leapTest.getActualMaximum(Calendar.DATE)){
+			throw new Exception(String.format("The month of %1$tB counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
+		}
 	}
 	
 	// for testing purposes
