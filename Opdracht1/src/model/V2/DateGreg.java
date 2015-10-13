@@ -202,22 +202,9 @@ public class DateGreg extends DateBase {
 	 * 
 	 * @param o The object to compare this DateGreg object to
 	 */
-
+	// TODO
 	@Override
 	public int differenceInYears(Date d) throws Exception {
-		DateGreg toCompare = new DateGreg(d);
-		
-		/*
-		int diff = toCompare.Greg.get(Calendar.YEAR) - this.Greg.get(Calendar.YEAR);
-		if (this.Greg.get(Calendar.MONTH) > toCompare.Greg.get(Calendar.MONTH) ||
-				(this.Greg.get(Calendar.MONTH) == toCompare.Greg.get(Calendar.MONTH) && this.Greg.get(Calendar.DATE) > toCompare.Greg.get(Calendar.DATE))){
-			diff--;
-		}		
-		
-		return diff;
-		*/
-		
-		
 		return 0;
 	}
 
@@ -334,7 +321,7 @@ public class DateGreg extends DateBase {
 	
 	//////////////////////////////////////////////////////////////////////// HELPER ////////////////////////////////////////////////////////////////////////
 	/**
-	 * Checks if the provided date values fall within the expected parameters. If not, an error message is fetched from the MagicStrings class, and thrown as an exception.
+	 * Checks if the provided date is valid or not. If not, an error message is fetched from the MagicStrings class, and thrown as an exception.
 	 * 
 	 * @param day The provided day of the month. Should range from 1 to max. 31.
 	 * @param month The provided month. Should range from 1 to 12.
@@ -348,17 +335,8 @@ public class DateGreg extends DateBase {
 		if (year > 9999) throw new Exception(magicString.getYearRangeWrong());
 		
 		GregorianCalendar leapTest = new GregorianCalendar(year, (month-1), 1);
-		
-		System.out.println(leapTest.get(Calendar.DAY_OF_MONTH) + " " + (leapTest.get(Calendar.MONTH)+1) + " " + leapTest.get(Calendar.YEAR));
-		System.out.println("Max days? " + leapTest.getActualMaximum(Calendar.DATE));
-		
 		if (day > leapTest.getActualMaximum(Calendar.DATE)){
-			throw new Exception(String.format("The month of %1$tB counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
+			throw new Exception(String.format("The month of %1$tB %1$tY counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
 		}
-	}
-	
-	// for testing purposes
-	public Boolean leapTest() throws Exception{
-		return this.Greg.isLeapYear(this.getYear());
 	}
 }
