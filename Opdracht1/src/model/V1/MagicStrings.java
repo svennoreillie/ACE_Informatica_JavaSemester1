@@ -10,7 +10,7 @@ public final class MagicStrings {
 	public final String monthRangeWrong = "Month is not in a valid range";
 	public final String dayRangeWrong = "Day is not in a valid range";
 	public final String dateZero = "Date can't go below 01/01/0001";
-	public final String fileNotfound = "Bestand niet gevonden";
+	public final String fileNotfound = "File not found!";
 	
 	// constructor
 	public MagicStrings() {
