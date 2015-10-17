@@ -1,10 +1,12 @@
 package application;
 
-import model.V2.DateGreg;;
+import model.V2.DateGreg;
+import model.V1.DateInt;
 
 public class App {
 
 	public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
 
 		// WORKING
 		DateGreg test = new DateGreg();
@@ -33,6 +35,8 @@ public class App {
 		System.out.print(test2.equals(test3) + "\n");
 		
 		//test.alterDate(aantalDagen);
+=======
+>>>>>>> refs/remotes/repsven/development
 		
 	}
 }
