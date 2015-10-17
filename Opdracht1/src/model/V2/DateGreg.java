@@ -282,36 +282,42 @@ public class DateGreg extends DateBase {
 		//
 		// DAYS PER MONTH
 		//
-		if (this.differenceInYears(d) > 1){
-			days += (smallest.Greg.getActualMaximum(Calendar.DATE) - smallest.getDay());
-			DateGreg endOfSmallYear = new DateGreg(31, 12, smallest.getYear());
-			DateGreg smallCalc = new DateGreg(1, smallest.getMonth(), smallest.getYear());
-			
-			for (int sm = (smallest.getMonth() +1); sm < endOfSmallYear.getMonth(); sm++){
-				smallCalc.Greg.set(Calendar.MONTH, sm);
-				days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
-			}
-			 /*
-			days += biggest.Greg.getActualMaximum(Calendar.DATE);
-			DateGreg startOfBigYear = new DateGreg(1,1,biggest.getYear());
-			for (int bm = (biggest.getMonth() +1); bm <= startOfBigYear.getMonth(); bm++){
-				biggest.Greg.set(Calendar.MONTH, bm);
-				days += biggest.Greg.getActualMaximum(Calendar.DATE);
-				}
-			*/
-			
-			days += biggest.Greg.getActualMaximum(Calendar.DATE);
-			DateGreg startOfBigYear = new DateGreg(1, 1, biggest.getYear());
-			DateGreg bigCalc = new DateGreg (1,1, biggest.getYear());
-			
-			for (int bm = 1; bm < biggest.getMonth(); bm++){
-				bigCalc.Greg.set(Calendar.MONTH, bm);
-				days += bigCalc.Greg.getActualMaximum(Calendar.DATE);
-			}
+		//TODO
+		
+		days += (smallest.Greg.getActualMaximum(Calendar.DATE) - smallest.getDay());
+		DateGreg endOfSmallYear = new DateGreg(31, 12, smallest.getYear());
+		DateGreg smallCalc = new DateGreg(1, smallest.getMonth(), smallest.getYear());
+		for (int sm = smallest.getMonth() + 1; sm <= endOfSmallYear.getMonth(); sm++){
+			smallCalc.Greg.set(Calendar.MONTH, sm);
+			days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
 		}
-		else{
-			
+		
+		
+		DateGreg bigCalc = new DateGreg(1,1, biggest.getYear());
+		for (int bm = 1; bm < biggest.getMonth(); bm++){
+			bigCalc.Greg.set(Calendar.MONTH, bm);
+			days += bigCalc.Greg.get(Calendar.DATE);
 		}
+		days += biggest.getDay();
+		
+		/*
+		for (int sm = (smallest.getMonth() +1); sm < endOfSmallYear.getMonth(); sm++){
+			smallCalc.Greg.set(Calendar.MONTH, sm);
+			days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
+		}
+		
+		
+		days += biggest.Greg.getActualMaximum(Calendar.DATE);
+		DateGreg startOfBigYear = new DateGreg(1, 1, biggest.getYear());
+		DateGreg bigCalc = new DateGreg (1,1, biggest.getYear());
+		
+		for (int bm = 1; bm < biggest.getMonth(); bm++){
+			bigCalc.Greg.set(Calendar.MONTH, bm);
+			days += bigCalc.Greg.getActualMaximum(Calendar.DATE);
+		}
+		*/
+		
+		
 		return days;
 	}
 
