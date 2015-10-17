@@ -262,17 +262,6 @@ public class DateGreg extends DateBase {
 			biggest = new DateGreg(this);
 		}
 		
-		/*
-		leapCounter = smallest.getYear();
-		while (leapCounter < biggest.getYear()){
-			if (this.Greg.isLeapYear(leapCounter)){
-				leapDaysTotal++;
-			}
-			leapCounter++;
-		} 
-		// Kan efficienter als For-loop, zie hieronder
-		*/
-		
 		for (int sy = smallest.getYear(); sy <= biggest.getYear(); sy++){
 			if (this.Greg.isLeapYear(sy)){
 				days++;
@@ -285,16 +274,18 @@ public class DateGreg extends DateBase {
 		//TODO
 		
 		days += (smallest.Greg.getActualMaximum(Calendar.DATE) - smallest.getDay());
-		DateGreg endOfSmallYear = new DateGreg(31, 12, smallest.getYear());
 		DateGreg smallCalc = new DateGreg(1, smallest.getMonth(), smallest.getYear());
-		for (int sm = smallest.getMonth() + 1; sm <= endOfSmallYear.getMonth(); sm++){
+		for (int sm = smallest.getMonth(); sm <= 11; sm++){
+
 			smallCalc.Greg.set(Calendar.MONTH, sm);
+			System.out.println("\nMonth test \nCalendar: " + smallCalc.Greg.get(Calendar.MONTH));
+			System.out.println("DateGreg " + smallCalc.getMonth() + "\n");
 			days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
 		}
 		
 		
 		DateGreg bigCalc = new DateGreg(1,1, biggest.getYear());
-		for (int bm = 1; bm < biggest.getMonth(); bm++){
+		for (int bm = 0; bm < (biggest.getMonth() -1); bm++){
 			bigCalc.Greg.set(Calendar.MONTH, bm);
 			days += bigCalc.Greg.get(Calendar.DATE);
 		}
