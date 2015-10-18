@@ -6,6 +6,15 @@ public class House {
 	private int number;
 	private int row;
 	private List<Reservation> reservations;
+	
+	public House() {
+		
+	}
+	
+	public House(int displayNumber) throws Throwable {
+		this.setDisplayNumber(displayNumber);
+	}
+	
 	public int getNumber() {
 		return number;
 	}

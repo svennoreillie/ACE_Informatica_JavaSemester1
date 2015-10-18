@@ -20,7 +20,7 @@ public class ReservationStorage implements ReservationStorageInterface  {
 		this.getHouses();
 	}
 	
-	private List<House> getHouses() throws Throwable {
+	public List<House> getHouses() throws Throwable {
 		if (this.houses.size() == 0) {
 			List<String> buffer = storage.getReservationList();
 			for (String stringReservation : buffer) {
