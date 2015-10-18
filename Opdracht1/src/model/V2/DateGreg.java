@@ -391,4 +391,35 @@ public class DateGreg extends DateBase {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Greg == null) ? 0 : Greg.hashCode());
+		result = prime * result + ((magicString == null) ? 0 : magicString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DateGreg other = (DateGreg) obj;
+		if (Greg == null) {
+			if (other.Greg != null)
+				return false;
+		} else if (!Greg.equals(other.Greg))
+			return false;
+		if (magicString == null) {
+			if (other.magicString != null)
+				return false;
+		} else if (!magicString.equals(other.magicString))
+			return false;
+		return true;
+	}
 }

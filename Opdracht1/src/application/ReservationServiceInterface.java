@@ -6,13 +6,15 @@ import model.Date;
 
 public interface ReservationServiceInterface {
 
-	public List<House> getAllHouses();
-	public List<House> getAvailableHouses(Date startDate, int numberOfDays);
-	public List<Reservation> getReservationsForDate(Date date);
-	public Date getFirstAvailableDate();
-	public Date getFirstAvailableDate(House house);
-	public Date getFirstAvailableDate(int numberOfDays);
-	public Date getFirstAvailableDate(House house, int numberOfDays);
+	public List<House> getAllHouses() throws Throwable;
+	public List<House> getAvailableHouses(Date startDate, int numberOfDays) throws Throwable;
+	public List<Reservation> getReservationsForDate(Date date) throws Throwable;
+	
+	public List<Reservation> getReservationsForHouseOnDate(House house, Date date) throws Throwable;
+	
+	public Date getFirstAvailableDate() throws Throwable;
+	public Date getFirstAvailableDate(House house) throws Throwable;
+	public Date getFirstAvailableDate(House house, int numberOfDays) throws Throwable;
 	
 	
 	public Reservation getFirstReservationForPerson(Person person);
