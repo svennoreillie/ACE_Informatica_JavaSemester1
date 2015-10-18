@@ -16,11 +16,11 @@ public class ReservationStorage implements ReservationStorageInterface  {
 	private List<Reservation> reservations = new ArrayList<Reservation>();
 	private Boolean refresh = false;
 	
-	public ReservationStorage() throws Exception {
+	public ReservationStorage() throws Throwable {
 		this.getHouses();
 	}
 	
-	private List<House> getHouses() throws Exception {
+	private List<House> getHouses() throws Throwable {
 		if (this.houses.size() == 0) {
 			List<String> buffer = storage.getReservationList();
 			for (String stringReservation : buffer) {
@@ -43,7 +43,7 @@ public class ReservationStorage implements ReservationStorageInterface  {
 	}
 	
 	@Override
-	public List<Reservation> getReservations() throws Exception {
+	public List<Reservation> getReservations() throws Throwable {
 		if (reservations.size() == 0 || refresh) {
 			List<String> buffer = storage.getReservationList();
 			for (String stringReservation : buffer) {
