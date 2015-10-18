@@ -245,4 +245,14 @@ public class DateInt extends DateBase {
 		return new DateInt(day, month, year);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + day;
+		result = prime * result + month;
+		result = prime * result + year;
+		return result;
+	}
+
 }

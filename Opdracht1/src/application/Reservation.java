@@ -8,28 +8,69 @@ public class Reservation {
 	private Person person;
 	private House house;
 	
-	protected Date getStartDate() {
+	
+	public Date getStartDate() {
 		return startDate;
 	}
-	protected void setStartDate(Date startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	protected int getNumberOfDays() {
+	public int getNumberOfDays() {
 		return numberOfDays;
 	}
-	protected void setNumberOfDays(int numberOfDays) {
+	public void setNumberOfDays(int numberOfDays) {
 		this.numberOfDays = numberOfDays;
 	}
-	protected Person getPerson() {
+	public Person getPerson() {
 		return person;
 	}
-	protected void setPerson(Person person) {
+	public void setPerson(Person person) {
 		this.person = person;
 	}
-	protected House getHouse() {
+	public House getHouse() {
 		return house;
 	}
-	protected void setHouse(House house) {
+	public void setHouse(House house) {
 		this.house = house;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((house == null) ? 0 : house.hashCode());
+		result = prime * result + numberOfDays;
+		result = prime * result + ((person == null) ? 0 : person.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reservation other = (Reservation) obj;
+		if (house == null) {
+			if (other.house != null)
+				return false;
+		} else if (!house.equals(other.house))
+			return false;
+		if (numberOfDays != other.numberOfDays)
+			return false;
+		if (person == null) {
+			if (other.person != null)
+				return false;
+		} else if (!person.equals(other.person))
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		return true;
+	}
+	
+	
 }

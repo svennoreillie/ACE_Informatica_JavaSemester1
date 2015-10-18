@@ -3,8 +3,6 @@ package model.V2;
 import model.Date;
 import model.DateBase;
 
-import model.Months;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -124,14 +122,11 @@ public class DateGreg extends DateBase {
 	}
 	
 	@Override
-	public boolean equals(Object o) {
-		if (this.Greg.equals(o)){
-			return true;
-		}
-		else{
-			return false;
-		}
-		// Geeft telkens een FALSE terug; ook al vergelijk je een object met zichzelf
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Greg == null) ? 0 : Greg.hashCode());
+		return result;
 	}
 
 	@Override

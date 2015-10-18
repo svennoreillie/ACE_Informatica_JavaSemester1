@@ -1,24 +1,45 @@
 package dataStorage;
 
-public interface DataStorage {
+import java.util.List;
 
-	/**
-	 * Gets the data from the data file
-	 * 
-	 */
-	public StringBuffer getData();
-	
-	/**
-	 * Sets the data in to the data file
-	 * 
-	 */
-	public void setData(StringBuffer data);
-	
-	
-	/**
-	 * Checks if the format of the data is correct
-	 * 
-	 */
-	public void dataFormatCheck (StringBuffer data);
+public class DataStorage implements DataStorageInterface{
+
+	@Override
+	public String getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getReservationList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setData(String data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setReservationList(List<String> reservationList) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addReservation(String reservation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dataFormatCheck(String data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 }
