@@ -11,7 +11,8 @@ import java.util.GregorianCalendar;
  */
 public class DateGreg extends DateBase {
 	
-	// TODO fix compareTo()?
+	// TODO Nice to have: use alterDate() in differenceInYear() for efficiency 
+	// TODO Nice to have: documentatie
 	
 	//////////////////////////////////////////////////////////////////////// PRIVATE VARIABLE INSTANCES /////////////////////////////////////////////////////////////////////////
 	private GregorianCalendar Greg;
@@ -183,6 +184,7 @@ public class DateGreg extends DateBase {
 	 * Compares the current date object to the provided Date parameter. If the Date precedes DateGreg, this method returns a true statement.
 	 * 
 	 * @param d The date to compare this DateGreg object to
+	 * @return boolean
 	 * @throws Exception
 	 */
 	@Override
@@ -197,12 +199,7 @@ public class DateGreg extends DateBase {
 		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd?)
 	}
 	
-	/**
-	 * Compares the current date object to the provided Object. If both are equal, this method returns a true statement.
-	 * 
-	 * @param o The object to compare this DateGreg object to
-	 */
-	
+
 	/**
 	 * Calculates the difference in years between the current DateGreg object and the provided Date object.
 	 * 
@@ -337,7 +334,12 @@ public class DateGreg extends DateBase {
 		// Geeft maand terug volgens systeemtaal 	
 	}
 
-	// TODO
+	/**
+	 * Compares the current date object to the provided Date, 
+	 * 
+	 * @param o The object to compare this DateGreg object to
+	 */
+	//TODO
 	@Override
 	public int compareTo(Date otherDate) throws Exception {
 		DateGreg toCompare = new DateGreg(otherDate);
