@@ -28,7 +28,7 @@ public class DataStorageTest_17102015ITest {
 	  @Before
 	  public void setUp() throws IOException {
 	    storageLocation = temporaryFolder.newFile();
-	    storage = new DataStorageTest_17102015( storageLocation );
+	    storage = new DataStorageTest_17102015( );
 	  }
 	  
 	  @Test
@@ -71,7 +71,7 @@ public class DataStorageTest_17102015ITest {
 	  
 	  @Test( expected = IllegalArgumentException.class )
 	  public void constructWithNullAsStorageLocation() {
-	    new DataStorageTest_17102015( null ); 
+	    new DataStorageTest_17102015( ); 
 	  }
 	  
 	  private String readStoredContent() throws IOException {

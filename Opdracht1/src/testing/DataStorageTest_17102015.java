@@ -16,7 +16,7 @@ import org.junit.rules.ExpectedException;
 
 import dataStorage.DataStorage;
 import model.V1.DateInt;
-import model.V1.MagicStrings;
+import common.MagicStrings;
 //inspiration from Frank Appels's website
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.write;
