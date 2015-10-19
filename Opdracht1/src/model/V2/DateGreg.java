@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
  */
 public class DateGreg extends DateBase {
 	
-	// TODO difference in years/months/days
+	// TODO fix compareTo()?
 	
 	//////////////////////////////////////////////////////////////////////// PRIVATE VARIABLE INSTANCES /////////////////////////////////////////////////////////////////////////
 	private GregorianCalendar Greg;
@@ -218,7 +218,7 @@ public class DateGreg extends DateBase {
 	 * Calculates the difference in months between the current DateGreg object and the provided Date object.
 	 * 
 	 * @param d The date to which DateGreg needs to be compared to
-	 * @return An integer representing the number of years between both dates
+	 * @return An integer representing the number of months between both dates
 	 */
 	@Override
 	public int differenceInMonths(Date d) throws Exception {
@@ -236,23 +236,19 @@ public class DateGreg extends DateBase {
 		return ((this.differenceInYears(d)-1)*12) + Math.abs(12 - smallest.getMonth()) + (biggest.getMonth());
 	}
 	
-	// TODO
+	/**
+	 *  Calculates the difference in months between the current DateGreg object and the provided Date object.
+	 *  
+	 *  @param d The date to which DateGreg needs to be compared to
+	 *  @return An integer representing the number of days elapsed between both dates
+	 */
 	@Override
 	public int differenceInDays(Date d) throws Exception {
 		int days = 0;
 		DateGreg smallest;
 		DateGreg biggest;
 		
-		//
-		// DAYS PER YEAR
-		//
-		if (this.differenceInYears(d) > 2){
-		days += (this.differenceInYears(d)-1) * 365;
-		}
-		else{
-			days += this.differenceInYears(d) * 365;
-		}
-		
+		// Determine in which order dates should be placed in calculations
 		if (this.smallerThan(d)){
 			smallest = new DateGreg(this);
 			biggest = new DateGreg(d);
@@ -262,52 +258,58 @@ public class DateGreg extends DateBase {
 			biggest = new DateGreg(this);
 		}
 		
-		for (int sy = smallest.getYear(); sy <= biggest.getYear(); sy++){
-			if (this.Greg.isLeapYear(sy)){
-				days++;
+
+		// If there is a difference of more than 24 months between two dates, we can safely add the whole years inbetween to our day total
+		if (this.differenceInMonths(d) > 24){
+			days += (this.differenceInYears(d) - 1) * 365;
+			
+			//then add one extra day per leap year
+			for (int ly = smallest.getYear() + 1; ly < biggest.getYear(); ly++){
+				if (smallest.Greg.isLeapYear(ly)){
+					days++;
+				}
 			}
 		}
 		
-		//
-		// DAYS PER MONTH
-		//
-		//TODO
-		
-		days += (smallest.Greg.getActualMaximum(Calendar.DATE) - smallest.getDay());
-		DateGreg smallCalc = new DateGreg(1, smallest.getMonth(), smallest.getYear());
-		for (int sm = smallest.getMonth(); sm <= 11; sm++){
+		// If there's more than 12 months between two dates, it means new year falls somewhere between both; meaning we can calculate the difference between that fixed date between both,
+		// and add it to our day total.
+		if ((this.differenceInMonths(d) > 12)){
+			DateGreg smallCalc = new DateGreg(smallest);
+			for (int i = smallest.getMonth() +1 ; i <= 12; i++){
+				smallCalc.Greg.set(Calendar.MONTH, i);
+				days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
+			}
 
-			smallCalc.Greg.set(Calendar.MONTH, sm);
-			System.out.println("\nMonth test \nCalendar: " + smallCalc.Greg.get(Calendar.MONTH));
-			System.out.println("DateGreg " + smallCalc.getMonth() + "\n");
-			days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
+			DateGreg bigCalc = new DateGreg(biggest);
+			for (int i = 1; i < biggest.getMonth(); i++){
+				bigCalc.Greg.set(Calendar.MONTH, i);
+				days += bigCalc.Greg.getActualMaximum(Calendar.DATE);
+			}
 		}
 		
-		
-		DateGreg bigCalc = new DateGreg(1,1, biggest.getYear());
-		for (int bm = 0; bm < (biggest.getMonth() -1); bm++){
-			bigCalc.Greg.set(Calendar.MONTH, bm);
-			days += bigCalc.Greg.get(Calendar.DATE);
+		// If there's more than a month between both dates, we can count from the smaller date up until its month's end; and the start of the biggest date's month up until its day.
+		if ((this.differenceInMonths(d) > 1)){
+			if (this.differenceInMonths(d) < 12){
+				DateGreg monthCalc = new DateGreg(smallest);
+				for (int m = smallest.getMonth(); m < biggest.getMonth() -1; m++){
+					monthCalc.Greg.set(Calendar.MONTH, m+1);
+					days += monthCalc.Greg.getActualMaximum(Calendar.DATE);
+				}
+			}
+			days += (smallest.Greg.getActualMaximum(Calendar.DATE)) - smallest.getDay();
+			days += biggest.getDay();
 		}
-		days += biggest.getDay();
 		
-		/*
-		for (int sm = (smallest.getMonth() +1); sm < endOfSmallYear.getMonth(); sm++){
-			smallCalc.Greg.set(Calendar.MONTH, sm);
-			days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
+		// If there's strictly less than a month's difference between two days, we can just subtract them from one another
+		if (this.differenceInMonths(d) < 1){
+			if (smallest.getMonth() != biggest.getMonth()){
+				days += (smallest.Greg.getActualMaximum(Calendar.DATE)) - smallest.getDay();
+				days += biggest.getDay();
+			}
+			else{
+				days += biggest.getDay() - smallest.getDay();
+			}
 		}
-		
-		
-		days += biggest.Greg.getActualMaximum(Calendar.DATE);
-		DateGreg startOfBigYear = new DateGreg(1, 1, biggest.getYear());
-		DateGreg bigCalc = new DateGreg (1,1, biggest.getYear());
-		
-		for (int bm = 1; bm < biggest.getMonth(); bm++){
-			bigCalc.Greg.set(Calendar.MONTH, bm);
-			days += bigCalc.Greg.getActualMaximum(Calendar.DATE);
-		}
-		*/
-		
 		
 		return days;
 	}
