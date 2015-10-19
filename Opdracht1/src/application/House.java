@@ -34,8 +34,7 @@ public class House {
 		this.reservations = reservations;
 	}
 	
-<<<<<<< HEAD
-=======
+
 	public int getDisplayNumber() {
 		return (getRow() * 100) + getNumber();
 	}
@@ -74,7 +73,6 @@ public class House {
 			return false;
 		return true;
 	}
-	
->>>>>>> refs/remotes/Opdracht1_repository_vanTettekop/development
+
 	
 }
