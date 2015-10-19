@@ -10,12 +10,13 @@ import java.util.Scanner;
 import common.MagicStrings;
 import model.V1.DateInt;
 
+
 public class DataStorage implements DataStorageInterface {
 	
 	
 	private String fullList = new String();
 	private List<String> reservationList = new ArrayList<String>();
-	private File file = new File("bestanden\\reservaties.txt");
+	private File file = new File("bestanden\\werknemers.txt");
 	private DataStorage storage = new DataStorage();
 	private MagicStrings ms = new MagicStrings ();
 	
