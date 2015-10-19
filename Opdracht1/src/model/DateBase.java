@@ -56,6 +56,9 @@ public abstract class DateBase implements Date {
 		}
         
     }
+	
+	@Override
+	public abstract int hashCode();
 
 	public int compareTo(Date otherDate) throws Exception {
 		if (otherDate == null) throw new NullPointerException("otherDate is null");
@@ -64,5 +67,6 @@ public abstract class DateBase implements Date {
 		int otherDays = otherDate.totalDaysSinceJesus();
 		return Integer.compare(thisDays, otherDays);
 	}
+	
 	
 }

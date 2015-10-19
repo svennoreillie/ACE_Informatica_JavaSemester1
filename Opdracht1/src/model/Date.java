@@ -15,4 +15,7 @@ public interface Date {
 	public int totalDaysSinceJesus() throws Exception;
 	public Date changeDate(int aantalDagen) throws Exception;
 	public void alterDate(int aantalDagen) throws Exception;
+	
+	boolean equals(Object obj);
+	int hashCode();
 }
