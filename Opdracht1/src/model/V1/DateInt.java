@@ -5,6 +5,8 @@ import model.DateBase;
 import model.Months;
 import java.util.Calendar;
 
+import common.MagicStrings;
+
 
 public class DateInt extends DateBase {
 
@@ -243,6 +245,16 @@ public class DateInt extends DateBase {
 		
 		int day = totalDays;
 		return new DateInt(day, month, year);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + day;
+		result = prime * result + month;
+		result = prime * result + year;
+		return result;
 	}
 
 }

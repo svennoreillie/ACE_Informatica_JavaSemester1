@@ -6,21 +6,23 @@ import model.Date;
 
 public interface ReservationServiceInterface {
 
-	public List<House> getAllHouses();
-	public List<House> getAvailableHouses(Date startDate, int numberOfDays);
-	public List<Reservation> getReservationsForDate(Date date);
-	public Date getFirstAvailableDate();
-	public Date getFirstAvailableDate(House house);
-	public Date getFirstAvailableDate(int numberOfDays);
-	public Date getFirstAvailableDate(House house, int numberOfDays);
+	public List<House> getAllHouses() throws Throwable;
+	public List<House> getAvailableHouses(Date startDate, int numberOfDays) throws Throwable;
+	public List<Reservation> getReservationsForDate(Date date) throws Throwable;
+	
+	public List<Reservation> getReservationsForHouseOnDate(House house, Date date) throws Throwable;
+	
+	public Date getFirstAvailableDate() throws Throwable;
+	public Date getFirstAvailableDate(House house) throws Throwable;
+	public Date getFirstAvailableDate(House house, int numberOfDays) throws Throwable;
 	
 	
-	public Reservation getFirstReservationForPerson(Person person);
-	public Reservation getFirstReservationForPerson(String firstName, String lastName);
+	public Reservation getFirstReservationForPerson(Person person) throws Throwable;
+	public Reservation getFirstReservationForPerson(String firstName, String lastName) throws Throwable;
 	
-	public List<Reservation> getReservationsForPerson(Person person);
-	public List<Reservation> getReservationsForPerson(String firstName, String lastName);
+	public List<Reservation> getReservationsForPerson(Person person) throws Throwable;
+	public List<Reservation> getReservationsForPerson(String firstName, String lastName) throws Throwable;
 	
-	public void CreateReservation(Reservation reservation);
+	public void CreateReservation(Reservation reservation) throws Throwable;
 
 }

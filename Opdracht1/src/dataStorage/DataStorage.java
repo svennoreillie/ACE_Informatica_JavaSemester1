@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import common.MagicStrings;
 import model.V1.DateInt;
-import model.V1.MagicStrings;
+
 
 public class DataStorage implements DataStorageInterface {
 	

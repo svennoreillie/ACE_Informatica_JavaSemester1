@@ -8,12 +8,14 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import model.V1.DateInt;
+import common.MagicStrings;
 
 public class DateIntTest {
  
 	DateInt ctorDateIII;
 	Calendar sysDate;
 	DateInt ctorDate;
+	MagicStrings ms = new MagicStrings();
 	final int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
 	final int[] notLeapYears = new int [] {1900, 2001, 2002, 2003, 2005, 2006, 2007};
 	final int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
@@ -41,7 +43,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_zeroAsDay() throws Exception {
 		//arrange
-	    thrown.expectMessage("Day is not in a valid range");
+	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
 		ctorDate.setDate(0, 1, 2000);
 	}
@@ -49,7 +51,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_negativeAsDay() throws Exception {
 		//arrange
-	    thrown.expectMessage("Day is not in a valid range");
+	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
 		ctorDate.setDate(-1, 1, 2000);
 	}
@@ -73,7 +75,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_day29feb_notInLeapYear() throws Exception {
 		//arrange
-	    thrown.expectMessage("Day is not in a valid range");
+	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
 		for (int i = 0; i < notLeapYears.length; i ++){
 			ctorDate.setDate(29, 2, notLeapYears[i]);
@@ -83,7 +85,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_day30And31Feb() throws Exception {
 		//arrange
-	    thrown.expectMessage("Day is not in a valid range");
+	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
 		for (int i = 1999; i < 2006; i++){
 			for (int j = 30; j < 32; j++){
@@ -113,7 +115,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_day31InAllShortMonths() throws Exception {
 		//arrange
-	    thrown.expectMessage("Day is not in a valid range");
+	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
 		for(int i = 0; i< longMonths.length; i++){
 			ctorDate.setDate(31, longMonths[i], 2000);
@@ -124,7 +126,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_zeroAsMonth() throws Exception {
 		//arrange
-	    thrown.expectMessage("Month is not in a valid range");
+	    thrown.expectMessage(ms.getMonthRangeWrong());
 		//act
 		ctorDate.setDate(1, 0, 2000);
 	}
@@ -132,7 +134,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_negativeAsMonth() throws Exception {
 		//arrange
-	    thrown.expectMessage("Month is not in a valid range");
+	    thrown.expectMessage(ms.getMonthRangeWrong());
 		//act
 		ctorDate.setDate(1, -1, 2000);
 	}
@@ -147,7 +149,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_month13() throws Exception {
 		//arrange
-	    thrown.expectMessage("Month is not in a valid range");
+	    thrown.expectMessage(ms.getMonthRangeWrong());
 	    //act
 	    ctorDate.setDate(1, 13, 2000);
 	}
@@ -156,7 +158,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_zeroAsYear() throws Exception {
 		//arrange
-	    thrown.expectMessage("Year is not in a valid range");
+	    thrown.expectMessage(ms.getYearRangeWrong());
 		//act
 		ctorDate.setDate(1, 1, 0);
 	}
@@ -164,7 +166,7 @@ public class DateIntTest {
 	@Test
 	public void testSetDate_negativeAsYear() throws Exception {
 		//arrange
-	    thrown.expectMessage("Year is not in a valid range");
+	    thrown.expectMessage(ms.getYearRangeWrong());
 		//act
 		ctorDate.setDate(1, 1, -1);
 	}
@@ -341,7 +343,7 @@ public class DateIntTest {
 	@Test
 	public void testDateIntString_wrongSeperator() throws Exception {
 		//arrange
-	    thrown.expectMessage("Date does not contain the correct separator");
+	    thrown.expectMessage(ms.getDateSeperatorWrong());
 		//act
 		ctorDate = new DateInt ("01:01:2000");
 	}
@@ -349,7 +351,7 @@ public class DateIntTest {
 	@Test
 	public void testDateIntString_wrongLength() throws Exception {
 		//arrange
-	    thrown.expectMessage("Incorrect date length, you must supply date in following format DD/MM/YYYY");
+	    thrown.expectMessage(ms.getDateFormatWrong());
 	    //act
 	    ctorDate = new DateInt ("1:01:2000");
 	    ctorDate = new DateInt ("01:1:2000");  
