@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
  */
 public class DateGreg extends DateBase {
 	
-	// TODO difference in years/months/days
+	// TODO fix compareTo()?
 	
 	//////////////////////////////////////////////////////////////////////// PRIVATE VARIABLE INSTANCES /////////////////////////////////////////////////////////////////////////
 	private GregorianCalendar Greg;
@@ -202,69 +202,118 @@ public class DateGreg extends DateBase {
 	 * 
 	 * @param o The object to compare this DateGreg object to
 	 */
-	// TODO
+	
+	/**
+	 * Calculates the difference in years between the current DateGreg object and the provided Date object.
+	 * 
+	 * @param d The date to which DateGreg needs to be compared to
+	 * @return An unsigned integer representing the number of years between both dates
+	 */
 	@Override
 	public int differenceInYears(Date d) throws Exception {
-		return 0;
+		return Math.abs(this.getYear() - ((DateGreg) d).getYear());
 	}
 
-	// TODO
+	/**
+	 * Calculates the difference in months between the current DateGreg object and the provided Date object.
+	 * 
+	 * @param d The date to which DateGreg needs to be compared to
+	 * @return An integer representing the number of months between both dates
+	 */
 	@Override
 	public int differenceInMonths(Date d) throws Exception {
-		//DateGreg toCompare = new DateGreg(d);
-		// TODO differenceInMonths
+		DateGreg smallest;
+		DateGreg biggest;
 		
-		//int diff = (differenceInYears(d) * 12) + ();
-		
-		/*
-		if (this.Greg.get(Calendar.MONTH) > toCompare.Greg.get(Calendar.MONTH) ||
-				(this.Greg.get(Calendar.MONTH) == toCompare.Greg.get(Calendar.MONTH) && this.Greg.get(Calendar.DATE) > toCompare.Greg.get(Calendar.DATE))){
-			diff--;
+		if (this.smallerThan(d)){
+			smallest = new DateGreg(this);
+			biggest = new DateGreg(d);
 		}
-		*/
-		
-		//return diff;
-		
-		return 0;
+		else{
+			smallest = new DateGreg(d);
+			biggest = new DateGreg(this);
+		}
+		return ((this.differenceInYears(d)-1)*12) + Math.abs(12 - smallest.getMonth()) + (biggest.getMonth());
 	}
 	
-	// TODO
+	/**
+	 *  Calculates the difference in months between the current DateGreg object and the provided Date object.
+	 *  
+	 *  @param d The date to which DateGreg needs to be compared to
+	 *  @return An integer representing the number of days elapsed between both dates
+	 */
 	@Override
 	public int differenceInDays(Date d) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		int days = 0;
+		DateGreg smallest;
+		DateGreg biggest;
+		
+		// Determine in which order dates should be placed in calculations
+		if (this.smallerThan(d)){
+			smallest = new DateGreg(this);
+			biggest = new DateGreg(d);
+		}
+		else{
+			smallest = new DateGreg(d);
+			biggest = new DateGreg(this);
+		}
+		
+
+		// If there is a difference of more than 24 months between two dates, we can safely add the whole years inbetween to our day total
+		if (this.differenceInMonths(d) > 24){
+			days += (this.differenceInYears(d) - 1) * 365;
+			
+			//then add one extra day per leap year
+			for (int ly = smallest.getYear() + 1; ly < biggest.getYear(); ly++){
+				if (smallest.Greg.isLeapYear(ly)){
+					days++;
+				}
+			}
+		}
+		
+		// If there's more than 12 months between two dates, it means new year falls somewhere between both; meaning we can calculate the difference between that fixed date between both,
+		// and add it to our day total.
+		if ((this.differenceInMonths(d) > 12)){
+			DateGreg smallCalc = new DateGreg(smallest);
+			for (int i = smallest.getMonth() +1 ; i <= 12; i++){
+				smallCalc.Greg.set(Calendar.MONTH, i);
+				days += smallCalc.Greg.getActualMaximum(Calendar.DATE);
+			}
+
+			DateGreg bigCalc = new DateGreg(biggest);
+			for (int i = 1; i < biggest.getMonth(); i++){
+				bigCalc.Greg.set(Calendar.MONTH, i);
+				days += bigCalc.Greg.getActualMaximum(Calendar.DATE);
+			}
+		}
+		
+		// If there's more than a month between both dates, we can count from the smaller date up until its month's end; and the start of the biggest date's month up until its day.
+		if ((this.differenceInMonths(d) > 1)){
+			if (this.differenceInMonths(d) < 12){
+				DateGreg monthCalc = new DateGreg(smallest);
+				for (int m = smallest.getMonth(); m < biggest.getMonth() -1; m++){
+					monthCalc.Greg.set(Calendar.MONTH, m+1);
+					days += monthCalc.Greg.getActualMaximum(Calendar.DATE);
+				}
+			}
+			days += (smallest.Greg.getActualMaximum(Calendar.DATE)) - smallest.getDay();
+			days += biggest.getDay();
+		}
+		
+		// If there's strictly less than a month's difference between two days, we can just subtract them from one another
+		if (this.differenceInMonths(d) < 1){
+			if (smallest.getMonth() != biggest.getMonth()){
+				days += (smallest.Greg.getActualMaximum(Calendar.DATE)) - smallest.getDay();
+				days += biggest.getDay();
+			}
+			else{
+				days += biggest.getDay() - smallest.getDay();
+			}
+		}
+		
+		return days;
 	}
 
-	// TODO
-	@Override
-	public int totalDaysSinceJesus() throws Exception {
-		try {
-			int total = 0;
-			int daysInMonth = this.Greg.getActualMaximum(Calendar.MONTH);
-			total += ((this.getYear() - 1) * 365);
-			
-			//calculate leapDays
-			int numberOfLeapYears = this.getYear() / 4;
-			//subtract centuries (no leapyears)
-			int numberOfCenturies = this.getYear() / 100;
-			//subtract 400's (exception on the centuries leapyears)
-			int numberOf400s = this.getYear() / 400;
-			int totalLeapDays = numberOfLeapYears - numberOfCenturies + numberOf400s;
-			
-			total += totalLeapDays;
-			
-			for (int i = 1; i < this.getMonth(); i++) {
-				total += daysInMonth;
-			}
-			
-			total += this.getDay();
-			
-			return total;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
-	
 	/**
 	 * Returns this object's current date as a string; e.g. "24 July 2006".
 	 */
@@ -313,7 +362,6 @@ public class DateGreg extends DateBase {
 	 */
 	@Override
 	public Date changeDate(int numberOfDays) throws Exception{
-		// TODO Check if changeDate() method gives desired result
 		this.Greg.add(Calendar.DATE, numberOfDays);
 		return this;
 	}
@@ -338,5 +386,42 @@ public class DateGreg extends DateBase {
 		if (day > leapTest.getActualMaximum(Calendar.DATE)){
 			throw new Exception(String.format("The month of %1$tB %1$tY counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
 		}
+	}
+
+	@Override
+	public int totalDaysSinceJesus() throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((Greg == null) ? 0 : Greg.hashCode());
+		result = prime * result + ((magicString == null) ? 0 : magicString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DateGreg other = (DateGreg) obj;
+		if (Greg == null) {
+			if (other.Greg != null)
+				return false;
+		} else if (!Greg.equals(other.Greg))
+			return false;
+		if (magicString == null) {
+			if (other.magicString != null)
+				return false;
+		} else if (!magicString.equals(other.magicString))
+			return false;
+		return true;
 	}
 }
