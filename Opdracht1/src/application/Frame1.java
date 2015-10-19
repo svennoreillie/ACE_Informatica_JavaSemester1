@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,11 +11,8 @@ import com.toedter.calendar.JDateChooser;
 import java.util.List;
 
 
-import model.V1.DateInt;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 
 
 public class Frame1 {
@@ -26,7 +22,7 @@ public class Frame1 {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JDateChooser dp = new JDateChooser();
-	private JComboBox unitsAvailable = new JComboBox();
+	private JComboBox<String> unitsAvailable = new JComboBox<String>();
 
 	/**
 	 * Launch the application.
@@ -96,6 +92,9 @@ public class Frame1 {
 					// exception met delegate in ander scherm
 					e1.printStackTrace();
 				}
+				catch (Throwable ex) {
+					ex.printStackTrace();
+				}
 				
 				
 			}
@@ -107,7 +106,7 @@ public class Frame1 {
 		lblUnitsAvailable.setBounds(26, 92, 93, 14);
 		frame.getContentPane().add(lblUnitsAvailable);
 		
-		unitsAvailable = new JComboBox();
+		unitsAvailable = new JComboBox<String>();
 		unitsAvailable.setBounds(140, 89, 125, 20);
 		frame.getContentPane().add(unitsAvailable);
 		
