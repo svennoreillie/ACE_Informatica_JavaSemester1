@@ -27,4 +27,6 @@ public class House {
 	protected void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+	
+	
 }
