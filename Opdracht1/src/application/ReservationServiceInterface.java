@@ -17,12 +17,12 @@ public interface ReservationServiceInterface {
 	public Date getFirstAvailableDate(House house, int numberOfDays) throws Throwable;
 	
 	
-	public Reservation getFirstReservationForPerson(Person person);
-	public Reservation getFirstReservationForPerson(String firstName, String lastName);
+	public Reservation getFirstReservationForPerson(Person person) throws Throwable;
+	public Reservation getFirstReservationForPerson(String firstName, String lastName) throws Throwable;
 	
-	public List<Reservation> getReservationsForPerson(Person person);
-	public List<Reservation> getReservationsForPerson(String firstName, String lastName);
+	public List<Reservation> getReservationsForPerson(Person person) throws Throwable;
+	public List<Reservation> getReservationsForPerson(String firstName, String lastName) throws Throwable;
 	
-	public void CreateReservation(Reservation reservation);
+	public void CreateReservation(Reservation reservation) throws Throwable;
 
 }

@@ -2,9 +2,11 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
-import model.V1.MagicStrings;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import common.MagicStrings;
 
 /**
  * DateGreg is a subclass of Date, serving as a wrapper class for the GregorianCalendar class. The provided dates are to be manipulated using GregorianCalendar functions wherever possible.
