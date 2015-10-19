@@ -15,8 +15,8 @@ public class DataStorage implements DataStorageInterface {
 	
 	private String fullList = new String();
 	private List<String> reservationList = new ArrayList<String>();
-	private File file = new File("bestanden\\werknemers.txt");
-	private DataStorage storage = new DataStorage();
+	//private File file = new File("bestanden\\werknemers.txt");
+	//private DataStorage storage = new DataStorage();
 	private MagicStrings ms = new MagicStrings ();
 	
 	@Override
