@@ -5,6 +5,8 @@ import model.DateBase;
 import model.Months;
 import java.util.Calendar;
 
+import common.MagicStrings;
+
 
 public class DateInt extends DateBase {
 

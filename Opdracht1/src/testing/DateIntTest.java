@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import model.V1.DateInt;
-import model.V1.MagicStrings;
+import common.MagicStrings;
 
 public class DateIntTest {
  
