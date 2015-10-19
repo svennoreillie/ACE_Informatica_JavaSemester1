@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 public class DateGreg extends DateBase {
 	
 	// TODO Nice to have: use alterDate() in differenceInYear() for efficiency 
-	// TODO Nice to have: documentatie
+	// TODO Nice to have: documentation
 	
 	//////////////////////////////////////////////////////////////////////// PRIVATE VARIABLE INSTANCES /////////////////////////////////////////////////////////////////////////
 	private GregorianCalendar Greg;
@@ -163,6 +163,7 @@ public class DateGreg extends DateBase {
 		}
 	}
 
+	
 	/**
 	 * Returns the current date as a string in the YY/MM/DD format.
 	 */
@@ -364,8 +365,9 @@ public class DateGreg extends DateBase {
 	 */
 	@Override
 	public Date changeDate(int numberOfDays) throws Exception{
-		this.Greg.add(Calendar.DATE, numberOfDays);
-		return this;
+		DateGreg d = new DateGreg(this);
+		d.Greg.add(Calendar.DATE, numberOfDays);
+		return d;
 	}
 	
 	
@@ -392,7 +394,7 @@ public class DateGreg extends DateBase {
 
 	@Override
 	public int totalDaysSinceJesus() throws Exception {
-		// TODO Auto-generated method stub
+		// Not in use for DateGreg
 		return 0;
 	}
 
