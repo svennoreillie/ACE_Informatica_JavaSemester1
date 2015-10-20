@@ -72,6 +72,7 @@ public class DateIntTest {
 		}
 	}
 	
+	//try catch blok
 	@Test
 	public void testSetDate_day29feb_notInLeapYear() throws Exception {
 		//arrange
@@ -82,6 +83,7 @@ public class DateIntTest {
 		}   
 	}
 	
+	//try catch blok
 	@Test
 	public void testSetDate_day30And31Feb() throws Exception {
 		//arrange
