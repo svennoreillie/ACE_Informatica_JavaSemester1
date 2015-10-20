@@ -7,7 +7,7 @@ public class House {
 	private int row;
 	private List<Reservation> reservations;
 	
-	public House() {
+	public House(){
 		
 	}
 	
@@ -33,11 +33,7 @@ public class House {
 	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/SvenBranch/development
 	public int getDisplayNumber() {
 		return (getRow() * 100) + getNumber();
 	}
@@ -76,9 +72,4 @@ public class House {
 			return false;
 		return true;
 	}
-
-<<<<<<< HEAD
-	
-=======
->>>>>>> refs/remotes/SvenBranch/development
 }
