@@ -310,7 +310,6 @@ public class DateGreg extends DateBase {
 				days += biggest.getDay() - smallest.getDay();
 			}
 		}
-		
 		return days;
 	}
 
@@ -338,11 +337,11 @@ public class DateGreg extends DateBase {
 	}
 
 	/**
-	 * Compares the current date object to the provided Date, 
+	 * Compares the current date object to the provided Date, using the compareTo() method from the Calendar class. 
 	 * 
-	 * @param o The object to compare this DateGreg object to
+	 * @param otherDate The object to compare this DateGreg object to
+	 * @see {@link #compareTo(Calendar anotherCalendar) compareTo}
 	 */
-	//TODO
 	@Override
 	public int compareTo(Date otherDate) throws Exception {
 		DateGreg toCompare = new DateGreg(otherDate);
