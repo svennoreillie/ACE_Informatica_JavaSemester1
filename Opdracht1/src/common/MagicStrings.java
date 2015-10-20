@@ -1,4 +1,4 @@
-package model.V1;
+package common;
 
 public final class MagicStrings {
 	
@@ -11,6 +11,13 @@ public final class MagicStrings {
 	public final String dayRangeWrong = "Day is not in a valid range";
 	public final String dateZero = "Date can't go below 01/01/0001";
 	public final String fileNotfound = "File not found!";
+	
+	public static final String reservationNotFound = "Reservation not found!";
+	public static final String houseNotFound = "House not found!";
+	public static final String personNotFound = "Person not found!";
+	public static final String reservationDateError = "The provided date is not correct";
+	public static final String reservationAvailabilityError = "The provided date is no longer available";
+
 	
 	// constructor
 	public MagicStrings() {
