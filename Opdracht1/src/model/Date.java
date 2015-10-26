@@ -18,4 +18,5 @@ public interface Date {
 	
 	boolean equals(Object obj);
 	int hashCode();
+
 }
