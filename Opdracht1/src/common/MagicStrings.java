@@ -17,6 +17,8 @@ public final class MagicStrings {
 	public static final String personNotFound = "Person not found!";
 	public static final String reservationDateError = "The provided date is not correct";
 	public static final String reservationAvailabilityError = "The provided date is no longer available";
+	public static final String datesEqualError = "Dates are equal, a returnDate can not be created";
+	
 
 	
 	// constructor
