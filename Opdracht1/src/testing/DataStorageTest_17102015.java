@@ -5,12 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Rule;
-//import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import dataStorage.DataStorage;
@@ -24,14 +20,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class DataStorageTest_17102015 implements SessionStorage{
+	@SuppressWarnings("unused")
+	private String fullList = new String();
+	@SuppressWarnings("unused")
 	private File ctorFileI;
+	
+	
 	private DataStorage ds;
 	private File storageLocation;
-		
-	private final String s = new String();
-	private String fullList = new String();
 	private final String reservation = new String();
-	private final List<String> reservationList = new ArrayList<String>();
 	private final DataStorage storage = new DataStorage();
 	
 	@Rule
@@ -40,8 +37,8 @@ public class DataStorageTest_17102015 implements SessionStorage{
 	@Before
 	public void setUp() throws Exception{
 		//voorbeeld ctorDateIII = new DateInt (1,1,2000);
-		ctorFileI = new File ("bestanden\\werknemers.txt");	
-		ds = new DataStorage();
+		this.ctorFileI = new File ("bestanden\\werknemers.txt");	
+		this.ds = new DataStorage();
 		//String s = new String("res");
 	}
 	//hieronder code van JUnit testing boek aan te passen naar deze klasse
@@ -130,9 +127,9 @@ public class DataStorageTest_17102015 implements SessionStorage{
 	@Test
 	public void testAddReservationReservationNotSameAsFullList() throws Throwable {
 		//String s = "res";
-		fullList = storage.getData();
-		fullList += ";";
-		fullList += reservation;
+		this.fullList = storage.getData();
+		this.fullList += ";";
+		this.fullList += reservation;
 		assertEquals("fullList","s");
 	}
 	@Test

@@ -20,6 +20,7 @@ public class ReservationService implements ReservationServiceInterface {
 
 	private ReservationStorage storage = new ReservationStorage();
 	private List<House> everyHouse = new ArrayList<House>();
+	@SuppressWarnings("unused")
 	private Boolean refresh = false;
 	
 	public ReservationService() throws Throwable {
@@ -230,7 +231,7 @@ public class ReservationService implements ReservationServiceInterface {
 	//HELPERS
 	private void insertReservation(Reservation reservation) {
 		storage.addReservation(reservation);
-		refresh = true;
+		this.refresh = true;
 	}
 	
 	private HashMap<Date, List<Reservation>> createReservationMap() throws Throwable {
@@ -267,24 +268,6 @@ public class ReservationService implements ReservationServiceInterface {
 			
 			reservationList.add(reservation);
 			map.put(person, reservationList);
-
-		}
-		return map;
-	}
-	
-	private HashMap<House, List<Reservation>> createHouseMap() throws Throwable {
-		HashMap<House, List<Reservation>> map = new HashMap<House, List<Reservation>>();
-		List<Reservation> reservations = storage.getReservations();
-		for (Reservation reservation : reservations) {
-			
-			House house = reservation.getHouse();
-			List<Reservation> reservationList = map.get(house);
-			if (reservationList == null) {
-				reservationList = new ArrayList<Reservation>();
-			}
-			
-			reservationList.add(reservation);
-			map.put(house, reservationList);
 
 		}
 		return map;
