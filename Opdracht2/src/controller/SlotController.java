@@ -68,11 +68,18 @@ public class SlotController {
 			 		logTekst = "Poging "+aantalPogingen+" "+slot.getSlotCombinatie()+" FOUTE CODE!";
 			 		boolean isGeheimGevonden = slot.isGeheimGevonden();			 		 
 					 if (isGeheimGevonden){
-						 //TODO
+						 bedieningsPanel.openKluis();
+						 slotStatus = SlotStatus.OPEN;
+						 bedieningsPanel.setTekstForControleButton("SLUIT KLUIS");
+						 bedieningsPanel.setSlotButtonsActief(false);
+						 logTekst = "Kluis open bij poging " + aantalPogingen;
 					 }
 					 else{
 						 if (aantalPogingen == MAX_AANTAL_POGINGEN){
-							 //TODO
+							 slotStatus = SlotStatus.BLOCKED;
+							 bedieningsPanel.setTekstForControleButton("DEBLOKKEER KLUIS");
+							 bedieningsPanel.setSlotButtonsActief(false);
+							 logTekst = "Kluis geblokkeerd na poging " + aantalPogingen;
 						 }
 					 }					 
 					 break;
