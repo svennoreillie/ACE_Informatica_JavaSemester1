@@ -9,7 +9,7 @@ public class DateFactory {
 	private static DateType _type = DateType.DateInt;
 	
 	public static void setType(DateType type) {
-		type = type;
+		_type = type;
 	}
 	
 	public static Date generateDate() throws Exception {

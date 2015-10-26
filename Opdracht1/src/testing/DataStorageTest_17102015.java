@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -15,7 +14,6 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 import dataStorage.DataStorage;
-import model.V1.DateInt;
 import common.MagicStrings;
 //inspiration from Frank Appels's website
 import static java.nio.charset.StandardCharsets.UTF_8;
