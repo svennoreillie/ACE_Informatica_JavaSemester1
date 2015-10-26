@@ -114,11 +114,11 @@ public class DateInt extends DateBase {
 			total += ((this.year - 1) * 365);
 			
 			//calculate leapDays
-			int numberOfLeapYears = this.year / 4;
+			int numberOfLeapYears = (this.year - 1) / 4;
 			//subtract centuries (no leapyears)
-			int numberOfCenturies = this.year / 100;
+			int numberOfCenturies = (this.year - 1) / 100;
 			//subtract 400's (exception on the centuries leapyears)
-			int numberOf400s = this.year / 400;
+			int numberOf400s = (this.year - 1) / 400;
 			int totalLeapDays = numberOfLeapYears - numberOfCenturies + numberOf400s;
 			
 			total += totalLeapDays;
@@ -142,21 +142,31 @@ public class DateInt extends DateBase {
 
 	@Override
 	public int differenceInYears(Date d) throws Exception {
-		DateInt date = differenceDate(d);
-		
-		return (date.year - 1); 
+		try {
+			DateInt date = differenceDate(d);
+			
+			return (date.year - 1);
+		} catch (Exception e) {
+			if (e.getMessage() == MagicStrings.datesEqualError) return 0;
+			throw e;
+		} 
 	}
 
 	@Override
 	public int differenceInMonths(Date d) throws Exception {
-		DateInt date = differenceDate(d);
-		
-		return ((date.year - 1) * 12) + date.month;
+		try {
+			DateInt date = differenceDate(d);
+			
+			return ((date.year - 1) * 12) + date.month;
+		} catch (Exception e) {
+			if (e.getMessage() == MagicStrings.datesEqualError) return 0;
+			throw e;
+		}
 	}
 
 	@Override
 	public int differenceInDays(Date d) throws Exception {
-		return d.totalDaysSinceJesus() - this.totalDaysSinceJesus();
+		return Math.abs(d.totalDaysSinceJesus() - this.totalDaysSinceJesus());
 	}
 
 	@Override
@@ -186,19 +196,25 @@ public class DateInt extends DateBase {
 	
 	//Region helpers
 	private int getNumberOfDays(int month, int year) throws Exception {
+		return getNumberOfDays(month, year, false);
+	}
+	
+	private int getNumberOfDays(int month, int year, Boolean skipCalcLeapYears) throws Exception {
 		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
 		if (month == 2 && year < 1) throw new Exception(magicString.getYearRangeWrong());
 		
 		int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
 		
-		if (month == 2) {
-			//February => search for leap years
-			if (isLeapYear(year)) {
-				return 29;
+		if (!skipCalcLeapYears) {
+			if (month == 2) {
+				//February => search for leap years
+				if (isLeapYear(year)) {
+					return 29;
+				} 
+				
+				return 28;
 			} 
-			
-			return 28;
-		} 
+		}
 		
 		for (int i : longMonths) {
 			if (i == month) return 31;
@@ -214,10 +230,12 @@ public class DateInt extends DateBase {
 	}
 
 	private boolean isLeapYear(int year) {
-		if ((year % 400) != 0) return true;
-		if ((year % 100) != 0) return false;
-		if ((year % 4) != 0) return false;	
-		
+		Boolean deelbaarDoor4 = (year % 4) == 0;
+		Boolean deelbaarDoor100 = (year % 100) == 0;
+		Boolean deelbaarDoor400 = (year % 400) == 0;
+		if (!deelbaarDoor4) return false;
+		if (deelbaarDoor400) return true;
+		if (deelbaarDoor100) return false;
 		return true;
 	}
 	
@@ -225,20 +243,21 @@ public class DateInt extends DateBase {
 		int totalDays = this.totalDaysSinceJesus();
 		int otherTotalDays = d.totalDaysSinceJesus();
 		
-		int difference = otherTotalDays - totalDays;
+		int difference = Math.abs(otherTotalDays - totalDays);
+		if (difference == 0) throw new Exception(MagicStrings.datesEqualError);
 		DateInt date = this.createDate(difference);
 		return date;
 	}
 	
 	private DateInt createDate(int totalDays) throws Exception {
 		int year = 1;
-		while (totalDays >= getNumberOfDays(year)) {
+		while (totalDays > getNumberOfDays(year)) {
 			totalDays -= getNumberOfDays(year);
 			year++;
 		}
 		
 		int month = 1;
-		while (totalDays >= getNumberOfDays(month, year)) {
+		while (totalDays > getNumberOfDays(month, year)) {
 			totalDays -= getNumberOfDays(month, year);
 			month++;
 		}

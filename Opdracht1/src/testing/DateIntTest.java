@@ -7,6 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import model.Date;
+import model.DateBase;
 import model.V1.DateInt;
 import common.MagicStrings;
 
@@ -19,6 +21,7 @@ public class DateIntTest {
 	final int[] leapYears = new int [] {2000, 2004, 2008, 2012, 2016, 2020, 2400};
 	final int[] notLeapYears = new int [] {1900, 2001, 2002, 2003, 2005, 2006, 2007};
 	final int[] longMonths = new int[] { 1, 3, 5, 7, 8, 10, 12 };
+	final int[] shortMonths = new int[] { 2, 4, 6, 9, 11 };
 	final String euString = new String ("01/01/2000");
 	final String usString = new String ("2000/01/01");
 
@@ -119,8 +122,8 @@ public class DateIntTest {
 		//arrange
 	    thrown.expectMessage(ms.getDayRangeWrong());
 		//act
-		for(int i = 0; i< longMonths.length; i++){
-			ctorDate.setDate(31, longMonths[i], 2000);
+		for(int i = 0; i< shortMonths.length; i++){
+			ctorDate.setDate(31, shortMonths[i], 2000);
 		}
 	}
 	
@@ -224,7 +227,7 @@ public class DateIntTest {
 	
 	@Test
 	public void testDifferenceInMonthsSameMonth() throws Exception {
-		assertEquals(1,ctorDateIII.differenceInMonths(ctorDateIII));
+		assertEquals(0,ctorDateIII.differenceInMonths(ctorDateIII));
 	}
 
 	@Test
@@ -245,40 +248,61 @@ public class DateIntTest {
 		assertEquals(ctorDate,ctorDateIII);
 		assertEquals(ctorDateIII,ctorDate);
 	}
+	
+	@Test
+	public void testTotalDaysSinceJesusNumbered() throws Exception {
+		Date d1 = new DateInt(5, 2, 1);
+		assertEquals(36,d1.totalDaysSinceJesus());
+		Date d2 = new DateInt(5, 2, 2);
+		assertEquals(401,d2.totalDaysSinceJesus());
+		Date d3 = new DateInt(25, 4, 5);
+		assertEquals(1576,d3.totalDaysSinceJesus());
+		Date d4 = new DateInt(25, 2, 5);
+		assertEquals(1517,d4.totalDaysSinceJesus());
+		Date d5 = new DateInt(25, 4, 1999);
+		assertEquals(729869,d5.totalDaysSinceJesus());
+		Date d6 = new DateInt(25, 2, 1999);
+		assertEquals(729810,d6.totalDaysSinceJesus());
+	}
+
 
 	@Test
 	public void testChangeDateOneDay() throws Exception {
-		ctorDateIII.changeDate(1);
-		assertEquals(2,ctorDateIII.getDay());
+		DateBase date = (DateBase)ctorDateIII.changeDate(1);
+		assertEquals(2,date.getDay());
 	}
 	
 	@Test
 	public void testChangeDateMinusOneDay() throws Exception {
-		ctorDateIII.changeDate(-1);
-		assertEquals(31,ctorDateIII.getDay());
-		assertEquals(12,ctorDateIII.getMonth());
-		assertEquals(1999,ctorDateIII.getYear());
+		DateBase date = (DateBase)ctorDateIII.changeDate(-1);
+		assertEquals(31,date.getDay());
+		assertEquals(12,date.getMonth());
+		assertEquals(1999,date.getYear());
 	}
 	
 	@Test
 	public void testChangeDateZeroDay() throws Exception {
-		ctorDateIII.changeDate(0);
-		assertEquals(1,ctorDateIII.getDay());
+		DateBase date = (DateBase)ctorDateIII.changeDate(0);
+		assertEquals(1,date.getDay());
 	}
 	
 	@Test
 	public void testChangeDateOverLeapYear() throws Exception {
-		ctorDateIII.changeDate(61);
-		assertEquals(1,ctorDateIII.getDay());
-		assertEquals(3,ctorDateIII.getMonth());
+		DateBase date = (DateBase)ctorDateIII.changeDate(61);
+		assertEquals(2,date.getDay());
+		assertEquals(3,date.getMonth());
 	}
 
 	@Test
 	public void testChangeDateNotOverLeapYear() throws Exception {
-		ctorDateIII.changeDate(425);
-		assertEquals(1,ctorDateIII.getDay());
-		assertEquals(3,ctorDateIII.getMonth());
-		assertEquals(2001,ctorDateIII.getYear());
+		DateBase date = (DateBase)ctorDateIII.changeDate(426);
+		assertEquals(2,date.getDay());
+		assertEquals(3,date.getMonth());
+		assertEquals(2001,date.getYear());
+		DateBase date2 = (DateBase)date.changeDate(365);
+		assertEquals(2,date2.getDay());
+		assertEquals(3,date2.getMonth());
+		assertEquals(2002,date2.getYear());
 	}
 	
 	@Test
@@ -296,6 +320,15 @@ public class DateIntTest {
 	}
 	
 	@Test
+	public void testAlterDateMinusOneDay2() throws Exception {
+		DateInt date = new DateInt(31,12,1999);
+		date.alterDate(-1);
+		assertEquals(30,date.getDay());
+		assertEquals(12,date.getMonth());
+		assertEquals(1999,date.getYear());
+	}
+	
+	@Test
 	public void testAlterDateZeroDay() throws Exception {
 		ctorDateIII.alterDate(0);
 		assertEquals(1,ctorDateIII.getDay());
@@ -304,22 +337,26 @@ public class DateIntTest {
 	@Test
 	public void testAlterDateOverLeapYear() throws Exception {
 		ctorDateIII.alterDate(61);
-		assertEquals(1,ctorDateIII.getDay());
+		assertEquals(2,ctorDateIII.getDay());
 		assertEquals(3,ctorDateIII.getMonth());
 	}
 
 	@Test
 	public void testToStringNotOverLeapYear() throws Exception {
-		ctorDateIII.alterDate(425);
-		assertEquals(1,ctorDateIII.getDay());
+		ctorDateIII.alterDate(426);
+		assertEquals(2,ctorDateIII.getDay());
 		assertEquals(3,ctorDateIII.getMonth());
 		assertEquals(2001,ctorDateIII.getYear());
+		ctorDateIII.alterDate(365);
+		assertEquals(2,ctorDateIII.getDay());
+		assertEquals(3,ctorDateIII.getMonth());
+		assertEquals(2002,ctorDateIII.getYear());
 	}
 
 	@Test
 	public void testDateInt() {
 		assertEquals(sysDate.get(Calendar.DATE),ctorDate.getDay());
-		assertEquals(sysDate.get(Calendar.MONTH),ctorDate.getMonth());
+		assertEquals(sysDate.get(Calendar.MONTH) + 1,ctorDate.getMonth());
 		assertEquals(sysDate.get(Calendar.YEAR),ctorDate.getYear());
 	}
 
@@ -353,7 +390,7 @@ public class DateIntTest {
 	@Test
 	public void testDateIntString_wrongLength() throws Exception {
 		//arrange
-	    thrown.expectMessage(ms.getDateFormatWrong());
+	    thrown.expectMessage(ms.getDateLengthWrong());
 	    //act
 	    ctorDate = new DateInt ("1:01:2000");
 	    ctorDate = new DateInt ("01:1:2000");  
