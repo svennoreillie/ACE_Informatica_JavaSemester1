@@ -384,12 +384,12 @@ public class DateGreg extends DateBase {
 	public void checkDate(int day, int month, int year) throws Exception{
 		if (day < 1 || day > 31) throw new Exception(magicString.getDayRangeWrong());
 		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
-		if (year < 1) throw new Exception(magicString.getDateZero());
-		if (year > 9999) throw new Exception(magicString.getYearRangeWrong());
+		if (year < 1) throw new Exception(magicString.yearRangeWrong);
+		if (year > 9999) throw new Exception(magicString.yearRangeWrong);
 		
 		GregorianCalendar leapTest = new GregorianCalendar(year, (month-1), 1);
 		if (day > leapTest.getActualMaximum(Calendar.DATE)){
-			throw new Exception(String.format("The month of %1$tB %1$tY counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
+			throw new Exception(magicString.dayRangeWrong);
 		}
 	}
 
