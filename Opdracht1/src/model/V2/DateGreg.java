@@ -171,7 +171,7 @@ public class DateGreg extends DateBase {
 	 */
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%1$tY/%1$tm/%1$te", this.Greg);
+		return String.format("%1$tY/%1$tm/%1$td", this.Greg);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class DateGreg extends DateBase {
 	@Override
 	public String getFormatEuropean() {
 
-		return String.format("%1$te/%1$tm/%1$tY", this.Greg);
+		return String.format("%1$td/%1$tm/%1$tY", this.Greg);
 	}
 
 	/**
