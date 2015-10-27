@@ -2,21 +2,35 @@ package testing;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
+
+import application.House;
+import application.ReservationService;
 
 public class ReservationServiceTest {
 
 	@Test
-	public void testReservationService() {
-		fail("Not yet implemented");
+	public void testReservationService() throws Throwable {
+		
+		ReservationService rS;
+		rS = new ReservationService();
+		assertNotEquals(null, rS);
+	
 	}
 
 	@Test
-	public void testGetAllHouses() {
-		fail("Not yet implemented");
+	public void testGetAllHouses() throws Throwable {
+		ReservationService rS = null;
+		rS=new ReservationService();
+		List<House> houseList = new ArrayList<>();
+		houseList = rS.getAllHouses();
+		assertEquals(107,houseList.size());
 	}
 
-	@Test
+	/*@Test
 	public void testGetAvailableHouses() {
 		fail("Not yet implemented");
 	}
@@ -69,6 +83,6 @@ public class ReservationServiceTest {
 	@Test
 	public void testCreateReservation() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }
