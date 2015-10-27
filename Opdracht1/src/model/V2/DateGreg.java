@@ -2,18 +2,19 @@ package model.V2;
 
 import model.Date;
 import model.DateBase;
+import common.MagicStrings;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import common.MagicStrings;
 
 /**
  * DateGreg is a subclass of Date, serving as a wrapper class for the GregorianCalendar class. The provided dates are to be manipulated using GregorianCalendar functions wherever possible.
  */
 public class DateGreg extends DateBase {
 	
-	// TODO fix compareTo()?
+	// TODO Nice to have: use alterDate() in differenceInYear() for efficiency 
+	// TODO Nice to have: documentation
 	
 	//////////////////////////////////////////////////////////////////////// PRIVATE VARIABLE INSTANCES /////////////////////////////////////////////////////////////////////////
 	private GregorianCalendar Greg;
@@ -164,12 +165,13 @@ public class DateGreg extends DateBase {
 		}
 	}
 
+	
 	/**
 	 * Returns the current date as a string in the YY/MM/DD format.
 	 */
 	@Override
 	public String getFormatAmerican() {
-		return String.format("%1$tY/%1$tm/%1$te", this.Greg);
+		return String.format("%1$tY/%1$tm/%1$td", this.Greg);
 	}
 
 	/**
@@ -178,13 +180,14 @@ public class DateGreg extends DateBase {
 	@Override
 	public String getFormatEuropean() {
 
-		return String.format("%1$te/%1$tm/%1$tY", this.Greg);
+		return String.format("%1$td/%1$tm/%1$tY", this.Greg);
 	}
 
 	/**
 	 * Compares the current date object to the provided Date parameter. If the Date precedes DateGreg, this method returns a true statement.
 	 * 
 	 * @param d The date to compare this DateGreg object to
+	 * @return boolean
 	 * @throws Exception
 	 */
 	@Override
@@ -199,12 +202,7 @@ public class DateGreg extends DateBase {
 		//Opmerking: als je 2 identieke datums ingeeft, krijg je FALSE als resultaat (null-velden worden ingevuld met het huidige systeemtijd?)
 	}
 	
-	/**
-	 * Compares the current date object to the provided Object. If both are equal, this method returns a true statement.
-	 * 
-	 * @param o The object to compare this DateGreg object to
-	 */
-	
+
 	/**
 	 * Calculates the difference in years between the current DateGreg object and the provided Date object.
 	 * 
@@ -312,7 +310,6 @@ public class DateGreg extends DateBase {
 				days += biggest.getDay() - smallest.getDay();
 			}
 		}
-		
 		return days;
 	}
 
@@ -339,7 +336,12 @@ public class DateGreg extends DateBase {
 		// Geeft maand terug volgens systeemtaal 	
 	}
 
-	// TODO
+	/**
+	 * Compares the current date object to the provided Date, using the compareTo() method from the Calendar class. 
+	 * 
+	 * @param otherDate The object to compare this DateGreg object to
+	 * @see {@link #compareTo(Calendar anotherCalendar) compareTo}
+	 */
 	@Override
 	public int compareTo(Date otherDate) throws Exception {
 		DateGreg toCompare = new DateGreg(otherDate);
@@ -364,8 +366,9 @@ public class DateGreg extends DateBase {
 	 */
 	@Override
 	public Date changeDate(int numberOfDays) throws Exception{
-		this.Greg.add(Calendar.DATE, numberOfDays);
-		return this;
+		DateGreg d = new DateGreg(this);
+		d.Greg.add(Calendar.DATE, numberOfDays);
+		return d;
 	}
 	
 	
@@ -381,18 +384,18 @@ public class DateGreg extends DateBase {
 	public void checkDate(int day, int month, int year) throws Exception{
 		if (day < 1 || day > 31) throw new Exception(magicString.getDayRangeWrong());
 		if (month < 1 || month > 12) throw new Exception(magicString.getMonthRangeWrong());
-		if (year < 1) throw new Exception(magicString.getDateZero());
-		if (year > 9999) throw new Exception(magicString.getYearRangeWrong());
+		if (year < 1) throw new Exception(magicString.yearRangeWrong);
+		if (year > 9999) throw new Exception(magicString.yearRangeWrong);
 		
 		GregorianCalendar leapTest = new GregorianCalendar(year, (month-1), 1);
 		if (day > leapTest.getActualMaximum(Calendar.DATE)){
-			throw new Exception(String.format("The month of %1$tB %1$tY counts " + leapTest.getActualMaximum(Calendar.DATE) + " days.", leapTest));
+			throw new Exception(magicString.dayRangeWrong);
 		}
 	}
 
 	@Override
 	public int totalDaysSinceJesus() throws Exception {
-		// TODO Auto-generated method stub
+		// Not in use for DateGreg
 		return 0;
 	}
 

@@ -3,6 +3,8 @@ package model.V1;
 import model.Date;
 import model.DateBase;
 import model.Months;
+
+
 import java.util.Calendar;
 
 import common.MagicStrings;
@@ -20,20 +22,46 @@ public class DateInt extends DateBase {
 	
 	
 	//Region constructors
+	
+	/**
+	 * Instantiates an new DateInt object using the current system time.
+	 * 
+	 * @throws Exception
+	 */
 	public DateInt() throws Exception {
 		//This is the standard constructor, nothing needs to happen here because privates have defaults of 1
 		Calendar currentDate = Calendar.getInstance();
 		this.setDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH)+1, currentDate.get(Calendar.YEAR));
 	}
 	
+	/**
+	 * Instantiates a new DateInt object using the provided integers as parameters.
+	 * 
+	 * @param day Defines day of the month.
+	 * @param month Defines the month.
+	 * @param year Defines the year.
+	 * @throws Exception
+	 */
 	public DateInt(int day, int month, int year) throws Exception {
 		this.setDate(day, month, year);
 	}
 	
+	/**
+	 * Instantiates a new DateInt object by using an existing Date object.
+	 * 
+	 * @param date The Date object to base the new DateInt off of.
+	 * @throws Exception Throws an exception if the provided Date cannot produce a correct string from the getFormatEuropean() method. This should not be possible, since the date's already been checked and set.
+	 **/
 	public DateInt(Date date) throws Exception {
 		this(date.getFormatEuropean());
 	}
 	
+	/**
+	 * Instantiates a new DateInt object by using a string in the "DD/MM/YY" format.
+	 * 
+	 * @param date A string defining the date, in "DD/MM/YY" format.
+	 * @throws Exception Should the provided string contain formatting errors, an error message is pulled from the MagicString class.
+	 */
 	public DateInt(String date) throws Exception {
 		if (date == null) throw new Exception(magicString.getDateNull());
 		if (date.length() != 10) throw new Exception(magicString.getDateLengthWrong());
@@ -54,14 +82,32 @@ public class DateInt extends DateBase {
 	
 	//Region properties
 	//No getDateInt available so I changed these to public PVE
+	/**
+	 * Provides public access to the current object's day field.
+	 * 
+	 * @return An integer representing this object's day
+	 * @throws Exception
+	 */
 	public int getDay() {
 		return day;
 	}
 
+	/**
+	 * Provides public access to the current object's month field.
+	 * 
+	 * @return An integer representing this object's month
+	 * @throws Exception
+	 */
 	public int getMonth() {
 		return month;
 	}
 
+	/**
+	 * Provides public access to the current object's year field.
+	 * 
+	 * @return An integer representing this object's year
+	 * @throws Exception
+	 */
 	public int getYear() {
 		return year;
 	}
@@ -70,6 +116,15 @@ public class DateInt extends DateBase {
 	
 	
 	//Region public methods from Date interface
+	/**
+	 * Changes the current object's date fields.
+	 * 
+	 *  @param day The new date's day of the month
+	 *  @param month The new date's month
+	 *  @param year The new date's year
+	 *  @throws Exception
+	 *  @see checkDate
+	 */
 	@Override
 	public boolean setDate(int day, int month, int year) throws Exception {
 		if (year < 1) throw new Exception(magicString.getYearRangeWrong());
@@ -82,6 +137,7 @@ public class DateInt extends DateBase {
 		
 		return true;
 	}
+	
 	/**
 	 * Converts a date to American format
 	 * 
@@ -135,11 +191,24 @@ public class DateInt extends DateBase {
 		}
 	}
 
+	/**
+	 * Compares the current date object to the provided Date parameter. If the Date precedes DateGreg, this method returns a true statement.
+	 * 
+	 * @param d The date to compare this DateGreg object to
+	 * @return boolean
+	 * @throws Exception
+	 */
 	@Override
 	public boolean smallerThan(Date d) throws Exception {
 		return this.totalDaysSinceJesus() < d.totalDaysSinceJesus();
 	}
 
+	/**
+	 * Calculates the difference in years between the current DateInt object and the provided Date object.
+	 * 
+	 * @param d The date to which DateGreg needs to be compared to
+	 * @return An unsigned integer representing the number of years between both dates
+	 */
 	@Override
 	public int differenceInYears(Date d) throws Exception {
 		try {
