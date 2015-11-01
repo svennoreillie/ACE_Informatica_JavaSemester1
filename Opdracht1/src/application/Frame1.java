@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,10 +16,12 @@ import com.toedter.calendar.JDateChooser;
 import model.DateFactory;
 
 import java.util.List;
+import java.util.Calendar;
 import java.util.Date;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 
 public class Frame1 extends JFrame {
 
@@ -97,6 +100,13 @@ public class Frame1 extends JFrame {
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
 					for (House h : houselist) {
 						unitsAvailable.addItem(h.toString());
+						}
+					
+					if(houselist.size() < 1){
+						JOptionPane.showMessageDialog(null, "No bungalows available.");
+					}
+					else{
+						unitsAvailable.setEnabled(true);
 					}
 				}
 
@@ -118,6 +128,7 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblUnitsAvailable);
 
 		unitsAvailable = new JComboBox<String>();
+		unitsAvailable.setEnabled(false);
 		unitsAvailable.setBounds(140, 89, 125, 20);
 		frame.getContentPane().add(unitsAvailable);
 
@@ -126,6 +137,7 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblLastNa);
 
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(140, 134, 142, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -135,11 +147,13 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblNewLabel);
 
 		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(140, 169, 142, 20);
 		frame.getContentPane().add(textField_1);
 
 		JButton btnNewButton_1 = new JButton("Register");
+		btnNewButton_1.setEnabled(false);
 		btnNewButton_1.setBounds(297, 209, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 
@@ -149,7 +163,12 @@ public class Frame1 extends JFrame {
 		textField_2.setColumns(10);
 
 		dp = new JDateChooser();
+		dp.setDateFormatString("dd/MM/yyyy");
 		dp.setBounds(140, 21, 125, 23);
 		frame.getContentPane().add(dp);
+		Date sysTime = new Date();
+		dp.setDate(sysTime);
+		
+		
 	}
 }
