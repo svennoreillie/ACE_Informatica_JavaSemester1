@@ -1,0 +1,30 @@
+185,2/12/2015,7>Van Damme,Lennert
+287,10/9/2015,14>janssens,Lennert
+321,5/12/2015,7>Theins,Dominique
+185,11/12/2015,9>Grootjans,Sigi
+140,17/12/2015,14>Bartholome,tine
+435,30/1/2016,3>Roesems,valerie
+546,20/5/2016,5>Vermeiren,valerie
+187,3/10/2016,8>Segers,Greet
+231,20/3/2016,4>Van Veerde,valerie
+396,6/10/2016,9>Van Veerde,Tom
+483,30/10/2016,12>janseune,Sigi
+581,4/10/2016,11>Van Damme,Edith
+161,1/9/2016,3>Van Damme,Jan
+274,8/9/2016,5>Van Dijk,Lennert
+375,4/5/2016,6>Segers,Jan
+469,15/12/2016,7>janssens,Frans
+542,3/3/2016,13>Van Veerde,Danny
+100,26/10/2016,14>Van Dijk,Fons
+235,3/2/2016,11>janseune,Dominique
+362,19/9/2016,5>Van Dijk,Edith
+491,6/11/2016,12>Roesems,tine
+136,24/3/2016,10>Segers,Sigi
+279,25/2/2016,6>Roesems,valerie
+391,26/4/2016,7>Segers,bart
+448,16/5/2016,4>Bartholome,Jan
+195,10/12/2016,10>Van Damme,valerie
+214,28/9/2016,8>Grootjans,Fons
+390,5/3/2016,7>Theins,valerie
+405,27/6/2016,12>Segers,Sigi
+193,11/4/2016,10>Roesems,valerie

@@ -26,12 +26,16 @@ public class ReservationStorage implements ReservationStorageInterface  {
 		if (this.houses.size() == 0) {
 			List<String> buffer = storage.getReservationList();
 			for (String stringReservation : buffer) {
-				int index= stringReservation.indexOf(',');
-				if (index <= 0) throw new Exception("Data not in correct string format");
-				String displayNumber = stringReservation.substring(0, index);
-				
-				House house = createHouse(displayNumber);
-				if (!this.houses.contains(house)) this.houses.add(house);
+				try {
+					int index= stringReservation.indexOf(',');
+					if (index <= 0) throw new Exception("Data not in correct string format");
+					String displayNumber = stringReservation.substring(0, index);
+					
+					House house = createHouse(displayNumber);
+					if (!this.houses.contains(house)) this.houses.add(house);
+				} catch (Exception e) {
+					continue;
+				}
 			}
 		}
 		return this.houses;
