@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -83,15 +84,22 @@ public class Frame1 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					int numbernights = Integer.parseInt(textField_2.getText());
-					model.Date date = (model.Date) dp.getDate();
-					
-					ReservationService rs = new ReservationService();
-						List<House> houselist = rs.getAvailableHouses(date, numbernights);
-						for(House h : houselist){
-							unitsAvailable.addItem(h.toString());
-						}
-						}
+						int numbernights = Integer.parseInt(textField_2.getText());
+						model.Date date = (model.Date) dp.getDate();
+						
+						ReservationService rs = new ReservationService();
+							List<House> houselist = rs.getAvailableHouses(date, numbernights);
+							for(House h : houselist){
+								unitsAvailable.addItem(h.toString());
+								}
+							
+							if(houselist.size() > 1){
+								JOptionPane.showMessageDialog(null, "No houses available");
+							}
+							else{
+								unitsAvailable.setEnabled(true);
+							}
+					}
 						
 					
 					
@@ -117,6 +125,7 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblUnitsAvailable);
 		
 		unitsAvailable = new JComboBox<String>();
+		unitsAvailable.setEnabled(false);
 		unitsAvailable.setBounds(140, 89, 125, 20);
 		frame.getContentPane().add(unitsAvailable);
 		
@@ -125,6 +134,7 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblLastNa);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(140, 134, 142, 20);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -134,11 +144,13 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblNewLabel);
 		
 		textField_1 = new JTextField();
+		textField_1.setEnabled(false);
 		textField_1.setColumns(10);
 		textField_1.setBounds(140, 169, 142, 20);
 		frame.getContentPane().add(textField_1);
 		
 		JButton btnNewButton_1 = new JButton("Register");
+		btnNewButton_1.setEnabled(false);
 		btnNewButton_1.setBounds(297, 209, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
