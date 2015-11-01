@@ -15,8 +15,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class Frame1 {
+public class Frame1 extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -28,6 +32,18 @@ public class Frame1 {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Frame1() {
+		initialize();
+	}
+	
+	
+	public void Show() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -38,13 +54,7 @@ public class Frame1 {
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public Frame1() {
-		initialize();
+	
 	}
 
 	/**
