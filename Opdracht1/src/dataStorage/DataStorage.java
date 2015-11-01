@@ -3,6 +3,8 @@ package dataStorage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,14 +18,14 @@ public class DataStorage implements DataStorageInterface {
 	
 	private String fullList = new String();
 	private List<String> reservationList = new ArrayList<String>();
-	private File file = new File("bestanden\\werknemers.txt");
-	private DataStorage storage = new DataStorage();
+	private File file = new File("reservaties.txt");
 	private MagicStrings ms = new MagicStrings ();
 	
 	@Override
 	public String getData() throws Throwable {
 		try{
-			Scanner scanner = new Scanner(file);
+			Path path = Paths.get("reservaties.txt");
+			Scanner scanner = new Scanner(path);
 			while (scanner.hasNext()){
 				fullList+=(scanner.nextLine());
 				fullList+=";";
@@ -46,7 +48,7 @@ public class DataStorage implements DataStorageInterface {
 	@Override
 	public List<String> getReservationList() throws Throwable {
 		try{
-			fullList = storage.getData();
+			fullList = this.getData();
 			String fullStringList = fullList.toString();
 			String [] splitList = fullStringList.split(";");
 			for ( String s : splitList){
@@ -59,13 +61,14 @@ public class DataStorage implements DataStorageInterface {
 		}
 	}
 
+
 	//Schrijvt volledige string (overschrijft hard)
 	@Override
 	public void setData(String data) throws Throwable {
 		String [] splitList = data.split(";");
 		boolean b = true;
 		for (String s : splitList){
-			if(!storage.dataFormatCheck(s)&& b){
+			if(!this.dataFormatCheck(s)&& b){
 				b = false;
 			}
 		}
@@ -111,11 +114,11 @@ public class DataStorage implements DataStorageInterface {
 	public void addReservation(String reservation) throws Throwable {
 		
 		try{
-			if(storage.dataFormatCheck(reservation)){
-				fullList = storage.getData();
+			if(this.dataFormatCheck(reservation)){
+				fullList = this.getData();
 				fullList += ";";
 				fullList += reservation;
-				storage.setData(fullList);
+				this.setData(fullList);
 			}
 			else{
 				throw new Exception(ms.getDateFormatWrong());

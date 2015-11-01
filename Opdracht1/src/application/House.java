@@ -39,7 +39,7 @@ public class House {
 	}
 	
 	public void setDisplayNumber(int displayNumber) throws Exception {
-		if (displayNumber < 0 || displayNumber > 9999) throw new Exception("DisplayNumber not in valid range 1 - 9999");
+		if (displayNumber < 101 || displayNumber > 9999) throw new Exception("DisplayNumber not in valid range 1 - 9999");
 		this.setRow(displayNumber / 100);
 		this.setNumber(displayNumber % 100);
 	}
@@ -62,11 +62,6 @@ public class House {
 			return false;
 		House other = (House) obj;
 		if (number != other.number)
-			return false;
-		if (reservations == null) {
-			if (other.reservations != null)
-				return false;
-		} else if (!reservations.equals(other.reservations))
 			return false;
 		if (row != other.row)
 			return false;
