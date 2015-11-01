@@ -90,7 +90,7 @@ public class Frame1 extends JFrame {
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
-					for (House h : houselist) {
+					for (House h : houselist) { 
 						unitsAvailable.addItem(h.toString());
 					}
 					
