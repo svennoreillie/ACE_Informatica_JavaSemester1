@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import common.MagicStrings;
+import dataStorage.HouseService;
 import dataStorage.ReservationStorage;
 import model.Date;
 import model.DateFactory;
@@ -19,51 +20,37 @@ import model.DateFactory;
 public class ReservationService implements ReservationServiceInterface {
 
 	private ReservationStorage storage = new ReservationStorage();
-	private List<House> everyHouse = new ArrayList<House>();
+
 	@SuppressWarnings("unused")
 	private Boolean refresh = false;
-	
+
 	public ReservationService() throws Throwable {
-		
+
 	}
 
-	
 	@Override
 	public List<House> getAllHouses() throws Throwable {
-
-		if (everyHouse != null && everyHouse.size() ==0) {
-			int rowNumber = 1;
-			int houseNumber = 1;
-			while (everyHouse.size() < 107) {
-				if (houseNumber > 10) {
-					rowNumber++;
-					houseNumber = 1;
-				}
-				House house = new House((rowNumber * 100) + houseNumber);
-				everyHouse.add(house);
-				houseNumber++;
-			}
-		}
-		return everyHouse;
+		HouseService hs = new HouseService();
+		return hs.getAllHouses();
 	}
-
 
 	@Override
 	public List<House> getAvailableHouses(Date startDate, int numberOfDays) throws Throwable {
 		List<House> availableHouses = getAllHouses();
 		HashMap<Date, List<Reservation>> map = createReservationMap();
-		
+
 		for (int i = 0; i < numberOfDays; i++) {
 			List<Reservation> reservations = map.get(startDate.changeDate(i));
-			for (Reservation reservation : reservations) {
-				availableHouses.remove(reservation.getHouse());
+			if (reservations != null) {
+				for (Reservation reservation : reservations) {
+					availableHouses.remove(reservation.getHouse());
+				}
 			}
 		}
-		
+
 		return availableHouses;
 	}
 
-	
 	@Override
 	public List<Reservation> getReservationsForDate(Date date) throws Throwable {
 		List<Reservation> returnReservations = new ArrayList<Reservation>();
@@ -78,7 +65,6 @@ public class ReservationService implements ReservationServiceInterface {
 		return returnReservations;
 	}
 
-	
 	@Override
 	public List<Reservation> getReservationsForHouseOnDate(House house, Date date) throws Throwable {
 		List<Reservation> returnReservations = new ArrayList<Reservation>();
@@ -95,7 +81,6 @@ public class ReservationService implements ReservationServiceInterface {
 		return returnReservations;
 	}
 
-
 	@Override
 	public Date getFirstAvailableDate() throws Throwable {
 		Date current = DateFactory.generateDate();
@@ -107,12 +92,11 @@ public class ReservationService implements ReservationServiceInterface {
 		return current;
 	}
 
-
 	@Override
 	public Date getFirstAvailableDate(House house) throws Throwable {
-		if (house == null) throw new Exception(MagicStrings.houseNotFound);
+		if (house == null)
+			throw new Exception(MagicStrings.houseNotFound);
 		Date current = DateFactory.generateDate();
-		
 
 		while (getReservationsForHouseOnDate(house, current).size() > 0) {
 			current.alterDate(1);
@@ -121,14 +105,13 @@ public class ReservationService implements ReservationServiceInterface {
 		return current;
 	}
 
-
 	@Override
 	public Date getFirstAvailableDate(House house, int numberOfDays) throws Throwable {
 		HashMap<Date, List<Reservation>> map = createReservationMap();
-		
+
 		Date startDate = DateFactory.generateDate();
 		int nextAlter = 0;
-		
+
 		do {
 			startDate.alterDate(nextAlter);
 			nextAlter = 0;
@@ -149,12 +132,11 @@ public class ReservationService implements ReservationServiceInterface {
 					break;
 				}
 
-			} 
+			}
 		} while (nextAlter != 0);
-		
+
 		return startDate;
 	}
-
 
 	@Override
 	public Reservation getFirstReservationForPerson(Person person) throws Throwable {
@@ -170,11 +152,10 @@ public class ReservationService implements ReservationServiceInterface {
 				}
 			}
 		}
-		
+
 		return returnReservation;
 	}
 
-	
 	@Override
 	public Reservation getFirstReservationForPerson(String firstName, String lastName) throws Throwable {
 		Person person = new Person();
@@ -182,8 +163,6 @@ public class ReservationService implements ReservationServiceInterface {
 		person.setLastName(lastName);
 		return getFirstReservationForPerson(person);
 	}
-
-
 
 	@Override
 	public List<Reservation> getReservationsForPerson(Person person) throws Throwable {
@@ -195,8 +174,6 @@ public class ReservationService implements ReservationServiceInterface {
 		return reservations;
 	}
 
-
-
 	@Override
 	public List<Reservation> getReservationsForPerson(String firstName, String lastName) throws Throwable {
 		Person person = new Person();
@@ -205,74 +182,71 @@ public class ReservationService implements ReservationServiceInterface {
 		return getReservationsForPerson(person);
 	}
 
-	
-
 	@Override
 	public void CreateReservation(Reservation reservation) throws Throwable {
-		//Check all fields given
-		if (reservation == null) throw new Exception(MagicStrings.reservationNotFound);
-		
+		// Check all fields given
+		if (reservation == null)
+			throw new Exception(MagicStrings.reservationNotFound);
+
 		House house = reservation.getHouse();
 		Date startDate = reservation.getStartDate();
-		
-		if (house == null) throw new Exception(MagicStrings.houseNotFound);
-		if (!getAllHouses().contains(house)) throw new Exception(MagicStrings.houseNotFound);
-		if (reservation.getPerson() == null) throw new Exception(MagicStrings.personNotFound);
-		if (startDate.smallerThan(DateFactory.generateDate())) throw new Exception(MagicStrings.reservationDateError);
-		
+
+		if (house == null)
+			throw new Exception(MagicStrings.houseNotFound);
+		if (!getAllHouses().contains(house))
+			throw new Exception(MagicStrings.houseNotFound);
+		if (reservation.getPerson() == null)
+			throw new Exception(MagicStrings.personNotFound);
+		if (startDate.smallerThan(DateFactory.generateDate()))
+			throw new Exception(MagicStrings.reservationDateError);
+
 		for (int i = 0; i < reservation.getNumberOfDays(); i++) {
 			if (getReservationsForHouseOnDate(house, startDate).size() > 0) {
 				throw new Exception(MagicStrings.reservationAvailabilityError);
 			}
 		}
-		
+
 		insertReservation(reservation);
 	}
 
-	
-	
-	
-	
-	
-	
-	//HELPERS
+	// HELPERS
 	private void insertReservation(Reservation reservation) {
 		storage.addReservation(reservation);
 		this.refresh = true;
 	}
-	
+
 	private HashMap<Date, List<Reservation>> createReservationMap() throws Throwable {
 		HashMap<Date, List<Reservation>> map = new HashMap<Date, List<Reservation>>();
 		List<Reservation> reservations = storage.getReservations();
 		for (Reservation reservation : reservations) {
-			
+
 			for (int i = 0; i < reservation.getNumberOfDays(); i++) {
 				Date theDate = reservation.getStartDate().changeDate(i);
 				List<Reservation> reservationList = map.get(theDate);
 				if (reservationList == null) {
 					reservationList = new ArrayList<Reservation>();
 				}
-					
-					reservationList.add(reservation);
-					map.put(theDate, reservationList);
-				
+
+				reservationList.add(reservation);
+				map.put(theDate, reservationList);
+
 			}
-			
+
 		}
 		return map;
 	}
-	
+
 	private HashMap<Person, List<Reservation>> createPersonMap() throws Throwable {
 		HashMap<Person, List<Reservation>> map = new HashMap<Person, List<Reservation>>();
 		List<Reservation> reservations = storage.getReservations();
 		for (Reservation reservation : reservations) {
-			
+
 			Person person = reservation.getPerson();
 			List<Reservation> reservationList = map.get(person);
 			if (reservationList == null) {
 				reservationList = new ArrayList<Reservation>();
 			}
-			
+
 			reservationList.add(reservation);
 			map.put(person, reservationList);
 
