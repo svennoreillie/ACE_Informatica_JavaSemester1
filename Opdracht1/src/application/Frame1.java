@@ -8,13 +8,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import com.toedter.calendar.JDateChooser;
-import java.util.List;
 
+import com.toedter.calendar.DateUtil;
+import com.toedter.calendar.*;
+import com.toedter.calendar.JDateChooser;
+
+import model.DateFactory;
+
+import java.util.List;
+import java.util.Date;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 
 public class Frame1 extends JFrame {
 
@@ -33,7 +38,7 @@ public class Frame1 extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+
 	}
 
 	/**
@@ -42,8 +47,7 @@ public class Frame1 extends JFrame {
 	public Frame1() {
 		initialize();
 	}
-	
-	
+
 	public void Show() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,7 +59,7 @@ public class Frame1 extends JFrame {
 				}
 			}
 		});
-	
+
 	}
 
 	/**
@@ -66,15 +70,15 @@ public class Frame1 extends JFrame {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
+
 		JLabel lblReservationBungalows = new JLabel("Reservation bungalows");
 		lblReservationBungalows.setBounds(0, 0, 434, 14);
 		frame.getContentPane().add(lblReservationBungalows);
-		
+
 		JLabel lblFromDate = new JLabel("From date : ");
 		lblFromDate.setBounds(24, 30, 76, 14);
 		frame.getContentPane().add(lblFromDate);
-		
+
 		JLabel lblNumberOfNights = new JLabel("Number of nights :");
 		lblNumberOfNights.setBounds(24, 55, 95, 14);
 		frame.getContentPane().add(lblNumberOfNights);
@@ -106,6 +110,19 @@ public class Frame1 extends JFrame {
 					
 							
 				 catch (NumberFormatException e1) {
+					int numbernights = Integer.parseInt(textField_2.getText());
+					Date dpDate = dp.getDate();
+
+					model.Date date = DateFactory.generateDate(dpDate.getDay(), dpDate.getMonth(), dpDate.getYear());
+
+					ReservationService rs = new ReservationService();
+					List<House> houselist = rs.getAvailableHouses(date, numbernights);
+					for (House h : houselist) {
+						unitsAvailable.addItem(h.toString());
+					}
+				}
+
+				catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					// exception met delegate in ander scherm
 					e1.printStackTrace();
