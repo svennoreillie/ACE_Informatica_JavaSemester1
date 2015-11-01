@@ -9,19 +9,17 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import com.toedter.calendar.DateUtil;
-import com.toedter.calendar.*;
+
 import com.toedter.calendar.JDateChooser;
 
 import model.DateFactory;
 
 import java.util.List;
-import java.util.Calendar;
 import java.util.Date;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 
 public class Frame1 extends JFrame {
 
@@ -36,12 +34,6 @@ public class Frame1 extends JFrame {
 	private JDateChooser dp = new JDateChooser();
 	private JComboBox<String> unitsAvailable = new JComboBox<String>();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-	}
 
 	/**
 	 * Create the application.
@@ -87,20 +79,20 @@ public class Frame1 extends JFrame {
 
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
 					int numbernights = Integer.parseInt(textField_2.getText());
-					Date dpDate = dp.getDate();
-
-					model.Date date = DateFactory.generateDate(dpDate.getDay(), dpDate.getMonth(), dpDate.getYear());
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					String stringDate = sdf.format(dp.getDate());
+					model.Date date = DateFactory.generateDate(stringDate);
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
 					for (House h : houselist) {
 						unitsAvailable.addItem(h.toString());
-						}
+					}
 					
 					if(houselist.size() < 1){
 						JOptionPane.showMessageDialog(null, "No bungalows available.");
@@ -111,11 +103,9 @@ public class Frame1 extends JFrame {
 				}
 
 				catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					// exception met delegate in ander scherm
 					e1.printStackTrace();
 				} catch (Throwable ex) {
-					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 
 			}
