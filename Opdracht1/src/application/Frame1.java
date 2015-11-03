@@ -4,7 +4,9 @@ import java.awt.EventQueue;
 
 import com.toedter.calendar.JDateChooser;
 
-import components.SpinnerDemo;
+import components.CyclingSpinnerListModel;
+import components.MyPanel;
+import components.SpringUtilities;
 import model.DateFactory;
 
 import java.util.List;
@@ -26,11 +28,75 @@ import java.util.Date;
 public class Frame1 extends JFrame {
 
 	/**
+	 * @return 
 	 * 
 	 */
 	
 	//toegevoegd Geert 3 november bron stack overflow private class gebruiken om te extenden naar JPanel
-		private class MyPanel extends JPanel{
+		//ff testen of code kan gebruikt worden zonder de vermelding met de private class
+	private class MyPanel extends JPanel{
+			//3 November void toegevoegd=> MyPanel moest vervangen worden door Frame1 plus argument verwijderd uit super()
+			public MyPanel(boolean cycleMonths) {
+		        super();
+
+		        String[] labels = {"Month: ", "Year: ", "Another Date: "};
+		        int numPairs = labels.length;
+		        Calendar calendar = Calendar.getInstance();
+		        JFormattedTextField ftf = null;
+
+		        //Add the first label-spinner pair.
+		        String[] monthStrings = getMonthStrings(); //get month names
+		        SpinnerListModel monthModel = null;
+		        if (cycleMonths) { //use custom model
+		            monthModel = new CyclingSpinnerListModel(monthStrings);
+		        } else { //use standard model
+		            monthModel = new SpinnerListModel(monthStrings);
+		        }
+		        JSpinner spinner = addLabeledSpinner(this,
+		                                             labels[0],
+		                                             monthModel);
+		        //Tweak the spinner's formatted text field.
+		        ftf = getTextField(spinner);
+		        if (ftf != null ) {
+		            ftf.setColumns(8); //specify more width than we need
+		            ftf.setHorizontalAlignment(JTextField.RIGHT);
+		        }
+
+
+		        //Add second label-spinner pair.
+		        int currentYear = calendar.get(Calendar.YEAR);
+		        SpinnerModel yearModel = new SpinnerNumberModel(currentYear, //initial value
+		                                       currentYear - 100, //min
+		                                       currentYear + 100, //max
+		                                       1);                //step
+		        //If we're cycling, hook this model up to the month model.
+		        if (monthModel instanceof CyclingSpinnerListModel) {
+		            ((CyclingSpinnerListModel)monthModel).setLinkedModel(yearModel);
+		        }
+		        spinner = addLabeledSpinner(this, labels[1], yearModel);
+		        //Make the year be formatted without a thousands separator.
+		        spinner.setEditor(new JSpinner.NumberEditor(spinner, "#"));
+
+
+		        //Add the third label-spinner pair.
+		        Date initDate = calendar.getTime();
+		        calendar.add(Calendar.YEAR, -100);
+		        Date earliestDate = calendar.getTime();
+		        calendar.add(Calendar.YEAR, 200);
+		        Date latestDate = calendar.getTime();
+		        SpinnerModel dateModel = new SpinnerDateModel(initDate,
+		                                     earliestDate,
+		                                     latestDate,
+		                                     Calendar.YEAR);//ignored for user input
+		        spinner = addLabeledSpinner(this, labels[2], dateModel);
+		        spinner.setEditor(new JSpinner.DateEditor(spinner, "MM/yyyy"));
+
+		        //Lay out the panel.
+		        SpringUtilities.makeCompactGrid(this,
+		                                        numPairs, 2, //rows, cols
+		                                        10, 10,        //initX, initY
+		                                        6, 10);       //xPad, yPad
+		    }
 			 /**
 		     * Return the formatted text field used by the editor, or
 		     * null if the editor doesn't descend from JSpinner.DefaultEditor.
@@ -86,11 +152,11 @@ public class Frame1 extends JFrame {
 			//Geert 3 november removed static to resolve error
 		    private void createAndShowGUI() {
 		        //Create and set up the window.
-		        JFrame frame = new JFrame("SpinnerDemo");
+		        JFrame frame = new JFrame("MyPanel");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		        //Add content to the window.
-		        frame.add(new SpinnerDemo(false));
+		        frame.add(new MyPanel(false));
 
 		        //Display the window.
 		        frame.pack();
@@ -110,7 +176,7 @@ public class Frame1 extends JFrame {
 		    }
 			
 		}
-	
+	/*
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField;
@@ -124,6 +190,7 @@ public class Frame1 extends JFrame {
 	/**
 	 * Create the application.
 	 */
+	/*
 	public Frame1() {
 		initialize();
 	}
@@ -141,10 +208,11 @@ public class Frame1 extends JFrame {
 		});
 
 	}
-
+*/
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	/*
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
@@ -166,6 +234,7 @@ public class Frame1 extends JFrame {
 		/*
 		 * 
 		 */
+	/*
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -268,6 +337,7 @@ public class Frame1 extends JFrame {
 					} else {
 						unitsAvailable.setEnabled(true);
 					}*/
+	/*
 				}
 
 				catch (NumberFormatException e1) {
@@ -294,5 +364,11 @@ public class Frame1 extends JFrame {
 		Date sysTime = new Date();
 		dp.setDate(sysTime);
 
+	}
+	*/
+
+	public void Show() {
+		// TODO Auto-generated method stub
+		
 	}
 }

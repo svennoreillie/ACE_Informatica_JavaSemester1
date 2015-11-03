@@ -45,8 +45,8 @@ import java.awt.Container;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SpinnerDemo extends JPanel {
-    public SpinnerDemo(boolean cycleMonths) {
+public class MyPanel extends JPanel {
+    public MyPanel(boolean cycleMonths) {
         super(new SpringLayout());
 
         String[] labels = {"Month: ", "Year: ", "Another Date: "};
@@ -167,7 +167,7 @@ public class SpinnerDemo extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Add content to the window.
-        frame.add(new SpinnerDemo(false));
+        frame.add(new MyPanel(false));
 
         //Display the window.
         frame.pack();
