@@ -9,19 +9,17 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import com.toedter.calendar.DateUtil;
-import com.toedter.calendar.*;
 import com.toedter.calendar.JDateChooser;
 
 import model.DateFactory;
 
 import java.util.List;
-import java.util.Calendar;
 import java.util.Date;
-
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 
 public class Frame1 extends JFrame {
 
@@ -34,14 +32,9 @@ public class Frame1 extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JDateChooser dp = new JDateChooser();
-	private JComboBox<String> unitsAvailable = new JComboBox<String>();
+	private JComboBox<House> unitsAvailable = new JComboBox<House>();
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-
-	}
+	private House selectedHouse = null;
 
 	/**
 	 * Create the application.
@@ -87,36 +80,33 @@ public class Frame1 extends JFrame {
 
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
 					int numbernights = Integer.parseInt(textField_2.getText());
-					Date dpDate = dp.getDate();
 
-					model.Date date = DateFactory.generateDate(dpDate.getDay(), dpDate.getMonth(), dpDate.getYear());
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					String stringDate = sdf.format(dp.getDate());
+					model.Date date = DateFactory.generateDate(stringDate);
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
 					for (House h : houselist) {
-						unitsAvailable.addItem(h.toString());
-						}
-					
-					if(houselist.size() < 1){
-						JOptionPane.showMessageDialog(null, "No bungalows available.");
+						unitsAvailable.addItem(h);
 					}
-					else{
+
+					if (houselist.size() < 1) {
+						JOptionPane.showMessageDialog(null, "No bungalows available.");
+					} else {
 						unitsAvailable.setEnabled(true);
 						//unitsAvailable = houselist.toString();
 					}
 				}
 
 				catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					// exception met delegate in ander scherm
 					e1.printStackTrace();
 				} catch (Throwable ex) {
-					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 
 			}
@@ -128,9 +118,25 @@ public class Frame1 extends JFrame {
 		lblUnitsAvailable.setBounds(26, 92, 93, 14);
 		frame.getContentPane().add(lblUnitsAvailable);
 
-		unitsAvailable = new JComboBox<String>();
+		unitsAvailable = new JComboBox<House>();
 		unitsAvailable.setEnabled(false);
+		unitsAvailable.setEditable(true);
 		unitsAvailable.setBounds(140, 89, 125, 20);
+		unitsAvailable.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					try {
+						selectedHouse = (House)event.getItem();
+						textField.setEnabled(true);
+						textField_1.setEnabled(true);
+					} catch (Exception ex) {
+						// cast failed
+						selectedHouse = null;
+					}
+				}
+			}
+		});
 		frame.getContentPane().add(unitsAvailable);
 
 		JLabel lblLastNa = new JLabel("Last Name Tennant");
@@ -169,7 +175,6 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(dp);
 		Date sysTime = new Date();
 		dp.setDate(sysTime);
-		
-		
+
 	}
 }
