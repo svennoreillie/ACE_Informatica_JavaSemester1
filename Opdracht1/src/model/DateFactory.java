@@ -46,7 +46,7 @@ public class DateFactory {
 	}
 	
 	public static Date generateDate(int day, int month, int year) throws Exception {
-		switch (_type) {
+		switch (_type) { 
 		case DateInt:
 			return new DateInt(day, month, year);
 		case DateGreg:

@@ -235,7 +235,8 @@ public class DateTest {
 
 	@Test
 	public void testDifferenceInYearsOneYear() throws Exception {
-		DateInt testDate = new DateInt(1,1,2001);
+		//DateInt testDate = new DateInt(1,1,2001);
+		Date testDate = DateFactory.generateDate(1,1,2001);
 		assertEquals(1,ctorDateIII.differenceInYears(testDate));
 		assertEquals(1,testDate.differenceInYears(ctorDateIII));
 	}
@@ -247,7 +248,8 @@ public class DateTest {
 	
 	@Test
 	public void testDifferenceInMonthsOneMonth() throws Exception {
-		DateInt testDate = new DateInt(1,2,2000);
+		//DateInt testDate = new DateInt(1,2,2000);
+		Date testDate = DateFactory.generateDate(1,2,2000);
 		assertEquals(1,ctorDateIII.differenceInMonths(testDate));
 		assertEquals(1,testDate.differenceInMonths(ctorDateIII));
 	}
@@ -259,7 +261,8 @@ public class DateTest {
 
 	@Test
 	public void testDifferenceInDaysOneDay() throws Exception {
-		DateInt testDate = new DateInt(2,1,2000);
+		//DateInt testDate = new DateInt(2,1,2000);
+		Date testDate = DateFactory.generateDate(2,1,2000);
 		assertEquals(1,ctorDateIII.differenceInDays(testDate));
 		assertEquals(1,testDate.differenceInDays(ctorDateIII));
 	}
@@ -271,7 +274,7 @@ public class DateTest {
 
 	@Test
 	public void testTotalDaysSinceJesus() throws Exception {
-		ctorDate = new DateInt(ctorDateIII);
+		ctorDate = DateFactory.generateDate(ctorDateIII);
 		assertEquals(ctorDate,ctorDateIII);
 		assertEquals(ctorDateIII,ctorDate);
 	}
@@ -396,7 +399,7 @@ public class DateTest {
 
 	@Test
 	public void testDateIntDate() throws Exception {
-		ctorDate = new DateInt(ctorDateIII);
+		ctorDate = DateFactory.generateDate(ctorDateIII); //TODO switch out for DateFactory
 		assertEquals(ctorDate,ctorDateIII);
 		assertEquals(ctorDateIII,ctorDate);
 	}
