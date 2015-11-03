@@ -194,6 +194,7 @@ public class ReservationServiceTest {
 		assertEquals(expectedDate,actualDate);
 	}
 
+	
 	/*@Test
 	public void testGetFirstAvailableDateHouse() {
 		fail("Not yet implemented");
