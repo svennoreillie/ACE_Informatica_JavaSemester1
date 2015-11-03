@@ -195,9 +195,21 @@ public class ReservationServiceTest {
 	}
 
 	
-	/*@Test
-	public void testGetFirstAvailableDateHouse() {
-		fail("Not yet implemented");
+	@Test
+	public void testGetFirstAvailableDateHouse() throws Throwable {
+		int duration = 100;
+		Person person = new Person();
+		person.setFirstName("test");
+		person.setLastName("test");
+		
+		Date startDate = DateFactory.generateDate(3,11,2015);
+		Date expectedDate = startDate.changeDate(duration + 1);
+		
+		House house = rS.getAllHouses().get(0);
+		
+		Reservation reservation = createReservation(startDate, duration, person, house);
+		
+		assertEquals(expectedDate, rS.getFirstAvailableDate(house));
 	}
 
 	/*@Test
@@ -211,6 +223,7 @@ public class ReservationServiceTest {
 	}
 
 	@Test
+	
 	public void testGetFirstReservationForPersonStringString() {
 		fail("Not yet implemented");
 	}
