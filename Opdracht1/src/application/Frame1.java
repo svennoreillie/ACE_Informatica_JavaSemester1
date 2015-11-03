@@ -107,6 +107,7 @@ public class Frame1 extends JFrame {
 					}
 					else{
 						unitsAvailable.setEnabled(true);
+						//unitsAvailable = houselist.toString();
 					}
 				}
 
