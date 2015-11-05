@@ -35,7 +35,7 @@ public class Frame1 extends JFrame {
 	private JFrame frame;
 	private JTextField textLastName;
 	private JTextField textFirstName;
-	private JTextField textField_2;
+	private JTextField textNumber;
 	private JDateChooser dp = new JDateChooser();
 	private JComboBox<House> unitsAvailable = new JComboBox<House>();
 	private JButton btnRegister = new JButton("Register");
@@ -90,7 +90,7 @@ public class Frame1 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					int numbernights = Integer.parseInt(textField_2.getText());
+					int numbernights = Integer.parseInt(textNumber.getText());
 
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					String stringDate = sdf.format(dp.getDate());
@@ -200,7 +200,24 @@ public class Frame1 extends JFrame {
 		
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO check input and save the registration
+				try {
+					Reservation reservation = new Reservation();
+					Person person = new Person();
+					ReservationService reservationService = new ReservationService();
+					
+					person.setFirstName(textFirstName.getText());
+					person.setLastName(textLastName.getText());
+					
+					reservation.setHouse((House)unitsAvailable.getSelectedItem());
+					reservation.setPerson(person);
+					reservation.setNumberOfDays(Integer.parseInt(textNumber.getText()));
+					
+					reservationService.CreateReservation(reservation);
+				} catch (Throwable e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 
@@ -209,10 +226,10 @@ public class Frame1 extends JFrame {
 		btnRegister.setBounds(297, 209, 89, 23);
 		frame.getContentPane().add(btnRegister);
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(138, 52, 86, 20);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		textNumber = new JTextField();
+		textNumber.setBounds(138, 52, 86, 20);
+		frame.getContentPane().add(textNumber);
+		textNumber.setColumns(10);
 
 		dp = new JDateChooser();
 		dp.setDateFormatString("dd/MM/yyyy");
