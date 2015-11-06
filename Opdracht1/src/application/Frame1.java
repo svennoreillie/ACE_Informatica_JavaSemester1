@@ -20,6 +20,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Frame1 extends JFrame {
 
@@ -160,6 +162,10 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(textField_1);
 
 		JButton btnNewButton_1 = new JButton("Register");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton_1.setEnabled(false);
 		btnNewButton_1.setBounds(297, 209, 89, 23);
 		frame.getContentPane().add(btnNewButton_1);
