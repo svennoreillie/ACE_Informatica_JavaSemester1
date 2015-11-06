@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import common.MagicStrings;
+import model.DateFactory;
 import model.V1.DateInt;
 
 
@@ -44,7 +45,7 @@ public class DataStorage implements DataStorageInterface {
 		}
 	}
 
-	//List van Strings met elke reservatie in vorm: 111,5/11/2015,4>Adams,Chloe
+	//List van Strings met elke reservatie in vorm: 111,05/11/2015,4>Adams,Chloe
 	@Override
 	public List<String> getReservationList() throws Throwable {
 		try{
@@ -131,6 +132,7 @@ public class DataStorage implements DataStorageInterface {
 
 	//Controleert of ingevoerde data correct is
 	//huisnummer,vandatum,aantalnachten>naam,voornaam 
+	//111,05/11/2015,4>Adams,Chloe
 	@Override
 	public boolean dataFormatCheck(String data) throws Throwable {
 		boolean b = true;
@@ -144,7 +146,7 @@ public class DataStorage implements DataStorageInterface {
 		if(splitList.length == 2 || splitReservationNumberDateNight.length == 3 || splitName.length == 2){
 			try{
 					houseNumber = Integer.parseInt(splitReservationNumberDateNight[0]);
-					new DateInt(splitReservationNumberDateNight[1]);
+					DateFactory.generateDate(splitReservationNumberDateNight[1]);
 					nights = Integer.parseInt(splitReservationNumberDateNight[3]);
 				}
 			catch(Exception ex){
