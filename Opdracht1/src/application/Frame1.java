@@ -1,11 +1,14 @@
 package application;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -21,6 +24,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Frame1 extends JFrame {
 
@@ -29,11 +34,13 @@ public class Frame1 extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textLastName;
+	private JTextField textFirstName;
+	private JTextField textNumber;
 	private JDateChooser dp = new JDateChooser();
 	private JComboBox<House> unitsAvailable = new JComboBox<House>();
+	private JButton btnRegister = new JButton("Register");
+	
 
 	private House selectedHouse = null;
 
@@ -84,7 +91,7 @@ public class Frame1 extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
-					int numbernights = Integer.parseInt(textField_2.getText());
+					int numbernights = Integer.parseInt(textNumber.getText());
 
 					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 					String stringDate = sdf.format(dp.getDate());
@@ -133,8 +140,8 @@ public class Frame1 extends JFrame {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					try {
 						selectedHouse = (House)event.getItem();
-						textField.setEnabled(true);
-						textField_1.setEnabled(true);
+						textLastName.setEnabled(true);
+						textFirstName.setEnabled(true);
 					} catch (Exception ex) {
 						// cast failed
 						selectedHouse = null;
@@ -148,31 +155,87 @@ public class Frame1 extends JFrame {
 		lblLastNa.setBounds(24, 137, 110, 14);
 		frame.getContentPane().add(lblLastNa);
 
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(140, 134, 142, 20);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textLastName = new JTextField();
+		textLastName.setEnabled(false);
+		textLastName.setBounds(140, 134, 142, 20);
+		frame.getContentPane().add(textLastName);
+		textLastName.setColumns(10);
+		textLastName.getDocument().addDocumentListener(new DocumentListener(){
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				enableRegisterButton();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				enableRegisterButton();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				enableRegisterButton();
+			}		
+		});
 
 		JLabel lblNewLabel = new JLabel("First name tennant");
 		lblNewLabel.setBounds(24, 172, 95, 14);
 		frame.getContentPane().add(lblNewLabel);
 
-		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(140, 169, 142, 20);
-		frame.getContentPane().add(textField_1);
+		textFirstName = new JTextField();
+		textFirstName.setEnabled(false);
+		textFirstName.setColumns(10);
+		textFirstName.setBounds(140, 169, 142, 20);
+		frame.getContentPane().add(textFirstName);
+		textFirstName.getDocument().addDocumentListener(new DocumentListener(){
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				enableRegisterButton();
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				enableRegisterButton();
+			}
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				enableRegisterButton();	
+			}		
+		});
+		
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Reservation reservation = new Reservation();
+					Person person = new Person();
+					ReservationService reservationService = new ReservationService();
+					
+					person.setFirstName(textFirstName.getText());
+					person.setLastName(textLastName.getText());
+					
+					reservation.setHouse((House)unitsAvailable.getSelectedItem());
+					reservation.setPerson(person);
+					reservation.setNumberOfDays(Integer.parseInt(textNumber.getText()));
+					
+					reservationService.CreateReservation(reservation);
+				} catch (Throwable e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 
-		JButton btnNewButton_1 = new JButton("Register");
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.setBounds(297, 209, 89, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		
+		btnRegister.setEnabled(false);
+		btnRegister.setBounds(297, 209, 89, 23);
+		frame.getContentPane().add(btnRegister);
 
-		textField_2 = new JTextField();
-		textField_2.setBounds(138, 52, 86, 20);
-		frame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
+		textNumber = new JTextField();
+		textNumber.setBounds(138, 52, 86, 20);
+		frame.getContentPane().add(textNumber);
+		textNumber.setColumns(10);
 
 		dp = new JDateChooser();
 		dp.setDateFormatString("dd/MM/yyyy");
@@ -181,5 +244,14 @@ public class Frame1 extends JFrame {
 		Date sysTime = new Date();
 		dp.setDate(sysTime);
 
-	}
+		}
+	
+		public void enableRegisterButton(){
+			if(textFirstName.getText().equals("") || textLastName.getText().equals("")){
+				btnRegister.setEnabled(false);
+			}
+			else{
+				btnRegister.setEnabled(true);
+			}
+		}
 }
