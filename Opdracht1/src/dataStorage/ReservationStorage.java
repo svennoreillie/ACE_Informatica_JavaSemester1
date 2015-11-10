@@ -8,6 +8,7 @@ import model.DateFactory;
 import application.House;
 import dataStorage.HouseService;
 import application.Reservation;
+import common.CompositeException;
 import common.MagicStrings;
 import application.Person;
 
@@ -54,6 +55,7 @@ public class ReservationStorage implements ReservationStorageInterface  {
 	public List<Reservation> getReservations() throws Throwable {
 		if (reservations.size() == 0 || refresh) {
 			List<String> buffer = storage.getReservationList();
+			List<Exception> exceptionList = new ArrayList<Exception>();
 			for (String stringReservation : buffer) {
 				try {
 					String[] mainParts = stringReservation.split("[,\\>]");
@@ -74,10 +76,10 @@ public class ReservationStorage implements ReservationStorageInterface  {
 
 					reservations.add(reservation);
 				} catch (Exception e) {
-					e.printStackTrace();
-					continue;
+					exceptionList.add(e);
 				}
 			} 
+			if (!exceptionList.isEmpty()) throw new CompositeException(exceptionList);
 		}
 		return reservations;
 	}

@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 
 import com.toedter.calendar.JDateChooser;
 
+import common.CompositeException;
 import model.DateFactory;
 
 import java.util.List;
@@ -108,8 +109,13 @@ public class Frame1 extends JFrame {
 						//unitsAvailable = houselist.toString();
 					}
 				}
-
-				catch (NumberFormatException e1) {
+				catch (CompositeException compEx) {
+					String fouten = "Er werden meerdere fouten gevonden:";
+					for (Exception ex : compEx.getInnerExceptionList()) {
+						fouten += String.format("%n%s", ex.getMessage());
+					}
+					JOptionPane.showMessageDialog(null, fouten);
+				} catch (NumberFormatException e1) {
 					e1.printStackTrace();
 				} catch (Throwable ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage());
