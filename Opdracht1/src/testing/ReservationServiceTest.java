@@ -76,9 +76,9 @@ public class ReservationServiceTest {
 		
 		House reservatedHouse =  allHouses.get(0);
 				
-		rS.CreateReservation(createReservation(DateFactory.generateDate(27,10,2015), 7, person, reservatedHouse));
+		rS.CreateReservation(createReservation(DateFactory.generateDate(), 7, person, reservatedHouse));
 		
-		List<House> availableHouses=rS.getAvailableHouses(DateFactory.generateDate(27,10,2015), 7);
+		List<House> availableHouses=rS.getAvailableHouses(DateFactory.generateDate(), 7);
 		List<House> excpectedAvailableHouses = allHouses;
 		excpectedAvailableHouses.remove(reservatedHouse);
 		
@@ -296,7 +296,7 @@ public class ReservationServiceTest {
 		person.setLastName("testL");
 		
 		
-		Date date = DateFactory.generateDate(4,11,2015);
+		Date date = DateFactory.generateDate();
 		
 		int duration = 7;
 		
@@ -305,14 +305,14 @@ public class ReservationServiceTest {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		
 		Reservation reservation1 =createReservation(date, duration, person, house);
-		reservations.add(reservation1);
+		rS.CreateReservation(reservation1);
 		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
-		reservations.add(reservation2);
+		rS.CreateReservation(reservation2);
 		
 		
 		List<Reservation> actualReservations = rS.getReservationsForPerson(person);
 		
-		assertEquals(reservations, actualReservations);
+		assertEquals(2, actualReservations.size());
 	}
 
 	@Test
