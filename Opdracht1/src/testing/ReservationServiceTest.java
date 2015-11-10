@@ -218,20 +218,20 @@ public class ReservationServiceTest {
 
 	@Test
 	public void testGetFirstAvailableDateHouseInt() throws Throwable {
-		int duration = 100;
+		int duration = 7;
 		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
+		person.setFirstName("testF");
+		person.setLastName("testL");
 		
-		Date startDate = DateFactory.generateDate(3,11,2015);
-		Date expectedDate = startDate.changeDate(duration + 1);
+		Date startDate = DateFactory.generateDate();
+		Date expectedDate = startDate.changeDate(duration);
 		
 		House house = rS.getAllHouses().get(0);
 		
 		Reservation reservation = createReservation(startDate, duration, person, house);
 		rS.CreateReservation(reservation);
 		
-		Date actualDate = rS.getFirstAvailableDate(house,1);
+		Date actualDate = rS.getFirstAvailableDate(house,5);
 		
 		assertEquals(expectedDate, actualDate);
 	}
@@ -245,10 +245,7 @@ public class ReservationServiceTest {
 		person.setFirstName("Person");
 		person.setLastName("1");
 		
-		Date date1 = DateFactory.generateDate(4,11,2015);
-		
-		
-		
+		Date date1 = DateFactory.generateDate().changeDate(1);
 		Date date2 = date1.changeDate(duration+1);
 		
 		Reservation reservation1=createReservation(date2, duration, person, house);
@@ -260,7 +257,7 @@ public class ReservationServiceTest {
 		
 		Reservation actualReservation = rS.getFirstReservationForPerson(person);
 		
-		assertEquals(date1, actualReservation);
+		assertEquals(reservation2, actualReservation);
 		
 	}
 
@@ -335,8 +332,6 @@ public class ReservationServiceTest {
 		List<Reservation> actualReservations = rS.getReservationsForPerson(person.getFirstName(),person.getLastName());
 		
 		assertEquals(reservations, actualReservations);
-		
-		
 	}
 
 	
