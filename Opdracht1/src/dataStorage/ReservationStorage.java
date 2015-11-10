@@ -93,7 +93,16 @@ public class ReservationStorage implements ReservationStorageInterface  {
 
 	@Override
 	public void addReservation(Reservation reservation) {
-		reservations.add(reservation);
+		try {
+			reservations.add(reservation);
+			storage.setReservationList(convertReservationListToStringList(reservations));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -107,5 +116,13 @@ public class ReservationStorage implements ReservationStorageInterface  {
 	private List<House> getAllHouses() throws Throwable {
 		HouseService hs = new HouseService();
 		return hs.getAllHouses();
+	}
+	
+	private List<String> convertReservationListToStringList (List<Reservation> reservationList){
+		List<String> stringList = new ArrayList<String>();
+		for(Reservation reservation : reservationList){
+			stringList.add(reservation.toString());
+		}
+		return stringList;
 	}
 }

@@ -1,6 +1,7 @@
 package application;
 
 import model.Date;
+import model.Months;
 
 public class Reservation {
 	private Date startDate;
@@ -42,6 +43,31 @@ public class Reservation {
 		result = prime * result + ((person == null) ? 0 : person.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		return result;
+	}
+	@Override
+	public String toString() {
+		StringBuffer s = new StringBuffer();
+		s.append(Integer.toString(this.getHouse().getDisplayNumber()));
+		s.append(",");
+		try {
+			s.append(String.format("%02d", this.getStartDate().getDay()));
+			s.append("/");
+			s.append(String.format("%02d", this.getStartDate().getMonth()));
+			s.append("/");
+			s.append(String.format("%04d", this.getStartDate().getYear()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		s.append(",");
+		s.append(Integer.toString(this.getNumberOfDays()));
+		s.append(">");
+		s.append(this.getPerson().getLastName());
+		s.append(",");
+		s.append(this.getPerson().getFirstName());
+		
+		
+		return s.toString();
 	}
 	@Override
 	public boolean equals(Object obj) {
