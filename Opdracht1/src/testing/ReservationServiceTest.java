@@ -156,25 +156,6 @@ public class ReservationServiceTest {
 		assertEquals(expectedReservations, reservations);
 	}
 
-	@Test
-	public void testGetFirstAvailableDate() throws Throwable {
-		int duration = 100;
-		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
-		Date startDate = DateFactory.generateDate(30, 10, 2015);
-		Date expectedDate = startDate.changeDate(duration);
-		
-		for(int i = 0 ; i<107 ; i++){
-			Reservation reservation = createReservation(startDate, duration, person, rS.getAllHouses().get(i));
-			rS.CreateReservation(reservation);
-		}
-		
-		Date actualDate = rS.getFirstAvailableDate();
-		
-		assertEquals(expectedDate,actualDate);
-	}
-
 	
 	@Test
 	public void testGetFirstAvailableDateHouse() throws Throwable {
@@ -287,11 +268,11 @@ public class ReservationServiceTest {
 	@Test
 	public void testGetReservationsForPersonStringString() throws Throwable {
 		Person person = new Person();
-		person.setFirstName("testF");
-		person.setLastName("testL");
+		person.setFirstName("testF2");
+		person.setLastName("testL2");
 		
 		
-		Date date = DateFactory.generateDate(4,11,2015);
+		Date date = DateFactory.generateDate();
 		
 		int duration = 7;
 		
