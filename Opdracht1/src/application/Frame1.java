@@ -1,6 +1,5 @@
 package application;
 
-import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +14,7 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
 import common.CompositeException;
+import model.DateBase;
 import model.DateFactory;
 
 import java.util.List;
@@ -90,6 +90,10 @@ public class Frame1 extends JFrame {
 		frame.getContentPane().add(lblNumberOfNights);
 
 		JButton btnNewButton = new JButton("Search");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -111,6 +115,7 @@ public class Frame1 extends JFrame {
 						JOptionPane.showMessageDialog(null, "No bungalows available.");
 					} else {
 						unitsAvailable.setEnabled(true);
+						//unitsAvailable = houselist.toString();
 					}
 				}
 				catch (CompositeException compEx) {
@@ -215,21 +220,26 @@ public class Frame1 extends JFrame {
 					Person person = new Person();
 					ReservationService reservationService = new ReservationService();
 					
+					
 					person.setFirstName(textFirstName.getText());
 					person.setLastName(textLastName.getText());					
 					reservation.setHouse((House)unitsAvailable.getSelectedItem());
 					reservation.setPerson(person);
 					reservation.setNumberOfDays(Integer.parseInt(textNumber.getText()));
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					String stringDate = sdf.format(dp.getDate());
+					model.Date date = DateFactory.generateDate(stringDate);
+					reservation.setStartDate(date);
 					
 					reservationService.CreateReservation(reservation);
 				} catch (Throwable e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					//e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 				
 			}
 		});
-
 		
 		btnRegister.setEnabled(false);
 		btnRegister.setBounds(297, 209, 89, 23);
