@@ -41,6 +41,8 @@ public class DataStorageTest_17102015 implements SessionStorage{
 		this.ds = new DataStorage();
 		//String s = new String("res");
 	}
+	/*
+	 //Geert 10 Nov JUnit code voorbeeld, nu in commentaar gezet
 	//hieronder code van JUnit testing boek aan te passen naar deze klasse
 	//@Test
 	@Test
@@ -88,7 +90,7 @@ public class DataStorageTest_17102015 implements SessionStorage{
 		  //testen op JUnit boek code nodig hierboven?
 		  
 		  //tot hier testen op JUNit code boek
-		  
+		*/  
 	@Test
 	public void testGetDataFileNotFound() {
 		MagicStrings s = new MagicStrings();
@@ -146,6 +148,16 @@ public class DataStorageTest_17102015 implements SessionStorage{
 	@Test
 	public void testDataFormatCheckWrongFormat() throws Throwable {
 		assertFalse(ds.dataFormatCheck("111,5/11/2015,4>Adams"));
+	}
+	@Override
+	public File read() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void store(File file) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*@Override
