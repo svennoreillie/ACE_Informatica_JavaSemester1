@@ -27,6 +27,8 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class Frame1 extends JFrame {
 
@@ -100,7 +102,7 @@ public class Frame1 extends JFrame {
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
-					unitsAvailable.removeAll();
+					unitsAvailable.removeAllItems();
 					for (House h : houselist) {
 						unitsAvailable.addItem(h);
 					}
@@ -239,6 +241,26 @@ public class Frame1 extends JFrame {
 		textNumber.setColumns(10);
 
 		dp = new JDateChooser();
+		dp.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+
+				try {
+					SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+					String stringDate = sdf.format(dp.getDate());
+					model.Date date = DateFactory.generateDate(stringDate);
+					
+					model.Date current = DateFactory.generateDate();
+					
+					if (date.smallerThan(current)) {
+						btnNewButton.setEnabled(false);
+					} else {
+						btnNewButton.setEnabled(true);
+					}
+				} catch (Exception e) {
+					
+				}
+			}
+		});
 		dp.setDateFormatString("dd/MM/yyyy");
 		dp.setBounds(140, 21, 125, 23);
 		Date minDate = new Date();
