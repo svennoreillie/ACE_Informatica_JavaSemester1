@@ -302,8 +302,6 @@ public class ReservationServiceTest {
 		
 		House house = rS.getAllHouses().get(0);
 		
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		
 		Reservation reservation1 =createReservation(date, duration, person, house);
 		rS.CreateReservation(reservation1);
 		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
@@ -327,18 +325,16 @@ public class ReservationServiceTest {
 		int duration = 7;
 		
 		House house = rS.getAllHouses().get(0);
-		
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		
+
 		Reservation reservation1 =createReservation(date, duration, person, house);
-		reservations.add(reservation1);
+		rS.CreateReservation(reservation1);
 		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
-		reservations.add(reservation2);
+		rS.CreateReservation(reservation2);
 		
 		
 		List<Reservation> actualReservations = rS.getReservationsForPerson(person.getFirstName(),person.getLastName());
 		
-		assertEquals(reservations, actualReservations);
+		assertEquals(2, actualReservations.size());
 	}
 
 	
