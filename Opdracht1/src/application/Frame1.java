@@ -212,8 +212,7 @@ public class Frame1 extends JFrame {
 					ReservationService reservationService = new ReservationService();
 					
 					person.setFirstName(textFirstName.getText());
-					person.setLastName(textLastName.getText());
-					
+					person.setLastName(textLastName.getText());					
 					reservation.setHouse((House)unitsAvailable.getSelectedItem());
 					reservation.setPerson(person);
 					reservation.setNumberOfDays(Integer.parseInt(textNumber.getText()));
@@ -253,5 +252,13 @@ public class Frame1 extends JFrame {
 			else{
 				btnRegister.setEnabled(true);
 			}
+		}
+		
+		private void clearWindow(){
+			dp.setCalendar(null);
+			textNumber.setText("");
+			unitsAvailable.setSelectedIndex(-1);
+			textLastName.setText("");
+			textFirstName.setText("");
 		}
 }
