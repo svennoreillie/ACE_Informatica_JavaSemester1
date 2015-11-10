@@ -31,6 +31,7 @@ public class ReservationServiceTest {
 		reservation.setStartDate(startDate);
 		reservation.setNumberOfDays(numberOfDays);
 		reservation.setHouse(house);
+		reservation.setPerson(person);
 		return reservation;
 	}
 	
@@ -251,6 +252,7 @@ public class ReservationServiceTest {
 		Date date2 = date1.changeDate(duration+1);
 		
 		Reservation reservation1=createReservation(date2, duration, person, house);
+		
 		rS.CreateReservation(reservation1);
 		
 		Reservation reservation2=createReservation(date1, duration, person, house);
