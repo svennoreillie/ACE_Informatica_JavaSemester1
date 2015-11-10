@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import application.House;
 import application.Person;
 import application.Reservation;
 import application.ReservationService;
+import common.MagicStrings;
 import model.Date;
 import model.DateFactory;
 
@@ -34,6 +37,10 @@ public class ReservationServiceTest {
 		reservation.setPerson(person);
 		return reservation;
 	}
+	
+	@Rule
+    public ExpectedException thrown= ExpectedException.none();
+	
 	
 	//Test Constructor
 	@Test

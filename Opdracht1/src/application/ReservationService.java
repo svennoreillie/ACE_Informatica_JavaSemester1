@@ -119,11 +119,12 @@ public class ReservationService implements ReservationServiceInterface {
 
 				Boolean houseAvailable = true;
 				List<Reservation> reservations = map.get(startDate.changeDate(i));
-
+				if (reservations == null) continue;
+				
 				for (Reservation reservation : reservations) {
 					if (reservation.getHouse() == house) {
 						houseAvailable = false;
-						nextAlter = i;
+						nextAlter = (i + 1);
 						break;
 					}
 				}
@@ -201,7 +202,7 @@ public class ReservationService implements ReservationServiceInterface {
 			throw new Exception(MagicStrings.reservationDateError);
 
 		for (int i = 0; i < reservation.getNumberOfDays(); i++) {
-			if (getReservationsForHouseOnDate(house, startDate).size() > 0) {
+			if (getReservationsForHouseOnDate(house, startDate.changeDate(i)).size() > 0) {
 				throw new Exception(MagicStrings.reservationAvailabilityError);
 			}
 		}
