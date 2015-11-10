@@ -156,25 +156,6 @@ public class ReservationServiceTest {
 		assertEquals(expectedReservations, reservations);
 	}
 
-	@Test
-	public void testGetFirstAvailableDate() throws Throwable {
-		int duration = 100;
-		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
-		Date startDate = DateFactory.generateDate(30, 10, 2015);
-		Date expectedDate = startDate.changeDate(duration);
-		
-		for(int i = 0 ; i<107 ; i++){
-			Reservation reservation = createReservation(startDate, duration, person, rS.getAllHouses().get(i));
-			rS.CreateReservation(reservation);
-		}
-		
-		Date actualDate = rS.getFirstAvailableDate();
-		
-		assertEquals(expectedDate,actualDate);
-	}
-
 	
 	@Test
 	public void testGetFirstAvailableDateHouse() throws Throwable {
@@ -273,8 +254,6 @@ public class ReservationServiceTest {
 		
 		House house = rS.getAllHouses().get(0);
 		
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		
 		Reservation reservation1 =createReservation(date, duration, person, house);
 		rS.CreateReservation(reservation1);
 		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
@@ -289,27 +268,25 @@ public class ReservationServiceTest {
 	@Test
 	public void testGetReservationsForPersonStringString() throws Throwable {
 		Person person = new Person();
-		person.setFirstName("testF");
-		person.setLastName("testL");
+		person.setFirstName("testF2");
+		person.setLastName("testL2");
 		
 		
-		Date date = DateFactory.generateDate(4,11,2015);
+		Date date = DateFactory.generateDate();
 		
 		int duration = 7;
 		
 		House house = rS.getAllHouses().get(0);
-		
-		List<Reservation> reservations = new ArrayList<Reservation>();
-		
+
 		Reservation reservation1 =createReservation(date, duration, person, house);
-		reservations.add(reservation1);
+		rS.CreateReservation(reservation1);
 		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
-		reservations.add(reservation2);
+		rS.CreateReservation(reservation2);
 		
 		
 		List<Reservation> actualReservations = rS.getReservationsForPerson(person.getFirstName(),person.getLastName());
 		
-		assertEquals(reservations, actualReservations);
+		assertEquals(2, actualReservations.size());
 	}
 
 	
