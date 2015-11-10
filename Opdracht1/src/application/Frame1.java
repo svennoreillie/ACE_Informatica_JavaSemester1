@@ -220,15 +220,6 @@ public class Frame1 extends JFrame {
 				
 			}
 		});
-
-		JButton btnNewButton_1 = new JButton("Register");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.setBounds(297, 209, 89, 23);
-		frame.getContentPane().add(btnNewButton_1);
 		
 		btnRegister.setEnabled(false);
 		btnRegister.setBounds(297, 209, 89, 23);
