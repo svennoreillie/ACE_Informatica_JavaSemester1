@@ -31,6 +31,7 @@ public class ReservationServiceTest {
 		reservation.setStartDate(startDate);
 		reservation.setNumberOfDays(numberOfDays);
 		reservation.setHouse(house);
+		reservation.setPerson(person);
 		return reservation;
 	}
 	
@@ -208,36 +209,136 @@ public class ReservationServiceTest {
 		House house = rS.getAllHouses().get(0);
 		
 		Reservation reservation = createReservation(startDate, duration, person, house);
+		rS.CreateReservation(reservation);
 		
-		assertEquals(expectedDate, rS.getFirstAvailableDate(house));
-	}
-
-	/*@Test
-	public void testGetFirstAvailableDateHouseInt() {
-		fail("Not yet implemented");
+		Date actualDate = rS.getFirstAvailableDate(house);
+		
+		assertEquals(expectedDate, actualDate);
 	}
 
 	@Test
-	public void testGetFirstReservationForPersonPerson() {
-		fail("Not yet implemented");
+	public void testGetFirstAvailableDateHouseInt() throws Throwable {
+		int duration = 100;
+		Person person = new Person();
+		person.setFirstName("test");
+		person.setLastName("test");
+		
+		Date startDate = DateFactory.generateDate(3,11,2015);
+		Date expectedDate = startDate.changeDate(duration + 1);
+		
+		House house = rS.getAllHouses().get(0);
+		
+		Reservation reservation = createReservation(startDate, duration, person, house);
+		rS.CreateReservation(reservation);
+		
+		Date actualDate = rS.getFirstAvailableDate(house,1);
+		
+		assertEquals(expectedDate, actualDate);
 	}
 
 	@Test
+	public void testGetFirstReservationForPersonPerson() throws Throwable {
+		int duration = 7;
+		House house = rS.getAllHouses().get(0);
+		
+		Person person = new Person();
+		person.setFirstName("Person");
+		person.setLastName("1");
+		
+		Date date1 = DateFactory.generateDate(4,11,2015);
+		
+		
+		
+		Date date2 = date1.changeDate(duration+1);
+		
+		Reservation reservation1=createReservation(date2, duration, person, house);
+		
+		rS.CreateReservation(reservation1);
+		
+		Reservation reservation2=createReservation(date1, duration, person, house);
+		rS.CreateReservation(reservation2);
+		
+		Reservation actualReservation = rS.getFirstReservationForPerson(person);
+		
+		assertEquals(date1, actualReservation);
+		
+	}
+
+	@Test
+	public void testGetFirstReservationForPersonStringString() throws Throwable {
+		Person person = new Person();
+		person.setFirstName("testF");
+		person.setLastName("testL");
+		
+		
+		Date date = DateFactory.generateDate(4,11,2015);
+		
+		int duration = 7;
+		
+		House house = rS.getAllHouses().get(0);
+		
+		
+		Reservation reservation =createReservation(date, duration, person, house);
+		
+		Reservation actualReservation = rS.getFirstReservationForPerson(person.getFirstName(), person.getLastName());
+		
+		assertEquals(reservation, actualReservation);
+	}
+
+	@Test
+	public void testGetReservationsForPersonPerson() throws Throwable {
+		Person person = new Person();
+		person.setFirstName("testF");
+		person.setLastName("testL");
+		
+		
+		Date date = DateFactory.generateDate(4,11,2015);
+		
+		int duration = 7;
+		
+		House house = rS.getAllHouses().get(0);
+		
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		
+		Reservation reservation1 =createReservation(date, duration, person, house);
+		reservations.add(reservation1);
+		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
+		reservations.add(reservation2);
+		
+		
+		List<Reservation> actualReservations = rS.getReservationsForPerson(person);
+		
+		assertEquals(reservations, actualReservations);
+	}
+
+	@Test
+	public void testGetReservationsForPersonStringString() throws Throwable {
+		Person person = new Person();
+		person.setFirstName("testF");
+		person.setLastName("testL");
+		
+		
+		Date date = DateFactory.generateDate(4,11,2015);
+		
+		int duration = 7;
+		
+		House house = rS.getAllHouses().get(0);
+		
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		
+		Reservation reservation1 =createReservation(date, duration, person, house);
+		reservations.add(reservation1);
+		Reservation reservation2 =createReservation(date.changeDate(8), duration, person, house);
+		reservations.add(reservation2);
+		
+		
+		List<Reservation> actualReservations = rS.getReservationsForPerson(person.getFirstName(),person.getLastName());
+		
+		assertEquals(reservations, actualReservations);
+		
+		
+	}
+
 	
-	public void testGetFirstReservationForPersonStringString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetReservationsForPersonPerson() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetReservationsForPersonStringString() {
-		fail("Not yet implemented");
-	}
-
-	*/
 
 }

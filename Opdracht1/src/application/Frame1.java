@@ -18,6 +18,7 @@ import common.CompositeException;
 import model.DateFactory;
 
 import java.util.List;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -99,6 +100,7 @@ public class Frame1 extends JFrame {
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
+					unitsAvailable.removeAll();
 					for (House h : houselist) {
 						unitsAvailable.addItem(h);
 					}
@@ -239,6 +241,8 @@ public class Frame1 extends JFrame {
 		dp = new JDateChooser();
 		dp.setDateFormatString("dd/MM/yyyy");
 		dp.setBounds(140, 21, 125, 23);
+		Date minDate = new Date();
+		dp.setMinSelectableDate(minDate);
 		frame.getContentPane().add(dp);
 		Date sysTime = new Date();
 		dp.setDate(sysTime);
