@@ -100,6 +100,7 @@ public class Frame1 extends JFrame {
 
 					ReservationService rs = new ReservationService();
 					List<House> houselist = rs.getAvailableHouses(date, numbernights);
+					unitsAvailable.removeAll();
 					for (House h : houselist) {
 						unitsAvailable.addItem(h);
 					}
