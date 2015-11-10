@@ -89,11 +89,11 @@ public class ReservationServiceTest {
 	@Test
 	public void testGetReservationsForDateForOneReservations() throws Throwable {
 		
-		Date startDate = DateFactory.generateDate(27, 10, 2015);
+		Date startDate = DateFactory.generateDate();
 		int numberOfDays = 7;
 		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
+		person.setFirstName("testF");
+		person.setLastName("testL");
 		House house =  allHouses.get(0);
 		
 		Reservation reservation = createReservation(startDate, numberOfDays, person, house);
@@ -111,76 +111,49 @@ public class ReservationServiceTest {
 	@Test
 	public void testGetReservationsForDateForMultipleReservations() throws Throwable {
 		
-		Date startDate1 = DateFactory.generateDate(27, 10, 2015);
-		Date startDate2 = DateFactory.generateDate(22,10,2015);
-		Date startDate3 = DateFactory.generateDate(29,10,2015);
+		Date startDate = DateFactory.generateDate();
+		int numberOfDays = 5;
+		Person person = new Person();
+		House house = rS.getAllHouses().get(0);
 		
-		List<Reservation> expectedReservation = new ArrayList<Reservation>();
+		List<Reservation> expectedReservations = new ArrayList<>();
 		
-		int numberOfDays = 10;
+		Reservation reservation = createReservation(startDate, numberOfDays, person, house);
+		rS.CreateReservation(reservation);
+		expectedReservations.add(reservation);
 		
-		for(int i=0;i<12;i++){
-			Person person = new Person();
-			person.setFirstName("test"+i);
-			person.setLastName("test"+i);
-			
-			Reservation reservation=createReservation(startDate1, numberOfDays, person, allHouses.get(i));
-			
-			switch (i%3) {
-			case 0:
-				reservation = createReservation(startDate1, numberOfDays, person, allHouses.get(i));
-				break;
-				
-			case 1:
-				reservation = createReservation(startDate2, numberOfDays, person, allHouses.get(i));
-				break;
-				
-			case 2:
-				reservation = createReservation(startDate3, numberOfDays, person, allHouses.get(i));
-				break;
-
-			default:
-				
-				break;
-			}
-			rS.CreateReservation(reservation);
-			expectedReservation.add(reservation);
-			
-		}
+		Reservation reservation2 = createReservation(startDate, numberOfDays, person, rS.getAllHouses().get(1));
+		rS.CreateReservation(reservation2);
+		expectedReservations.add(reservation2);
 		
-		List<Reservation> actualReservations=rS.getReservationsForDate(DateFactory.generateDate(30,10,2015));
-
-		assertEquals(expectedReservation, actualReservations);
+		List<Reservation> actualReservations = rS.getReservationsForDate(startDate.changeDate(1));
+		
+		assertEquals(expectedReservations, actualReservations);
 	}
 
 	@Test
 	public void testGetReservationsForHouseOnDate() throws Exception, Throwable {
 		House house = allHouses.get(0);
 		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
+		person.setFirstName("testF");
+		person.setLastName("testL");
+		int duration = 10;
+		
+		Date date = DateFactory.generateDate();
 		
 		
-		Date date = DateFactory.generateDate(30, 10, 2015);
-		Date date2 = DateFactory.generateDate(2, 11, 2015);
-		Date date3 = DateFactory.generateDate(3, 11, 2015);
+		Reservation reservation = createReservation(date, duration, person, house);
 		
-		Reservation reservation = createReservation(date, 7, person, house);
-		Reservation reservation2 = createReservation(date2, 7, person, house);
 		
 		List<Reservation> expectedReservations = new ArrayList<>();
 		expectedReservations.add(reservation);
-		expectedReservations.add(reservation2);
 		
 		
 		rS.CreateReservation(reservation);
 		
-		List<Reservation> reservations = rS.getReservationsForHouseOnDate(house, date3);
+		List<Reservation> reservations = rS.getReservationsForHouseOnDate(house, DateFactory.generateDate().changeDate(7));
 		
 		assertEquals(expectedReservations, reservations);
-		
-		
-		
 	}
 
 	@Test
@@ -205,13 +178,13 @@ public class ReservationServiceTest {
 	
 	@Test
 	public void testGetFirstAvailableDateHouse() throws Throwable {
-		int duration = 100;
+		int duration = 7;
 		Person person = new Person();
-		person.setFirstName("test");
-		person.setLastName("test");
+		person.setFirstName("testF");
+		person.setLastName("testL");
 		
-		Date startDate = DateFactory.generateDate(3,11,2015);
-		Date expectedDate = startDate.changeDate(duration + 1);
+		Date startDate = DateFactory.generateDate();
+		Date expectedDate = startDate.changeDate(duration);
 		
 		House house = rS.getAllHouses().get(0);
 		
@@ -265,7 +238,6 @@ public class ReservationServiceTest {
 		Reservation actualReservation = rS.getFirstReservationForPerson(person);
 		
 		assertEquals(reservation2, actualReservation);
-		
 	}
 
 	@Test
@@ -274,15 +246,14 @@ public class ReservationServiceTest {
 		person.setFirstName("testF");
 		person.setLastName("testL");
 		
-		
-		Date date = DateFactory.generateDate(4,11,2015);
+		Date date = DateFactory.generateDate();
 		
 		int duration = 7;
 		
 		House house = rS.getAllHouses().get(0);
 		
-		
 		Reservation reservation =createReservation(date, duration, person, house);
+		rS.CreateReservation(reservation);
 		
 		Reservation actualReservation = rS.getFirstReservationForPerson(person.getFirstName(), person.getLastName());
 		
