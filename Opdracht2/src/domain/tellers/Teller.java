@@ -27,7 +27,7 @@ public abstract class Teller implements Cloneable, Serializable{
 		return huidigeIndex;
 	}
 	
-	protected void setHuidigeIndex(int index){
+	public void setHuidigeIndex(int index){
 		huidigeIndex=index;
 	}
 
