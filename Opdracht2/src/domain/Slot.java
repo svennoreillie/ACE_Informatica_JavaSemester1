@@ -25,12 +25,7 @@ public class Slot {
 	}
 	
 	private void setTellers (List<Teller> inTeVoerenTellerLijst){
-		for( Teller teVerwijderenTeller : tellerLijst){
-			tellerLijst.remove(teVerwijderenTeller);
-		}
-		for (Teller toeTeVoegenTeller : inTeVoerenTellerLijst){
-			tellerLijst.add(toeTeVoegenTeller);
-		}
+		this.tellerLijst = inTeVoerenTellerLijst;
 	}
 	
 	private void setGeheimeCode (String nieuweGeheimeCode){
@@ -45,8 +40,15 @@ public class Slot {
 		return slotCombinatie.toString();
 	}
 	
+	//Methode moet nagekeken worden, toegevoegd vanwege fout in slotcontroller (uml geeft slechts 1 parameter aan) 
+	public void updateHuidigeWaardeTeller(int tellerPositieInTellerLijst) {
+		Teller huidigeTeller = tellerLijst.get(tellerPositieInTellerLijst);
+		huidigeTeller.updateHuidigeWaarde();
+	}
+	
+	//denk dat deze weg mag
 	public void updateHuidigeWaardeTeller(int tellerPositieInTellerLijst, int huidigeTellerPositie) {
-		Teller huidigeTeller = tellerLijst.get(huidigeTellerPositie);
+		Teller huidigeTeller = tellerLijst.get(tellerPositieInTellerLijst);
 		huidigeTeller.setHuidigeIndex(huidigeTellerPositie);
 	}
 	
@@ -55,7 +57,7 @@ public class Slot {
 	}
 	
 	public Boolean isGeheimGevonden() {
-		if(getSlotCombinatie() == geheimeCode)
+		if(getSlotCombinatie().equals(geheimeCode))
 		{
 			return true;
 		}
