@@ -1,21 +1,28 @@
 package domain.tellers;
 
+import java.lang.reflect.Array;
+
 import Helpers.NotImplementedException;
 
 public class CyclischeTeller extends Teller {
 
 	public CyclischeTeller() {
-		throw new NotImplementedException();
+		super();
 	}
 	
 	public CyclischeTeller(Character...chars) {
-		throw new NotImplementedException();
+		super(chars);
 	}
 	
 	@Override
 	public void updateHuidigeWaarde() {
-		// TODO Auto-generated method stub
-
+		int huidigeIndex = this.getHuidigeIndex();
+		int maximumIndex = Array.getLength(this.getMogelijkeWaarden()) - 1;
+		if (huidigeIndex == maximumIndex) {
+			this.setHuidigeIndex(0);
+		} else {
+			this.setHuidigeIndex(huidigeIndex + 1);
+		}
 	}
 
 }
