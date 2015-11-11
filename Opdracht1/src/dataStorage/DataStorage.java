@@ -67,18 +67,17 @@ public class DataStorage implements DataStorageInterface {
 	@Override
 	public void setData(String data) throws Throwable {
 		String [] splitList = data.split(";");
-		boolean b = true;
+
 		for (String s : splitList){
-			if(!this.dataFormatCheck(s)&& b){
-				b = false;
+			if(!this.dataFormatCheck(s)){
+				throw new Exception(ms.getDateFormatWrong());
 			}
 		}
-		if(b){
+
 			try{
 				PrintWriter writer = new PrintWriter(file);
 				for (String s : splitList){
-					writer.print(s);
-					writer.println();
+					writer.println(s);
 				}
 				writer.close();
 			}
@@ -88,10 +87,7 @@ public class DataStorage implements DataStorageInterface {
 			catch(Exception ex){
 				throw new Exception(ex.getMessage());
 			}
-		}
-		else{
-			throw new Exception(ms.getDateFormatWrong());
-		}
+
 	}
 
 	//List van Strings met elke reservatie in vorm: 111,5/11/2015,4>Adams,Chloe  => roept setdata aan
@@ -101,6 +97,7 @@ public class DataStorage implements DataStorageInterface {
 			fullList = new String();
 			for( String s : reservationList){
 				fullList += s;
+				fullList += ";";
 			}
 			DataStorage storage = new DataStorage();
 			storage.setData(fullList);
@@ -135,7 +132,6 @@ public class DataStorage implements DataStorageInterface {
 	//111,05/11/2015,4>Adams,Chloe
 	@Override
 	public boolean dataFormatCheck(String data) throws Throwable {
-		boolean b = true;
 		int houseNumber = 0;
 		int nights = 0;
 
@@ -143,24 +139,24 @@ public class DataStorage implements DataStorageInterface {
 		String [] splitList = data.split(">");
 		String [] splitReservationNumberDateNight = splitList[0].split(",");
 		String [] splitName = splitList[1].split(",");
-		if(splitList.length == 2 || splitReservationNumberDateNight.length == 3 || splitName.length == 2){
+		if(splitList.length == 2 && splitReservationNumberDateNight.length == 3 && splitName.length == 2){
 			try{
 					houseNumber = Integer.parseInt(splitReservationNumberDateNight[0]);
 					DateFactory.generateDate(splitReservationNumberDateNight[1]);
-					nights = Integer.parseInt(splitReservationNumberDateNight[3]);
+					nights = Integer.parseInt(splitReservationNumberDateNight[2]);
 				}
 			catch(Exception ex){
-					b = false;
+					return false;
 				}
-			if(houseNumber > 999 || nights == 0 )
+			if(houseNumber > 9999 || nights <= 0 )
 				{
-					b = false;
+					return false;
 				}
 			}
 		}
 		catch(Exception ex){
-			b = false;
+			return false;
 		}
-		return b;
+		return true;
 	}
 }
