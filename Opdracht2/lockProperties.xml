@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment/>
+<entry key="teller0Type">Cyclische teller</entry>
+<entry key="code">a</entry>
+<entry key="deblokeercode">test</entry>
+<entry key="teller0Waardes">abc</entry>
+<entry key="teller4Waardes"/>
+<entry key="teller4Type">null</entry>
+<entry key="teller3Waardes"/>
+<entry key="teller3Type">null</entry>
+<entry key="teller2Waardes"/>
+<entry key="teller2Type">null</entry>
+<entry key="teller1Type">null</entry>
+<entry key="teller1Waardes"/>
+</properties>
