@@ -33,10 +33,12 @@ public class Launcher{
       
       for(int i=0;i<tellerTypes.size();i++){
     	  TellerType tT = tellerTypes.get(i);
-    	  Character[] tW = tellerWaardes.get(i);
-    	  Object[] passed = {tW};
-    	  Teller t = TellerTypeFactory.createTellerType(tT.getKlasseNaam(), passed);
-    	  tellers.add(t);
+    	  if(tT!=null){
+    		  Character[] tW = tellerWaardes.get(i);
+        	  Object[] passed = {tW};
+        	  Teller t = TellerTypeFactory.createTellerType(tT.getKlasseNaam(), passed);
+        	  tellers.add(t);
+    	  }
       }
 
       Slot slot =new Slot(tellers,geheimeCode);
