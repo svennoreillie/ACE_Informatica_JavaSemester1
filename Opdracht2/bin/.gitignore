@@ -1,2 +1,7 @@
-/testing/
+/Helpers/
+/application/
+/controller/
 /domain/
+/testing/
+/ui/
+/db/

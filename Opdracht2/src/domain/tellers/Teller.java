@@ -32,7 +32,7 @@ public abstract class Teller implements Cloneable, Serializable{
 	}
 
 	public void resetHuidigeWaarde() {
-		this.huidigeIndex=0;
+		this.huidigeIndex = 0;
 	}
 
 	public abstract void updateHuidigeWaarde();
