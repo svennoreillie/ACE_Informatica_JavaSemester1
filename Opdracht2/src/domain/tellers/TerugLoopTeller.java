@@ -6,7 +6,7 @@ import Helpers.NotImplementedException;
 
 public class TerugLoopTeller extends Teller {
 
-	private Boolean oplopend = false;
+	private Boolean oplopend = true;
 	
 	public TerugLoopTeller() {
 		super();
@@ -35,5 +35,11 @@ public class TerugLoopTeller extends Teller {
 				oplopend = true;
 			}
 		}
+	}
+	
+	@Override
+	public void resetHuidigeWaarde(){
+		this.setHuidigeIndex(0);
+		oplopend = true;
 	}
 }
