@@ -28,5 +28,13 @@ public class CyclischeTellerTest {
 		huidigeTeller.updateHuidigeWaarde();
 		assertEquals('0',huidigeTeller.getHuidigeWaarde());
 	}
-
+	
+	@Test
+	public void testResethuidigeWaarde(){
+		huidigeTeller.updateHuidigeWaarde();
+		huidigeTeller.resetHuidigeWaarde();
+		assertEquals('0',huidigeTeller.getHuidigeWaarde());
+		huidigeTeller.resetHuidigeWaarde();
+		assertEquals('0',huidigeTeller.getHuidigeWaarde());
+	}
 }
