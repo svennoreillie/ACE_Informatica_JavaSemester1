@@ -232,6 +232,12 @@ public class Frame1 extends JFrame {
 					reservation.setStartDate(date);
 					
 					reservationService.CreateReservation(reservation);
+					clearWindow();
+					unitsAvailable.setEnabled(false);
+					textFirstName.setEnabled(false);
+					textLastName.setEnabled(false);
+					
+					JOptionPane.showMessageDialog(null, reservation.toString() + "\nRegistration succesful.");
 				} catch (Throwable e1) {
 					// TODO Auto-generated catch block
 					//e1.printStackTrace();
