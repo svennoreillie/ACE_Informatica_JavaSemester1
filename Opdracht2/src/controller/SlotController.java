@@ -87,7 +87,7 @@ public class SlotController {
 			 	case BLOCKED:
 			 		logTekst  = "Deblokkering slot mislukt";
 			 		String deblokCode = JOptionPane.showInputDialog("Typ deblokkeercode");
-			 		if (deblokCode.equals(DEBLOK_CODE)){
+			 		if (deblokCode!=null && deblokCode.equals(DEBLOK_CODE)){
 			 			 slotStatus = SlotStatus.CLOSED;
 						 bedieningsPanel.setTekstForControleButton("OPEN KLUIS");
 						 slot.resetTellers();
