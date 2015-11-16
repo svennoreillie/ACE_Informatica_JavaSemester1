@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 
 public class Winkel {
 	
+	//test
+	
 	private ArrayList<String> itemTitles;
 	private ArrayList<String> itemTypes;
 	private ArrayList<String> itemIds;
