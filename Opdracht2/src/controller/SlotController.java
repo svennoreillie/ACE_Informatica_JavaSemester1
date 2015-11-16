@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import db.PropertiesLoaderSaver;
 import domain.*;
 import domain.tellers.Teller;
 import ui.*;
 
 public class SlotController {
-	private final static String DEBLOK_CODE = "deblok";
+	private final static String DEBLOK_CODE = PropertiesLoaderSaver.getDeblokeercode();
 	private final static int MAX_AANTAL_POGINGEN = 3;
 	
 	private Slot slot;	
@@ -86,14 +87,14 @@ public class SlotController {
 			 	case BLOCKED:
 			 		logTekst  = "Deblokkering slot mislukt";
 			 		String deblokCode = JOptionPane.showInputDialog("Typ deblokkeercode");
-			 		if (deblokCode.equals(DEBLOK_CODE)){
+			 		if (deblokCode!=null && deblokCode.equals(DEBLOK_CODE)){
 			 			 slotStatus = SlotStatus.CLOSED;
 						 bedieningsPanel.setTekstForControleButton("OPEN KLUIS");
 						 slot.resetTellers();
 						 resetTellers();
 						 bedieningsPanel.setSlotButtonsActief(true);
 						 aantalPogingen = 0;
-						 logTekst = "Slot succesvol gedeblokkeerd";
+						 logTekst = "Slot succesvol gedeblokkeerd"; 
 			 		}
 			 }	
 			 bedieningsPanel.updateLogTekst( logTekst);  
