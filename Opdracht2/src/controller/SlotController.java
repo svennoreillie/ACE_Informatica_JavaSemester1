@@ -94,7 +94,7 @@ public class SlotController {
 						 resetTellers();
 						 bedieningsPanel.setSlotButtonsActief(true);
 						 aantalPogingen = 0;
-						 logTekst = "Slot succesvol gedeblokkeerd";
+						 logTekst = "Slot succesvol gedeblokkeerd"; 
 			 		}
 			 }	
 			 bedieningsPanel.updateLogTekst( logTekst);  
