@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import db.PropertiesLoaderSaver;
 import domain.*;
 import domain.tellers.Teller;
 import ui.*;
 
 public class SlotController {
-	private final static String DEBLOK_CODE = "deblok";
+	private final static String DEBLOK_CODE = PropertiesLoaderSaver.getDeblokeercode();
 	private final static int MAX_AANTAL_POGINGEN = 3;
 	
 	private Slot slot;	
