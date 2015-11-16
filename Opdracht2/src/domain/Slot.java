@@ -46,12 +46,6 @@ public class Slot {
 		huidigeTeller.updateHuidigeWaarde();
 	}
 	
-	//denk dat deze weg mag
-	public void updateHuidigeWaardeTeller(int tellerPositieInTellerLijst, int huidigeTellerPositie) {
-		Teller huidigeTeller = tellerLijst.get(tellerPositieInTellerLijst);
-		huidigeTeller.setHuidigeIndex(huidigeTellerPositie);
-	}
-	
 	public int getAantalTellers() {
 		return  tellerLijst.size();
 	}

@@ -24,9 +24,6 @@ public class SlotTest {
 	private Teller teller2;
 	private Teller teller3;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
 
 	@Before
 	public void setUp() throws Exception {

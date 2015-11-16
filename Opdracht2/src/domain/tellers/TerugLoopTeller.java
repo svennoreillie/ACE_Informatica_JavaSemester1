@@ -1,23 +1,45 @@
 package domain.tellers;
 
+import java.lang.reflect.Array;
+
 import Helpers.NotImplementedException;
 
 public class TerugLoopTeller extends Teller {
 
-	private Boolean oplopend = false;
+	private Boolean oplopend = true;
 	
 	public TerugLoopTeller() {
-		throw new NotImplementedException();
+		super();
 	}
 	
 	public TerugLoopTeller(Character...chars) {
-		throw new NotImplementedException();
+		super(chars);
 	}
 	
 	@Override
 	public void updateHuidigeWaarde() {
-		// TODO Auto-generated method stub
-
+		int huidigeWaarde = this.getHuidigeIndex();
+		int maxWaarde = Array.getLength(this.getMogelijkeWaarden()) - 1;
+		
+		if (oplopend){
+			huidigeWaarde++;
+			setHuidigeIndex(huidigeWaarde);
+			if (huidigeWaarde == maxWaarde){
+				oplopend = false;
+			}
+		}
+		else{
+			huidigeWaarde--;
+			setHuidigeIndex(huidigeWaarde);
+			if (huidigeWaarde == 0){
+				oplopend = true;
+			}
+		}
 	}
-
+	
+	@Override
+	public void resetHuidigeWaarde(){
+		this.setHuidigeIndex(0);
+		oplopend = true;
+	}
 }
