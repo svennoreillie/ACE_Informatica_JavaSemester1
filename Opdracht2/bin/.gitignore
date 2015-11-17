@@ -1,8 +1,6 @@
-/Helpers/
-/KlassenDiagram/
-/application/
-/controller/
-/db/
-/domain/
 /testing/
+/controller/
 /ui/
+/domain/
+/db/
+/KlassenDiagram/
