@@ -19,10 +19,19 @@ public class ButtonPanel extends JPanel {
 	JButton blueButton;
 	JButton yellowButton;
 	JButton redButton;
+	
+	BluePanel bluePanel;
+	YellowPanel yellowPanel;
+	RedPanel redPanel;
+	
 	MainWindow mainWindow;
 
 	public ButtonPanel(MainWindow mainWindow) {
 		super();
+		
+		bluePanel=new BluePanel();
+		yellowPanel=new YellowPanel();
+		redPanel=new RedPanel();
 
 		this.mainWindow = mainWindow;
 		
@@ -30,37 +39,35 @@ public class ButtonPanel extends JPanel {
 
 		blueButton = new JButton("Blue");
 		blueButton.addActionListener(new blueButtonListener());
+		add(blueButton);
+		
 		yellowButton = new JButton("Yellow");
 		yellowButton.addActionListener(new yellowButtonListener());
+		add(yellowButton);
+		
 		redButton = new JButton("Red");
 		redButton.addActionListener(new redButtonListener());
-
-		add(blueButton);
-		add(yellowButton);
 		add(redButton);
 	}
 
 	class blueButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Blue button");
-			mainWindow.setViewPanel(new BluePanel());
+			mainWindow.changeViewPanel(bluePanel);
 		}
 	}
 
 	class redButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Red button");
-			mainWindow.setViewPanel(new RedPanel());
+			mainWindow.changeViewPanel(redPanel);
 		}
 	}
 
 	class yellowButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Yellow button");
-			mainWindow.setViewPanel(new YellowPanel());
+			mainWindow.changeViewPanel(yellowPanel);
 		}
 	}
 
