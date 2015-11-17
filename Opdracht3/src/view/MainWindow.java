@@ -6,8 +6,6 @@ import javax.swing.JPanel;
 import view.panels.*;
 
 import java.awt.GridBagLayout;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 
 public class MainWindow extends JFrame{
@@ -31,6 +29,7 @@ public class MainWindow extends JFrame{
 		contentPanel.setLayout(gbl);
 		buttonPanel = new ButtonPanel(this);
 		setButtonPanel(buttonPanel);
+		setViewPanel(buttonPanel.getHomePanel());
 
 		this.setContentPane(contentPanel);
 		this.setSize(800, 600);
@@ -63,5 +62,4 @@ public class MainWindow extends JFrame{
 		setVisible(true);
 	}
 	
-
 }
