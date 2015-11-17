@@ -48,12 +48,15 @@ public class ButtonPanel extends JPanel {
 		redButton = new JButton("Red");
 		redButton.addActionListener(new redButtonListener());
 		add(redButton);
+		
+		
 	}
 
 	class blueButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainWindow.changeViewPanel(bluePanel);
+			bluePanel.repaint();
 		}
 	}
 
@@ -61,6 +64,7 @@ public class ButtonPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainWindow.changeViewPanel(redPanel);
+			redPanel.repaint();
 		}
 	}
 
@@ -68,6 +72,7 @@ public class ButtonPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainWindow.changeViewPanel(yellowPanel);
+			yellowPanel.repaint();
 		}
 	}
 

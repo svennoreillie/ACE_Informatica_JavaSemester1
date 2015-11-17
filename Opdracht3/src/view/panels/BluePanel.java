@@ -14,6 +14,5 @@ public class BluePanel extends JPanel{
 	public BluePanel(){
 		super();
 		setBackground(Color.BLUE);
-	}
-	
+	}	
 }

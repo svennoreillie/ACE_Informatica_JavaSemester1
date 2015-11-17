@@ -14,8 +14,5 @@ public class RedPanel extends JPanel{
 	public RedPanel(){
 		super();
 		setBackground(Color.RED);
-	}
-
-	
-	
+	}	
 }

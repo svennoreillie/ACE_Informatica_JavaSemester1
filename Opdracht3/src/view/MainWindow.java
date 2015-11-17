@@ -7,6 +7,7 @@ import view.panels.*;
 
 import java.awt.GridBagLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 
 public class MainWindow extends JFrame{
@@ -17,7 +18,6 @@ public class MainWindow extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPanel;
-	private JPanel viewPanel;
 	private ButtonPanel buttonPanel;
 
 	public MainWindow() {
@@ -31,9 +31,6 @@ public class MainWindow extends JFrame{
 		contentPanel.setLayout(gbl);
 		buttonPanel = new ButtonPanel(this);
 		setButtonPanel(buttonPanel);
-		viewPanel=new JPanel();
-		viewPanel.setBackground(Color.ORANGE);
-		setViewPanel(viewPanel);
 
 		this.setContentPane(contentPanel);
 		this.setSize(800, 600);
@@ -43,7 +40,7 @@ public class MainWindow extends JFrame{
 		this.setVisible(true);
 	}
 
-	public void setViewPanel(JPanel panel) {
+	private void setViewPanel(JPanel panel) {
 		GridBagConstraints gbc_viewPanel = new GridBagConstraints();
 		gbc_viewPanel.gridy = 0;
 		gbc_viewPanel.gridx = 1;
@@ -61,8 +58,10 @@ public class MainWindow extends JFrame{
 	
 	public void changeViewPanel(JPanel panel) {	
 		contentPanel.removeAll();
-		setButtonPanel(new ButtonPanel(this));
+		setButtonPanel(buttonPanel);
 		setViewPanel(panel);
 		setVisible(true);
 	}
+	
+
 }
