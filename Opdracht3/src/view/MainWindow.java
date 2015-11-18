@@ -1,11 +1,13 @@
 package view;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import view.panels.*;
 
 import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 public class MainWindow extends JFrame{
@@ -52,6 +54,9 @@ public class MainWindow extends JFrame{
 		gbc_buttonPanel.gridy = 0;
 		gbc_buttonPanel.gridx = 0;
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+		
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		contentPanel.add(buttonPanel, gbc_buttonPanel);
 	}
 	
