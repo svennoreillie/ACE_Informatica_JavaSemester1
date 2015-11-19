@@ -3,6 +3,8 @@
  */
 package model;
 
+import common.MagicStrings;
+
 /**
  * A customer's details, including name, adress, e-mail and an unique ID.
  * 
@@ -15,12 +17,23 @@ public class Customer {
 	private Adress adress;
 	private int id;
 	private String email;
+	private MagicStrings magicString;
 	
-	public Customer(Person person, Adress adress, int id, String email){
-		setPerson(person);
-		setAdress(adress);
-		setId(id);
-		setEmail(email);
+	public Customer(Person person, Adress adress, int id, String email) throws Exception{
+		try{
+			if (this.adress.getStreet() == "" || this.adress.getNumber() == "" || this.adress.getZip() == "" 
+					|| this.adress.getCity() == "" || this.adress.getCountry() == "") throw new Exception(magicString.getAdressNull());
+			if (this.person.getFirstName() == "") throw new Exception(magicString.getFirstNameNull());
+			if (this.person.getLastName() == "") throw new Exception(magicString.getLastNameNull());
+			
+			setPerson(person);
+			setAdress(adress);
+			setId(id);
+			setEmail(email);
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
 	
 	public Person getPerson() {

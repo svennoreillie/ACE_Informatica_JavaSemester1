@@ -5,17 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import model.Adress;
+
 public class AdressTest {
+	
+	Adress test1;
+	Adress test2;
 
 	@Before
 	public void setUp() throws Exception {
-		String street = "Lelielaan";
-		String number = "123";
-		String box;
-		String zip = "9000"; 
-		String city = "Buchtbeek";
-		String country = "Belgium";
-		
+		test1 = new Adress("Lelielaan", "123", "", "9000", "Buchtbeek", "Belgium");
+		test2 = new Adress("Brolbaan", "987", "bus 0305", "7000", "Sint-Haldis-Leeuw", "Belgium");
 	}
 
 	@Test
@@ -25,67 +25,84 @@ public class AdressTest {
 
 	@Test
 	public void testSetStreet() {
-		fail("Not yet implemented");
+		test1.setStreet("test");
+		assertEquals("test", test1.getStreet());
 	}
 
 	@Test
 	public void testGetStreet() {
-		fail("Not yet implemented");
+		System.out.println(test1.getStreet());
+		assertEquals("Lelielaan", test1.getStreet());
+		
+		System.out.println(test2.getStreet());
+		assertEquals("Brolbaan", test1.getStreet());
 	}
 
 	@Test
 	public void testSetNumber() {
-		fail("Not yet implemented");
+		test1.setNumber("69");
+		assertEquals("69", test1.getNumber());
 	}
 
 	@Test
 	public void testGetNumber() {
-		fail("Not yet implemented");
+		assertEquals("123", test1.getNumber());
 	}
 
 	@Test
 	public void testGetBox() {
-		fail("Not yet implemented");
+		assertEquals("", test1.getBox());
+		assertEquals("bus 0305", test2.getBox());
 	}
 
 	@Test
 	public void testSetBox() {
-		fail("Not yet implemented");
+		test1.setBox("testbus");
+		assertEquals("testbus", test1.getBox());
+		
+		test2.setBox("testbus2");
+		assertEquals("testbus2", test2.getBox());
 	}
 
 	@Test
 	public void testGetZip() {
-		fail("Not yet implemented");
+		assertEquals("9000", test1.getZip());
+		assertEquals("7000", test2.getZip());
 	}
 
 	@Test
 	public void testSetZip() {
-		fail("Not yet implemented");
+		test1.setZip("testzip");
+		assertEquals("testzip", test1.getZip());
 	}
 
 	@Test
 	public void testGetCity() {
-		fail("Not yet implemented");
+		assertEquals("Buchtbeek", test1.getCity());
+		assertEquals("Sint-Haldis-Leeuw", test2.getCity());
 	}
 
 	@Test
 	public void testSetCity() {
-		fail("Not yet implemented");
+		test1.setCity("testcity");
+		assertEquals("testcity", test1.getCity());
 	}
 
 	@Test
 	public void testGetCountry() {
-		fail("Not yet implemented");
+		assertEquals("Belgium", test1.getCountry());
 	}
 
 	@Test
 	public void testSetCountry() {
-		fail("Not yet implemented");
+		test1.setCountry("France");
+		assertEquals("France", test1.getCountry());
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertEquals("Lelielaan 123, 9000 Buchtbeek, Belgium", test1.toString());
+		assertEquals("Brolbaan 987 bus 0305, 7000 Sint-Haldis-Leeuw, Belgium", test2.toString());
 	}
 
 }
