@@ -14,13 +14,14 @@ public class AdressTest {
 
 	@Before
 	public void setUp() throws Exception {
-		test1 = new Adress("Lelielaan", "123", "", "9000", "Buchtbeek", "Belgium");
-		test2 = new Adress("Brolbaan", "987", "bus 0305", "7000", "Sint-Haldis-Leeuw", "Belgium");
+		test1 = new Adress("abc", "123", "", "1234", "gemeente1", "Belgium");
+		test2 = new Adress("zyx", "987", "bus 0001", "9876", "gemeente2", "Belgium");
 	}
 
 	@Test
 	public void testAdress() {
-		fail("Not yet implemented");
+		Adress test3 = new Adress("Lelielaan", "27", "", "3069", "Buchtbeek", "Belgium");
+		assertEquals("Lelielaan 27, 3069 Buchtbeek, Belgium", test3.toString());
 	}
 
 	@Test
@@ -31,11 +32,8 @@ public class AdressTest {
 
 	@Test
 	public void testGetStreet() {
-		System.out.println(test1.getStreet());
-		assertEquals("Lelielaan", test1.getStreet());
-		
-		System.out.println(test2.getStreet());
-		assertEquals("Brolbaan", test1.getStreet());
+		assertEquals("abc", test1.getStreet());
+		assertEquals("zyx", test2.getStreet());
 	}
 
 	@Test
@@ -52,7 +50,7 @@ public class AdressTest {
 	@Test
 	public void testGetBox() {
 		assertEquals("", test1.getBox());
-		assertEquals("bus 0305", test2.getBox());
+		assertEquals("bus 0001", test2.getBox());
 	}
 
 	@Test
@@ -66,8 +64,8 @@ public class AdressTest {
 
 	@Test
 	public void testGetZip() {
-		assertEquals("9000", test1.getZip());
-		assertEquals("7000", test2.getZip());
+		assertEquals("1234", test1.getZip());
+		assertEquals("9876", test2.getZip());
 	}
 
 	@Test
@@ -78,8 +76,8 @@ public class AdressTest {
 
 	@Test
 	public void testGetCity() {
-		assertEquals("Buchtbeek", test1.getCity());
-		assertEquals("Sint-Haldis-Leeuw", test2.getCity());
+		assertEquals("gemeente1", test1.getCity());
+		assertEquals("gemeente2", test2.getCity());
 	}
 
 	@Test
@@ -101,8 +99,8 @@ public class AdressTest {
 
 	@Test
 	public void testToString() {
-		assertEquals("Lelielaan 123, 9000 Buchtbeek, Belgium", test1.toString());
-		assertEquals("Brolbaan 987 bus 0305, 7000 Sint-Haldis-Leeuw, Belgium", test2.toString());
+		assertEquals("abc 123, 1234 gemeente1, Belgium", test1.toString());
+		assertEquals("zyx 987 bus 0001, 9876 gemeente2, Belgium", test2.toString());
 	}
 
 }
