@@ -23,4 +23,32 @@ public class Games extends model.Item {
 		super(titel, verhuurPrijsInEuro, beginVerhuurDatum, verhuurPeriodeInDagen, verhuurPrijsPerDag);
 		this.setGameType(gameType);
 	}
+
+	@Override
+	public String toString() {
+		return "Games [gameType=" + gameType + ", " + super.toString() + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((gameType == null) ? 0 : gameType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Games other = (Games) obj;
+		if (gameType != other.gameType)
+			return false;
+		return true;
+	}
+	
 }
