@@ -3,7 +3,7 @@
  */
 package model;
 
-import common.MagicStrings;
+import common.AntiMagicStrings;
 
 /**
  * A customer's details, including name, adress, e-mail and an unique ID.
@@ -17,7 +17,7 @@ public class Customer {
 	private Adress adress;
 	private int id;
 	private String email;
-	private MagicStrings magicString;
+	private AntiMagicStrings magicString;
 	
 	public Customer(Person person, Adress adress, int id, String email) throws Exception{
 		try{
