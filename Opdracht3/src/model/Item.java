@@ -1,16 +1,22 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-public class Item extends ModelBase {
+
+abstract public class Item extends ModelBase {
 
 
 	private static final long serialVersionUID = 1122921448314180585L;
 	
-	
 	private String titel;
-	private BigDecimal verhuurPrijs;
-	private ItemType type;
+	
+
+	private BigDecimal verhuurPrijsInEuro;
+	private Date beginVerhuurDatum;
+	private int verhuurPeriodeInDagen;
+	private Double verhuurPrijsPerDag;
+	
 	
 	public String getTitel() {
 		return titel;
@@ -18,27 +24,46 @@ public class Item extends ModelBase {
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
-	
 	public BigDecimal getVerhuurPrijs() {
-		return verhuurPrijs;
+		return verhuurPrijsInEuro;
 	}
 	public void setVerhuurPrijs(BigDecimal verhuurPrijs) {
-		this.verhuurPrijs = verhuurPrijs;
+		this.verhuurPrijsInEuro = verhuurPrijs;
+	}
+	public Date getBeginVerhuurDatum() {
+		return beginVerhuurDatum;
+	}
+	public void setBeginVerhuurDatum(Date beginVerhuurDatum) {
+		this.beginVerhuurDatum = beginVerhuurDatum;
+	}
+	public int getVerhuurPeriodeInDagen() {
+		return verhuurPeriodeInDagen;
+	}
+	public void setVerhuurPeriodeInDagen(int verhuurPeriodeInDagen) {
+		this.verhuurPeriodeInDagen = verhuurPeriodeInDagen;
+	}
+	public Double getVerhuurPrijsPerDag() {
+		return verhuurPrijsPerDag;
+	}
+	public void setVerhuurPrijsPerDag(Double verhuurPrijsPerDag) {
+		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
 	
-	public ItemType getType() {
-		return type;
+	public Item(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
+			Double verhuurPrijsPerDag) {
+		this.setTitel(titel);
+		this.setVerhuurPrijs(verhuurPrijsInEuro);
+		this.setBeginVerhuurDatum(beginVerhuurDatum);
+		this.setVerhuurPeriodeInDagen(verhuurPeriodeInDagen);
+		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
 	}
-	public void setType(ItemType type) {
-		this.type = type;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((titel == null) ? 0 : titel.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((verhuurPrijs == null) ? 0 : verhuurPrijs.hashCode());
+		result = prime * result + ((verhuurPrijsInEuro == null) ? 0 : verhuurPrijsInEuro.hashCode());
 		return result;
 	}
 	@Override
@@ -55,20 +80,17 @@ public class Item extends ModelBase {
 				return false;
 		} else if (!titel.equals(other.titel))
 			return false;
-		if (type != other.type)
-			return false;
-		if (verhuurPrijs == null) {
-			if (other.verhuurPrijs != null)
+		if (verhuurPrijsInEuro == null) {
+			if (other.verhuurPrijsInEuro != null)
 				return false;
-		} else if (!verhuurPrijs.equals(other.verhuurPrijs))
+		} else if (!verhuurPrijsInEuro.equals(other.verhuurPrijsInEuro))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Item [titel=" + titel + ", verhuurPrijs=" + verhuurPrijs + ", type=" + type + "]";
+		return "Item [titel=" + titel + ", verhuurPrijs=" + verhuurPrijsInEuro + "]";
 	}
-	
 	
 }
