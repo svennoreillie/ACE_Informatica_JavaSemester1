@@ -1,19 +1,20 @@
 /**
  * 
  */
-package model;
+package model.subItems;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
+import model.Item;
 
 /**
  * @author Peter
  *
  */
-public class Dvd extends Item {
+public class Dvd extends model.Item {
 
 	private EnumTypeDvd dvdType;
 	

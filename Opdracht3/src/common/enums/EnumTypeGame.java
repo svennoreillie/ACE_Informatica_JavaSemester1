@@ -1,6 +1,6 @@
 package common.enums;
 
-public enum EnumTypeGames {
+public enum EnumTypeGame {
 	FIRSTPERSONSHOOTER,
 	MASSIVEMULTIPLAYERONLINE,
 	ROLEPLAYINGGAME

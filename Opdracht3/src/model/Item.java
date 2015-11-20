@@ -3,6 +3,8 @@ package model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import model.ModelBase;
+
 
 abstract public class Item extends ModelBase {
 
