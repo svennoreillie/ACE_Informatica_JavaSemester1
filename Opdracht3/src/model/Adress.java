@@ -25,8 +25,14 @@ public class Adress {
 	}
 	
 	public void setStreet(String s){
-		this.street = s;
+		try{
+			this.street = s;
+		}
+		catch (Exception e){
+			throw e;
+		}
 	}
+	
 	public String getStreet(){
 		return this.street;
 	}
@@ -77,7 +83,7 @@ public class Adress {
 		if (this.box != ""){
 			sb.append(" " + this.box);
 		}
-		sb.append(", " + this.zip + this.city + this.country);
+		sb.append(", " + this.zip + " " + this.city + ", " +this.country);
 		
 		return sb.toString();
 	}
