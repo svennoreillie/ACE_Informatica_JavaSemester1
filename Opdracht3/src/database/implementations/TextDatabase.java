@@ -54,7 +54,7 @@ public class TextDatabase<T extends ModelBase> implements DataReadWriteService<T
 		} catch (EOFException e) {
 			throw e;
 		} catch (IOException e) {
-			throw new DBException(MagicStrings.DBReadError, e);
+			throw new DBException(AntiMagicStrings.DBReadError, e);
 		}
 	}
 
@@ -64,7 +64,7 @@ public class TextDatabase<T extends ModelBase> implements DataReadWriteService<T
 			ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(this.dbPath));
 			return stream;
 		} catch (IOException e) {
-			throw new DBException(MagicStrings.DBWriteError, e);
+			throw new DBException(AntiMagicStrings.DBWriteError, e);
 		}
 	}
 
