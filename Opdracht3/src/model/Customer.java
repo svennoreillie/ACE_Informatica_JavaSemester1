@@ -19,8 +19,8 @@ public class Customer extends ModelBase{
 	private static final long serialVersionUID = -6548433533448484653L;
 	private Person person;
 	private Adress adress;
-	//private int id;
 	private String email;
+	private boolean spam = false;
 	private MagicStrings magicString;
 	
 	public Customer(Person person, Adress adress, String email) throws Exception{
@@ -33,18 +33,6 @@ public class Customer extends ModelBase{
 			throw e;
 		}
 	}
-	
-	/*
-	public Customer(Person person, Adress adress, String email, int ID) throws Exception{
-		try{
-			Customer cust = new Customer(person, adress, email);
-			super(ID);
-		}
-		catch (Exception e){
-			throw e;
-		}
-	}
-	*/
 	
 	public Person getPerson() {
 		return person;
@@ -63,5 +51,11 @@ public class Customer extends ModelBase{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public boolean getSpam(){
+		return spam;
+	}
+	public void setSpam(boolean bool){
+		this.spam = bool;
 	}
 }

@@ -37,7 +37,6 @@ public class CustomerTest {
 		try {
 			customer2 = new Customer(person, adress, email);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -64,11 +63,6 @@ public class CustomerTest {
 		Adress newAdress = new Adress("abc", "123", "", "1234", "zyx", "Belgium");
 		customer.setAdress(newAdress);
 		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAdress().toString());
-	}
-
-	@Test
-	public void testGetId() {
-		assertEquals(1, customer.getId());
 	}
 
 	@Test

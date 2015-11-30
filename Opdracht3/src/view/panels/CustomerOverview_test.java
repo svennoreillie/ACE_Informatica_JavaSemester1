@@ -23,7 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 
-public class CustomerOverview extends JPanel {
+public class CustomerOverview_test extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
 	private JTable tableCustomers;
 	private JTextField tfFirstName;
@@ -45,7 +45,7 @@ public class CustomerOverview extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CustomerOverview() {
+	public CustomerOverview_test() {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
