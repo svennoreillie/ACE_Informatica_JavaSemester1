@@ -29,7 +29,7 @@ public class Dvd extends model.Item {
 	public Dvd(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
 			Double verhuurPrijsPerDag, EnumTypeDvd type) {
 		super(titel, verhuurPrijsInEuro, beginVerhuurDatum, verhuurPeriodeInDagen, verhuurPrijsPerDag);
-		this.setDvdType(type);	
+		setDvdType(type);	
 	}
 
 	@Override

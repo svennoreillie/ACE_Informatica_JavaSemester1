@@ -21,7 +21,7 @@ public class Games extends model.Item {
 	public Games(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
 			Double verhuurPrijsPerDag, EnumTypeGame gameType) {
 		super(titel, verhuurPrijsInEuro, beginVerhuurDatum, verhuurPeriodeInDagen, verhuurPrijsPerDag);
-		this.setGameType(gameType);
+		setGameType(gameType);
 	}
 
 	@Override
