@@ -6,7 +6,6 @@ import java.util.List;
 
 import controller.MainWindowController;
 import model.Item;
-import model.ItemType;
 import model.Shop;
 import view.MainWindow;
 
@@ -16,9 +15,10 @@ public class App {
 		List<Item> items = new ArrayList<Item>();
 		
 		for(int i = 0; i<200;i++){
-			Item item = new Item();
+			Item item;
 			
-			if(i<100){
+			/*if(i<100){
+				item=
 				item.setId(i);
 				item.setType(ItemType.FILM);
 				item.setTitel("Film " + i);
@@ -28,9 +28,9 @@ public class App {
 				item.setType(ItemType.GAME);
 				item.setTitel("Game " + (i-100));
 				item.setVerhuurPrijs(new BigDecimal(3));
-			}
+			}*/
 			
-			items.add(item);
+			//items.add(item);
 		}
 		
 		shop.setItems(items);

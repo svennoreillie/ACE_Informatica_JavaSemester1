@@ -37,7 +37,7 @@ public class MainWindow extends JFrame{
 		setViewPanel(buttonPanel.getHomePanel());
 
 		this.setContentPane(contentPanel);
-		this.setSize(800, 600);
+		this.setSize(800, 630);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -26,11 +26,13 @@ public class ButtonPanel extends JPanel {
 	JButton yellowButton;
 	JButton redButton;
 	JButton rentalStatusButton;
+	JButton customerOverviewButton;
 	
 	BluePanel bluePanel;
 	YellowPanel yellowPanel;
 	RedPanel redPanel;
 	RentalStatusPanel rentalStatusPanel;
+	CustomerOverview customerOverview;
 	
 	ButtonPanelController controller;
 	
@@ -87,6 +89,18 @@ public class ButtonPanel extends JPanel {
 		rentalStatusButton=new JButton("Huur status");
 		rentalStatusButton.addActionListener(new RentalStatusButtonListener());
 		add(rentalStatusButton,gbc);
+		
+		customerOverview = new CustomerOverview();
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=4;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		customerOverviewButton = new JButton("Customer overview");
+		customerOverviewButton.addActionListener(new CustomerOverviewButtonListener());
+		add(customerOverviewButton,gbc);
+		
+		
+		
 	}
 	
 	public JPanel getHomePanel(){
@@ -123,6 +137,16 @@ public class ButtonPanel extends JPanel {
 			mainWindow.changeViewPanel(rentalStatusPanel);
 			rentalStatusPanel.repaint();
 		}
+	}
+	
+	class CustomerOverviewButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainWindow.changeViewPanel(customerOverview);
+			customerOverview.repaint();
+		}
+		
 	}
 
 	public void setController(ButtonPanelController controller) {
