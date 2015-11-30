@@ -14,12 +14,12 @@ import common.MagicStrings;
 public class Customer {
 	
 	private Person person;
-	private Adress adress;
+	private Address adress;
 	private int id;
 	private String email;
 	private MagicStrings magicString;
 	
-	public Customer(Person person, Adress adress, int id, String email) throws Exception{
+	public Customer(Person person, Address adress, int id, String email) throws Exception{
 		try{
 			// TODO er is ergens een fout in deze booleans
 			/*
@@ -44,10 +44,10 @@ public class Customer {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	public Adress getAdress() {
+	public Address getAdress() {
 		return adress;
 	}
-	public void setAdress(Adress adress) {
+	public void setAdress(Address adress) {
 		this.adress = adress;
 	}
 	public int getId() {

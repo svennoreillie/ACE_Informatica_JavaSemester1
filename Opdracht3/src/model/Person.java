@@ -6,7 +6,7 @@ package model;
  * @author Andre
  *
  */
-public class Person {
+public class Person extends ModelBase {
 	
 	private String firstName;
 	private String lastName;
