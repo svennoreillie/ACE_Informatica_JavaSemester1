@@ -1,22 +1,12 @@
 package common;
 
 public class AntiMagicStrings {
-	public final String firstNameNull = "Please enter the customer's first name.";
-	public final String lastNameNull = "Please enter the customer's last name.";
-	public final String adressNull = "Please fill in the customer's adress.";
-	
-	
-	// constructor
-	public AntiMagicStrings(){
-	}
-	
-	public String getFirstNameNull() {
-		return firstNameNull;
-	}
-	public String getLastNameNull() {
-		return lastNameNull;
-	}
-	public String getAdressNull() {
-		return adressNull;
-	}
+	public static final String firstNameNull = "Please enter the customer's first name.";
+	public static final String lastNameNull = "Please enter the customer's last name.";
+	public static final String adressNull = "Please fill in the customer's adress.";
+	public static final String DBReadError = "Failure reading from database";
+	public static final String DBWriteError = "Failure writing to database";
+	public static final String DBClassFailure = "Read succesful but no class was found";
+	public static final String DBEOFFailure = "End of file on unexpected place";
+	public static final String DBWriteListError = "Attempt to save null or empty list";
 }

@@ -5,22 +5,22 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import model.Adress;
+import model.Address;
 
 public class AdressTest {
 	
-	Adress test1;
-	Adress test2;
+	Address test1;
+	Address test2;
 
 	@Before
 	public void setUp() throws Exception {
-		test1 = new Adress("abc", "123", "", "1234", "gemeente1", "Belgium");
-		test2 = new Adress("zyx", "987", "bus 0001", "9876", "gemeente2", "Belgium");
+		test1 = new Address("abc", "123", "", "1234", "gemeente1", "Belgium");
+		test2 = new Address("zyx", "987", "bus 0001", "9876", "gemeente2", "Belgium");
 	}
 
 	@Test
 	public void testAdress() {
-		Adress test3 = new Adress("Lelielaan", "27", "", "3069", "Buchtbeek", "Belgium");
+		Address test3 = new Address("Lelielaan", "27", "", "3069", "Buchtbeek", "Belgium");
 		assertEquals("Lelielaan 27, 3069 Buchtbeek, Belgium", test3.toString());
 	}
 

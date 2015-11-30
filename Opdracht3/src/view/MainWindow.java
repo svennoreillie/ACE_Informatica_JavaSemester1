@@ -1,11 +1,15 @@
 package view;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.ButtonPanelController;
+import controller.MainWindowController;
 import view.panels.*;
 
 import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 
 public class MainWindow extends JFrame{
@@ -17,6 +21,7 @@ public class MainWindow extends JFrame{
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
+	private MainWindowController controller;
 
 	public MainWindow() {
 		GridBagLayout gbl = new GridBagLayout();
@@ -32,7 +37,7 @@ public class MainWindow extends JFrame{
 		setViewPanel(buttonPanel.getHomePanel());
 
 		this.setContentPane(contentPanel);
-		this.setSize(800, 600);
+		this.setSize(800, 630);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +57,9 @@ public class MainWindow extends JFrame{
 		gbc_buttonPanel.gridy = 0;
 		gbc_buttonPanel.gridx = 0;
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+		
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		contentPanel.add(buttonPanel, gbc_buttonPanel);
 	}
 	
@@ -60,6 +68,11 @@ public class MainWindow extends JFrame{
 		setButtonPanel(buttonPanel);
 		setViewPanel(panel);
 		setVisible(true);
+	}
+	
+	public void setController(MainWindowController controller){
+		this.controller =controller;
+		buttonPanel.setController(new ButtonPanelController(controller.getShop()));		
 	}
 	
 }
