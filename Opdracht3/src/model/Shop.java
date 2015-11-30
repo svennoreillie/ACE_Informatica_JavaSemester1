@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import model.Item;
+
 public class Shop extends ModelBase {
 
 	private static final long serialVersionUID = 1569780515984359142L;

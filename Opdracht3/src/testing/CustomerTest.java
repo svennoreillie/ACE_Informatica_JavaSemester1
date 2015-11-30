@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import common.MagicStrings;
+import common.AntiMagicStrings;
 import model.Adress;
 import model.Customer;
 import model.Person;
@@ -56,9 +56,8 @@ public class CustomerTest {
 	@Test
 	public void testSetPerson() {
 		Person person2 = new Person("Leo", "Haldis");
-		
 		customer.setPerson(person2);
-		assertEquals("Leo Haldis", this.person.toString());
+		assertEquals("Leo Haldis", customer.getPerson().toString());
 	}
 
 	@Test
@@ -70,8 +69,7 @@ public class CustomerTest {
 	public void testSetAdress() {
 		Adress newAdress = new Adress("abc", "123", "", "1234", "zyx", "Belgium");
 		customer.setAdress(newAdress);
-		
-		assertEquals("abc 123, 1234 zyx, Belgium", this.adress.toString());
+		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAdress().toString());
 	}
 
 	@Test
