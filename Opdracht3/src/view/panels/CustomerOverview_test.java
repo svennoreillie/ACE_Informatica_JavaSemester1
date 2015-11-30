@@ -39,8 +39,6 @@ public class CustomerOverview_test extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private JCheckBox chckbxSpam;
-	private CustomerTableModel tableModel;
 
 	/**
 	 * Create the panel.
@@ -55,8 +53,9 @@ public class CustomerOverview_test extends JPanel {
 		add(scrollPane);
 		
 		
-		//tableModel = new CustomerTableModel();
-		tableCustomers = new JTable(tableModel);
+		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
+		
+		tableCustomers = new JTable();
 		/*
 		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
 		tableCustomers = new JTable(Object[][] rowData, columnNames);
@@ -235,7 +234,6 @@ public class CustomerOverview_test extends JPanel {
 		this.tfNumber.setEnabled(true);
 		this.tfZip.setEnabled(true);
 		this.tfCustomerID.setEnabled(true);
-		this.chckbxSpam.setEnabled(true);
 	}
 	
 	private void disableAll(){
