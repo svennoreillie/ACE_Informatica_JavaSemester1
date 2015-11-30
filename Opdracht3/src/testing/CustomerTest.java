@@ -2,10 +2,7 @@ package testing;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import common.MagicStrings;
@@ -18,17 +15,15 @@ public class CustomerTest {
 	private Customer customer;
 	private Person person;
 	private Adress adress;
-	private int id;
 	private String email;
 	
 	@Before
 	public void setUp() throws Exception {
 		person = new Person("First", "Last");
 		adress = new Adress("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
-		id = 1;
 		email = "test@test.test";
 		
-		customer = new Customer(person, adress, id, email);
+		customer = new Customer(person, adress, email);
 	}
 
 	@Test
@@ -37,11 +32,10 @@ public class CustomerTest {
 		
 		person = new Person("First", "Last");
 		adress = new Adress("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
-		id = 1;
 		email = "test@test.test";
 		
 		try {
-			customer2 = new Customer(person, adress, id, email);
+			customer2 = new Customer(person, adress, email);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

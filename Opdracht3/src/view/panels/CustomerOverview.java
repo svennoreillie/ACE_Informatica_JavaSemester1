@@ -8,6 +8,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import model.Adress;
+import model.Customer;
+import model.Person;
+
 import java.awt.Font;
 import javax.swing.JSeparator;
 import java.awt.event.ActionListener;
@@ -16,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CustomerOverview extends JPanel {
+	private static final long serialVersionUID = 3080524381208533700L;
 	private JTable tableCustomers;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
@@ -46,6 +52,10 @@ public class CustomerOverview extends JPanel {
 		add(scrollPane);
 		
 		tableCustomers = new JTable();
+		/*
+		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
+		tableCustomers = new JTable(Object[][] rowData, columnNames);
+		*/
 		scrollPane.setViewportView(tableCustomers);
 		
 		
@@ -179,8 +189,17 @@ public class CustomerOverview extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (registerMode){
 					
-					// TODO: register new customer from text fields
+					//Create a new customer
+					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
+					Adress newAdress = new Adress(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
 					
+					// TODO incremental
+					try {
+						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				if (searchMode){
 					
