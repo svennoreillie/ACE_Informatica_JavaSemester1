@@ -12,14 +12,18 @@ abstract public class Item extends ModelBase {
 	private static final long serialVersionUID = 1122921448314180585L;
 	
 	private String titel;
-	
-
+	private final int boetePrijsPerDag = 3;
 	private BigDecimal verhuurPrijsInEuro;
-	private Date beginVerhuurDatum;
-	private int verhuurPeriodeInDagen;
 	private Double verhuurPrijsPerDag;
+	private boolean isUitgeleend;
 	
 	
+	public boolean isUitgeleend() {
+		return isUitgeleend;
+	}
+	public void setUitgeleend(boolean isUitgeleend) {
+		this.isUitgeleend = isUitgeleend;
+	}
 	public String getTitel() {
 		return titel;
 	}
@@ -32,18 +36,7 @@ abstract public class Item extends ModelBase {
 	public void setVerhuurPrijs(BigDecimal verhuurPrijs) {
 		this.verhuurPrijsInEuro = verhuurPrijs;
 	}
-	public Date getBeginVerhuurDatum() {
-		return beginVerhuurDatum;
-	}
-	public void setBeginVerhuurDatum(Date beginVerhuurDatum) {
-		this.beginVerhuurDatum = beginVerhuurDatum;
-	}
-	public int getVerhuurPeriodeInDagen() {
-		return verhuurPeriodeInDagen;
-	}
-	public void setVerhuurPeriodeInDagen(int verhuurPeriodeInDagen) {
-		this.verhuurPeriodeInDagen = verhuurPeriodeInDagen;
-	}
+	
 	public Double getVerhuurPrijsPerDag() {
 		return verhuurPrijsPerDag;
 	}
@@ -51,12 +44,10 @@ abstract public class Item extends ModelBase {
 		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
 	
-	public Item(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
-			Double verhuurPrijsPerDag) {
+	public Item(String titel, BigDecimal verhuurPrijsInEuro, 
+			Double verhuurPrijsPerDag, BigDecimal boeteBedragPerDag) {
 		this.setTitel(titel);
 		this.setVerhuurPrijs(verhuurPrijsInEuro);
-		this.setBeginVerhuurDatum(beginVerhuurDatum);
-		this.setVerhuurPeriodeInDagen(verhuurPeriodeInDagen);
 		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
 	}
 	
