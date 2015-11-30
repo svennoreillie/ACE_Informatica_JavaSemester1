@@ -1,44 +1,62 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
-public class Item extends ModelBase {
+import model.ModelBase;
+
+
+abstract public class Item extends ModelBase {
 
 
 	private static final long serialVersionUID = 1122921448314180585L;
 	
-	
 	private String titel;
-	private BigDecimal verhuurPrijs;
-	private ItemType type;
+	private final int boetePrijsPerDag = 3;
+	private BigDecimal verhuurPrijsInEuro;
+	private Double verhuurPrijsPerDag;
+	private boolean isUitgeleend;
 	
+	
+	public boolean isUitgeleend() {
+		return isUitgeleend;
+	}
+	public void setUitgeleend(boolean isUitgeleend) {
+		this.isUitgeleend = isUitgeleend;
+	}
 	public String getTitel() {
 		return titel;
 	}
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
-	
 	public BigDecimal getVerhuurPrijs() {
-		return verhuurPrijs;
+		return verhuurPrijsInEuro;
 	}
 	public void setVerhuurPrijs(BigDecimal verhuurPrijs) {
-		this.verhuurPrijs = verhuurPrijs;
+		this.verhuurPrijsInEuro = verhuurPrijs;
 	}
 	
-	public ItemType getType() {
-		return type;
+	public Double getVerhuurPrijsPerDag() {
+		return verhuurPrijsPerDag;
 	}
-	public void setType(ItemType type) {
-		this.type = type;
+	public void setVerhuurPrijsPerDag(Double verhuurPrijsPerDag) {
+		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
+	
+	public Item(String titel, BigDecimal verhuurPrijsInEuro, 
+			Double verhuurPrijsPerDag, BigDecimal boeteBedragPerDag) {
+		this.setTitel(titel);
+		this.setVerhuurPrijs(verhuurPrijsInEuro);
+		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((titel == null) ? 0 : titel.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((verhuurPrijs == null) ? 0 : verhuurPrijs.hashCode());
+		result = prime * result + ((verhuurPrijsInEuro == null) ? 0 : verhuurPrijsInEuro.hashCode());
 		return result;
 	}
 	@Override
@@ -55,20 +73,17 @@ public class Item extends ModelBase {
 				return false;
 		} else if (!titel.equals(other.titel))
 			return false;
-		if (type != other.type)
-			return false;
-		if (verhuurPrijs == null) {
-			if (other.verhuurPrijs != null)
+		if (verhuurPrijsInEuro == null) {
+			if (other.verhuurPrijsInEuro != null)
 				return false;
-		} else if (!verhuurPrijs.equals(other.verhuurPrijs))
+		} else if (!verhuurPrijsInEuro.equals(other.verhuurPrijsInEuro))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Item [titel=" + titel + ", verhuurPrijs=" + verhuurPrijs + ", type=" + type + "]";
+		return "Item [titel=" + titel + ", verhuurPrijs=" + verhuurPrijsInEuro + "]";
 	}
-	
 	
 }
