@@ -26,12 +26,11 @@ public class Dvd extends model.Item {
 		this.dvdType = dvdTtype;
 	}
 	
-	public Dvd(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
-			Double verhuurPrijsPerDag, EnumTypeDvd type) {
-		super(titel, verhuurPrijsInEuro, beginVerhuurDatum, verhuurPeriodeInDagen, verhuurPrijsPerDag);
+	public Dvd(String titel, BigDecimal verhuurPrijsInEuro, Double verhuurPrijsPerDag, EnumTypeDvd type) {
+		super(titel, verhuurPrijsInEuro, verhuurPrijsPerDag);
 		setDvdType(type);	
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Dvd [dvdType=" + dvdType + ", " + super.toString() + "]";

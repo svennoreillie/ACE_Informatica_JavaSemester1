@@ -44,8 +44,7 @@ abstract public class Item extends ModelBase {
 		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
 	
-	public Item(String titel, BigDecimal verhuurPrijsInEuro, 
-			Double verhuurPrijsPerDag, BigDecimal boeteBedragPerDag) {
+	public Item(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag) {
 		this.setTitel(titel);
 		this.setVerhuurPrijs(verhuurPrijsInEuro);
 		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
