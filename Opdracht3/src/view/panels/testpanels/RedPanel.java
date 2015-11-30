@@ -1,18 +1,18 @@
-package view.panels;
+package view.panels.testpanels;
 
 import java.awt.Color;
 
 import javax.swing.JPanel;
 
-public class BluePanel extends JPanel{
+public class RedPanel extends JPanel{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public BluePanel(){
+	
+	public RedPanel(){
 		super();
-		setBackground(Color.BLUE);
+		setBackground(Color.RED);
 	}	
 }
