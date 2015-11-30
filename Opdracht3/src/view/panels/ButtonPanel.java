@@ -8,7 +8,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.ButtonPanelController;
+import controller.RentalStatusController;
 import view.MainWindow;
+import view.panels.testpanels.BluePanel;
+import view.panels.testpanels.RedPanel;
+import view.panels.testpanels.YellowPanel;
 
 public class ButtonPanel extends JPanel {
 
@@ -27,6 +32,7 @@ public class ButtonPanel extends JPanel {
 	RedPanel redPanel;
 	RentalStatusPanel rentalStatusPanel;
 	
+	ButtonPanelController controller;
 	
 	MainWindow mainWindow;
 
@@ -117,6 +123,11 @@ public class ButtonPanel extends JPanel {
 			mainWindow.changeViewPanel(rentalStatusPanel);
 			rentalStatusPanel.repaint();
 		}
+	}
+
+	public void setController(ButtonPanelController controller) {
+		this.controller = controller;
+		rentalStatusPanel.setController(new RentalStatusController(controller.getShop()));
 	}
 
 }

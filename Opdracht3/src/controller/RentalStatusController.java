@@ -10,14 +10,14 @@ public class RentalStatusController {
 	
 	private Shop shop;
 	
-	public RentalStatusController(Shop shop) throws ControllerException{
+	public RentalStatusController(Shop shop){
 		setShop(shop);
 	}
 	
-	private void setShop(Shop shop) throws ControllerException{
-		if(shop == null){
+	private void setShop(Shop shop){
+		/*if(shop == null){
 			throw new ControllerException("shop can't not be null!");
-		}
+		}*/
 		this.shop = shop;
 	}
 	
@@ -26,7 +26,7 @@ public class RentalStatusController {
 	}
 	
 	public List<Item> getItems(){
-		throw new NotImplementedException(); 
+		return shop.getItems();
 	}
 	
 	public List<Item> getRentedItems(){
