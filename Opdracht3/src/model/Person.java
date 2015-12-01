@@ -17,6 +17,10 @@ public class Person extends ModelBase {
 		setLastName(last);
 	}
 	
+	public Person() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

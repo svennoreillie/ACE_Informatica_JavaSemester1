@@ -2,8 +2,6 @@ package testing;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,10 +23,9 @@ public class CustomerTest {
 	public void setUp() throws Exception {
 		person = new Person("First", "Last");
 		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
-		id = 1;
 		email = "test@test.test";
 		
-		customer = new Customer(person, adress, id, email);
+		customer = new Customer(person, adress, email);
 	}
 
 	@Test
@@ -37,13 +34,11 @@ public class CustomerTest {
 		
 		person = new Person("First", "Last");
 		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
-		id = 1;
 		email = "test@test.test";
 		
 		try {
-			customer2 = new Customer(person, adress, id, email);
+			customer2 = new Customer(person, adress, email);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -68,20 +63,8 @@ public class CustomerTest {
 	@Test
 	public void testSetAdress() {
 		Address newAdress = new Address("abc", "123", "", "1234", "zyx", "Belgium");
-		customer.setAdress(newAdress);
-		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAdress().toString());
-	}
-
-	@Test
-	public void testGetId() {
-		assertEquals(1, customer.getId());
-	}
-
-	@Test
-	public void testSetId() {
-		int testID = 2;
-		customer.setId(testID);
-		assertEquals(2, customer.getId());
+		customer.setAddress(newAdress);
+		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAddress().toString());
 	}
 
 	@Test

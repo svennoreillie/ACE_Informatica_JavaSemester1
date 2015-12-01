@@ -28,6 +28,10 @@ public class Address extends ModelBase {
 		setCountry(country);
 	}
 	
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setStreet(String s){
 		try{
 			this.street = s;

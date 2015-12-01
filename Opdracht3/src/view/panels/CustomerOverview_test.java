@@ -23,7 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 
-public class CustomerOverview extends JPanel {
+public class CustomerOverview_test extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
 	private JTable tableCustomers;
 	private JTextField tfFirstName;
@@ -44,7 +44,7 @@ public class CustomerOverview extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CustomerOverview() {
+	public CustomerOverview_test() {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -166,7 +166,7 @@ public class CustomerOverview extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		btnClear = new JButton("Clear");
+		JButton btnClear = new JButton("Clear");
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -181,7 +181,7 @@ public class CustomerOverview extends JPanel {
 		btnClear.setBounds(467, 566, 89, 23);
 		add(btnClear);
 		
-		btnSearch = new JButton("Search...");
+		JButton btnSearch = new JButton("Search...");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -211,11 +211,7 @@ public class CustomerOverview extends JPanel {
 		btnSearch.setBounds(343, 566, 89, 23);
 		add(btnSearch);
 		
-		btnRegister = new JButton("New...");
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		JButton btnRegister = new JButton("New...");
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -275,49 +271,37 @@ public class CustomerOverview extends JPanel {
 	}
 	
 	private void registrationMode(){
-		try {
-			//Enable all text fields, save for Customer ID
-			enableAll();
-			this.tfCustomerID.setEnabled(false);
-			
-			//Change the button layout and behavior
-			btnRegister.setEnabled(false);
-			btnRegister.setVisible(false);
-			btnSearch.setText("Register");
-			btnClear.setText("Cancel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//Enable all text fields, save for Customer ID
+		enableAll();
+		this.tfCustomerID.setEnabled(false);
+		
+		//Change the button layout and behavior
+		this.btnRegister.setEnabled(false);
+		this.btnRegister.setVisible(false);
+		this.btnSearch.setText("Register");
+		this.btnClear.setText("Cancel");
 	}
 	
 	private void searchMode(){
-		try {
-			//Enable all text fields, including Customer ID
-			enableAll();
-			
-			//Change the button layout and behavior
-			this.btnRegister.setEnabled(false);
-			this.btnRegister.setVisible(false);
-			this.btnSearch.setText("Search");
-			this.btnClear.setText("Cancel");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//Enable all text fields, including Customer ID
+		enableAll();
+		
+		//Change the button layout and behavior
+		this.btnRegister.setEnabled(false);
+		this.btnRegister.setVisible(false);
+		this.btnSearch.setText("Search");
+		this.btnClear.setText("Cancel");
 	}
 	
 	private void defaultMode(){
-		try {
-			//Clear out and disable all text fields
-			clearAll();
-			disableAll();
-			
-			//Reset button layout and behavior
-			this.btnRegister.setEnabled(true);
-			this.btnRegister.setVisible(true);
-			this.btnSearch.setText("Search...");
-			this.btnClear.setText("Clear");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//Clear out and disable all text fields
+		clearAll();
+		disableAll();
+		
+		//Reset button layout and behavior
+		this.btnRegister.setEnabled(true);
+		this.btnRegister.setVisible(true);
+		this.btnSearch.setText("Search...");
+		this.btnClear.setText("Clear");
 	}
 }
