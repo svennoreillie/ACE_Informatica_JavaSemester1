@@ -3,10 +3,11 @@ package testing;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import common.AntiMagicStrings;
-import model.Adress;
+import model.Address;
 import model.Customer;
 import model.Person;
 
@@ -14,16 +15,17 @@ public class CustomerTest {
 
 	private Customer customer;
 	private Person person;
-	private Adress adress;
+	private Address adress;
+	private int id;
 	private String email;
 	
 	@Before
 	public void setUp() throws Exception {
 		person = new Person("First", "Last");
-		adress = new Adress("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
+		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
 		email = "test@test.test";
 		
-		customer = new Customer(person, adress, email);
+		customer = new Customer(person, adress, id, email);
 	}
 
 	@Test
@@ -31,7 +33,7 @@ public class CustomerTest {
 		Customer customer2;
 		
 		person = new Person("First", "Last");
-		adress = new Adress("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
+		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
 		email = "test@test.test";
 		
 		try {
@@ -60,7 +62,7 @@ public class CustomerTest {
 
 	@Test
 	public void testSetAdress() {
-		Adress newAdress = new Adress("abc", "123", "", "1234", "zyx", "Belgium");
+		Address newAdress = new Address("abc", "123", "", "1234", "zyx", "Belgium");
 		customer.setAdress(newAdress);
 		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAdress().toString());
 	}

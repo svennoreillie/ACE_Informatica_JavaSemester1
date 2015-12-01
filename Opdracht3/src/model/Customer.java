@@ -19,7 +19,7 @@ public class Customer {
 	private boolean spam = false;
 	private AntiMagicStrings magicString;
 	
-	public Customer(Person person, Adress adress, String email) throws Exception{
+	public Customer(Person person, Address adress, int id, String email) throws Exception{
 		try{
 			setPerson(person);
 			setAdress(adress);

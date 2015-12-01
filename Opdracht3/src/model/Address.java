@@ -6,8 +6,12 @@ package model;
  * @author Andre
  *
  */
-public class Adress {
+public class Address extends ModelBase {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7901763710456206990L;
 	private String street;
 	private String number; // ik stel voor dat dit een string blijft
 	private String box;
@@ -15,7 +19,7 @@ public class Adress {
 	private String city;
 	private String country;
 
-	public Adress(String street, String number, String box, String zip, String city, String country){
+	public Address(String street, String number, String box, String zip, String city, String country){
 		setStreet(street);
 		setNumber(number);
 		setBox(box);
