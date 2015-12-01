@@ -166,7 +166,7 @@ public class CustomerOverview extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		JButton btnClear = new JButton("Clear");
+		btnClear = new JButton("Clear");
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -181,7 +181,7 @@ public class CustomerOverview extends JPanel {
 		btnClear.setBounds(467, 566, 89, 23);
 		add(btnClear);
 		
-		JButton btnSearch = new JButton("Search...");
+		btnSearch = new JButton("Search...");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -211,7 +211,11 @@ public class CustomerOverview extends JPanel {
 		btnSearch.setBounds(343, 566, 89, 23);
 		add(btnSearch);
 		
-		JButton btnRegister = new JButton("New...");
+		btnRegister = new JButton("New...");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -271,37 +275,52 @@ public class CustomerOverview extends JPanel {
 	}
 	
 	private void registrationMode(){
-		//Enable all text fields, save for Customer ID
-		enableAll();
-		this.tfCustomerID.setEnabled(false);
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Register");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, save for Customer ID
+			enableAll();
+			this.tfCustomerID.setEnabled(false);
+			
+			//Change the button layout and behavior
+			btnRegister.setEnabled(false);
+			btnRegister.setVisible(false);
+			btnSearch.setText("Register");
+			btnClear.setText("Cancel");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void searchMode(){
-		//Enable all text fields, including Customer ID
-		enableAll();
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Search");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, including Customer ID
+			enableAll();
+			
+			//Change the button layout and behavior
+			this.btnRegister.setEnabled(false);
+			this.btnRegister.setVisible(false);
+			this.btnSearch.setText("Search");
+			this.btnClear.setText("Cancel");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void defaultMode(){
-		//Clear out and disable all text fields
-		clearAll();
-		disableAll();
-		
-		//Reset button layout and behavior
-		this.btnRegister.setEnabled(true);
-		this.btnRegister.setVisible(true);
-		this.btnSearch.setText("Search...");
-		this.btnClear.setText("Clear");
+		try {
+			//Clear out and disable all text fields
+			clearAll();
+			disableAll();
+			
+			//Reset button layout and behavior
+			this.btnRegister.setEnabled(true);
+			this.btnRegister.setVisible(true);
+			this.btnSearch.setText("Search...");
+			this.btnClear.setText("Clear");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
