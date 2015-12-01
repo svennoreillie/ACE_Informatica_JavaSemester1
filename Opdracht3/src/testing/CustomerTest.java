@@ -66,13 +66,6 @@ public class CustomerTest {
 	}
 
 	@Test
-	public void testSetId() {
-		int testID = 2;
-		customer.setId(testID);
-		assertEquals(2, customer.getId());
-	}
-
-	@Test
 	public void testGetEmail() {
 		assertEquals("test@test.test", customer.getEmail());
 	}

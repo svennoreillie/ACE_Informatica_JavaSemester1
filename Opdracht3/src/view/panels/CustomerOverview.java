@@ -221,6 +221,12 @@ public class CustomerOverview extends JPanel {
 		});
 		btnRegister.setBounds(226, 566, 89, 23);
 		add(btnRegister);
+		
+		tfZip = new JTextField();
+		tfZip.setEnabled(false);
+		tfZip.setBounds(105, 534, 86, 20);
+		add(tfZip);
+		tfZip.setColumns(10);
 	}
 	
 	private void enableAll(){
@@ -235,7 +241,6 @@ public class CustomerOverview extends JPanel {
 		this.tfNumber.setEnabled(true);
 		this.tfZip.setEnabled(true);
 		this.tfCustomerID.setEnabled(true);
-		this.chckbxSpam.setEnabled(true);
 	}
 	
 	private void disableAll(){
