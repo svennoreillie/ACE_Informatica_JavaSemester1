@@ -4,7 +4,7 @@ import model.Customer;
 
 public class CustomerFactory {
 
-	public static Customer createCustomer(){
+	public static void createCustomer(){
 		
 	}
 	
