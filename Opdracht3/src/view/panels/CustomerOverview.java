@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import model.Adress;
+import model.Address;
 import model.Customer;
 import model.CustomerTableModel;
 import model.Person;
@@ -39,7 +39,6 @@ public class CustomerOverview extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private JCheckBox chckbxSpam;
 	private CustomerTableModel tableModel;
 
 	/**
@@ -190,7 +189,7 @@ public class CustomerOverview extends JPanel {
 				if (btnSearch.getText() == "Register"){
 					//Create a new customer
 					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-					Adress newAdress = new Adress(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
+					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
 					try {
 						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
 					} catch (Exception e1) {

@@ -25,7 +25,7 @@ public class CustomerTest {
 		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
 		email = "test@test.test";
 		
-		customer = new Customer(person, adress, id, email);
+		customer = new Customer(person, adress, email);
 	}
 
 	@Test
@@ -63,8 +63,8 @@ public class CustomerTest {
 	@Test
 	public void testSetAdress() {
 		Address newAdress = new Address("abc", "123", "", "1234", "zyx", "Belgium");
-		customer.setAdress(newAdress);
-		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAdress().toString());
+		customer.setAddress(newAdress);
+		assertEquals("abc 123, 1234 zyx, Belgium", customer.getAddress().toString());
 	}
 
 	@Test

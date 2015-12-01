@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import model.Adress;
+import model.Address;
 import model.Customer;
 import model.CustomerTableModel;
 import model.Person;
@@ -39,6 +39,7 @@ public class CustomerOverview_test extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
+	private CustomerTableModel tableModel;
 
 	/**
 	 * Create the panel.
@@ -53,9 +54,8 @@ public class CustomerOverview_test extends JPanel {
 		add(scrollPane);
 		
 		
-		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
-		
-		tableCustomers = new JTable();
+		//tableModel = new CustomerTableModel();
+		tableCustomers = new JTable(tableModel);
 		/*
 		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
 		tableCustomers = new JTable(Object[][] rowData, columnNames);
@@ -189,7 +189,7 @@ public class CustomerOverview_test extends JPanel {
 				if (btnSearch.getText() == "Register"){
 					//Create a new customer
 					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-					Adress newAdress = new Adress(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
+					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
 					try {
 						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
 					} catch (Exception e1) {
@@ -220,6 +220,12 @@ public class CustomerOverview_test extends JPanel {
 		});
 		btnRegister.setBounds(226, 566, 89, 23);
 		add(btnRegister);
+		
+		tfZip = new JTextField();
+		tfZip.setEnabled(false);
+		tfZip.setBounds(105, 534, 86, 20);
+		add(tfZip);
+		tfZip.setColumns(10);
 	}
 	
 	private void enableAll(){
