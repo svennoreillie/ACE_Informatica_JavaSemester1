@@ -200,7 +200,7 @@ public class CustomerOverview extends JPanel {
 				
 				if (btnSearch.getText() == "Search"){
 					
-					// TODO: filter the customer table according to the text field contents
+					// TODO ANDRE: filter the customer table according to the text field contents
 					
 				}
 				else{
@@ -286,7 +286,6 @@ public class CustomerOverview extends JPanel {
 			btnSearch.setText("Register");
 			btnClear.setText("Cancel");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -302,7 +301,6 @@ public class CustomerOverview extends JPanel {
 			this.btnSearch.setText("Search");
 			this.btnClear.setText("Cancel");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -319,7 +317,6 @@ public class CustomerOverview extends JPanel {
 			this.btnSearch.setText("Search...");
 			this.btnClear.setText("Clear");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

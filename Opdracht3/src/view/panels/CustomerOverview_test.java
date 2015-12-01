@@ -200,7 +200,7 @@ public class CustomerOverview_test extends JPanel {
 				
 				if (btnSearch.getText() == "Search"){
 					
-					// TODO: filter the customer table according to the text field contents
+					// TODO ANDRE: filter the customer table according to the text field contents
 					
 				}
 				else{
