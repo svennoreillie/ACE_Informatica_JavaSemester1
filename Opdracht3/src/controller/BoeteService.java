@@ -5,6 +5,22 @@ import model.Uitlening;
 
 public interface BoeteService {
 		
+	public class Boetes {
+
+		public Boetes() {
+			// TODO Auto-generated constructor stub
+		}
+
+	}
+
+	public class Boete {
+
+		public Boete() {
+			// TODO Auto-generated constructor stub
+		}
+
+	}
+
 	//TODO exceptions 
 	public BigDecimal berekenBoeteWaarde (Uitlening uitlening);
 	
