@@ -24,9 +24,8 @@ public class Cd extends Item {
 			this.cdTtype = setType;
 	}
 	
-	public Cd(String titel, BigDecimal verhuurPrijsInEuro, Date beginVerhuurDatum, int verhuurPeriodeInDagen,
-			Double verhuurPrijsPerDag, EnumTypeCd type) {
-		super(titel, verhuurPrijsInEuro, beginVerhuurDatum, verhuurPeriodeInDagen, verhuurPrijsPerDag);
+	public Cd(String titel, BigDecimal verhuurPrijsInEuro, Double verhuurPrijsPerDag, EnumTypeCd type) {
+		super(titel, verhuurPrijsInEuro, verhuurPrijsPerDag);
 		setCdType(type);
 	}
 
