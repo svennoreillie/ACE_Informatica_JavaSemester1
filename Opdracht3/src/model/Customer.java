@@ -30,6 +30,10 @@ public class Customer {
 		}
 	}
 	
+	public Customer(){
+		
+	}
+	
 	public Person getPerson() {
 		return person;
 	}
