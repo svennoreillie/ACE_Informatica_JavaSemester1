@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import model.Address;
 import model.Customer;
 import model.Person;
-import testing.CustomerTableIOTest;
 
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -22,12 +21,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
 import javax.swing.JCheckBox;
 
-public class CustomerOverview_test extends JPanel {
+public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
+	private JTable tableCustomers;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
 	private JTextField tfEmail;
@@ -42,17 +40,27 @@ public class CustomerOverview_test extends JPanel {
 	private JButton btnSearch;
 	private JButton btnClear;
 	private DefaultTableModel tableModel;
-	private JTable tableCustomers;
-	private static ArrayList<Customer> customerList;
-	private CustomerTableIOTest iotest;
 
 	/**
 	 * Create the panel.
 	 */
-	public CustomerOverview_test() {
+	public CustomerOverview() {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 580, 350);
+		add(scrollPane);
+		
+		
+		//tableModel = new CustomerTableModel();
+		tableCustomers = new JTable(tableModel);
+		/*
+		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
+		tableCustomers = new JTable(Object[][] rowData, columnNames);
+		*/
+		scrollPane.setViewportView(tableCustomers);
 		
 		
 		JLabel lblFirstName = new JLabel("First name");
@@ -158,7 +166,7 @@ public class CustomerOverview_test extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		JButton btnClear = new JButton("Clear");
+		btnClear = new JButton("Clear");
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -173,7 +181,7 @@ public class CustomerOverview_test extends JPanel {
 		btnClear.setBounds(467, 566, 89, 23);
 		add(btnClear);
 		
-		JButton btnSearch = new JButton("Search...");
+		btnSearch = new JButton("Search...");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -184,8 +192,6 @@ public class CustomerOverview_test extends JPanel {
 					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
 					try {
 						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
-						customerList.add(newCustomer);
-						iotest.addCustomer(customerList);
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, "Error on creating customer.");
 						e1.printStackTrace();
@@ -205,7 +211,11 @@ public class CustomerOverview_test extends JPanel {
 		btnSearch.setBounds(343, 566, 89, 23);
 		add(btnSearch);
 		
-		JButton btnRegister = new JButton("New...");
+		btnRegister = new JButton("New...");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -220,14 +230,6 @@ public class CustomerOverview_test extends JPanel {
 		tfZip.setBounds(105, 534, 86, 20);
 		add(tfZip);
 		tfZip.setColumns(10);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 580, 339);
-		add(scrollPane);
-		String[] columns = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
-		tableModel = new DefaultTableModel(columns, 0);
-		tableCustomers = new JTable(tableModel);
-		scrollPane.setViewportView(tableCustomers);
 	}
 	
 	private void enableAll(){
@@ -273,41 +275,49 @@ public class CustomerOverview_test extends JPanel {
 	}
 	
 	private void registrationMode(){
-		//Enable all text fields, save for Customer ID
-		enableAll();
-		this.tfCustomerID.setEnabled(false);
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Register");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, save for Customer ID
+			enableAll();
+			this.tfCustomerID.setEnabled(false);
+			
+			//Change the button layout and behavior
+			btnRegister.setEnabled(false);
+			btnRegister.setVisible(false);
+			btnSearch.setText("Register");
+			btnClear.setText("Cancel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void searchMode(){
-		//Enable all text fields, including Customer ID
-		enableAll();
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Search");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, including Customer ID
+			enableAll();
+			
+			//Change the button layout and behavior
+			this.btnRegister.setEnabled(false);
+			this.btnRegister.setVisible(false);
+			this.btnSearch.setText("Search");
+			this.btnClear.setText("Cancel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void defaultMode(){
-		//Clear out and disable all text fields
-		clearAll();
-		disableAll();
-		
-		//Reset button layout and behavior
-		this.btnRegister.setEnabled(true);
-		this.btnRegister.setVisible(true);
-		this.btnSearch.setText("Search...");
-		this.btnClear.setText("Clear");
-	}
-	
-	public static void addToTempList(Customer cust){
-		customerList.add(cust);
+		try {
+			//Clear out and disable all text fields
+			clearAll();
+			disableAll();
+			
+			//Reset button layout and behavior
+			this.btnRegister.setEnabled(true);
+			this.btnRegister.setVisible(true);
+			this.btnSearch.setText("Search...");
+			this.btnClear.setText("Clear");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
