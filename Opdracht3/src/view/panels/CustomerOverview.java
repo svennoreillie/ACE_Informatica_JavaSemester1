@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import model.Address;
 import model.Customer;
-import model.CustomerTableModel;
 import model.Person;
 
 import java.awt.Font;
@@ -39,7 +39,7 @@ public class CustomerOverview extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private CustomerTableModel tableModel;
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Create the panel.

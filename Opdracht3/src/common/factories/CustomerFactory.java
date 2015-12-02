@@ -8,8 +8,9 @@ import model.Person;
 
 public class CustomerFactory {
 
-	public static void createCustomer(){
+	public static Customer createCustomer(){
 		final Random rand = new Random();
+		Customer customer = null;
 		
 		// Make a person and address to put into a Customer
 		Person person = PersonFactory.getPerson(rand);
@@ -24,11 +25,11 @@ public class CustomerFactory {
 		
 		// Instantiate the new Customer
 		try {
-			Customer customer = new Customer(person, address, email);
+			customer = new Customer(person, address, email);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return customer;
 	}
-	
 }

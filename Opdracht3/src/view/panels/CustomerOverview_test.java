@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import model.Address;
 import model.Customer;
-import model.CustomerTableModel;
 import model.Person;
 
 import java.awt.Font;
@@ -25,7 +25,6 @@ import javax.swing.JCheckBox;
 
 public class CustomerOverview_test extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
-	private JTable tableCustomers;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
 	private JTextField tfEmail;
@@ -39,7 +38,8 @@ public class CustomerOverview_test extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private CustomerTableModel tableModel;
+	private DefaultTableModel tableModel;
+	private JTable tableCustomers;
 
 	/**
 	 * Create the panel.
@@ -48,19 +48,6 @@ public class CustomerOverview_test extends JPanel {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 580, 350);
-		add(scrollPane);
-		
-		
-		//tableModel = new CustomerTableModel();
-		tableCustomers = new JTable(tableModel);
-		/*
-		String[] columnNames = {"Customer", "First name", "Last name", "E-mail"};
-		tableCustomers = new JTable(Object[][] rowData, columnNames);
-		*/
-		scrollPane.setViewportView(tableCustomers);
 		
 		
 		JLabel lblFirstName = new JLabel("First name");
@@ -226,6 +213,14 @@ public class CustomerOverview_test extends JPanel {
 		tfZip.setBounds(105, 534, 86, 20);
 		add(tfZip);
 		tfZip.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 580, 339);
+		add(scrollPane);
+		String[] columns = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
+		tableModel = new DefaultTableModel(columns, 0);
+		tableCustomers = new JTable(tableModel);
+		scrollPane.setViewportView(tableCustomers);
 	}
 	
 	private void enableAll(){
