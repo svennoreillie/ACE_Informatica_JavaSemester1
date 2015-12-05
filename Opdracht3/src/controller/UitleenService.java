@@ -14,7 +14,7 @@ import model.subItems.Game;
 
 public interface UitleenService {
 
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum);
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException;
 	
 	public boolean isHuidigItemMomenteelUitgeleend(Item item);
 	
@@ -32,6 +32,6 @@ public interface UitleenService {
 	
 	public void uitleningVanMeerdereItemsStoppen (List<Uitlening> teStoppenItemlijst);
 	
-	public Date geefEindDatumVanDeUitlening (Uitlening uitlening);
+	public DateTime geefEindDatumVanDeUitlening (Uitlening uitlening);
 	
 }
