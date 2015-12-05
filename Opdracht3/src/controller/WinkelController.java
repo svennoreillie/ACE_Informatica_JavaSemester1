@@ -9,8 +9,18 @@ import model.*;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Games;
+//toegevoegd Geert 5 December
+//bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
+//Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+/**
+ * gebruikt model: traditionele Model-View-Controller(MVC) model
+ * @author 
+ *
+ */
 
-public class WinkelController {
+public class WinkelController implements Controller{
 
 	private Shop currentShop;
 	
