@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import model.Customer;
-import view.panels.CustomerOverview_test;
 
 public class CustomerTableIOTest {
 	

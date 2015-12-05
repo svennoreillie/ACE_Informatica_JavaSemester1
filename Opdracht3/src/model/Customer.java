@@ -11,8 +11,12 @@ import common.AntiMagicStrings;
  * @author Andre
  *
  */
-public class Customer {
+public class Customer extends ModelBase {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5251642987943748923L;
 	private Person person;
 	private Address address;
 	private String email;

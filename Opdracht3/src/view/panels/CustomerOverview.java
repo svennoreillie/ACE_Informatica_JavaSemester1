@@ -16,6 +16,7 @@ import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
 import model.Address;
 import model.Customer;
+import model.CustomerTableModel;
 import model.Person;
 import testing.CustomerTableIOTest;
 
@@ -232,8 +233,10 @@ public class CustomerOverview extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 580, 339);
 		add(scrollPane);
-		String[] columns = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
-		tableModel = new DefaultTableModel(columns, 0);
+		//String[] columnNames = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
+		//Object[][] data = {};
+		//tableCustomers = new JTable(data, columnNames);
+		CustomerTableModel tableModel = new CustomerTableModel();
 		tableCustomers = new JTable(tableModel);
 		scrollPane.setViewportView(tableCustomers);
 		
@@ -241,19 +244,14 @@ public class CustomerOverview extends JPanel {
 		btnLaunchFactory.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Vector<ArrayList<Customer>> data = new Vector<ArrayList<Customer>>();
 				ArrayList<Customer> tempList = new ArrayList<>();
 				for (int i = 0; i < 10; i++){
-					//customerList.add(CustomerFactory.createCustomer());
 					tempList.add(CustomerFactory.createCustomer());
 				}
-				// TODO voeg data toe aan de rows
-				//data.add(customerList);
-				data.add(tempList);
 				
-				tableModel.addRow(data);
-				tableCustomers.setModel(tableModel);
-				tableCustomers.repaint();
+				for (int i = 0; i < tempList.size(); i++){
+					tableModel.addCustomer(tempList.get(i));
+				}
 			}
 		});
 			
