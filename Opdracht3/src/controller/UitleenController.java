@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -124,8 +123,8 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public Date geefEindDatumVanDeUitlening(Uitlening uitlening) {
-		return null;
+	public DateTime geefEindDatumVanDeUitlening(Uitlening uitlening) {
+		return uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
 	}
 
 }

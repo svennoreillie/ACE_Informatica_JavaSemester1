@@ -32,6 +32,6 @@ public interface UitleenService {
 	
 	public void uitleningVanMeerdereItemsStoppen (List<Uitlening> teStoppenItemlijst);
 	
-	public Date geefEindDatumVanDeUitlening (Uitlening uitlening);
+	public DateTime geefEindDatumVanDeUitlening (Uitlening uitlening);
 	
 }
