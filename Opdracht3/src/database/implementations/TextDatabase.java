@@ -27,16 +27,10 @@ public class TextDatabase<T extends ModelBase> implements DataReadWriteService<T
 
 	private final Path dbPath;
 
-	public TextDatabase() {
-		this.dbPath = Paths.get(getGenericClass().getName() + ".db");
+	public TextDatabase(Class<T> classType) {
+		this.dbPath = Paths.get(classType.getName() + ".db");
 	}
 	
-	protected Class<T> getGenericClass() {
-		Class<? extends TextDatabase> classType = this.getClass();
-		ParameterizedType type = (ParameterizedType)classType.getGenericSuperclass();
-		Class<T> genericClass = (Class<T>)type.getActualTypeArguments()[0];
-		return genericClass;
-	}
 
 	public void Show() {
 
