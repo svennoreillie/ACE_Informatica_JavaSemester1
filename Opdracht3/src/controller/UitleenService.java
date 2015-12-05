@@ -10,7 +10,7 @@ import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
-import model.subItems.Games;
+import model.subItems.Game;
 
 public interface UitleenService {
 
@@ -26,7 +26,7 @@ public interface UitleenService {
 	
 	public List<Dvd> alleUitgeleendeDvd ();
 	
-	public List<Games> alleUitgeleendeGames ();
+	public List<Game> alleUitgeleendeGames ();
 	
 	public void uitleningVanEenItemStoppen(Uitlening uitlening);
 	
