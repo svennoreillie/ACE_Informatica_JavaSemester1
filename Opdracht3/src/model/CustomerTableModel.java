@@ -4,7 +4,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class CustomerTableModel extends AbstractTableModel{
 	private String[] columnNames = {"CustomerID", "FirstName", "LastName", "Email"};
-	private ModelBase[][] data;
+	private ModelBase[][] data ;
 	
 	
 	@Override
