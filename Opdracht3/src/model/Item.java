@@ -8,7 +8,6 @@ import model.ModelBase;
 
 abstract public class Item extends ModelBase {
 
-
 	private static final long serialVersionUID = 1122921448314180585L;
 	
 	private String titel;
@@ -17,7 +16,9 @@ abstract public class Item extends ModelBase {
 	private Double verhuurPrijsPerDag;
 	private boolean isUitgeleend;
 	
-	
+	public int getBoetePrijsPerDag() {
+		return boetePrijsPerDag;
+	}
 	public boolean isUitgeleend() {
 		return isUitgeleend;
 	}

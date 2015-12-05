@@ -85,7 +85,7 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public Date geefEindDatumVanDeUitlening(Uitlening uitlening) {
+	public DateTime geefEindDatumVanDeUitlening(Uitlening uitlening) {
 		return null;
 	}
 
