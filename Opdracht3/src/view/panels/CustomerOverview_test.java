@@ -11,6 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import common.factories.AddressFactory;
+import common.factories.CustomerFactory;
+import common.factories.PersonFactory;
 import model.Address;
 import model.Customer;
 import model.Person;
@@ -23,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JCheckBox;
 
@@ -206,6 +210,10 @@ public class CustomerOverview_test extends JPanel {
 		add(btnSearch);
 		
 		JButton btnRegister = new JButton("New...");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -228,6 +236,23 @@ public class CustomerOverview_test extends JPanel {
 		tableModel = new DefaultTableModel(columns, 0);
 		tableCustomers = new JTable(tableModel);
 		scrollPane.setViewportView(tableCustomers);
+		
+		JButton btnLaunchFactory = new JButton("Launch factory");
+		btnLaunchFactory.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Vector<ArrayList<Customer>> data = new Vector<ArrayList<Customer>>();
+				
+				for (int i = 0; i < 10; i++){
+					customerList.add(CustomerFactory.createCustomer());
+				}
+				// TODO voeg data toe aan de rows
+				data.add(customerList);
+			}
+		});
+			
+		btnLaunchFactory.setBounds(10, 566, 139, 23);
+		add(btnLaunchFactory);
 	}
 	
 	private void enableAll(){
@@ -307,7 +332,7 @@ public class CustomerOverview_test extends JPanel {
 		this.btnClear.setText("Clear");
 	}
 	
-	public static void addToTempList(Customer cust){
-		customerList.add(cust);
+	private void populateTable(){
+		
 	}
 }

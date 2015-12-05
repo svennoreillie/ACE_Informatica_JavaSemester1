@@ -58,6 +58,7 @@ public class CustomerTableIOTest {
 		}
 	}
 	
+	/*
 	public void copyToList(){
 		while (true){
 			try {
@@ -76,4 +77,5 @@ public class CustomerTableIOTest {
 			}
 		}
 	}
+	*/
 }
