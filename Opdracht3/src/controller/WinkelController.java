@@ -8,7 +8,8 @@ import common.enums.EnumTypeGame;
 import model.*;
 import model.subItems.Cd;
 import model.subItems.Dvd;
-import model.subItems.Games;
+import model.subItems.Game;
+
 //toegevoegd Geert 5 December
 //bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
 //Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WinkelController implements Controller{
 
 	private Shop currentShop;
+	//lijn toegevoegd 5 december voor testen github issue met versie 113
+	private Shop current2Shop;
 	
 	public WinkelController() {
 		//TODO :: eerste shop uit db gaan halen en ander ctor aanroepen
@@ -62,7 +65,7 @@ public class WinkelController implements Controller{
 		return null;
 	}
 	
-	public List<Games> searchGames(EnumTypeGame type, String searchString) {
+	public List<Game> searchGames(EnumTypeGame type, String searchString) {
 		//TODO:: 5.	ik wil aan de hand van een deel van de titel van een item alle 
 		//items van een bepaald type kunnen  opvragen 
 		//(als tekst op de console) die hieraan voldoen. (vb alle films met test in de titel)

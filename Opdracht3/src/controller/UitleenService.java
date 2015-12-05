@@ -10,11 +10,11 @@ import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
-import model.subItems.Games;
+import model.subItems.Game;
 
 public interface UitleenService {
 
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum);
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException;
 	
 	public boolean isHuidigItemMomenteelUitgeleend(Item item);
 	
@@ -26,12 +26,12 @@ public interface UitleenService {
 	
 	public List<Dvd> alleUitgeleendeDvd ();
 	
-	public List<Games> alleUitgeleendeGames ();
+	public List<Game> alleUitgeleendeGames ();
 	
 	public void uitleningVanEenItemStoppen(Uitlening uitlening);
 	
 	public void uitleningVanMeerdereItemsStoppen (List<Uitlening> teStoppenItemlijst);
 	
-	public Date geefEindDatumVanDeUitlening (Uitlening uitlening);
+	public DateTime geefEindDatumVanDeUitlening (Uitlening uitlening);
 	
 }

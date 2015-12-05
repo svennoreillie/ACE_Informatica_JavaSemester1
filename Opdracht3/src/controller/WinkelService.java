@@ -8,7 +8,7 @@ import common.enums.EnumTypeGame;
 import model.Item;
 import model.subItems.Cd;
 import model.subItems.Dvd;
-import model.subItems.Games;
+import model.subItems.Game;
 
 public interface WinkelService {
 
@@ -22,5 +22,5 @@ public interface WinkelService {
 	
 	public List<Dvd> searchDvd(EnumTypeDvd type, String searchString); 
 	
-	public List<Games> searchGames(EnumTypeGame type, String searchString); 
+	public List<Game> searchGames(EnumTypeGame type, String searchString); 
 }
