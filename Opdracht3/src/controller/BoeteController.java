@@ -16,8 +16,10 @@ public class BoeteController implements BoeteService {
 		if(isErOpHuidigeUitleningEenBoete(uitlening)){
 			DateTime systemDate = new DateTime();
 			UitleenController uitleenController = new UitleenController();
-			int aantalBoeteDagen = Integer.parseInt( (Days.daysBetween(systemDate, uitleenController.geefEindDatumVanDeUitlening(uitlening))).toString());
-			int boetePrijs = (uitlening.getUitgeleendItem().getBoetePrijsPerDag())* aantalBoeteDagen;
+			Days daysBetweenString = Days.daysBetween(uitleenController.geefEindDatumVanDeUitlening(uitlening), systemDate);
+			int aantalBoeteDagen = daysBetweenString.getDays();
+			int absAantalBoeteDagen = Math.abs(aantalBoeteDagen);
+			int boetePrijs = (uitlening.getUitgeleendItem().getBoetePrijsPerDag())* absAantalBoeteDagen;
 			boeteBedrag = new BigDecimal (boetePrijs);
 			return boeteBedrag;
 		}	
