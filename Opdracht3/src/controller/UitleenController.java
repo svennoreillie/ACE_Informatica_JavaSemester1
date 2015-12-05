@@ -9,7 +9,7 @@ import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
-import model.subItems.Games;
+import model.subItems.Game;
 
 public class UitleenController implements UitleenService {
 	
@@ -39,32 +39,71 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public List<Item> uitgeleendeItemsVanHuidigeKlant(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Item> items = new ArrayList<Item>();
+		
+		for(Uitlening u : uitleningen){
+			if(u.getKlantDieUitleent().equals(customer)){
+				items.add(u.getUitgeleendItem());
+			}
+		}
+		
+		return items;
 	}
 
 	@Override
 	public List<Item> alleUitgeleendeItems() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Item> items = new ArrayList<>();
+		
+		for(Uitlening u:uitleningen){
+			items.add(u.getUitgeleendItem());
+		}
+		
+		return items;
 	}
 
 	@Override
 	public List<Cd> alleUitgeleendeCd() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cd> Cds = new ArrayList<Cd>();
+		
+		for(Uitlening u : uitleningen){
+			Item i = u.getUitgeleendItem();
+			if(i instanceof Cd){
+				Cd c = (Cd) i;
+				Cds.add(c);
+			}
+		}
+		
+		return Cds;
 	}
 
 	@Override
 	public List<Dvd> alleUitgeleendeDvd() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Dvd> dvds = new ArrayList<Dvd>();
+		
+		for(Uitlening u : uitleningen){
+			Item i = u.getUitgeleendItem();
+			if(i instanceof Dvd){
+				Dvd d = (Dvd) i;
+				dvds.add(d);
+			}
+		}
+		
+		return dvds;
 	}
 
 	@Override
-	public List<Games> alleUitgeleendeGames() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Game> alleUitgeleendeGames() {
+		List<Game> games = new ArrayList<Game>();
+		
+		for(Uitlening u : uitleningen){
+			Item i = u.getUitgeleendItem();
+			if(i instanceof Game){
+				Game g = (Game) i;
+				games.add(g);
+			}
+		}
+		
+		return games;
 	}
 
 	@Override
