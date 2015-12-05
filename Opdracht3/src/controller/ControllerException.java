@@ -1,6 +1,6 @@
 package controller;
 
-public class ControllerException extends Throwable{
+public class ControllerException extends Exception{
 
 	/**
 	 * 

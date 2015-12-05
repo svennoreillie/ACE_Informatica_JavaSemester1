@@ -22,7 +22,11 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) {
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
+		if(beginVerhuurDatum.isBeforeNow()){
+			throw new ControllerException("Date can't be in the past");
+		}
+		
 		Uitlening uitlening = new Uitlening();
 		uitlening.setUitgeleendItem(item);
 		uitlening.setKlantDieUitleent(customer);
