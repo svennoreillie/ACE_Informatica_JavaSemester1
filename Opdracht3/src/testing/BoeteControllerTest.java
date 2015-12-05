@@ -2,6 +2,8 @@ package testing;
 
 import static org.junit.Assert.*;
 
+import java.math.BigDecimal;
+
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -32,8 +34,10 @@ public class BoeteControllerTest {
 
 	@Test
 	public void testBerekenBoeteWaarde() {
-		assertEquals(0,boeteController.berekenBoeteWaarde(uitleningZonderBoete));
-		assertEquals(15,boeteController.berekenBoeteWaarde(uitleningMetBoete));
+		BigDecimal zero = new BigDecimal(0);
+		BigDecimal vijftien = new BigDecimal(15);
+		assertEquals(zero,boeteController.berekenBoeteWaarde(uitleningZonderBoete));
+		assertEquals(vijftien,boeteController.berekenBoeteWaarde(uitleningMetBoete));
 	}
 
 	@Test
