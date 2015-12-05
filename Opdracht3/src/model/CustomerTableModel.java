@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-<<<<<<< HEAD
+
 public class CustomerTableModel extends AbstractTableModel {
 	/**
 	 * 
@@ -13,11 +13,6 @@ public class CustomerTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1807002911481267147L;
 	private static final String[] columnsNames = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
 	private final LinkedList<Customer> data;
-=======
-public class CustomerTableModel extends AbstractTableModel{
-	private String[] columnNames = {"CustomerID", "FirstName", "LastName", "Email"};
-	private ModelBase[][] data ;
->>>>>>> refs/remotes/Sven/development
 	
 	public CustomerTableModel(){
 		data = new LinkedList<Customer>();
