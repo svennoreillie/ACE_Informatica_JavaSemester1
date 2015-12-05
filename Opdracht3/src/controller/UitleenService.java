@@ -14,7 +14,7 @@ public interface UitleenService {
 
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, Date beginVerhuurDatum);
 	
-	public boolean isHuidigItemNietUitgeleend (Item item);
+	public boolean isHuidigItemMomenteelUitgeleend(Item item);
 	
 	public List<Item> uitgeleendeItemsVanHuidigeKlant (Customer customer);
 	
