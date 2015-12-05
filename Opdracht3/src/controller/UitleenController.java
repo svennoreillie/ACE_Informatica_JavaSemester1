@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import model.Customer;
 import model.Item;
 import model.Uitlening;
@@ -21,7 +23,7 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, Date beginVerhuurDatum) {
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) {
 		Uitlening uitlening = new Uitlening();
 		uitlening.setUitgeleendItem(item);
 		uitlening.setKlantDieUitleent(customer);
