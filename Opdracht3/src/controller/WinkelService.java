@@ -11,14 +11,6 @@ import model.subItems.Dvd;
 import model.subItems.Games;
 
 public interface WinkelService {
-		
-	public class Winkeldummy {
-
-		public Winkeldummy() {
-			// TODO Auto-generated constructor stub
-		}
-
-	}
 
 	public void AddItem(Item item);
 	
