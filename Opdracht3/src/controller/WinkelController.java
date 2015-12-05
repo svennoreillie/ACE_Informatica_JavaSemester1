@@ -9,6 +9,7 @@ import model.*;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
+
 //toegevoegd Geert 5 December
 //bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
 //Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WinkelController implements Controller{
 
 	private Shop currentShop;
+	//lijn toegevoegd 5 december voor testen github issue met versie 113
+	private Shop current2Shop;
 	
 	public WinkelController() {
 		//TODO :: eerste shop uit db gaan halen en ander ctor aanroepen
