@@ -9,8 +9,10 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import common.enums.EnumTypeGame;
 import controller.BoeteController;
 import model.Uitlening;
+import model.subItems.Game;
 
 public class BoeteControllerTest {
 
@@ -26,6 +28,8 @@ public class BoeteControllerTest {
 		uitleningMetBoete = new Uitlening();
 		uitleningMetBoete.setBeginVerhuurDatum(new DateTime().minusDays(10));
 		uitleningMetBoete.setVerhuurPeriodeInDagen(5);
+		uitleningMetBoete.setUitgeleendItem(
+				new Game("Rocket League", new BigDecimal(3), 3.0, EnumTypeGame.ROLEPLAYINGGAME));
 	}
 
 	@After
