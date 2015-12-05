@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -23,7 +22,11 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) {
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
+		if(beginVerhuurDatum.isBeforeNow()){
+			throw new ControllerException("Date can't be in the past");
+		}
+		
 		Uitlening uitlening = new Uitlening();
 		uitlening.setUitgeleendItem(item);
 		uitlening.setKlantDieUitleent(customer);
@@ -125,7 +128,7 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public DateTime geefEindDatumVanDeUitlening(Uitlening uitlening) {
-		return null;
+		return uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
 	}
 
 }
