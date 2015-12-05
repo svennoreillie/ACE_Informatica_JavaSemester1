@@ -19,13 +19,12 @@ import model.ModelBase;
 public class Data<T extends ModelBase> implements DataService<T> {
 
 	private List<T> internalList;
-	private DataReadWriteService<T> readWriteService;
-	
-	public Data() throws Exception {
-		this.readWriteService = DataSourceFactory.GetService();
+	private Class<T> classType;
+
+	public Data(Class<T> classType) {
+		this.classType = classType;
 	}
-	
-	
+
 
 	@Override
 	public List<T> getAll() throws DBMissingException, DBException {
@@ -36,7 +35,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	}
 
 	public List<T> getListFromStream() throws DBException, DBMissingException {
-		return this.readWriteService.readDB();
+		return DataSourceFactory.getSource(classType).readDB();
 	}
 
 	@Override
@@ -50,7 +49,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> tobList = this.getAll();
 		if (!tobList.contains(entity)) {
 			tobList.add(entity);
-			this.readWriteService.writeDB(this.internalList);
+			DataSourceFactory.getSource(classType).writeDB(this.internalList);
 		}
 	}
 
@@ -59,7 +58,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> tobList = this.getAll();
 		if (tobList.contains(entity)) {
 			tobList.remove(entity);
-			this.readWriteService.writeDB(this.internalList);
+			DataSourceFactory.getSource(classType).writeDB(this.internalList);
 		}
 	}
 

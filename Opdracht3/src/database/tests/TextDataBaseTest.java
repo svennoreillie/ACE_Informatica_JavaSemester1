@@ -27,11 +27,12 @@ import database.internalInterface.*;
 public class TextDataBaseTest {
 
 	private Path testModelPath = Paths.get("model.Address.db");
-	private TextDatabase<Address> testDB = new TextDatabase<Address>();
+	private TextDatabase<Address> testDB = new TextDatabase<Address>(Address.class);
 
 	@Before
 	public void setUp() throws Exception {
 		Files.createFile(testModelPath);
+		
 	}
 
 	@After
@@ -45,21 +46,21 @@ public class TextDataBaseTest {
 
 	@Test
 	public void testPathCreation() {
-		String testString = "testing.TestModel.db";
+		String testString = "model.Address.db";
 		assertEquals(testModelPath, testDB.getDbPath());
 		assertEquals(testString, testDB.getDbPath().toString());
 		
-		TextDatabase<Person> personGen = new TextDatabase<Person>();
-		String visitString = "model.Visit.db";
-		Path visitPath = Paths.get(visitString);
+		TextDatabase<Person> personGen = new TextDatabase<Person>(Person.class);
+		String personString = "model.Person.db";
+		Path visitPath = Paths.get(personString);
 		assertEquals(visitPath, personGen.getDbPath());
-		assertEquals(visitString, personGen.getDbPath().toString());
+		assertEquals(personString, personGen.getDbPath().toString());
 		
-		TextDatabase<Shop> shopGen = new TextDatabase<Shop>();
-		String addressString = "model.Address.db";
-		Path addressPath = Paths.get(addressString);
+		TextDatabase<Shop> shopGen = new TextDatabase<Shop>(Shop.class);
+		String shopString = "model.Shop.db";
+		Path addressPath = Paths.get(shopString);
 		assertEquals(addressPath, shopGen.getDbPath());
-		assertEquals(addressString, shopGen.getDbPath().toString());
+		assertEquals(shopString, shopGen.getDbPath().toString());
 	}
 	
 	@Test(expected=EOFException.class)

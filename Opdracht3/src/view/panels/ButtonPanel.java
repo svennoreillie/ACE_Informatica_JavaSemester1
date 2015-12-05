@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import controller.ButtonPanelController;
 import controller.RentalStatusController;
+import database.DataStrategy;
+import model.Shop;
 import view.MainWindow;
 import view.panels.testpanels.BluePanel;
 import view.panels.testpanels.RedPanel;
