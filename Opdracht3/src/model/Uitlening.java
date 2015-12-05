@@ -2,20 +2,23 @@ package model;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
+
 public class Uitlening extends ModelBase {
 
 	
-	private Date beginVerhuurDatum;
+	private DateTime beginVerhuurDatum;
 	private int verhuurPeriodeInDagen;
 	private Item uitgeleendItem;
 	private Customer klantDieUitleent;
 	
 	
 	//TODO setter in try catch blok met in de catch gebruik maken van antiMagicString returns
-	public Date getBeginVerhuurDatum() {
+	public DateTime getBeginVerhuurDatum() {
 		return beginVerhuurDatum;
 	}
-	public void setBeginVerhuurDatum(Date beginVerhuurDatum) {
+	public void setBeginVerhuurDatum(DateTime beginVerhuurDatum) {
 		this.beginVerhuurDatum = beginVerhuurDatum;
 	}
 	public int getVerhuurPeriodeInDagen() {
