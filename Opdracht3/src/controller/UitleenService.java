@@ -14,7 +14,7 @@ public interface UitleenService {
 
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, Date beginVerhuurDatum);
 	
-	public boolean isHuidigItemNietUitgeleend (Item item);
+	public boolean isHuidigItemMomenteelUitgeleend(Item item);
 	
 	public List<Item> uitgeleendeItemsVanHuidigeKlant (Customer customer);
 	
@@ -29,5 +29,7 @@ public interface UitleenService {
 	public void uitleningVanEenItemStoppen(Uitlening uitlening);
 	
 	public void uitleningVanMeerdereItemsStoppen (List<Uitlening> teStoppenItemlijst);
+	
+	public Date geefEindDatumVanDeUitlening (Uitlening uitlening);
 	
 }
