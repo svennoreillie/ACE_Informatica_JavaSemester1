@@ -7,7 +7,7 @@ import common.enums.EnumTypeDvd;
 import common.enums.EnumTypeGame;
 import model.Item;
 
-public class Games extends model.Item {
+public class Game extends model.Item {
 
 	private EnumTypeGame gameType;
 	
@@ -18,7 +18,7 @@ public class Games extends model.Item {
 	public void setGameType(EnumTypeGame newGameTtype) {
 		this.gameType = newGameTtype;
 	}
-	public Games(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag , EnumTypeGame gameType) {
+	public Game(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag , EnumTypeGame gameType) {
 		super(titel, verhuurPrijsInEuro, verhuurPrijsPerDag);
 		setGameType(gameType);
 	}
@@ -44,7 +44,7 @@ public class Games extends model.Item {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Games other = (Games) obj;
+		Game other = (Game) obj;
 		if (gameType != other.gameType)
 			return false;
 		return true;
