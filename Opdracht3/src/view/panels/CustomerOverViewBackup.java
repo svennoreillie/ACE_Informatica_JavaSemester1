@@ -9,10 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import model.Address;
 import model.Customer;
-import model.CustomerTableModel;
 import model.Person;
 
 import java.awt.Font;
@@ -23,7 +23,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JCheckBox;
 
-public class CustomerOverview_test extends JPanel {
+public class CustomerOverViewBackup extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
 	private JTable tableCustomers;
 	private JTextField tfFirstName;
@@ -39,12 +39,12 @@ public class CustomerOverview_test extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private CustomerTableModel tableModel;
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Create the panel.
 	 */
-	public CustomerOverview_test() {
+	public CustomerOverViewBackup() {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -166,7 +166,7 @@ public class CustomerOverview_test extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		JButton btnClear = new JButton("Clear");
+		btnClear = new JButton("Clear");
 		btnClear.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -181,7 +181,7 @@ public class CustomerOverview_test extends JPanel {
 		btnClear.setBounds(467, 566, 89, 23);
 		add(btnClear);
 		
-		JButton btnSearch = new JButton("Search...");
+		btnSearch = new JButton("Search...");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -211,7 +211,11 @@ public class CustomerOverview_test extends JPanel {
 		btnSearch.setBounds(343, 566, 89, 23);
 		add(btnSearch);
 		
-		JButton btnRegister = new JButton("New...");
+		btnRegister = new JButton("New...");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -271,37 +275,49 @@ public class CustomerOverview_test extends JPanel {
 	}
 	
 	private void registrationMode(){
-		//Enable all text fields, save for Customer ID
-		enableAll();
-		this.tfCustomerID.setEnabled(false);
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Register");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, save for Customer ID
+			enableAll();
+			this.tfCustomerID.setEnabled(false);
+			
+			//Change the button layout and behavior
+			btnRegister.setEnabled(false);
+			btnRegister.setVisible(false);
+			btnSearch.setText("Register");
+			btnClear.setText("Cancel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void searchMode(){
-		//Enable all text fields, including Customer ID
-		enableAll();
-		
-		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Search");
-		this.btnClear.setText("Cancel");
+		try {
+			//Enable all text fields, including Customer ID
+			enableAll();
+			
+			//Change the button layout and behavior
+			this.btnRegister.setEnabled(false);
+			this.btnRegister.setVisible(false);
+			this.btnSearch.setText("Search");
+			this.btnClear.setText("Cancel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void defaultMode(){
-		//Clear out and disable all text fields
-		clearAll();
-		disableAll();
-		
-		//Reset button layout and behavior
-		this.btnRegister.setEnabled(true);
-		this.btnRegister.setVisible(true);
-		this.btnSearch.setText("Search...");
-		this.btnClear.setText("Clear");
+		try {
+			//Clear out and disable all text fields
+			clearAll();
+			disableAll();
+			
+			//Reset button layout and behavior
+			this.btnRegister.setEnabled(true);
+			this.btnRegister.setVisible(true);
+			this.btnSearch.setText("Search...");
+			this.btnClear.setText("Clear");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
