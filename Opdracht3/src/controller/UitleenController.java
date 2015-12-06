@@ -23,8 +23,34 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
-		if(beginVerhuurDatum.isBeforeNow()){
+		
+		//Checks if date is in the past
+		if(Integer.parseInt(beginVerhuurDatum.year().getAsString())<Integer.parseInt(DateTime.now().year().getAsString())||
+				Integer.parseInt(beginVerhuurDatum.monthOfYear().getAsString())<Integer.parseInt(DateTime.now().monthOfYear().getAsString())||
+				Integer.parseInt(beginVerhuurDatum.dayOfMonth().getAsString())<Integer.parseInt(DateTime.now().dayOfMonth().getAsString())
+				){
 			throw new ControllerException("Date can't be in the past");
+		}
+		
+		//Checks if verhuurPeriodeDagen is positive
+		if(verhuurPeriodeDagen<0){
+			throw new ControllerException("The number of days can't be negative");
+		}
+		
+		//Checks if item is already rented between beginVerhuurDatum and beginVerhuurDatum+verhuurPeriodeDagen
+		for(Uitlening u:uitleningen){
+			if(u.getUitgeleendItem().equals(item)){
+				List<DateTime> uItemDates = new ArrayList<DateTime>();
+				for(int i = 0 ;i<u.getVerhuurPeriodeInDagen();i++){
+					uItemDates.add(u.getBeginVerhuurDatum().plus(i));
+				}
+
+				for(int i = 0;i<verhuurPeriodeDagen;i++){
+					if(uItemDates.contains(beginVerhuurDatum.plus(i))){
+						throw new ControllerException("The item is already rented during the entered period");
+					}
+				}
+			}
 		}
 		
 		Uitlening uitlening = new Uitlening();
