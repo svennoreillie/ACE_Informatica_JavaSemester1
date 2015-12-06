@@ -1,5 +1,5 @@
-package org.springframework.web.bind.annotation;
+/*package org.springframework.web.bind.annotation;
 
 public interface IRequestMapping {
 
-}
+}*/

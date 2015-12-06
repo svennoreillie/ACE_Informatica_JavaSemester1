@@ -10,18 +10,19 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 
-//toegevoegd Geert 5 December
+//toegevoegd Geert 5 December en nadien (tot nader bericht) uitgecommentarieerd wegens eigenschappen van spring framework
 //bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
 //Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.IController;
+//import org.springframework.web.bind.annotation.IRequestMapping;
 /**
  * gebruikt model: traditionele Model-View-Controller(MVC) model
  * @author 
  *
  */
 
-public class WinkelController implements Controller{
+public class WinkelController {
 
 	private Shop currentShop;
 	//lijn toegevoegd 5 december voor testen github issue met versie 113

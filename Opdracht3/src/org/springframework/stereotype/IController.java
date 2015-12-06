@@ -1,5 +1,5 @@
-package org.springframework.stereotype;
+/*package org.springframework.stereotype;
 
 public interface IController {
 
-}
+}*/
