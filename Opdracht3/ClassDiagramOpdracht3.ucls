@@ -4,7 +4,7 @@
   router="FAN">  
   <class id="1" language="java" name="application.App" project="Opdracht3" file="/Opdracht3/src/application/App.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="107" width="107" x="117" y="10"/>    
+    <position height="107" width="107" x="41" y="5"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -13,7 +13,7 @@
   </class>  
   <class id="2" language="java" name="common.AntiMagicStrings" project="Opdracht3" 
     file="/Opdracht3/src/common/AntiMagicStrings.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="205" y="379"/>    
+    <position height="-1" width="-1" x="110" y="299"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -22,7 +22,7 @@
   </class>  
   <class id="3" language="java" name="common.DBException" project="Opdracht3" 
     file="/Opdracht3/src/common/DBException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="371" y="362"/>    
+    <position height="-1" width="-1" x="276" y="292"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -31,7 +31,7 @@
   </class>  
   <class id="4" language="java" name="common.DBMissingException" project="Opdracht3" 
     file="/Opdracht3/src/common/DBMissingException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="553" y="345"/>    
+    <position height="-1" width="-1" x="451" y="273"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -40,7 +40,7 @@
   </class>  
   <class id="5" language="java" name="common.NotImplementedException" project="Opdracht3" 
     file="/Opdracht3/src/common/NotImplementedException.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="154" width="173" x="648" y="271"/>    
+    <position height="154" width="173" x="544" y="197"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -49,12 +49,12 @@
   </class>  
   <package id="6" language="java" name="common.enums" project="Opdracht3" file="/Opdracht3/src/common/enums" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="168" y="149"/>    
+    <position height="-1" width="-1" x="96" y="149"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="7" language="java" name="common.factories" project="Opdracht3" file="/Opdracht3/src/common/factories" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="175" y="216"/>    
+    <position height="-1" width="-1" x="273" y="151"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
