@@ -14,9 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
+import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
-import model.CustomerTableModel;
 import model.Person;
 import testing.CustomerTableIOTest;
 
@@ -48,13 +48,15 @@ public class CustomerOverview extends JPanel {
 	private JButton btnClear;
 	private DefaultTableModel tableModel;
 	private JTable tableCustomers;
-	private static ArrayList<Customer> customerList;
+	private ArrayList<Customer> customerList;
 	private CustomerTableIOTest iotest;
 
 	/**
 	 * Create the panel.
 	 */
 	public CustomerOverview() {
+		customerList = new ArrayList<>();
+		
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -233,11 +235,27 @@ public class CustomerOverview extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 580, 339);
 		add(scrollPane);
-		//String[] columnNames = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
-		//Object[][] data = {};
-		//tableCustomers = new JTable(data, columnNames);
 		CustomerTableModel tableModel = new CustomerTableModel();
 		tableCustomers = new JTable(tableModel);
+		tableCustomers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 2){
+					// TODO Launch Customer Detail pane
+					JOptionPane.showMessageDialog(null, "Double click!");
+				}
+				else{
+					try{
+						fillForm(customerList.get(tableCustomers.getSelectedRow()));
+					}
+					catch (Exception e){
+						System.err.println(e);
+					}
+					enableAll();
+					tfCustomerID.setEnabled(false);
+				}
+			}
+		});
 		scrollPane.setViewportView(tableCustomers);
 		
 		JButton btnLaunchFactory = new JButton("Launch factory");
@@ -245,13 +263,16 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				ArrayList<Customer> tempList = new ArrayList<>();
+
 				for (int i = 0; i < 10; i++){
 					tempList.add(CustomerFactory.createCustomer());
 				}
 				
 				for (int i = 0; i < tempList.size(); i++){
 					tableModel.addCustomer(tempList.get(i));
+					customerList.add(tempList.get(i));
 				}
+				
 			}
 		});
 			
@@ -259,6 +280,9 @@ public class CustomerOverview extends JPanel {
 		add(btnLaunchFactory);
 	}
 	
+	/**
+	 * Enables all text fields on the pane (even the Customer ID), so they can be edited.
+	 */
 	private void enableAll(){
 		//enables all text fields
 		this.tfAdress.setEnabled(true);
@@ -273,6 +297,9 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setEnabled(true);
 	}
 	
+	/**
+	 * Disables all text fields on the pane, so they can't be edited.
+	 */
 	private void disableAll(){
 		//Disables all text fields
 		this.tfAdress.setEnabled(false);
@@ -287,6 +314,9 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setEnabled(false);
 	}
 	
+	/**
+	 * Clears out all text fields on the pane.
+	 */
 	private void clearAll(){
 		//Clears out all text fields
 		this.tfAdress.setText("");
@@ -301,6 +331,9 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setText("");
 	}
 	
+	/**
+	 * Sets the pane's behavior so new customers can be added using the text fields on the bottom.
+	 */
 	private void registrationMode(){
 		//Enable all text fields, save for Customer ID
 		enableAll();
@@ -313,6 +346,9 @@ public class CustomerOverview extends JPanel {
 		this.btnClear.setText("Cancel");
 	}
 	
+	/**
+	 * Sets the pane's behavior so the text fields on the bottom can be used as search filters.
+	 */
 	private void searchMode(){
 		//Enable all text fields, including Customer ID
 		enableAll();
@@ -324,6 +360,9 @@ public class CustomerOverview extends JPanel {
 		this.btnClear.setText("Cancel");
 	}
 	
+	/**
+	 * Sets the pane's behavior to its default state
+	 */
 	private void defaultMode(){
 		//Clear out and disable all text fields
 		clearAll();
@@ -336,7 +375,21 @@ public class CustomerOverview extends JPanel {
 		this.btnClear.setText("Clear");
 	}
 	
-	private void populateTable(){
-		
+	/**
+	 * Fills out the form on the bottom according to which customer is selected on the table above.
+	 * 
+	 * @param customer the customer whose details are displayed
+	 */
+	private void fillForm(Customer customer){
+		tfAdress.setText(customer.getAddress().getStreet());
+		tfBox.setText(customer.getAddress().getBox());
+		tfCity.setText(customer.getAddress().getCity());
+		tfCountry.setText(customer.getAddress().getCountry());
+		tfCustomerID.setText(Integer.toString(customer.getId()));
+		tfEmail.setText(customer.getEmail());
+		tfFirstName.setText(customer.getPerson().getFirstName());
+		tfLastName.setText(customer.getPerson().getLastName());
+		tfNumber.setText(customer.getAddress().getNumber());
+		tfZip.setText(customer.getAddress().getZip());
 	}
 }
