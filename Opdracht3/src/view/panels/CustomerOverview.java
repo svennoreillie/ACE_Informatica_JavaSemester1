@@ -14,9 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
+import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
-import model.CustomerTableModel;
 import model.Person;
 import testing.CustomerTableIOTest;
 

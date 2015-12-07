@@ -1,9 +1,11 @@
-package model;
+package controller;
 
 import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
+
+import model.Customer;
 
 
 public class CustomerTableModel extends AbstractTableModel {
