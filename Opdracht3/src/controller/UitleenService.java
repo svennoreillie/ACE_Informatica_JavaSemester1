@@ -25,59 +25,61 @@ public interface UitleenService {
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException;
 	
 	/**
-	 * 
+	 * Returns if this {@link Item} is leased at the moment.
 	 * @param item
-	 * @return
+	 * @return a boolean specifying if the {@link Item} is leased or not.
 	 */
 	public boolean isHuidigItemMomenteelUitgeleend(Item item);
 	
 	/**
 	 * 
 	 * @param customer
-	 * @return
+	 * @return a list of all {@link Item}s leased by a specific {@link Customer}.
 	 */
 	public List<Item> uitgeleendeItemsVanHuidigeKlant (Customer customer);
 	
 	/**
 	 * 
-	 * @return
+	 * @return a list of all leased {@link Item}s.
 	 */
 	public List<Item> alleUitgeleendeItems ();
 	
 	/**
 	 * 
-	 * @return
+	 * @return a list of all leased {@link Cd}'d.
 	 */
 	public List<Cd> alleUitgeleendeCd ();
 	
 	/**
 	 * 
-	 * @return
+	 * @return a list of all leased {@link Dvd}'s.
 	 */
 	public List<Dvd> alleUitgeleendeDvd ();
 	
 	/**
 	 * 
-	 * @return
+	 * @return a list of all leased {@link Game}'s.
 	 */
 	public List<Game> alleUitgeleendeGames ();
 	
+		
 	/**
-	 * 
-	 * @param uitlening
+	 * Stops a specific {@link Uitlening}.
+	 * @param uitlening	the lease that has to be stopped.
+	 *
 	 */
 	public void uitleningVanEenItemStoppen(Uitlening uitlening);
 	
 	/**
-	 * 
-	 * @param teStoppenItemlijst
+	 * Stops a list of leases.
+	 * @param teStoppenItemlijst	the list of {@link Uitlening} that has to be stopped
 	 */
 	public void uitleningVanMeerdereItemsStoppen (List<Uitlening> teStoppenItemlijst);
 	
 	/**
 	 * 
-	 * @param uitlening
-	 * @return
+	 * @param uitlening	the {@link Uitlening} of wich the enddate has to be known.
+	 * @return the {@link DateTime} when a specific {@link Uitlening} will end
 	 */
 	public DateTime geefEindDatumVanDeUitlening (Uitlening uitlening);
 	

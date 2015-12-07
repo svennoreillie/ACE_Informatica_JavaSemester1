@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import common.enums.EnumTypeCd;
+import common.enums.EnumTypeDvd;
 import common.enums.EnumTypeGame;
 import controller.ControllerException;
 import controller.UitleenController;
@@ -21,30 +23,35 @@ import model.Customer;
 import model.Item;
 import model.Person;
 import model.Uitlening;
+import model.subItems.Cd;
+import model.subItems.Dvd;
 import model.subItems.Game;
+
+/**
+ * 
+ * @author Huybrechts Pieter
+ *
+ */
 
 public class UitleenControllerTest {
 
 	UitleenController uitleenController;
 	
-	Item item;
+	Game game;
+	Cd cd;
+	Dvd dvd;
 	Customer customer;
 	DateTime dateNow;
 	DateTime datePast;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		uitleenController = new UitleenController();
 		
-		item = new Game("titel", new BigDecimal(3), 3.0,EnumTypeGame.FIRSTPERSONSHOOTER);
+		game = new Game("game", new BigDecimal(3), 3.0,EnumTypeGame.FIRSTPERSONSHOOTER);
+		cd = new Cd("cd", new BigDecimal(3), 3.0,EnumTypeCd.MUZIEK);
+		dvd = new Dvd("dvd", new BigDecimal(3), 3.0,EnumTypeDvd.FILM);
+		
 		customer = new Customer(new Person("First","Last"),new Address("street","number","","3300","City","Country"),"bla@bla.com");
 		dateNow = new DateTime(DateTime.now());
 		datePast = new DateTime(1,1,1,0,0);
@@ -57,34 +64,36 @@ public class UitleenControllerTest {
 
 	@Test
 	public void testAanmakenVanEenUitlening() throws Exception {
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 	}
 	
 	@Test(expected=ControllerException.class)
 	public void testAanmakenVanEenUitleningInThePast() throws Exception {
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, datePast);
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, datePast);
 	}
 	
 	@Test(expected=ControllerException.class)
 	public void testAanmakenVanEenUitleningWithNegativeNumberOfDays() throws Exception {
-		uitleenController.aanmakenVanEenUitlening(item, customer, -1, dateNow);
+		uitleenController.aanmakenVanEenUitlening(game, customer, -1, dateNow);
 	}
 	
 	@Test(expected=ControllerException.class)
 	public void testAanmakenVanEenUitleningWithAnAlreadyRentedItem() throws Exception {
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow.plus(1));
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow.plus(1));
 	}
 	
 	@Test
 	public void testIsHuidigItemMomenteelUitgeleendWhenTrue() throws ControllerException {
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
-		assertTrue(uitleenController.isHuidigItemMomenteelUitgeleend(item));
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		assertTrue(uitleenController.isHuidigItemMomenteelUitgeleend(game));
 	}
 	
 	@Test
 	public void testIsHuidigItemMomenteelUitgeleendWhenFalse() throws ControllerException {
-		assertFalse(uitleenController.isHuidigItemMomenteelUitgeleend(item));
+		assertFalse(uitleenController.isHuidigItemMomenteelUitgeleend(game));
 	}
 
 	@Test
@@ -97,8 +106,13 @@ public class UitleenControllerTest {
 	@Test
 	public void testUitgeleendeItemsVanHuidigeKlantWhenHeHasRented() throws ControllerException {
 		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(item);
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
+		itemList.add(game);
+		itemList.add(cd);
+		itemList.add(dvd);
+		
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		
 		assertEquals(itemList, uitleenController.uitgeleendeItemsVanHuidigeKlant(customer));
 	}
@@ -112,8 +126,14 @@ public class UitleenControllerTest {
 	@Test
 	public void testAlleUitgeleendeItems() throws ControllerException {
 		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(item);
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
+		itemList.add(game);
+		itemList.add(cd);
+		itemList.add(dvd);
+		
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+		
 		assertEquals(itemList, uitleenController.alleUitgeleendeItems());
 	}
 
@@ -130,8 +150,11 @@ public class UitleenControllerTest {
 	@Test
 	public void testAlleUitgeleendeGames() throws ControllerException {
 		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(item);
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
+		itemList.add(game);
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+		
 		assertEquals(itemList, uitleenController.alleUitgeleendeGames());
 	}
 	
@@ -143,9 +166,9 @@ public class UitleenControllerTest {
 
 	@Test
 	public void testUitleningVanEenItemStoppen() throws ControllerException {
-		uitleenController.aanmakenVanEenUitlening(item, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		Uitlening uitlening = new Uitlening();
-		uitlening.setUitgeleendItem(item);
+		uitlening.setUitgeleendItem(game);
 		uitlening.setKlantDieUitleent(customer);
 		uitlening.setBeginVerhuurDatum(dateNow);
 		uitlening.setVerhuurPeriodeInDagen(5);

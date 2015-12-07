@@ -12,7 +12,13 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 
+/**
+ * Keeps a list of all the leases and gives the possibility to create, delete or view leases.
+ * @author Huybrechts Pieter
+ *
+ */
 public class UitleenController implements UitleenService {
+
 	
 	List<Uitlening> uitleningen;
 	
@@ -149,7 +155,6 @@ public class UitleenController implements UitleenService {
 			uitleningen.remove(u);
 			u.getUitgeleendItem().setUitgeleend(false);
 		}
-		
 	}
 
 	@Override
