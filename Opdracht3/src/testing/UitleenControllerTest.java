@@ -36,30 +36,52 @@ import model.subItems.Game;
 public class UitleenControllerTest {
 
 	UitleenController uitleenController;
-	
+
 	Game game;
 	Cd cd;
 	Dvd dvd;
 	Customer customer;
 	DateTime dateNow;
 	DateTime datePast;
-	
+	Uitlening gameUitlening;
+	Uitlening cdUitlening;
+	Uitlening dvdUitlening;
+
 	@Before
 	public void setUp() throws Exception {
 		uitleenController = new UitleenController();
-		
-		game = new Game("game", new BigDecimal(3), 3.0,EnumTypeGame.FIRSTPERSONSHOOTER);
-		cd = new Cd("cd", new BigDecimal(3), 3.0,EnumTypeCd.MUZIEK);
-		dvd = new Dvd("dvd", new BigDecimal(3), 3.0,EnumTypeDvd.FILM);
-		
-		customer = new Customer(new Person("First","Last"),new Address("street","number","","3300","City","Country"),"bla@bla.com");
+
+		game = new Game("game", new BigDecimal(3), 3.0, EnumTypeGame.FIRSTPERSONSHOOTER);
+		cd = new Cd("cd", new BigDecimal(3), 3.0, EnumTypeCd.MUZIEK);
+		dvd = new Dvd("dvd", new BigDecimal(3), 3.0, EnumTypeDvd.FILM);
+
+		customer = new Customer(new Person("First", "Last"),
+				new Address("street", "number", "", "3300", "City", "Country"), "bla@bla.com");
 		dateNow = new DateTime(DateTime.now());
-		datePast = new DateTime(1,1,1,0,0);
+		datePast = new DateTime(1, 1, 1, 0, 0);
+		
+		gameUitlening=new Uitlening();
+		gameUitlening.setBeginVerhuurDatum(dateNow);
+		gameUitlening.setVerhuurPeriodeInDagen(5);
+		gameUitlening.setUitgeleendItem(game);
+		gameUitlening.setKlantDieUitleent(customer);
+		
+		cdUitlening=new Uitlening();
+		cdUitlening.setBeginVerhuurDatum(dateNow);
+		cdUitlening.setVerhuurPeriodeInDagen(5);
+		cdUitlening.setUitgeleendItem(cd);
+		cdUitlening.setKlantDieUitleent(customer);
+		
+		dvdUitlening=new Uitlening();
+		dvdUitlening.setBeginVerhuurDatum(dateNow);
+		dvdUitlening.setVerhuurPeriodeInDagen(5);
+		dvdUitlening.setUitgeleendItem(dvd);
+		dvdUitlening.setKlantDieUitleent(customer);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		
+
 	}
 
 	@Test
@@ -68,123 +90,169 @@ public class UitleenControllerTest {
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 	}
-	
-	@Test(expected=ControllerException.class)
+
+	@Test(expected = ControllerException.class)
 	public void testAanmakenVanEenUitleningInThePast() throws Exception {
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, datePast);
 	}
-	
-	@Test(expected=ControllerException.class)
+
+	@Test(expected = ControllerException.class)
 	public void testAanmakenVanEenUitleningWithNegativeNumberOfDays() throws Exception {
 		uitleenController.aanmakenVanEenUitlening(game, customer, -1, dateNow);
 	}
-	
-	@Test(expected=ControllerException.class)
+
+	@Test(expected = ControllerException.class)
 	public void testAanmakenVanEenUitleningWithAnAlreadyRentedItem() throws Exception {
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow.plus(1));
 	}
-	
+
 	@Test
 	public void testIsHuidigItemMomenteelUitgeleendWhenTrue() throws ControllerException {
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		assertTrue(uitleenController.isHuidigItemMomenteelUitgeleend(game));
 	}
-	
+
 	@Test
 	public void testIsHuidigItemMomenteelUitgeleendWhenFalse() throws ControllerException {
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		assertFalse(uitleenController.isHuidigItemMomenteelUitgeleend(game));
 	}
 
 	@Test
 	public void testUitgeleendeItemsVanHuidigeKlantWhenNoneAreRented() {
 		List<Item> emptyItemsList = new ArrayList<Item>();
-		
-		assertEquals(emptyItemsList, uitleenController.uitgeleendeItemsVanHuidigeKlant(customer));
+
+		assertEquals(emptyItemsList, uitleenController.uitleningnenVanKlant(customer));
 	}
-	
+
 	@Test
 	public void testUitgeleendeItemsVanHuidigeKlantWhenHeHasRented() throws ControllerException {
-		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(game);
-		itemList.add(cd);
-		itemList.add(dvd);
-		
+		List<Uitlening> itemList = new ArrayList<Uitlening>();
+		itemList.add(gameUitlening);
+		itemList.add(cdUitlening);
+		itemList.add(dvdUitlening);
+
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
-		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
-		
-		assertEquals(itemList, uitleenController.uitgeleendeItemsVanHuidigeKlant(customer));
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+
+		assertEquals(itemList, uitleenController.uitleningnenVanKlant(customer));
 	}
 
 	@Test
 	public void testAlleUitgeleendeItemsWhenNoneAreRented() {
 		List<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, uitleenController.alleUitgeleendeItems());
+		assertEquals(itemList, uitleenController.alleUitleningen());
 	}
-	
+
 	@Test
-	public void testAlleUitgeleendeItems() throws ControllerException {
-		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(game);
-		itemList.add(cd);
-		itemList.add(dvd);
+	public void testAlleUitleningen() throws ControllerException {
+		List<Uitlening> itemList = new ArrayList<>();
+		itemList.add(gameUitlening);
+		itemList.add(cdUitlening);
+		itemList.add(dvdUitlening);
+
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+
+		assertEquals(itemList, uitleenController.alleUitleningen());
+	}
+
+	@Test
+	public void testAlleUitleningenVanCd() throws ControllerException {
+		List<Uitlening> itemList = new ArrayList<Uitlening>();
+		itemList.add(cdUitlening);
+
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+
+		assertEquals(itemList, uitleenController.alleUitleningenVanCd());
+	}
+
+	@Test
+	public void testAlleUitgeleendeDvd() throws ControllerException {
+		List<Uitlening> itemList = new ArrayList<Uitlening>();
+		itemList.add(dvdUitlening);
+
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+
+		assertEquals(itemList, uitleenController.alleUitleningenVanDvd());
+	}
+
+	@Test
+	public void testAlleUitleningenVanGame() throws ControllerException {
+		List<Uitlening> itemList = new ArrayList<Uitlening>();
+		itemList.add(gameUitlening);
 		
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
-		
-		assertEquals(itemList, uitleenController.alleUitgeleendeItems());
+
+		assertEquals(itemList, uitleenController.alleUitleningenVanGame());
 	}
 
-	@Test
-	public void testAlleUitgeleendeCd() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAlleUitgeleendeDvd() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAlleUitgeleendeGames() throws ControllerException {
-		List<Item> itemList = new ArrayList<Item>();
-		itemList.add(game);
-		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
-		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
-		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
-		
-		assertEquals(itemList, uitleenController.alleUitgeleendeGames());
-	}
-	
 	@Test
 	public void testAlleUitgeleendeGamesWhenNoneAreRented() {
 		List<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, uitleenController.alleUitgeleendeGames());
+		assertEquals(itemList, uitleenController.alleUitleningenVanGame());
 	}
 
 	@Test
 	public void testUitleningVanEenItemStoppen() throws ControllerException {
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 		Uitlening uitlening = new Uitlening();
 		uitlening.setUitgeleendItem(game);
 		uitlening.setKlantDieUitleent(customer);
 		uitlening.setBeginVerhuurDatum(dateNow);
 		uitlening.setVerhuurPeriodeInDagen(5);
 		uitleenController.uitleningVanEenItemStoppen(uitlening);
-		
-		assertEquals(new ArrayList<Item>(), uitleenController.alleUitgeleendeItems());
+
+		ArrayList<Uitlening> itemsList = new ArrayList<Uitlening>();
+		itemsList.add(cdUitlening);
+		itemsList.add(dvdUitlening);
+
+		assertEquals(itemsList, uitleenController.alleUitleningen());
 	}
 
 	@Test
 	public void testUitleningVanMeerdereItemsStoppen() throws ControllerException {
-		fail("Not yet implemented");
+		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
+		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
+			
+		List<Uitlening> toDeleteItems = new ArrayList<Uitlening>();
+		
+		for(Uitlening u : uitleenController.getAllUitleningen()){
+			toDeleteItems.add( u.Clone());
+		}
+		
+		uitleenController.uitleningVanMeerdereItemsStoppen(toDeleteItems);
+		
+		assertEquals(new ArrayList<>(), uitleenController.getAllUitleningen());
 	}
 
 	@Test
-	public void testGeefEindDatumVanDeUitlening() {
-		fail("Not yet implemented");
+	public void testGeefEindDatumVanDeUitlening() throws ControllerException {
+		
+		Uitlening uitlening = new Uitlening();
+		uitlening.setBeginVerhuurDatum(dateNow);
+		uitlening.setVerhuurPeriodeInDagen(5);
+		
+		DateTime actualDate = uitleenController.geefEindDatumVanDeUitlening(uitlening);
+		DateTime expectedDate = dateNow.plusDays(5);
+		
+		assertEquals(expectedDate, actualDate);
+		
 	}
 
 }

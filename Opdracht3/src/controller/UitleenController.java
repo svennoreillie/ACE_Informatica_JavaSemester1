@@ -31,10 +31,9 @@ public class UitleenController implements UitleenService {
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
 		
 		//Checks if date is in the past
-		if(Integer.parseInt(beginVerhuurDatum.year().getAsString())<Integer.parseInt(DateTime.now().year().getAsString())||
-				Integer.parseInt(beginVerhuurDatum.monthOfYear().getAsString())<Integer.parseInt(DateTime.now().monthOfYear().getAsString())||
-				Integer.parseInt(beginVerhuurDatum.dayOfMonth().getAsString())<Integer.parseInt(DateTime.now().dayOfMonth().getAsString())
-				){
+		if(beginVerhuurDatum.getYear()<DateTime.now().getYear() || 
+				beginVerhuurDatum.getMonthOfYear() < DateTime.now().getMonthOfYear() ||
+				beginVerhuurDatum.getDayOfMonth() < DateTime.now().getDayOfMonth()){
 			throw new ControllerException("Date can't be in the past");
 		}
 		
@@ -75,12 +74,12 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Item> uitgeleendeItemsVanHuidigeKlant(Customer customer) {
-		List<Item> items = new ArrayList<Item>();
+	public List<Uitlening> uitleningnenVanKlant(Customer customer) {
+		List<Uitlening> items = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			if(u.getKlantDieUitleent().equals(customer)){
-				items.add(u.getUitgeleendItem());
+				items.add(u);
 			}
 		}
 		
@@ -88,25 +87,24 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Item> alleUitgeleendeItems() {
-		List<Item> items = new ArrayList<>();
+	public List<Uitlening> alleUitleningen() {
+		List<Uitlening> items = new ArrayList<Uitlening>();
 		
 		for(Uitlening u:uitleningen){
-			items.add(u.getUitgeleendItem());
+			items.add(u);
 		}
 		
 		return items;
 	}
 
 	@Override
-	public List<Cd> alleUitgeleendeCd() {
-		List<Cd> Cds = new ArrayList<Cd>();
+	public List<Uitlening> alleUitleningenVanCd() {
+		List<Uitlening> Cds = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Cd){
-				Cd c = (Cd) i;
-				Cds.add(c);
+				Cds.add(u);
 			}
 		}
 		
@@ -114,14 +112,13 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Dvd> alleUitgeleendeDvd() {
-		List<Dvd> dvds = new ArrayList<Dvd>();
+	public List<Uitlening> alleUitleningenVanDvd() {
+		List<Uitlening> dvds = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Dvd){
-				Dvd d = (Dvd) i;
-				dvds.add(d);
+				dvds.add(u);
 			}
 		}
 		
@@ -129,14 +126,13 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Game> alleUitgeleendeGames() {
-		List<Game> games = new ArrayList<Game>();
+	public List<Uitlening> alleUitleningenVanGame() {
+		List<Uitlening> games = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Game){
-				Game g = (Game) i;
-				games.add(g);
+				games.add(u);
 			}
 		}
 		
@@ -160,6 +156,11 @@ public class UitleenController implements UitleenService {
 	@Override
 	public DateTime geefEindDatumVanDeUitlening(Uitlening uitlening) {
 		return uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
+	}
+
+	@Override
+	public List<Uitlening> getAllUitleningen() {
+		return uitleningen;
 	}
 
 }

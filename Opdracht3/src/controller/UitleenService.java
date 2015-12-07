@@ -36,31 +36,31 @@ public interface UitleenService {
 	 * @param customer
 	 * @return a list of all {@link Item}s leased by a specific {@link Customer}.
 	 */
-	public List<Item> uitgeleendeItemsVanHuidigeKlant (Customer customer);
+	public List<Uitlening> uitleningnenVanKlant (Customer customer);
 	
 	/**
 	 * 
 	 * @return a list of all leased {@link Item}s.
 	 */
-	public List<Item> alleUitgeleendeItems ();
+	public List<Uitlening> alleUitleningen ();
 	
 	/**
 	 * 
 	 * @return a list of all leased {@link Cd}'d.
 	 */
-	public List<Cd> alleUitgeleendeCd ();
+	public List<Uitlening> alleUitleningenVanCd ();
 	
 	/**
 	 * 
 	 * @return a list of all leased {@link Dvd}'s.
 	 */
-	public List<Dvd> alleUitgeleendeDvd ();
+	public List<Uitlening> alleUitleningenVanDvd ();
 	
 	/**
 	 * 
 	 * @return a list of all leased {@link Game}'s.
 	 */
-	public List<Game> alleUitgeleendeGames ();
+	public List<Uitlening> alleUitleningenVanGame ();
 	
 		
 	/**
@@ -83,4 +83,9 @@ public interface UitleenService {
 	 */
 	public DateTime geefEindDatumVanDeUitlening (Uitlening uitlening);
 	
+	/**
+	 * 
+	 * @return List of all {@link Uitlening}en
+	 */
+	public List<Uitlening> getAllUitleningen();
 }
