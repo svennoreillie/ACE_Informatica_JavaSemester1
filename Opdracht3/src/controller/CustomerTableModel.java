@@ -1,9 +1,11 @@
-package model;
+package controller;
 
 import java.util.LinkedList;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
+
+import model.Customer;
 
 
 public class CustomerTableModel extends AbstractTableModel {
@@ -11,7 +13,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"Customer ID", "First Name", "Surname", "E-mail", "Spam"};
+	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Spam"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){
@@ -35,25 +37,20 @@ public class CustomerTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		//return data[row][column];
-		//return data.get(row);
 		Object value = null;
 		Customer customer = data.get(row);
 		
 		switch(column){
 		case 0:
-			value = customer.getId();
-			break;
-		case 1:
 			value = customer.getPerson().getFirstName();
 			break;
-		case 2:
+		case 1:
 			value = customer.getPerson().getLastName();
 			break;
-		case 3:
+		case 2:
 			value = customer.getEmail();
 			break;
-		case 4:
+		case 3:
 			value = customer.getSpam();
 			break;
 		default:
