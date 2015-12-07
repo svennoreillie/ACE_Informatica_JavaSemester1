@@ -35,8 +35,6 @@ public class CustomerTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int column) {
-		//return data[row][column];
-		//return data.get(row);
 		Object value = null;
 		Customer customer = data.get(row);
 		
