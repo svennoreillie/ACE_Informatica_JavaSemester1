@@ -19,6 +19,7 @@ import model.Address;
 import model.Customer;
 import model.Person;
 import testing.CustomerTableIOTest;
+import view.MainWindow;
 
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -50,6 +51,7 @@ public class CustomerOverview extends JPanel {
 	private JTable tableCustomers;
 	private ArrayList<Customer> customerList;
 	private CustomerTableIOTest iotest;
+	private CustomerDetail detail;
 
 	/**
 	 * Create the panel.
@@ -72,7 +74,7 @@ public class CustomerOverview extends JPanel {
 		tfFirstName.setBounds(85, 402, 150, 20);
 		add(tfFirstName);
 		
-		JLabel lblLastName = new JLabel("Last name");
+		JLabel lblLastName = new JLabel("Surname");
 		lblLastName.setBounds(10, 433, 65, 14);
 		add(lblLastName);
 		
@@ -242,7 +244,9 @@ public class CustomerOverview extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
 					// TODO Launch Customer Detail pane
-					JOptionPane.showMessageDialog(null, "Double click!");
+					//JOptionPane.showMessageDialog(null, "Double click!");
+					detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
+					
 				}
 				else{
 					try{
