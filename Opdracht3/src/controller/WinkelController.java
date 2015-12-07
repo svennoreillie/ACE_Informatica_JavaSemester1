@@ -33,6 +33,7 @@ public class WinkelController implements java.awt.event.ActionListener{
 
 	private Shop currentShop;
 	private Item currentItems;
+	List<Item>items;
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -55,7 +56,11 @@ public class WinkelController implements java.awt.event.ActionListener{
 	}
 	
 	public void AddItem(Item item) {
-		
+		//uitleningen.add(uitlening);
+		items.add(item);
+		System.out.println ("Items: items added");
+	}
+	public void RemoveItem (Item item) {
 	}
 	//toegevoegd 6 december Geert
 	public List<Item> getAllItemsSorted() {
