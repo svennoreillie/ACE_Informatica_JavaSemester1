@@ -21,7 +21,6 @@ public class Customer extends ModelBase {
 	private Address address;
 	private String email;
 	private boolean spam = false;
-	private AntiMagicStrings magicString;
 	
 	public Customer(Person person, Address address, String email) throws Exception{
 		try{

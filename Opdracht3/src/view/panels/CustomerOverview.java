@@ -228,9 +228,9 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					//detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
-					detail = new CustomerDetail();
-					detail.loadCustomer(customerList.get(tableCustomers.getSelectedRow()));
+					detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
+					//detail = new CustomerDetail();
+					//detail.loadCustomer(customerList.get(tableCustomers.getSelectedRow()));
 					mainWindow.changeViewPanel(detail);
 				}
 				else{

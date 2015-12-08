@@ -102,12 +102,6 @@ public class ButtonPanel extends JPanel {
 		customerOverviewButton = new JButton("Customer overview");
 		customerOverviewButton.addActionListener(new CustomerOverviewButtonListener());
 		add(customerOverviewButton,gbc);
-		
-		customerDetail = new CustomerDetail();
-		gbc = new GridBagConstraints();
-		gbc.gridx=1;
-		gbc.gridy=4;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
 	}
 	
 	public JPanel getHomePanel(){
