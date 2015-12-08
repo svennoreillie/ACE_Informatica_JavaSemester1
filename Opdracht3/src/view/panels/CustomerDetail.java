@@ -19,8 +19,12 @@ import view.MainWindow;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CustomerDetail extends JPanel {
+	private Customer customer;
+	private CustomerOverview overview;
 	private JTable tableCustomerRentedItems;
 	private CustomerRentedItemTableModel tableModel;
 	private JLabel lblCustomerName;
@@ -30,9 +34,9 @@ public class CustomerDetail extends JPanel {
 
 	/**
 	 * Create the panel.
-	 * @param mainWindow 
 	 */
-	public CustomerDetail(Customer customer){
+	public CustomerDetail(){
+		
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -54,6 +58,12 @@ public class CustomerDetail extends JPanel {
 		scrollPane.setViewportView(tableCustomerRentedItems);
 		
 		JButton btnClose = new JButton("Close");
+		btnClose.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			}
+		});
 		btnClose.setBounds(501, 566, 89, 23);
 		add(btnClose);
 		
@@ -77,14 +87,14 @@ public class CustomerDetail extends JPanel {
 		tglbtnNewsletter.setBounds(10, 162, 121, 23);
 		add(tglbtnNewsletter);
 		
-		loadCustomer(customer);
+		//loadCustomer(customer);
 	}
-
+	
 	/**
 	 * Replaces the text on the labels with the customer's details
 	 * @param customer the customer whose details have to be displayed
 	 */
-	private void loadCustomer(Customer customer){
+	public void loadCustomer(Customer customer){
 		StringBuffer buff = new StringBuffer();
 		buff.append(customer.getPerson().getFirstName() + " " + customer.getPerson().getLastName());
 		lblCustomerName.setText(buff.toString());

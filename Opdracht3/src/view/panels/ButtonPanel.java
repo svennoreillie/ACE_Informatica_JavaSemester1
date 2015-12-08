@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -101,10 +102,28 @@ public class ButtonPanel extends JPanel {
 		customerOverviewButton = new JButton("Customer overview");
 		customerOverviewButton.addActionListener(new CustomerOverviewButtonListener());
 		add(customerOverviewButton,gbc);
+		
+		customerDetail = new CustomerDetail();
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=4;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
 	}
 	
 	public JPanel getHomePanel(){
 		return bluePanel;
+	}
+	
+	class PanelSwitchListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == customerDetail){
+				mainWindow.changeViewPanel(customerOverview);
+			}
+			
+		}
+		
 	}
 
 	class BlueButtonListener implements ActionListener {
@@ -140,18 +159,23 @@ public class ButtonPanel extends JPanel {
 	}
 	
 	class CustomerOverviewButtonListener implements ActionListener{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			mainWindow.changeViewPanel(customerOverview);
 			customerOverview.repaint();
-		}
-		
+		}	
 	}
-
+	
+	class CustomerDetailListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			mainWindow.changeViewPanel(customerOverview);
+		}
+	}
+	
 	public void setController(ButtonPanelController controller) {
 		this.controller = controller;
 		rentalStatusPanel.setController(new RentalStatusController(controller.getShop()));
 	}
-
+	
 }

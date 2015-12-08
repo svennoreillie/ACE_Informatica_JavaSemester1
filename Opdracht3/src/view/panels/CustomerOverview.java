@@ -73,7 +73,7 @@ public class CustomerOverview extends JPanel {
 		tfFirstName = new JTextField();
 		tfFirstName.setEnabled(false);
 		tfFirstName.setColumns(10);
-		tfFirstName.setBounds(85, 402, 150, 20);
+		tfFirstName.setBounds(85, 402, 190, 20);
 		add(tfFirstName);
 		
 		JLabel lblLastName = new JLabel("Surname");
@@ -83,17 +83,17 @@ public class CustomerOverview extends JPanel {
 		tfLastName = new JTextField();
 		tfLastName.setEnabled(false);
 		tfLastName.setColumns(10);
-		tfLastName.setBounds(85, 430, 150, 20);
+		tfLastName.setBounds(85, 430, 190, 20);
 		add(tfLastName);
 		
 		JLabel lblEmail = new JLabel("E-mail");
-		lblEmail.setBounds(355, 402, 46, 14);
+		lblEmail.setBounds(311, 405, 46, 14);
 		add(lblEmail);
 		
 		tfEmail = new JTextField();
 		tfEmail.setEnabled(false);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(430, 399, 160, 20);
+		tfEmail.setBounds(389, 399, 201, 20);
 		add(tfEmail);
 		
 		JLabel label_3 = new JLabel("Adress");
@@ -160,36 +160,23 @@ public class CustomerOverview extends JPanel {
 		add(separator);
 		
 		JLabel lblCustomerId = new JLabel("Customer ID");
-		lblCustomerId.setBounds(355, 430, 65, 14);
+		lblCustomerId.setBounds(311, 433, 65, 14);
 		add(lblCustomerId);
 		
 		tfCustomerID = new JTextField();
 		tfCustomerID.setEnabled(false);
-		tfCustomerID.setBounds(430, 427, 160, 20);
+		tfCustomerID.setBounds(389, 427, 201, 20);
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		JButton btnClear = new JButton("Clear");
-		btnClear.addMouseListener(new MouseAdapter() {
+		btnRegister = new JButton("New...");
+		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (btnSearch.getText() == "Register" || btnSearch.getText() == "Search"){
-					defaultMode();
+			public void mouseClicked(MouseEvent arg0) {
+				if (btnRegister.getText() == "New..."){
+					registrationMode();
 				}
-				else{
-					clearAll();
-				}
-			}
-		});
-		btnClear.setBounds(467, 566, 89, 23);
-		add(btnClear);
-		
-		JButton btnSearch = new JButton("Search...");
-		btnSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				if (btnSearch.getText() == "Register"){
+				else if (btnRegister.getText() == "Save"){
 					//Create a new customer
 					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
 					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
@@ -202,33 +189,29 @@ public class CustomerOverview extends JPanel {
 						e1.printStackTrace();
 					}
 				}
-				
-				if (btnSearch.getText() == "Search"){
-					
-					// TODO ANDRE: filter the customer table according to the text field contents
-					
-				}
-				else{
-					searchMode();
+				else if (btnRegister.getText() == "Search"){
+					// TODO Search function
 				}
 			}
 		});
-		btnSearch.setBounds(343, 566, 89, 23);
-		add(btnSearch);
+		btnRegister.setBounds(384, 566, 89, 23);
+		add(btnRegister);
 		
-		JButton btnRegister = new JButton("New...");
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnRegister.addMouseListener(new MouseAdapter() {
+		btnSearch = new JButton("Search...");
+		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				registrationMode();
+				if (btnSearch.getText() == "Search..."){
+					searchMode();
+				}
+				else if (btnSearch.getText() == "Cancel"){
+					defaultMode();
+				}
 			}
 		});
-		btnRegister.setBounds(226, 566, 89, 23);
-		add(btnRegister);
+		
+		btnSearch.setBounds(501, 566, 89, 23);
+		add(btnSearch);
 		
 		tfZip = new JTextField();
 		tfZip.setEnabled(false);
@@ -245,8 +228,9 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					//detailMode();
-					detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
+					//detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
+					detail = new CustomerDetail();
+					detail.loadCustomer(customerList.get(tableCustomers.getSelectedRow()));
 					mainWindow.changeViewPanel(detail);
 				}
 				else{
@@ -341,14 +325,13 @@ public class CustomerOverview extends JPanel {
 	 */
 	private void registrationMode(){
 		//Enable all text fields, save for Customer ID
+		clearAll();
 		enableAll();
 		this.tfCustomerID.setEnabled(false);
 		
 		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Register");
-		this.btnClear.setText("Cancel");
+		this.btnRegister.setText("Save");
+		this.btnSearch.setText("Cancel");
 	}
 	
 	/**
@@ -356,13 +339,12 @@ public class CustomerOverview extends JPanel {
 	 */
 	private void searchMode(){
 		//Enable all text fields, including Customer ID
+		clearAll();
 		enableAll();
 		
 		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Search");
-		this.btnClear.setText("Cancel");
+		this.btnRegister.setText("Search");
+		this.btnSearch.setText("Cancel");
 	}
 	
 	/**
@@ -374,10 +356,8 @@ public class CustomerOverview extends JPanel {
 		disableAll();
 		
 		//Reset button layout and behavior
-		this.btnRegister.setEnabled(true);
-		this.btnRegister.setVisible(true);
+		this.btnRegister.setText("New...");
 		this.btnSearch.setText("Search...");
-		this.btnClear.setText("Clear");
 	}
 	
 	public void overViewMode(){
