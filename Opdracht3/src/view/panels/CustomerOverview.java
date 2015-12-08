@@ -34,6 +34,7 @@ import javax.swing.JCheckBox;
 
 public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
+	private MainWindow mainWindow;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
 	private JTextField tfEmail;
@@ -55,8 +56,9 @@ public class CustomerOverview extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param mainWindow 
 	 */
-	public CustomerOverview() {
+	public CustomerOverview(MainWindow mainWindow) {
 		customerList = new ArrayList<>();
 		
 		Dimension dimension = new Dimension(600, 600);
@@ -243,10 +245,9 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					// TODO Launch Customer Detail pane
-					//JOptionPane.showMessageDialog(null, "Double click!");
+					//detailMode();
 					detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
-					
+					mainWindow.changeViewPanel(detail);
 				}
 				else{
 					try{
@@ -377,6 +378,10 @@ public class CustomerOverview extends JPanel {
 		this.btnRegister.setVisible(true);
 		this.btnSearch.setText("Search...");
 		this.btnClear.setText("Clear");
+	}
+	
+	public void overViewMode(){
+		mainWindow.changeViewPanel(this);
 	}
 	
 	/**

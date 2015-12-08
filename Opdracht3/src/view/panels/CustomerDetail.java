@@ -15,6 +15,10 @@ import javax.swing.JToggleButton;
 
 import controller.CustomerRentedItemTableModel;
 import model.Customer;
+import view.MainWindow;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CustomerDetail extends JPanel {
 	private JTable tableCustomerRentedItems;
@@ -26,8 +30,9 @@ public class CustomerDetail extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @param mainWindow 
 	 */
-	public CustomerDetail(Customer customer) {
+	public CustomerDetail(Customer customer){
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -74,7 +79,7 @@ public class CustomerDetail extends JPanel {
 		
 		loadCustomer(customer);
 	}
-	
+
 	/**
 	 * Replaces the text on the labels with the customer's details
 	 * @param customer the customer whose details have to be displayed
@@ -92,7 +97,7 @@ public class CustomerDetail extends JPanel {
 		lblAddressLine_1.setText(buff.toString());
 		
 		buff = new StringBuffer();
-		buff.append(customer.getAddress().getZip() + " " + customer.getAddress().getCity().toUpperCase() + customer.getAddress().getCountry());
+		buff.append(customer.getAddress().getZip() + " " + customer.getAddress().getCity().toUpperCase() + " " + customer.getAddress().getCountry());
 		lblAddressLine_2.setText(buff.toString());
 		
 		lblEmailAddress.setText(customer.getEmail());
