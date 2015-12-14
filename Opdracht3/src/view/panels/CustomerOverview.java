@@ -379,7 +379,7 @@ public class CustomerOverview extends JPanel {
 			customerList.add(newCustomer);
 			tableModel.addCustomer(newCustomer);
 
-			JOptionPane.showInputDialog(null, "Customer saved.");
+			JOptionPane.showMessageDialog(null, "Customer saved.");
 			clearAll();
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(null, "Error on creating customer.");
