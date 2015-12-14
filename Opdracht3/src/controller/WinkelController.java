@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.stereotype.IController;
 //import org.springframework.web.bind.annotation.IRequestMapping;
-
+//test
 //toegevoegd Geert 6 december
 //inspiratie van www.austintek.com/mvc/
 
