@@ -9,11 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
-import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
-import common.factories.PersonFactory;
 import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
@@ -22,14 +19,9 @@ import view.MainWindow;
 
 import java.awt.Font;
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
-
-import javax.swing.JCheckBox;
 
 public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
@@ -46,7 +38,6 @@ public class CustomerOverview extends JPanel {
 	private JTextField tfCustomerID;
 	private JButton btnRegister;
 	private JButton btnSearch;
-	private JButton btnClear;
 	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
 	private ArrayList<Customer> customerList;
@@ -215,12 +206,12 @@ public class CustomerOverview extends JPanel {
 		tableCustomers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				//When double-clicked, the table will show a customer detail panel
 				if(arg0.getClickCount() == 2){
 					detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
-					//detail = new CustomerDetail();
-					//detail.loadCustomer(customerList.get(tableCustomers.getSelectedRow()));
 					mainWindow.changeViewPanel(detail);
 				}
+				//When clicked once, the customer's details will be shown in the text fields below
 				else{
 					try{
 						fillForm(customerList.get(tableCustomers.getSelectedRow()));
@@ -370,20 +361,51 @@ public class CustomerOverview extends JPanel {
 		tfZip.setText(customer.getAddress().getZip());
 	}
 	
+	/**
+	 * Checks if any of the text fields essential to customer registration are empty; used before registration to avoid null values.
+	 * 
+	 * @return True if there are any empty essential fields, false otherwise
+	 */
+	private boolean areThereBlankFields(){
+		if (tfFirstName.getText().trim().isEmpty() 
+				|| tfLastName.getText().trim().isEmpty() 
+				|| tfAdress.getText().trim().isEmpty()
+				|| tfNumber.getText().trim().isEmpty()
+				|| tfZip.getText().trim().isEmpty()
+				|| tfCity.getText().trim().isEmpty()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	/**
+	 * Saves a customer to the database, and adds it to the customer overview.
+	 */
 	private void saveCustomer(){
-		//Create a new customer
-		Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-		Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
-		try {
-			Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
-			customerList.add(newCustomer);
-			tableModel.addCustomer(newCustomer);
+		if (areThereBlankFields()){
+			JOptionPane.showMessageDialog(null, "Please fill in all fields.");
+		}
+		else{
+			if (tfCountry.getText().trim().isEmpty()){
+				tfCountry.setText("Belgium");
+			}
+			
+			//Create a new customer
+			Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
+			Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
+			try {
+				Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
+				customerList.add(newCustomer);
+				tableModel.addCustomer(newCustomer);
 
-			JOptionPane.showMessageDialog(null, "Customer saved.");
-			clearAll();
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "Error on creating customer.");
-			e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Customer saved.");
+				clearAll();
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Error on creating customer.");
+				e1.printStackTrace();
+			}
 		}
 	}
 }
