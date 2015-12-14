@@ -52,6 +52,12 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			DataSourceFactory.getSource(classType).writeDB(this.internalList);
 		}
 	}
+	
+	@Override
+	public void update(T entity) throws DBMissingException, DBException {
+		remove(entity);
+		add(entity);
+	}
 
 	@Override
 	public void remove(T entity) throws DBMissingException, DBException {

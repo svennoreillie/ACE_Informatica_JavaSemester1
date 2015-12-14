@@ -33,6 +33,14 @@ public interface DataService<T extends ModelBase> {
 	 * @throws DBException
 	 */
 	void add(T entity) throws DBMissingException, DBException;
+	
+	/**
+	 * Add an item to the database
+	 * @param entity
+	 * @throws DBMissingException
+	 * @throws DBException
+	 */
+	void update(T entity) throws DBMissingException, DBException;
 
 	/**
 	 * Removes an item from the database
