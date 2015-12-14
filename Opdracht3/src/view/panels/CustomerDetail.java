@@ -118,7 +118,7 @@ public class CustomerDetail extends JPanel {
 		lblAddressLine_1.setText(buff.toString());
 		
 		buff = new StringBuffer();
-		buff.append(customer.getAddress().getZip() + " " + customer.getAddress().getCity().toUpperCase() + " " + customer.getAddress().getCountry());
+		buff.append(customer.getAddress().getZip() + " " + customer.getAddress().getCity().toUpperCase() + ", " + customer.getAddress().getCountry());
 		lblAddressLine_2.setText(buff.toString());
 		
 		lblEmailAddress.setText(customer.getEmail());
