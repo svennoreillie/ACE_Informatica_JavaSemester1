@@ -10,23 +10,43 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 
-//toegevoegd Geert 5 December
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//toegevoegd Geert 5 December en nadien (tot nader bericht) uitgecommentarieerd wegens eigenschappen van spring framework
 //bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
 //Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.stereotype.IController;
+//import org.springframework.web.bind.annotation.IRequestMapping;
+
+//toegevoegd Geert 6 december
+//inspiratie van www.austintek.com/mvc/
+
 /**
  * gebruikt model: traditionele Model-View-Controller(MVC) model
  * @author 
  *
  */
 
-public class WinkelController implements Controller{
+public class WinkelController implements java.awt.event.ActionListener{
 
 	private Shop currentShop;
-	//lijn toegevoegd 5 december voor testen github issue met versie 113
-	private Shop current2Shop;
+	private Item currentItems;
+	List<Item>items;
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		//eventueel tekst tonen op console, voorbeeld hieronder
+		/*
+		 * System.out.println ("Controller: the" + e.getActionCommand()
+		 * + "button is clicked at" + new java.util.Date(e.getWhen())
+		 * + " with e.paramString" + e.paramString() );
+		 */
+		//System.out.println ("Controller: acting on Model");
+		//model.incrementValue();
+	}//actionPerformed();
 	public WinkelController() {
 		//TODO :: eerste shop uit db gaan halen en ander ctor aanroepen
 	}
@@ -36,12 +56,15 @@ public class WinkelController implements Controller{
 	}
 	
 	public void AddItem(Item item) {
-		
+		//uitleningen.add(uitlening);
+		items.add(item);
+		System.out.println ("Items: items added");
 	}
-	
+	public void RemoveItem (Item item) {
+	}
+	//toegevoegd 6 december Geert
 	public List<Item> getAllItemsSorted() {
-		//TODO :: lijst van alle items geordend per type en binnen de type alfabetisch geordend
-		return null;
+		return currentShop.getItems();
 	}
 	
 	//Geert ik heb hier uw search even opgedeeld in 3 verschillende functies
@@ -71,4 +94,6 @@ public class WinkelController implements Controller{
 		//(als tekst op de console) die hieraan voldoen. (vb alle films met test in de titel)
 		return null;
 	}
+
+	
 }
