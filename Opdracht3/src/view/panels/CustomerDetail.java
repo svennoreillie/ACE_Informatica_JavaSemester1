@@ -132,49 +132,4 @@ public class CustomerDetail extends JPanel {
 			tglbtnNewsletter.setSelected(false);
 		}
 	}
-	
-	/**
-	 * Replaces the text on the labels with the customer's details
-	 * @param customer the customer whose details have to be displayed
-	 */
-	/*
-	public void loadCustomer(Customer customer){
-		StringBuffer buff = new StringBuffer();
-		buff.append(customer.getPerson().getFirstName() + " " + customer.getPerson().getLastName());
-		lblCustomerName.setText(buff.toString());
-		
-		buff = new StringBuffer();
-		buff.append(customer.getAddress().getStreet() + " " + customer.getAddress().getNumber());
-		if(customer.getAddress().getBox() != ""){
-			buff.append(", box " + customer.getAddress().getBox());
-		}
-		lblAddressLine_1.setText(buff.toString());
-		
-		buff = new StringBuffer();
-		buff.append(customer.getAddress().getZip() + " " + customer.getAddress().getCity().toUpperCase() + " " + customer.getAddress().getCountry());
-		lblAddressLine_2.setText(buff.toString());
-		
-		lblEmailAddress.setText(customer.getEmail());
-
-		if (customer.getSpam()){
-			tglbtnNewsletter.setText("Newsletter ON");
-			tglbtnNewsletter.setSelected(true);
-		}
-		else {
-			tglbtnNewsletter.setText("Newsletter OFF");
-			tglbtnNewsletter.setSelected(false);
-		}
-	}
-	
-	public void toggleSpam(Boolean bool){
-		if (bool){
-			tglbtnNewsletter.setText("Newsletter ON");
-			customer.setSpam(true);
-		}
-		else{
-			tglbtnNewsletter.setText("Newsletter OFF");
-			customer.setSpam(false);
-		}
-	}
-	*/
 }
