@@ -1,7 +1,6 @@
 package database;
 
 import database.helpers.DataSource;
-import database.implementations.CSVDatabase;
 import database.implementations.ExcelDatabase;
 import database.implementations.SQLDatabase;
 import database.implementations.TextDatabase;
@@ -19,8 +18,6 @@ public class DataSourceFactory {
 		switch (_type) {
 		case Text:
 			return new TextDatabase<T>(classType);
-		case CSV:
-			return new CSVDatabase<T>();
 		case SQL:
 			return new SQLDatabase<T>();
 		case EXCEL:
