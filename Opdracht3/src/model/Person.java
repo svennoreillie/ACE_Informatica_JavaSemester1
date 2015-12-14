@@ -18,7 +18,6 @@ public class Person extends ModelBase {
 	}
 	
 	public Person() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getFirstName() {

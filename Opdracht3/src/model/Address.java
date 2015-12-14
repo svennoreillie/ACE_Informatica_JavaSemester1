@@ -29,7 +29,6 @@ public class Address extends ModelBase {
 	}
 	
 	public Address() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setStreet(String s){
