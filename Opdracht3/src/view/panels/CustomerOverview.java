@@ -18,7 +18,6 @@ import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
 import model.Person;
-import testing.CustomerTableIOTest;
 import view.MainWindow;
 
 import java.awt.Font;
@@ -48,10 +47,9 @@ public class CustomerOverview extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private DefaultTableModel tableModel;
+	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
 	private ArrayList<Customer> customerList;
-	private CustomerTableIOTest iotest;
 	private CustomerDetail detail;
 
 	/**
@@ -60,6 +58,7 @@ public class CustomerOverview extends JPanel {
 	 */
 	public CustomerOverview(MainWindow mainWindow) {
 		customerList = new ArrayList<>();
+		tableModel = new CustomerTableModel();
 		
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
@@ -177,17 +176,7 @@ public class CustomerOverview extends JPanel {
 					registrationMode();
 				}
 				else if (btnRegister.getText() == "Save"){
-					//Create a new customer
-					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
-					try {
-						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
-						customerList.add(newCustomer);
-						iotest.addCustomer(customerList);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Error on creating customer.");
-						e1.printStackTrace();
-					}
+					saveCustomer();
 				}
 				else if (btnRegister.getText() == "Search"){
 					// TODO Search function
@@ -222,7 +211,6 @@ public class CustomerOverview extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 580, 339);
 		add(scrollPane);
-		CustomerTableModel tableModel = new CustomerTableModel();
 		tableCustomers = new JTable(tableModel);
 		tableCustomers.addMouseListener(new MouseAdapter() {
 			@Override
@@ -380,5 +368,22 @@ public class CustomerOverview extends JPanel {
 		tfLastName.setText(customer.getPerson().getLastName());
 		tfNumber.setText(customer.getAddress().getNumber());
 		tfZip.setText(customer.getAddress().getZip());
+	}
+	
+	private void saveCustomer(){
+		//Create a new customer
+		Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
+		Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
+		try {
+			Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
+			customerList.add(newCustomer);
+			tableModel.addCustomer(newCustomer);
+
+			JOptionPane.showInputDialog(null, "Customer saved.");
+			clearAll();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Error on creating customer.");
+			e1.printStackTrace();
+		}
 	}
 }
