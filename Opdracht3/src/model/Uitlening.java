@@ -5,7 +5,7 @@ import java.util.Date;
 import org.joda.time.DateTime;
 
 
-public class Uitlening extends ModelBase {
+public class Uitlening extends ModelBase implements Cloneable{
 
 	
 	private DateTime beginVerhuurDatum;
@@ -86,7 +86,17 @@ public class Uitlening extends ModelBase {
 	}
 	
 	
-	
+	public Uitlening Clone(){
+		Uitlening u = new Uitlening();
+		
+		u.setBeginVerhuurDatum(getBeginVerhuurDatum());
+		u.setId(getId());
+		u.setKlantDieUitleent(getKlantDieUitleent());
+		u.setUitgeleendItem(getUitgeleendItem());
+		u.setVerhuurPeriodeInDagen(getVerhuurPeriodeInDagen());
+		
+		return u;
+	}
 	
 
 }
