@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
 
 import common.*;
 import database.DataService;
-import database.DataSourceFactory;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
@@ -51,6 +50,12 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			tobList.add(entity);
 			DataSourceFactory.getSource(classType).writeDB(this.internalList);
 		}
+	}
+	
+	@Override
+	public void update(T entity) throws DBMissingException, DBException {
+		remove(entity);
+		add(entity);
 	}
 
 	@Override

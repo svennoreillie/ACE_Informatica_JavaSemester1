@@ -18,7 +18,6 @@ import org.junit.rules.ExpectedException;
 
 import common.*;
 import model.*;
-import database.DataSourceFactory;
 import database.helpers.*;
 import database.implementations.*;
 import database.internalInterface.*;
