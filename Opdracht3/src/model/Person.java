@@ -37,4 +37,10 @@ public class Person extends ModelBase {
 	public String toString(){
 		return this.firstName + " " + this.lastName;
 	}
+	
+	public boolean filter(String searchString) {
+		if (this.getFirstName().contains(searchString)) return true;
+		if (this.getLastName().contains(searchString)) return true;
+		return false;
+	}
 }

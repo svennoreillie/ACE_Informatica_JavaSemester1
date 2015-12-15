@@ -94,4 +94,14 @@ public class Address extends ModelBase {
 		
 		return sb.toString();
 	}
+	
+	public boolean filter(String searchString) {
+		if (this.getStreet().contains(searchString)) return true;
+		if (this.getBox().contains(searchString)) return true;
+		if (this.getCity().contains(searchString)) return true;
+		if (this.getCountry().contains(searchString)) return true;
+		if (this.getNumber().contains(searchString)) return true;
+		if (this.getZip().contains(searchString)) return true;
+		return false;
+	}
 }
