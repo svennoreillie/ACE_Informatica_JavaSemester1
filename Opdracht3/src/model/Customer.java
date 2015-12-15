@@ -62,4 +62,13 @@ public class Customer extends ModelBase {
 	public void setSpam(boolean bool){
 		this.spam = bool;
 	}
+	
+	
+	public boolean filter(String searchString) {
+		if (this.getPerson().filter(searchString)) return true;
+		if (this.getAddress().filter(searchString)) return true;
+		if (this.getEmail().contains(searchString)) return true;
+		return false;
+	}
+	
 }

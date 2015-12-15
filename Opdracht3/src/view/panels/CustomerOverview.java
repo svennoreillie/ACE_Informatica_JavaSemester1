@@ -11,9 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import common.DBException;
+import common.DBMissingException;
 import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
+import controller.CustomerController;
 import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
@@ -27,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;
@@ -200,9 +204,14 @@ public class CustomerOverview extends JPanel {
 				}
 				
 				if (btnSearch.getText() == "Search"){
-					
-					// TODO ANDRE: filter the customer table according to the text field contents
-					
+					// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
+					CustomerController controller = new CustomerController();
+					try {
+						List<Customer> customerList = controller.search(tfFirstName.getText());
+						// TODO ANDER => smijt dees in jtable
+					} catch (DBMissingException | DBException e1) {
+						// TODO ANDRE => LOG of toon error
+					}
 				}
 				else{
 					searchMode();

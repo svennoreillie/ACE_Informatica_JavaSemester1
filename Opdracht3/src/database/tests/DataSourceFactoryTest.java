@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.DataSourceFactory;
 import database.helpers.DataSource;
+import database.implementations.DataSourceFactory;
 import database.implementations.ExcelDatabase;
 import database.implementations.SQLDatabase;
 import database.implementations.TextDatabase;

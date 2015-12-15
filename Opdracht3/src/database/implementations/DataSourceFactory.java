@@ -1,9 +1,6 @@
-package database;
+package database.implementations;
 
 import database.helpers.DataSource;
-import database.implementations.ExcelDatabase;
-import database.implementations.SQLDatabase;
-import database.implementations.TextDatabase;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
@@ -21,7 +18,7 @@ public class DataSourceFactory {
 		case SQL:
 			return new SQLDatabase<T>();
 		case EXCEL:
-			return new ExcelDatabase<T>();
+			return new ExcelDatabase<T>(classType);
 		}
 		
 		return new TextDatabase<T>(classType);
