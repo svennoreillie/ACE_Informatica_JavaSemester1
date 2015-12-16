@@ -4,15 +4,14 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.ButtonPanelController;
-import controller.MainWindowController;
+import controller.event.WindowChangedService;
 import view.panels.*;
 
 import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame implements WindowChangedService{
 
 	/**
 	 * 
@@ -21,7 +20,6 @@ public class MainWindow extends JFrame{
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
-	private MainWindowController controller;
 
 	public MainWindow() {
 		GridBagLayout gbl = new GridBagLayout();
@@ -32,9 +30,9 @@ public class MainWindow extends JFrame{
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(gbl);
-		buttonPanel = new ButtonPanel(this);
+		buttonPanel = new ButtonPanel();
 		setButtonPanel(buttonPanel);
-		setViewPanel(buttonPanel.getHomePanel());
+		
 
 		this.setContentPane(contentPanel);
 		this.setSize(800, 630);
@@ -69,10 +67,10 @@ public class MainWindow extends JFrame{
 		setViewPanel(panel);
 		setVisible(true);
 	}
-	
-	public void setController(MainWindowController controller){
-		this.controller =controller;
-		buttonPanel.setController(new ButtonPanelController(controller.getShop()));		
+
+	@Override
+	public void fireChanged(JPanel panel) {
+		changeViewPanel(panel);
 	}
 	
 }
