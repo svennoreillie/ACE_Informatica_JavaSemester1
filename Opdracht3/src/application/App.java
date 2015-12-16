@@ -3,9 +3,12 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.event.MainWindowChangedFiringSource;
 import model.Item;
 import model.Shop;
 import view.MainWindow;
+import view.panels.CustomerOverview;
+import view.panels.testpanels.BluePanel;
 
 public class App {
 	public static void main(String[] args){
@@ -33,5 +36,7 @@ public class App {
 		
 		shop.setItems(items);*/
 		MainWindow mainWindow = new MainWindow();
+		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
+		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
 	}
 }

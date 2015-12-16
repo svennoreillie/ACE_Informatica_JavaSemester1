@@ -8,7 +8,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import common.enums.EventEnum;
+import controller.event.MainWindowChangedFiringSource;
 import view.MainWindow;
+import view.custom.Button;
 import view.panels.testpanels.BluePanel;
 import view.panels.testpanels.RedPanel;
 import view.panels.testpanels.YellowPanel;
@@ -20,25 +23,16 @@ public class ButtonPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	JButton blueButton;
-	JButton yellowButton;
-	JButton redButton;
-	JButton rentalStatusButton;
-	JButton customerOverviewButton;
-	
-	BluePanel bluePanel;
-	YellowPanel yellowPanel;
-	RedPanel redPanel;
-	RentalStatusPanel rentalStatusPanel;
-	CustomerOverview customerOverview;
-	
-	MainWindow mainWindow;
+	Button blueButton;
+	Button yellowButton;
+	Button redButton;
+	Button rentalStatusButton;
+	Button customerOverviewButton;
 
-	public ButtonPanel(MainWindow mainWindow) {
+	public ButtonPanel() {
 		super();
-		
-		this.mainWindow = mainWindow;
-		
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
+
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 50,100,50 };
 		int numberOfRows=14;
@@ -50,98 +44,55 @@ public class ButtonPanel extends JPanel {
 		gbl.rowHeights = heights;
 		setLayout(gbl);
 		
-		bluePanel=new BluePanel();
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx=1;
 		gbc.gridy=0;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		blueButton = new JButton("Blue");
-		blueButton.addActionListener(new BlueButtonListener());
+		blueButton = new Button("Blue");
+		blueButton.addActionListener(listener);
+		blueButton.setActionCommand(EventEnum.BLUEBUTTONEVENT);
 		add(blueButton,gbc);
 		
-		redPanel=new RedPanel();
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
 		gbc.gridy=1;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		redButton = new JButton("Red");
-		redButton.addActionListener(new RedButtonListener());
+		redButton = new Button("Red");
+		redButton.addActionListener(listener);
+		redButton.setActionCommand(EventEnum.REDBUTTONEVENT);
 		add(redButton,gbc);
 		
-		yellowPanel=new YellowPanel();
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
 		gbc.gridy=2;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		yellowButton = new JButton("Yellow");
-		yellowButton.addActionListener(new YellowButtonListener());
+		yellowButton = new Button("Yellow");
+		yellowButton.addActionListener(listener);
+		yellowButton.setActionCommand(EventEnum.YELLOWBUTTONEVENT);
 		add(yellowButton,gbc);
 		
-		rentalStatusPanel=new RentalStatusPanel();
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
 		gbc.gridy=3;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		rentalStatusButton=new JButton("Huur status");
-		rentalStatusButton.addActionListener(new RentalStatusButtonListener());
+		rentalStatusButton=new Button("Huur status");
+		rentalStatusButton.addActionListener(listener);
+		rentalStatusButton.setActionCommand(EventEnum.HUURSTATUSBUTTONEVENT);
 		add(rentalStatusButton,gbc);
 		
-		customerOverview = new CustomerOverview();
+		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
 		gbc.gridy=4;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		customerOverviewButton = new JButton("Customer overview");
-		customerOverviewButton.addActionListener(new CustomerOverviewButtonListener());
+		customerOverviewButton = new Button("Customer overview");
+		customerOverviewButton.addActionListener(listener);
+		customerOverviewButton.setActionCommand(EventEnum.CUSTOMEROVERVIEWBUTTONEVENT);
 		add(customerOverviewButton,gbc);
-		
-		
-		
-	}
 	
-	public JPanel getHomePanel(){
-		return bluePanel;
-	}
-
-	class BlueButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mainWindow.changeViewPanel(bluePanel);
-			bluePanel.repaint();
-		}
-	}
-
-	class RedButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mainWindow.changeViewPanel(redPanel);
-			redPanel.repaint();
-		}
-	}
-
-	class YellowButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mainWindow.changeViewPanel(yellowPanel);
-			yellowPanel.repaint();
-		}
-	}
-	
-	class RentalStatusButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mainWindow.changeViewPanel(rentalStatusPanel);
-			rentalStatusPanel.repaint();
-		}
-	}
-	
-	class CustomerOverviewButtonListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			mainWindow.changeViewPanel(customerOverview);
-			customerOverview.repaint();
-		}
-		
 	}
 }
