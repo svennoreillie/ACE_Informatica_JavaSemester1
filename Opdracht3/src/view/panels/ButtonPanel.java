@@ -8,10 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controller.ButtonPanelController;
-import controller.RentalStatusController;
-import database.DataStrategy;
-import model.Shop;
 import view.MainWindow;
 import view.panels.testpanels.BluePanel;
 import view.panels.testpanels.RedPanel;
@@ -35,8 +31,6 @@ public class ButtonPanel extends JPanel {
 	RedPanel redPanel;
 	RentalStatusPanel rentalStatusPanel;
 	CustomerOverview customerOverview;
-	
-	ButtonPanelController controller;
 	
 	MainWindow mainWindow;
 
@@ -150,10 +144,4 @@ public class ButtonPanel extends JPanel {
 		}
 		
 	}
-
-	public void setController(ButtonPanelController controller) {
-		this.controller = controller;
-		rentalStatusPanel.setController(new RentalStatusController(controller.getShop()));
-	}
-
 }

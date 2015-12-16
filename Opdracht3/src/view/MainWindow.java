@@ -4,8 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.ButtonPanelController;
-import controller.MainWindowController;
+
 import view.panels.*;
 
 import java.awt.GridBagLayout;
@@ -21,7 +20,6 @@ public class MainWindow extends JFrame{
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
-	private MainWindowController controller;
 
 	public MainWindow() {
 		GridBagLayout gbl = new GridBagLayout();
@@ -68,11 +66,6 @@ public class MainWindow extends JFrame{
 		setButtonPanel(buttonPanel);
 		setViewPanel(panel);
 		setVisible(true);
-	}
-	
-	public void setController(MainWindowController controller){
-		this.controller =controller;
-		buttonPanel.setController(new ButtonPanelController(controller.getShop()));		
 	}
 	
 }
