@@ -211,7 +211,7 @@ public class CustomerOverview extends JPanel {
 						// TODO ANDER => smijt dees in jtable
 					} catch (DBMissingException | DBException e1) {
 						// TODO ANDRE => LOG of toon error
-					}
+					} 
 				}
 				else{
 					searchMode();
