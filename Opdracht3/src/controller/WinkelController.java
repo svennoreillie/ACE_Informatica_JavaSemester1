@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Iterable;
 
 import common.DBException;
 import common.DBMissingException;
@@ -14,12 +15,17 @@ import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
-
+/**
+ * Controller for the Shop
+ * @author 
+ * Peter Vervoort
+ * Geert Van Weyenbergh
+ *
+ */
 public class WinkelController implements WinkelService {
 
 	DataStrategy<Item> dataItem = new DataStrategy<Item>(Item.class);
 	DataStrategy<Cd> dataCd = new DataStrategy<Cd>(Cd.class);
-	
 	
 	@Override
 	public void AddItem(Item item) {
@@ -78,7 +84,15 @@ public class WinkelController implements WinkelService {
 		List<Cd> alleCds = new ArrayList<Cd>();
 		try {
 			alleCds = dataCd.getAll();
+			Object list;
 			//haal uit allCds enkel diegene waar searchString ergens in de naam voorkomt.
+			
+			//Geert 17 december
+			for (Cd c:alleCds){
+				if (((DataStrategy<Cd>) c.dataCd).getAll().contains(searchString)){
+				System.out.println("Zoekterm gevonden");
+				}
+			}
 		} catch (DBMissingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
