@@ -84,7 +84,7 @@ public class WinkelController implements WinkelService {
 		List<Cd> alleCds = new ArrayList<Cd>();
 		try {
 			alleCds = dataCd.getAll();
-			Object list;
+			//Object list;
 			//haal uit allCds enkel diegene waar searchString ergens in de naam voorkomt.
 			
 			//Geert 17 december
