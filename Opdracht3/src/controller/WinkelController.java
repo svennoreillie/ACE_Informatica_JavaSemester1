@@ -7,6 +7,7 @@ import common.AntiMagicStrings;
 import common.DBException;
 import common.DBMissingException;
 import database.*;
+import model.Customer;
 import model.Item;
 import java.util.stream.*;
 
@@ -22,8 +23,24 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 	@Override
 	public void AddItemToStore(T entity) {
 		try {
+			List<T> baseList = dataBase.getAll();
+			boolean duplicatedEntity = false;
 			dataBase.add(entity);
-			// TODO Observer: newsletter to all clients who have it activated
+			for(T entity1 : baseList){
+				if (entity1.getTitel() == entity.getTitel()) {
+					duplicatedEntity = true;
+					break;
+				}
+			}
+			if (!duplicatedEntity) {
+				DataStrategy<Customer> dataCustomer = new DataStrategy<Customer>(Customer.class);
+				List<Customer> customerList = dataCustomer.getAll();
+				for(Customer customerOfList : customerList){
+					if (customerOfList.getSpam()) {
+						System.out.println("Mail sent to: " + customerOfList.getEmail());
+					}	
+				}
+			}
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
 			e.printStackTrace();
@@ -58,7 +75,6 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 					return base1.getTitel().compareTo(base2.getTitel());	
 				}	
 			};
-			//ToDo .distinct(baseComperator)
 			baseStream = baseStream.sorted(baseComperator);
 			return baseStream.collect(Collectors.toList());
 			
