@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import common.AntiMagicStrings;
 import model.Customer;
 import model.Item;
 import model.Uitlening;
@@ -34,12 +35,12 @@ public class UitleenController implements UitleenService {
 		if(beginVerhuurDatum.getYear()<DateTime.now().getYear() || 
 				beginVerhuurDatum.getMonthOfYear() < DateTime.now().getMonthOfYear() ||
 				beginVerhuurDatum.getDayOfMonth() < DateTime.now().getDayOfMonth()){
-			throw new ControllerException("Date can't be in the past");
+			throw new ControllerException(AntiMagicStrings.DateInThePast);
 		}
 		
 		//Checks if verhuurPeriodeDagen is positive
 		if(verhuurPeriodeDagen<0){
-			throw new ControllerException("The number of days can't be negative");
+			throw new ControllerException(AntiMagicStrings.NegativeNumberOfDays);
 		}
 		
 		//Checks if item is already rented between beginVerhuurDatum and beginVerhuurDatum+verhuurPeriodeDagen
@@ -52,7 +53,7 @@ public class UitleenController implements UitleenService {
 
 				for(int i = 0;i<verhuurPeriodeDagen;i++){
 					if(uItemDates.contains(beginVerhuurDatum.plus(i))){
-						throw new ControllerException("The item is already rented during the entered period");
+						throw new ControllerException(AntiMagicStrings.ItemAlreadyRentedDuringPeriod);
 					}
 				}
 			}
