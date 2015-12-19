@@ -17,10 +17,12 @@ import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
 import controller.CustomerController;
+import controller.event.MainWindowChangedFiringSource;
 import model.Address;
 import model.Customer;
 import model.Person;
 import testing.CustomerTableIOTest;
+import view.MainWindow;
 import view.tableModels.CustomerTableModel;
 
 import java.awt.Font;
@@ -253,7 +255,11 @@ public class CustomerOverview extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
 					// TODO Launch Customer Detail pane
-					JOptionPane.showMessageDialog(null, "Double click!");
+					//JOptionPane.showMessageDialog(null, "Double click!");
+					CustomerDetail detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
+					MainWindowChangedFiringSource.getInstance().fireChanged(detail);
+					
+					//setaction
 				}
 				else{
 					try{
