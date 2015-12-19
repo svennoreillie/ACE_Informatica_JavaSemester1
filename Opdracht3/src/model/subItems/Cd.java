@@ -15,6 +15,8 @@ import model.Item;
 public class Cd extends Item {
 
 	private EnumTypeCd cdTtype;
+	//toegevoedgd Geert 17 dec
+	public Object dataCd;
 
 	public EnumTypeCd getType() {
 		return cdTtype;
