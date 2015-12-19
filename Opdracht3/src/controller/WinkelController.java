@@ -1,30 +1,29 @@
 package controller;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import common.AntiMagicStrings;
 import common.DBException;
 import common.DBMissingException;
-import database.DataStrategy;
-import model.Customer;
+import database.*;
 import model.Item;
-import model.subItems.Cd;
-import model.subItems.Dvd;
-import model.subItems.Game;
 import java.util.stream.*;
 
-public class WinkelController implements WinkelService {
+public class WinkelController<T extends Item> implements WinkelService <T>{
 
-	DataStrategy<Item> dataItem = new DataStrategy<Item>(Item.class);
-	DataStrategy<Cd> dataCd = new DataStrategy<Cd>(Cd.class);
+	private DataStrategy<T> dataBase;
+	
+	public WinkelController(Class<T> entity) {
+		
+		 dataBase = new DataStrategy<T>(entity);
+	}
 	
 	@Override
-	public void AddItemToStore(Item item) {
+	public void AddItemToStore(T entity) {
 		try {
-			dataItem.add(item);
+			dataBase.add(entity);
+			// TODO Observer: newsletter to all clients who have it activated
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
 			e.printStackTrace();
@@ -32,13 +31,13 @@ public class WinkelController implements WinkelService {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
 			e.printStackTrace();
 		}
-		// TODO Observer: newsletter to all clients who have it activated
+		
 	}
 
 	@Override
-	public void RemoveItemToStore(Item item) {
+	public void RemoveItemToStore(T entity) {
 		try {
-			dataItem.remove(item);
+			dataBase.remove(entity);
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
 			e.printStackTrace();
@@ -47,19 +46,21 @@ public class WinkelController implements WinkelService {
 			e.printStackTrace();
 		}
 	}
-	
-	/*public List<Cd> getAllCdSortedByName();
-	
-	public List<Dvd> getAllDvdSortedByName();
-	
-	public List<Game> getAllGameSortedByName();*/
 
 	@Override
-	public List<Cd> getAllCdSortedByName() {
-		List<Item> alleItems = new ArrayList<Item>();
+	public List<T> getAllSortedByName() {
 		try {
-			Stream<Item> itemStream = dataItem.getAll().stream();
-			//itemStream.sorted()
+			Stream<T> baseStream = dataBase.getAll().stream();
+			Comparator<T> baseComperator = new Comparator<T>(){
+				
+				@Override
+				public int compare(T base1, T base2) {
+					return base1.getTitel().compareTo(base2.getTitel());	
+				}	
+			};
+			//ToDo .distinct(baseComperator)
+			baseStream = baseStream.sorted(baseComperator);
+			return baseStream.collect(Collectors.toList());
 			
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
@@ -71,42 +72,13 @@ public class WinkelController implements WinkelService {
 		return null;
 	}
 	
-	@Override
-	public List<Dvd> getAllDvdSortedByName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Game> getAllGameSortedByName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Cd> searchCdByStringPart(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Dvd> searchDvdByStringPart(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Game> searchGameByStringPart(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Item> searchItemByStringPart(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
+
+	@Override
+	public List<T> searchByStringPart(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
