@@ -258,8 +258,6 @@ public class CustomerOverview extends JPanel {
 					//JOptionPane.showMessageDialog(null, "Double click!");
 					CustomerDetail detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
 					MainWindowChangedFiringSource.getInstance().fireChanged(detail);
-					
-					//setaction
 				}
 				else{
 					try{
