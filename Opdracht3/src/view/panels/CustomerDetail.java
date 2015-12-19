@@ -78,7 +78,7 @@ public class CustomerDetail extends JPanel {
 		btnClose.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+				MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
 			}
 		});
 		btnClose.setBounds(501, 566, 89, 23);
