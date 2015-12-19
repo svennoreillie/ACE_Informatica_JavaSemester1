@@ -10,14 +10,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.util.List;
 
 import javax.swing.SwingConstants;
 
-import controller.RentalStatusController;
-import view.ViewException;
 
-import model.Item;
 
 public class RentalStatusPanel extends JPanel{
 
@@ -28,10 +24,7 @@ public class RentalStatusPanel extends JPanel{
 
 	private JPanel itemsPanel;
 	private JScrollPane scrollableItemsPanel;
-	private RentalStatusController controller;
 	
-	private List<Item> items;
-	private List<Item> rentedItems;
 	
 	public RentalStatusPanel(){
 		super();
@@ -61,22 +54,5 @@ public class RentalStatusPanel extends JPanel{
 		gbc.gridy=1;
 		gbc.fill = GridBagConstraints.BOTH;		
 		add(scrollableItemsPanel,gbc);
-	}
-	
-	public void setController(RentalStatusController controller){
-		
-		this.controller=controller;
-		items = controller.getItems();
-		rentedItems=items;
-		//rentedItems = controller.getRentedItems();
-		
-		for(Item i : items){
-			addItemPanel(i, rentedItems.contains(i));
-		}
-	}
-	
-	private void addItemPanel(Item item,boolean rented){
-		RentalItemPanel itemPanel= new RentalItemPanel(item,rented);
-		itemsPanel.add(itemPanel);
 	}
 }

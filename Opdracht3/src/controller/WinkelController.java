@@ -1,74 +1,112 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import common.enums.EnumTypeCd;
-import common.enums.EnumTypeDvd;
-import common.enums.EnumTypeGame;
-import model.*;
+import javax.swing.JOptionPane;
+
+import common.AntiMagicStrings;
+import common.DBException;
+import common.DBMissingException;
+import database.DataStrategy;
+import model.Customer;
+import model.Item;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
+import java.util.stream.*;
 
-//toegevoegd Geert 5 December
-//bron http://www.codejava.net/frameworks/spring/14-tips-for-writing-spring-mvc-controller
-//Gebruikte keuze: Controller interface en RequestMapping interface aangemaakt
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-/**
- * gebruikt model: traditionele Model-View-Controller(MVC) model
- * @author 
- *
- */
+public class WinkelController implements WinkelService {
 
-public class WinkelController implements Controller{
+	DataStrategy<Item> dataItem = new DataStrategy<Item>(Item.class);
+	DataStrategy<Cd> dataCd = new DataStrategy<Cd>(Cd.class);
+	
+	@Override
+	public void AddItemToStore(Item item) {
+		try {
+			dataItem.add(item);
+		} catch (DBMissingException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
+			e.printStackTrace();
+		} catch (DBException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
+			e.printStackTrace();
+		}
+		// TODO Observer: newsletter to all clients who have it activated
+	}
 
-	private Shop currentShop;
-	//lijn toegevoegd 5 december voor testen github issue met versie 113
-	private Shop current2Shop;
-	
-	public WinkelController() {
-		//TODO :: eerste shop uit db gaan halen en ander ctor aanroepen
+	@Override
+	public void RemoveItemToStore(Item item) {
+		try {
+			dataItem.remove(item);
+		} catch (DBMissingException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
+			e.printStackTrace();
+		} catch (DBException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
+			e.printStackTrace();
+		}
 	}
 	
-	public WinkelController(Shop shop) {
-		this.currentShop = shop;
-	}
+	/*public List<Cd> getAllCdSortedByName();
 	
-	public void AddItem(Item item) {
-		
-	}
+	public List<Dvd> getAllDvdSortedByName();
 	
-	public List<Item> getAllItemsSorted() {
-		//TODO :: lijst van alle items geordend per type en binnen de type alfabetisch geordend
+	public List<Game> getAllGameSortedByName();*/
+
+	@Override
+	public List<Cd> getAllCdSortedByName() {
+		List<Item> alleItems = new ArrayList<Item>();
+		try {
+			Stream<Item> itemStream = dataItem.getAll().stream();
+			//itemStream.sorted()
+			
+		} catch (DBMissingException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
+			e.printStackTrace();
+		} catch (DBException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
-	//Geert ik heb hier uw search even opgedeeld in 3 verschillende functies
-	//searchCd
-	//searchDvd
-	//searchGames
-	//Indien je wilt bouw ik een generic interface over de types heen als je tog 1 functie wilt behouden
-	//Maar dan dien je in die ene functie overweg te kunnen met generics.
-	
-	public List<Cd> searchCd(EnumTypeCd type, String searchString) {
-		//TODO:: 5.	ik wil aan de hand van een deel van de titel van een item alle 
-		//items van een bepaald type kunnen  opvragen 
-		//(als tekst op de console) die hieraan voldoen. (vb alle films met test in de titel)
+	@Override
+	public List<Dvd> getAllDvdSortedByName() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<Dvd> searchDvd(EnumTypeDvd type, String searchString) {
-		//TODO:: 5.	ik wil aan de hand van een deel van de titel van een item alle 
-		//items van een bepaald type kunnen  opvragen 
-		//(als tekst op de console) die hieraan voldoen. (vb alle films met test in de titel)
+
+	@Override
+	public List<Game> getAllGameSortedByName() {
+		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public List<Game> searchGames(EnumTypeGame type, String searchString) {
-		//TODO:: 5.	ik wil aan de hand van een deel van de titel van een item alle 
-		//items van een bepaald type kunnen  opvragen 
-		//(als tekst op de console) die hieraan voldoen. (vb alle films met test in de titel)
+
+	@Override
+	public List<Cd> searchCdByStringPart(String searchString) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Dvd> searchDvdByStringPart(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Game> searchGameByStringPart(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Item> searchItemByStringPart(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 }

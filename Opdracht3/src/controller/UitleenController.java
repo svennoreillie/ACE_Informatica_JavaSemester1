@@ -12,7 +12,13 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 
+/**
+ * Keeps a list of all the leases and gives the possibility to create, delete or view leases.
+ * @author Huybrechts Pieter
+ *
+ */
 public class UitleenController implements UitleenService {
+
 	
 	List<Uitlening> uitleningen;
 	
@@ -23,8 +29,33 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
-		if(beginVerhuurDatum.isBeforeNow()){
+		
+		//Checks if date is in the past
+		if(beginVerhuurDatum.getYear()<DateTime.now().getYear() || 
+				beginVerhuurDatum.getMonthOfYear() < DateTime.now().getMonthOfYear() ||
+				beginVerhuurDatum.getDayOfMonth() < DateTime.now().getDayOfMonth()){
 			throw new ControllerException("Date can't be in the past");
+		}
+		
+		//Checks if verhuurPeriodeDagen is positive
+		if(verhuurPeriodeDagen<0){
+			throw new ControllerException("The number of days can't be negative");
+		}
+		
+		//Checks if item is already rented between beginVerhuurDatum and beginVerhuurDatum+verhuurPeriodeDagen
+		for(Uitlening u:uitleningen){
+			if(u.getUitgeleendItem().equals(item)){
+				List<DateTime> uItemDates = new ArrayList<DateTime>();
+				for(int i = 0 ;i<u.getVerhuurPeriodeInDagen();i++){
+					uItemDates.add(u.getBeginVerhuurDatum().plus(i));
+				}
+
+				for(int i = 0;i<verhuurPeriodeDagen;i++){
+					if(uItemDates.contains(beginVerhuurDatum.plus(i))){
+						throw new ControllerException("The item is already rented during the entered period");
+					}
+				}
+			}
 		}
 		
 		Uitlening uitlening = new Uitlening();
@@ -43,12 +74,12 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Item> uitgeleendeItemsVanHuidigeKlant(Customer customer) {
-		List<Item> items = new ArrayList<Item>();
+	public List<Uitlening> uitleningnenVanKlant(Customer customer) {
+		List<Uitlening> items = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			if(u.getKlantDieUitleent().equals(customer)){
-				items.add(u.getUitgeleendItem());
+				items.add(u);
 			}
 		}
 		
@@ -56,25 +87,24 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Item> alleUitgeleendeItems() {
-		List<Item> items = new ArrayList<>();
+	public List<Uitlening> alleUitleningen() {
+		List<Uitlening> items = new ArrayList<Uitlening>();
 		
 		for(Uitlening u:uitleningen){
-			items.add(u.getUitgeleendItem());
+			items.add(u);
 		}
 		
 		return items;
 	}
 
 	@Override
-	public List<Cd> alleUitgeleendeCd() {
-		List<Cd> Cds = new ArrayList<Cd>();
+	public List<Uitlening> alleUitleningenVanCd() {
+		List<Uitlening> Cds = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Cd){
-				Cd c = (Cd) i;
-				Cds.add(c);
+				Cds.add(u);
 			}
 		}
 		
@@ -82,14 +112,13 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Dvd> alleUitgeleendeDvd() {
-		List<Dvd> dvds = new ArrayList<Dvd>();
+	public List<Uitlening> alleUitleningenVanDvd() {
+		List<Uitlening> dvds = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Dvd){
-				Dvd d = (Dvd) i;
-				dvds.add(d);
+				dvds.add(u);
 			}
 		}
 		
@@ -97,14 +126,13 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Game> alleUitgeleendeGames() {
-		List<Game> games = new ArrayList<Game>();
+	public List<Uitlening> alleUitleningenVanGame() {
+		List<Uitlening> games = new ArrayList<Uitlening>();
 		
 		for(Uitlening u : uitleningen){
 			Item i = u.getUitgeleendItem();
 			if(i instanceof Game){
-				Game g = (Game) i;
-				games.add(g);
+				games.add(u);
 			}
 		}
 		
@@ -123,12 +151,16 @@ public class UitleenController implements UitleenService {
 			uitleningen.remove(u);
 			u.getUitgeleendItem().setUitgeleend(false);
 		}
-		
 	}
 
 	@Override
 	public DateTime geefEindDatumVanDeUitlening(Uitlening uitlening) {
 		return uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
+	}
+
+	@Override
+	public List<Uitlening> getAllUitleningen() {
+		return uitleningen;
 	}
 
 }
