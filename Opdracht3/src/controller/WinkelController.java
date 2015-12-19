@@ -47,8 +47,7 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 		} catch (DBException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBWriteError);
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 
 	@Override
@@ -88,13 +87,24 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 		return null;
 	}
 	
-	
-
 	@Override
 	public List<T> searchByStringPart(String searchString) {
-		// TODO Auto-generated method stub
+		try {
+			List<T> baseList = dataBase.getAll();
+			for (T t : baseList) {
+				if (!t.getTitel().contains(searchString)) {
+					baseList.remove(t);
+				}
+			}
+			return baseList;
+			
+		} catch (DBMissingException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
+			e.printStackTrace();
+		} catch (DBException e) {
+			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
+			e.printStackTrace();
+		}
 		return null;
 	}
-
-
 }
