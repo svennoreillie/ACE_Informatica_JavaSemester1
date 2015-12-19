@@ -17,11 +17,11 @@ import common.factories.AddressFactory;
 import common.factories.CustomerFactory;
 import common.factories.PersonFactory;
 import controller.CustomerController;
-import controller.CustomerTableModel;
 import model.Address;
 import model.Customer;
 import model.Person;
 import testing.CustomerTableIOTest;
+import view.tableModels.CustomerTableModel;
 
 import java.awt.Font;
 import javax.swing.JSeparator;
@@ -53,7 +53,9 @@ public class CustomerOverview extends JPanel {
 	private DefaultTableModel tableModel;
 	private JTable tableCustomers;
 	private ArrayList<Customer> customerList;
-	private CustomerTableIOTest iotest;
+	
+	// TODO Andre: rearrange buttons
+	// TODO Andre: add search field
 
 	/**
 	 * Create the panel.
@@ -196,7 +198,7 @@ public class CustomerOverview extends JPanel {
 					try {
 						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
 						customerList.add(newCustomer);
-						iotest.addCustomer(customerList);
+						//iotest.addCustomer(customerList);
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null, "Error on creating customer.");
 						e1.printStackTrace();
