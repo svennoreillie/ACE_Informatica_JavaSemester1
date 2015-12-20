@@ -177,20 +177,9 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				if (btnSearch.getText() == "Register"){
-					//Create a new customer
-					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
-					try {
-						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
-						customerList.add(newCustomer);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Error on creating customer.");
-						e1.printStackTrace();
-					}
-				}
-				
-				if (btnSearch.getText() == "Search"){
+				if (btnSearch.getText() == "Search..."){
+					searchMode();
+					/*
 					// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
 					CustomerController controller = new CustomerController();
 					try {
@@ -198,10 +187,11 @@ public class CustomerOverview extends JPanel {
 						// TODO ANDER => smijt dees in jtable
 					} catch (DBMissingException | DBException e1) {
 						// TODO ANDRE => LOG of toon error
-					} 
+					}
+					*/ 
 				}
-				else{
-					searchMode();
+				else if (btnSearch.getText() == "Cancel"){
+					defaultMode();
 				}
 			}
 		});
