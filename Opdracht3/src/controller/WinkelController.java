@@ -13,7 +13,7 @@ import java.util.stream.*;
 
 public class WinkelController<T extends Item> implements WinkelService <T>{
 
-	private DataStrategy<T> dataBase;
+	private DataService<T> dataBase;
 	
 	public WinkelController(Class<T> entity) {
 		
