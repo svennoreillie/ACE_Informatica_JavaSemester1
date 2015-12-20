@@ -216,7 +216,7 @@ public class CustomerOverview extends JPanel {
 					registrationMode();
 				}
 				
-				if (btnRegister.getText() == "Save"){
+				else if (btnRegister.getText() == "Save"){
 					saveCustomer();
 					defaultMode();
 				}
@@ -364,14 +364,14 @@ public class CustomerOverview extends JPanel {
 		disableAll();
 		
 		//Reset button layout and behavior
-		this.btnRegister.setText("New...");
-		this.btnSearch.setText("Search...");
+		btnRegister.setText("New...");
+		btnSearch.setText("Search...");
 	}
 	
 	/**
 	 * Fills out the form on the bottom according to which customer is selected on the table above.
 	 * 
-	 * @param customer the customer whose details are displayed
+	 * @param customer the customer whose details are to be displayed
 	 */
 	private void fillForm(Customer customer){
 		tfAdress.setText(customer.getAddress().getStreet());
@@ -387,24 +387,35 @@ public class CustomerOverview extends JPanel {
 	}
 	
 	private void saveCustomer(){
-		// TODO ANDRE add checks for empty text fields
-		Person newPers = new Person();
-		newPers.setFirstName(tfFirstName.getText());
-		newPers.setLastName(tfLastName.getText());
-		
-		Address newAdd = new Address();
-		newAdd.setBox(tfBox.getText());
-		newAdd.setCity(tfCity.getText());
-		newAdd.setCountry(tfCountry.getText());
-		newAdd.setNumber(tfNumber.getText());
-		newAdd.setStreet(tfAdress.getText());
-		newAdd.setZip(tfZip.getText());
-		
-		Customer newCust = new Customer();
-		newCust.setPerson(newPers);
-		newCust.setAddress(newAdd);
-		
-		customerList.add(newCust);
-		tableModel.addCustomer(newCust);
+		if (tfAdress.getText().trim().isEmpty()
+				|| tfCity.getText().trim().isEmpty()
+				|| tfCountry.getText().trim().isEmpty()
+				|| tfEmail.getText().trim().isEmpty()
+				|| tfFirstName.getText().trim().isEmpty()
+				|| tfLastName.getText().trim().isEmpty()
+				|| tfNumber.getText().trim().isEmpty()
+				|| tfZip.getText().trim().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		}
+		else{
+			Person newPers = new Person();
+			newPers.setFirstName(tfFirstName.getText());
+			newPers.setLastName(tfLastName.getText());
+			
+			Address newAdd = new Address();
+			newAdd.setBox(tfBox.getText());
+			newAdd.setCity(tfCity.getText());
+			newAdd.setCountry(tfCountry.getText());
+			newAdd.setNumber(tfNumber.getText());
+			newAdd.setStreet(tfAdress.getText());
+			newAdd.setZip(tfZip.getText());
+			
+			Customer newCust = new Customer();
+			newCust.setPerson(newPers);
+			newCust.setAddress(newAdd);
+			
+			customerList.add(newCust);
+			tableModel.addCustomer(newCust);
+		}
 	}
 }
