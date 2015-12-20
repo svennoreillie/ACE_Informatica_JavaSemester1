@@ -21,7 +21,6 @@ import controller.event.MainWindowChangedFiringSource;
 import model.Address;
 import model.Customer;
 import model.Person;
-import testing.CustomerTableIOTest;
 import view.MainWindow;
 import view.tableModels.CustomerTableModel;
 
@@ -52,7 +51,7 @@ public class CustomerOverview extends JPanel {
 	private JButton btnRegister;
 	private JButton btnSearch;
 	private JButton btnClear;
-	private DefaultTableModel tableModel;
+	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
 	private ArrayList<Customer> customerList;
 	
@@ -173,41 +172,14 @@ public class CustomerOverview extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		JButton btnClear = new JButton("Clear");
-		btnClear.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (btnSearch.getText() == "Register" || btnSearch.getText() == "Search"){
-					defaultMode();
-				}
-				else{
-					clearAll();
-				}
-			}
-		});
-		btnClear.setBounds(467, 566, 89, 23);
-		add(btnClear);
-		
-		JButton btnSearch = new JButton("Search...");
+		btnSearch = new JButton("Search...");
 		btnSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				if (btnSearch.getText() == "Register"){
-					//Create a new customer
-					Person newPerson = new Person(tfFirstName.getText(), tfLastName.getText());
-					Address newAdress = new Address(tfAdress.getText(), tfNumber.getText(), tfBox.getText(), tfZip.getText(), tfCity.getText(), tfCountry.getText());
-					try {
-						Customer newCustomer = new Customer(newPerson, newAdress, tfEmail.getText());
-						customerList.add(newCustomer);
-						//iotest.addCustomer(customerList);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Error on creating customer.");
-						e1.printStackTrace();
-					}
-				}
-				
-				if (btnSearch.getText() == "Search"){
+				if (btnSearch.getText() == "Search..."){
+					searchMode();
+					/*
 					// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
 					CustomerController controller = new CustomerController();
 					try {
@@ -215,28 +187,32 @@ public class CustomerOverview extends JPanel {
 						// TODO ANDER => smijt dees in jtable
 					} catch (DBMissingException | DBException e1) {
 						// TODO ANDRE => LOG of toon error
-					} 
+					}
+					*/ 
 				}
-				else{
-					searchMode();
+				else if (btnSearch.getText() == "Cancel"){
+					defaultMode();
 				}
 			}
 		});
-		btnSearch.setBounds(343, 566, 89, 23);
+		btnSearch.setBounds(501, 566, 89, 23);
 		add(btnSearch);
 		
-		JButton btnRegister = new JButton("New...");
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnRegister = new JButton("New...");
 		btnRegister.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				registrationMode();
+				if (btnRegister.getText() == "New..."){
+					registrationMode();
+				}
+				
+				else if (btnRegister.getText() == "Save"){
+					saveCustomer();
+					defaultMode();
+				}
 			}
 		});
-		btnRegister.setBounds(226, 566, 89, 23);
+		btnRegister.setBounds(384, 566, 89, 23);
 		add(btnRegister);
 		
 		tfZip = new JTextField();
@@ -248,14 +224,12 @@ public class CustomerOverview extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 580, 339);
 		add(scrollPane);
-		CustomerTableModel tableModel = new CustomerTableModel();
+		tableModel = new CustomerTableModel();
 		tableCustomers = new JTable(tableModel);
 		tableCustomers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					// TODO Launch Customer Detail pane
-					//JOptionPane.showMessageDialog(null, "Double click!");
 					CustomerDetail detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
 					MainWindowChangedFiringSource.getInstance().fireChanged(detail);
 				}
@@ -355,10 +329,8 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setEnabled(false);
 		
 		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Register");
-		this.btnClear.setText("Cancel");
+		btnRegister.setText("Save");
+		btnSearch.setText("Cancel");
 	}
 	
 	/**
@@ -369,10 +341,8 @@ public class CustomerOverview extends JPanel {
 		enableAll();
 		
 		//Change the button layout and behavior
-		this.btnRegister.setEnabled(false);
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Search");
-		this.btnClear.setText("Cancel");
+		this.btnRegister.setText("Search");
+		this.btnSearch.setText("Cancel");
 	}
 	
 	/**
@@ -384,16 +354,14 @@ public class CustomerOverview extends JPanel {
 		disableAll();
 		
 		//Reset button layout and behavior
-		this.btnRegister.setEnabled(true);
-		this.btnRegister.setVisible(true);
-		this.btnSearch.setText("Search...");
-		this.btnClear.setText("Clear");
+		btnRegister.setText("New...");
+		btnSearch.setText("Search...");
 	}
 	
 	/**
 	 * Fills out the form on the bottom according to which customer is selected on the table above.
 	 * 
-	 * @param customer the customer whose details are displayed
+	 * @param customer the customer whose details are to be displayed
 	 */
 	private void fillForm(Customer customer){
 		tfAdress.setText(customer.getAddress().getStreet());
@@ -406,5 +374,38 @@ public class CustomerOverview extends JPanel {
 		tfLastName.setText(customer.getPerson().getLastName());
 		tfNumber.setText(customer.getAddress().getNumber());
 		tfZip.setText(customer.getAddress().getZip());
+	}
+	
+	private void saveCustomer(){
+		if (tfAdress.getText().trim().isEmpty()
+				|| tfCity.getText().trim().isEmpty()
+				|| tfCountry.getText().trim().isEmpty()
+				|| tfEmail.getText().trim().isEmpty()
+				|| tfFirstName.getText().trim().isEmpty()
+				|| tfLastName.getText().trim().isEmpty()
+				|| tfNumber.getText().trim().isEmpty()
+				|| tfZip.getText().trim().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		}
+		else{
+			Person newPers = new Person();
+			newPers.setFirstName(tfFirstName.getText());
+			newPers.setLastName(tfLastName.getText());
+			
+			Address newAdd = new Address();
+			newAdd.setBox(tfBox.getText());
+			newAdd.setCity(tfCity.getText());
+			newAdd.setCountry(tfCountry.getText());
+			newAdd.setNumber(tfNumber.getText());
+			newAdd.setStreet(tfAdress.getText());
+			newAdd.setZip(tfZip.getText());
+			
+			Customer newCust = new Customer();
+			newCust.setPerson(newPers);
+			newCust.setAddress(newAdd);
+			
+			customerList.add(newCust);
+			tableModel.addCustomer(newCust);
+		}
 	}
 }
