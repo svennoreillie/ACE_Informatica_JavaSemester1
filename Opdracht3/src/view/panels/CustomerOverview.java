@@ -205,7 +205,6 @@ public class CustomerOverview extends JPanel {
 				if (btnRegister.getText() == "New..."){
 					registrationMode();
 				}
-				
 				else if (btnRegister.getText() == "Save"){
 					try {
 						saveCustomer();
@@ -342,6 +341,9 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setText("");
 	}
 	
+	/**
+	 * Hides all text fields and tags at the bottom of the screen, save for the search text field.
+	 */
 	private void hideAll(){
 		this.tfAdress.setVisible(false);
 		this.tfBox.setVisible(false);
@@ -367,6 +369,9 @@ public class CustomerOverview extends JPanel {
 		this.lblZip.setVisible(false);
 	}
 	
+	/**
+	 * Shows all text fields and tags at the bottom of the screen, save for the search text field.
+	 */
 	private void showAll(){	
 		this.tfAdress.setVisible(true);
 		this.tfBox.setVisible(true);
@@ -423,17 +428,6 @@ public class CustomerOverview extends JPanel {
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
 		this.tfSearch.setEnabled(true);
-		
-		/*
-		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
-		CustomerController controller = new CustomerController();
-		try {
-			List<Customer> customerList = controller.search(tfFirstName.getText());
-			// TODO ANDER => smijt dees in jtable
-		} catch (DBMissingException | DBException e1) {
-			// TODO ANDRE => LOG of toon error
-		}
-		*/ 
 	}
 	
 	/**
@@ -510,6 +504,10 @@ public class CustomerOverview extends JPanel {
 		}
 	}
 	
+	/**
+	 * Searchs the database for customers, using the provided string as a filter.
+	 * @param stringToSearch The filter to be used in the search
+	 */
 	private void searchCustomers(String stringToSearch){
 		try {
 			tableModel.replaceCustomers(controller.search(stringToSearch));
