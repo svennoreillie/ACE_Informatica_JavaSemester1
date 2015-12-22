@@ -207,13 +207,8 @@ public class CustomerOverview extends JPanel {
 				}
 				
 				else if (btnRegister.getText() == "Save"){
-					saveCustomer();
-					defaultMode();
-				}
-				else if (btnRegister.getText() == "Search"){
 					try {
-						tableModel.replaceCustomers(controller.search(tfSearch.getText()));
-						
+						saveCustomer();
 					} catch (DBMissingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -221,6 +216,10 @@ public class CustomerOverview extends JPanel {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					defaultMode();
+				}
+				else if (btnRegister.getText() == "Search"){
+					searchCustomers(tfSearch.getText());
 				}
 			}
 		});
@@ -263,18 +262,6 @@ public class CustomerOverview extends JPanel {
 		btnLaunchFactory.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-//				ArrayList<Customer> tempList = new ArrayList<>();
-//
-//				for (int i = 0; i < 10; i++){
-//					tempList.add(CustomerFactory.createCustomer());
-//				}
-//				
-//				for (int i = 0; i < tempList.size(); i++){
-//					tableModel.addCustomer(tempList.get(i));
-//					//customerList.add(tempList.get(i));
-//					
-//				}
-//				
 				try {
 					controller.createCustomers();
 					tableModel.addCustomer(controller.getList()); 
@@ -487,8 +474,10 @@ public class CustomerOverview extends JPanel {
 	
 	/**
 	 * Makes a new customer using the text fields at the bottom of the panel, and saves it.
+	 * @throws DBException 
+	 * @throws DBMissingException 
 	 */
-	private void saveCustomer(){
+	private void saveCustomer() throws DBMissingException, DBException{
 		if (tfAdress.getText().trim().isEmpty()
 				|| tfCity.getText().trim().isEmpty()
 				|| tfCountry.getText().trim().isEmpty()
@@ -516,8 +505,20 @@ public class CustomerOverview extends JPanel {
 			newCust.setPerson(newPers);
 			newCust.setAddress(newAdd);
 			
-			customerList.add(newCust);
+			controller.addCustomer(newCust);
 			tableModel.addCustomer(newCust);
+		}
+	}
+	
+	private void searchCustomers(String stringToSearch){
+		try {
+			tableModel.replaceCustomers(controller.search(stringToSearch));
+		} catch (DBMissingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
