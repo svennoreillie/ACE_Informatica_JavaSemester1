@@ -13,8 +13,8 @@ public class CustomerFactory {
 		Customer customer = null;
 		
 		// Make a person and address to put into a Customer
-		Person person = PersonFactory.getPerson(rand);
-		Address address = AddressFactory.getAddress(rand);
+		Person person = PersonFactory.getPerson(rand, id);
+		Address address = AddressFactory.getAddress(rand, id);
 		
 		// Make an e-mail address using the customer's details
 		StringBuffer sbuff = new StringBuffer();

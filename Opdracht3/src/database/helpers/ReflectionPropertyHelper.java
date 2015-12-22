@@ -2,7 +2,7 @@ package database.helpers;
 
 import java.lang.reflect.Method;
 
-public class ReflectionPropertyHelper {
+public class ReflectionPropertyHelper implements Comparable {
 	
 	private String name;
 	private Method getter;
@@ -33,6 +33,15 @@ public class ReflectionPropertyHelper {
 	}
 	public void setPropertyType(Class propertyType) {
 		this.propertyType = propertyType;
+	}
+	
+	@Override
+	public int compareTo(Object o) {
+		if (o.getClass().equals(this.getClass())) {
+			return this.getName().compareTo(((ReflectionPropertyHelper)o).getName());
+		}
+		
+		return 0;
 	}
 	
 	

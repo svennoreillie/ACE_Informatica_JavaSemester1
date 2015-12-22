@@ -5,7 +5,7 @@ import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
 public class DataSourceFactory {
-	private static DataSource _type = DataSource.Text;
+	private static DataSource _type = DataSource.EXCEL;
 
 	public static void setType(DataSource type) {
 		_type = type;

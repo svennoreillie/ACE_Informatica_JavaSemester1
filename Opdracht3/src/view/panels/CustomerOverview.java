@@ -77,6 +77,8 @@ public class CustomerOverview extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws DBException 
+	 * @throws DBMissingException 
 	 */
 	public CustomerOverview() {
 		customerList = new ArrayList<>();
@@ -306,6 +308,12 @@ public class CustomerOverview extends JPanel {
 		lblSearch.setBounds(10, 464, 75, 14);
 		add(lblSearch);
 		lblSearch.setVisible(false);
+		
+		try {
+			tableModel.addCustomer(controller.getList());
+		} catch (DBMissingException | DBException e1) {
+			System.out.println(e1.toString());
+		} 
 	}
 	
 	/**
