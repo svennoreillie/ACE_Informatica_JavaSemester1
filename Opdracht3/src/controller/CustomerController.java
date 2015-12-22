@@ -26,12 +26,6 @@ public class CustomerController {
 	public List<Customer> search(String searchString) throws DBMissingException, DBException {
 		Stream<Customer> customerStream = customerData.getAll().stream();
 		return customerStream.filter(cust -> cust.filter(searchString)).collect(Collectors.toList());
-		//is zelfde als hieronder
-//		List<Customer> resultList = new ArrayList<Customer>();
-//		for (Customer cust : customerData.getAll()) {
-//			if (cust.filter(searchString)) resultList.add(cust);
-//		}
-//		return resultList;
 	}
 	
 	public void addCustomer(Customer customer) throws DBMissingException, DBException{
