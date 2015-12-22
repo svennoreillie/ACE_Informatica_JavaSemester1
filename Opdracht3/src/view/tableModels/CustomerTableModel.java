@@ -1,6 +1,7 @@
 package view.tableModels;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
@@ -23,6 +24,16 @@ public class CustomerTableModel extends AbstractTableModel {
 	public void addCustomer(Customer customer){
 		data.add(customer);
 		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+	public void addCustomer(List<Customer> search) {
+		data.addAll(search);
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+	public void replaceCustomers(List<Customer> customers){
+		data.clear();
+		addCustomer(customers);
 	}
 	
 	@Override
@@ -72,4 +83,6 @@ public class CustomerTableModel extends AbstractTableModel {
 	public Class getColumnClass(int c){
 		return getValueAt(0, c).getClass();
 	}
+
+
 }
