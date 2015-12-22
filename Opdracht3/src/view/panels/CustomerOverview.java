@@ -66,6 +66,7 @@ public class CustomerOverview extends JPanel {
 	private ArrayList<Customer> customerList;
 	private JTextField tfSearch;
 	private JLabel lblSearch;
+	private CustomerController controller = new CustomerController();
 
 	/**
 	 * Create the panel.
@@ -209,6 +210,18 @@ public class CustomerOverview extends JPanel {
 					saveCustomer();
 					defaultMode();
 				}
+				else if (btnRegister.getText() == "Search"){
+					try {
+						tableModel.replaceCustomers(controller.search(tfSearch.getText()));
+						
+					} catch (DBMissingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		btnRegister.setBounds(384, 566, 89, 23);
@@ -250,17 +263,28 @@ public class CustomerOverview extends JPanel {
 		btnLaunchFactory.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ArrayList<Customer> tempList = new ArrayList<>();
-
-				for (int i = 0; i < 10; i++){
-					tempList.add(CustomerFactory.createCustomer());
+//				ArrayList<Customer> tempList = new ArrayList<>();
+//
+//				for (int i = 0; i < 10; i++){
+//					tempList.add(CustomerFactory.createCustomer());
+//				}
+//				
+//				for (int i = 0; i < tempList.size(); i++){
+//					tableModel.addCustomer(tempList.get(i));
+//					//customerList.add(tempList.get(i));
+//					
+//				}
+//				
+				try {
+					controller.createCustomers();
+					tableModel.addCustomer(controller.getList()); 
+				} catch (DBMissingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (DBException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				
-				for (int i = 0; i < tempList.size(); i++){
-					tableModel.addCustomer(tempList.get(i));
-					customerList.add(tempList.get(i));
-				}
-				
 			}
 		});
 			
