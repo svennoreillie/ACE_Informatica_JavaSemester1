@@ -7,7 +7,7 @@ import common.DBMissingException;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
-public class SQLDatabase<T extends ModelBase> implements DataReadWriteService<T> {
+public class DatabaseSQL<T extends ModelBase> implements DataReadWriteService<T> {
 
 	@Override
 	public List<T> readDB() throws DBMissingException, DBException {

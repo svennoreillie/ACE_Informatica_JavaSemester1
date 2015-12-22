@@ -19,9 +19,11 @@ public class Data<T extends ModelBase> implements DataService<T> {
 
 	private List<T> internalList;
 	private Class<T> classType;
+	private DataReadWriteService<T> dataService;
 
 	public Data(Class<T> classType) {
 		this.classType = classType;
+		dataService = DataSourceFactory.getSource(classType);
 	}
 
 
@@ -34,7 +36,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	}
 
 	public List<T> getListFromStream() throws DBException, DBMissingException {
-		return DataSourceFactory.getSource(classType).readDB();
+		return dataService.readDB();
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> tobList = this.getAll();
 		if (!tobList.contains(entity)) {
 			tobList.add((T)entity);
-			DataSourceFactory.getSource(classType).writeDB(this.internalList);
+			dataService.writeDB(this.internalList);
 		}
 	}
 	
@@ -65,7 +67,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> tobList = this.getAll();
 		if (tobList.contains(entity)) {
 			tobList.remove(entity);
-			DataSourceFactory.getSource(classType).writeDB(this.internalList);
+			dataService.writeDB(this.internalList);
 		}
 	}
 

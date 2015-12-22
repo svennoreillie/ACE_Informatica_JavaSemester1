@@ -27,13 +27,13 @@ import jxl.write.biff.RowsExceededException;
 import model.subItems.*;
 import model.*;
 
-public class ExcelDatabase<T extends ModelBase> implements DataReadWriteService<T> {
+public class DatabaseExcel<T extends ModelBase> implements DataReadWriteService<T> {
 
 	private final Class<T> classType;
 	private final String className;
 	private final File file;
 
-	public ExcelDatabase(Class<T> classType) {
+	public DatabaseExcel(Class<T> classType) {
 		this.classType = classType;
 		this.className = classType.getName();
 		this.file = new File(this.className + ".xlsx");

@@ -35,7 +35,7 @@ public class TestExcelDatabase {
 
 	@Test
 	public void test() throws DBMissingException, DBException {
-		ExcelDatabase<Person> db = new ExcelDatabase<Person>(Person.class);
+		DatabaseExcel<Person> db = new DatabaseExcel<Person>(Person.class);
 		List<Person> persons = new ArrayList<Person>();
 		Person p1 = new Person();
 		p1.setId(1);
