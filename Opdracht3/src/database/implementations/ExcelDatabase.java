@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,7 +13,9 @@ import java.util.List;
 
 import common.DBException;
 import common.DBMissingException;
+import database.DataService;
 import database.DataStrategy;
+import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
 import jxl.*;
 import jxl.read.biff.BiffException;
@@ -21,7 +24,8 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-import model.ModelBase;
+import model.subItems.*;
+import model.*;
 
 public class ExcelDatabase<T extends ModelBase> implements DataReadWriteService<T> {
 
@@ -37,82 +41,117 @@ public class ExcelDatabase<T extends ModelBase> implements DataReadWriteService<
 
 	@Override
 	public List<T> readDB() throws DBMissingException, DBException {
-		Workbook workbook;
+		Workbook workbook = null;
 		try {
+			//open excel
 			workbook = Workbook.getWorkbook(file);
-
 			Sheet sheet = workbook.getSheet(0);
-			int row = 0;
+			
+			//load the structure of T & prepare returning list
+			List<ReflectionPropertyHelper> genericFieldArray = getFields();
+			List<T> returnList = new ArrayList<T>();
 
-			ArrayList<ArrayList<String>> info = new ArrayList<ArrayList<String>>();
+			int row = 1;
 			while (row < sheet.getRows()) {
+				//create an instance of T for this row
+				T instance = this.classType.newInstance();
+				
 				int column = 0;
-				ArrayList<String> rowinfo = new ArrayList<String>();
 				while (column < sheet.getColumns()) {
-					Cell cell = sheet.getCell(column, row);
-					String information = cell.getContents();
-					rowinfo.add(information);
+					try {
+						//read cell contents
+						Cell cell = sheet.getCell(column, row);
+						String content = cell.getContents();
+
+						//get setter for this column
+						ReflectionPropertyHelper property = genericFieldArray.get(column);
+						Method set = property.getSetter();
+						
+						//cast string to propertytype & invoke
+						set.invoke(instance, property.getPropertyType().cast(content));
+					} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+						//skip this information but log it
+						//TODO :: logging
+					}
+
 					column++;
 				}
-				info.add(rowinfo);
+				//store the new instance in a temp list
+				returnList.add(instance);
+				
 				row++;
 			}
-			workbook.close();
-		} catch (BiffException | IOException e) {
+			
+			return returnList;
+			
+		} catch (IOException e) {
+			throw new DBMissingException("Excel not found");
+		} catch (BiffException e) {
 			throw new DBException("Error trying to read from Excel database", e);
+		} catch (InstantiationException | IllegalAccessException e1) {
+			throw new DBException("Cannot instantiate the generic T", e1);
+		} finally {
+			if (workbook != null) workbook.close();
 		}
-		return null;
 	}
 
 	@Override
 	public void writeDB(List<T> list) throws DBMissingException, DBException {
+		WritableWorkbook workbook = null;
 		try {
-			WritableWorkbook workbook = Workbook.createWorkbook(file);
-
+			//create excel
+			workbook = Workbook.createWorkbook(file);
 			workbook.createSheet(className, 0);
 			WritableSheet sheet = workbook.getSheet(0);
 
-			List<Method> genericFieldArray = getFields();
+			//load structure of T
+			List<ReflectionPropertyHelper> genericFieldArray = getFields();
 
-			// Schrijf headers
+			//write header row
 			int col = 0;
-			for (Method f : genericFieldArray) {
+			for (ReflectionPropertyHelper f : genericFieldArray) {
 				Label label = new Label(col, 0, f.getName());
 				sheet.addCell(label);
 				col++;
 			}
 
-			// Schrijf data
+			//write data
 			int row = 1;
 			for (T item : list) {
+				//new row for every item in the list
 				col = 0;
-
-				for (Method f : genericFieldArray) {
+				for (ReflectionPropertyHelper property : genericFieldArray) {
+					//check the value of every property
 					Object value;
 					try {
-						if (ModelBase.class.isAssignableFrom(f.getClass())) {
-							//Deze field is een modelbase op zich
-							//In dit geval moeten we de equivalent nemen
-							DataStrategy strategy = new DataStrategy(f.getClass());
-							ModelBase model = (ModelBase)f.invoke(item);
+						if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
+							//found property is a ModelBase => lookup id to write in this excel
+							//leave storing of the found ModelBase to an instance of ExcelDatabase with type of found ModelBase
+							String classTypeString = property.getPropertyType().getName();
+							//ugly helper method to create a DataService, could not find a way to do it generic
+							DataService<? extends ModelBase> strategy = GetDedicatedDataService(classTypeString);
+
+							//get the value of this property for the current item in the list & save to other DataService
+							ModelBase model = (ModelBase) property.getGetter().invoke(item);
 							strategy.add(model);
-							//Save id of this item
+							//save id of this item in our own excel
 							value = model.getId();
 						} else {
-							value = f.invoke(item);
+							//normal property, get the object for this item in the list
+							value = property.getGetter().invoke(item);
 						}
-						
+
 						if (value != null) {
+							//fill the cell with the string representation of the found object
 							Label label = new Label(col, row, value.toString());
 							sheet.addCell(label);
 						}
 					} catch (IllegalArgumentException | IllegalAccessException e) {
-						// stil afvangen
-						throw new DBException("", e);
+						//TODO :: logging
 					} catch (InvocationTargetException e) {
-						// TODO Auto-generated catch block
-						throw new DBException("", e);
-					}
+						//error invoking the getter => just continue
+						//TODO:: logging
+					} 
 
 					col++;
 				}
@@ -127,23 +166,59 @@ public class ExcelDatabase<T extends ModelBase> implements DataReadWriteService<
 		}
 	}
 
-	private List<Method> getFields() {
-		//Field[] genericFieldArray = this.classType.getDeclaredFields();
-		
-		List<Method> returnList = new ArrayList<Method>();
-		for (Method m : this.classType.getMethods()) {
-		    if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {
-		    	returnList.add(m);
-		    }
+	private DataService<? extends ModelBase> GetDedicatedDataService(String classTypeString) {
+		//ugly helper to instantiate a new DataService of the correct type
+		//might be a better solution for it (without converting all of it to C#)
+		switch (classTypeString) {
+		case "model.Person":
+			return new DataStrategy<Person>(Person.class);
+		case "model.Address":
+			return new DataStrategy<Address>(Address.class);
+		case "model.Customer":
+			return new DataStrategy<Customer>(Customer.class);
+		case "model.Item":
+			return new DataStrategy<Item>(Item.class);
+		case "model.Shop":
+			return new DataStrategy<Shop>(Shop.class);
+		case "model.Uitlening":
+			return new DataStrategy<Uitlening>(Uitlening.class);
+		case "model.subItems.Cd":
+			return new DataStrategy<Cd>(Cd.class);
+		case "model.subItems.Dvd":
+			return new DataStrategy<Dvd>(Dvd.class);
+		case "model.subItems.Game":
+			return new DataStrategy<Game>(Game.class);
+		default:
+			return null;
 		}
-		
-		
-//		List<Field> returnList = new ArrayList<Field>();
-//		for (Field field : genericFieldArray) {
-//			if (Iterable.class.isAssignableFrom(field.getDeclaringClass())) continue;
-//			returnList.add(field);
-//		}
-		return returnList;
+	}
+
+	private List<ReflectionPropertyHelper> getFields() {
+		List<ReflectionPropertyHelper> properties = new ArrayList<ReflectionPropertyHelper>();
+
+		//iterate all methods found in T
+		for (Method m : this.classType.getMethods()) {
+			if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {
+				//if the name starts with get and has no parameters we assume it is a getter
+				ReflectionPropertyHelper helper = new ReflectionPropertyHelper();
+				try {
+					String getName = m.getName();
+					helper.setName(getName.substring(2, getName.length() - 1));
+					helper.setGetter(m);
+					helper.setPropertyType(m.getReturnType());
+
+					//look for a setter
+					Method setter = this.classType.getMethod("set" + helper.getName(), null);
+					helper.setSetter(setter);
+				} catch (Exception e) {
+					// setter not available, skip property
+				}
+
+				properties.add(helper);
+			}
+		}
+
+		return properties;
 	}
 
 }

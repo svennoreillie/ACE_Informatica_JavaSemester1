@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -48,19 +49,20 @@ public class WinkelController implements WinkelService {
 		}
 	}
 	
-	/*public List<Cd> getAllCdSortedByName();
-	
-	public List<Dvd> getAllDvdSortedByName();
-	
-	public List<Game> getAllGameSortedByName();*/
-
 	@Override
 	public List<Cd> getAllCdSortedByName() {
-		List<Item> alleItems = new ArrayList<Item>();
 		try {
-			Stream<Item> itemStream = dataItem.getAll().stream();
-			//itemStream.sorted()
-			
+			Stream<Cd> itemStream = dataCd.getAll().stream();
+			Comparator<Cd> itemComparer = new Comparator<Cd>() {
+
+				@Override
+				public int compare(Cd o1, Cd o2) {
+					return o1.getTitel().compareTo(o2.getTitel());
+				}
+				
+			};
+			itemStream = itemStream.sorted(itemComparer);
+			return itemStream.collect(Collectors.toList());
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);
 			e.printStackTrace();
