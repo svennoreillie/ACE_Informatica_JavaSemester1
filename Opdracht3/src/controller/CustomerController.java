@@ -35,7 +35,10 @@ public class CustomerController {
 	
 	
 	public List<Customer> search(Customer searchCustomer) throws DBMissingException, DBException {
-		// TODO ANDRE => maak bovenstaande method nu ook eens voor een gedetailleerdtdt object
+//		Stream<Customer> customerStream = customerData.get(searchCustomer.getId()).stream();
+//		return (List<Customer>) customerStream.filter(cust -> cust.filter(searchString)) 
+		
+//		 TODO ANDRE => maak bovenstaande method nu ook eens voor een gedetailleerdtdt object
 		return null;
 	}
 	
