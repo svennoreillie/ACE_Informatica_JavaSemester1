@@ -8,7 +8,7 @@ import model.Person;
 
 public class CustomerFactory {
 
-	public static Customer createCustomer(){
+	public static Customer createCustomer(int id){
 		final Random rand = new Random();
 		Customer customer = null;
 		
@@ -26,6 +26,7 @@ public class CustomerFactory {
 		// Instantiate the new Customer
 		try {
 			customer = new Customer(person, address, email);
+			customer.setId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

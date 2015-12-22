@@ -39,9 +39,8 @@ public class CustomerController {
 	}
 	
 	public void createCustomers() throws DBMissingException, DBException{
-		CustomerFactory factory = new CustomerFactory();
 		for (int i = 0; i < 10; i++){
-			customerData.add(CustomerFactory.createCustomer());
+			customerData.add(CustomerFactory.createCustomer(i));
 		}
 	}
 }
