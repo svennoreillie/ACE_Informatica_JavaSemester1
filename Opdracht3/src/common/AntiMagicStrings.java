@@ -9,4 +9,7 @@ public class AntiMagicStrings {
 	public static final String DBClassFailure = "Read succesful but no class was found";
 	public static final String DBEOFFailure = "End of file on unexpected place";
 	public static final String DBWriteListError = "Attempt to save null or empty list";
+	public static final String DateInThePast = "Date can't be in the past";
+	public static final String NegativeNumberOfDays = "The number of days can't be negative";
+	public static final String ItemAlreadyRentedDuringPeriod = "The item is already rented during the entered period";
 }
