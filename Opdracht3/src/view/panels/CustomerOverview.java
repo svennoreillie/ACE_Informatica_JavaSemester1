@@ -11,20 +11,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Document;
 
 import common.DBException;
 import common.DBMissingException;
-import common.factories.AddressFactory;
-import common.factories.CustomerFactory;
-import common.factories.PersonFactory;
 import controller.CustomerController;
 import controller.event.MainWindowChangedFiringSource;
 import model.Address;
 import model.Customer;
 import model.Person;
-import view.MainWindow;
 import view.tableModels.CustomerTableModel;
 
 import java.awt.Font;
@@ -74,6 +69,10 @@ public class CustomerOverview extends JPanel {
 	private JTextField tfSearch;
 	private JLabel lblSearch;
 	private CustomerController controller = new CustomerController();
+	
+	// TODO ANDRE:
+	// -Newsletter toggle
+	// -IndexOutOfBoundsException when selecting an item in the customer table
 
 	/**
 	 * Create the panel.
@@ -214,6 +213,7 @@ public class CustomerOverview extends JPanel {
 				if (btnRegister.getText() == "New..."){
 					registrationMode();
 				}
+				
 				else if (btnRegister.getText() == "Save"){
 					try {
 						saveCustomer();
@@ -246,8 +246,18 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					CustomerDetail detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
-					MainWindowChangedFiringSource.getInstance().fireChanged(detail);
+					CustomerDetail detail;
+					try {
+						detail = new CustomerDetail(controller.getList().get(tableCustomers.getSelectedRow()));
+						MainWindowChangedFiringSource.getInstance().fireChanged(detail);
+					} catch (DBMissingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
 				else{
 					try{
@@ -285,24 +295,18 @@ public class CustomerOverview extends JPanel {
 		
 		tfSearch = new JTextField();
 		DocumentListener documentListener = new DocumentListener() {
-
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}};
+		      public void changedUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void insertUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void removeUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		    };
+		tfSearch.getDocument().addDocumentListener(documentListener);
+		
 		tfSearch.setBounds(95, 461, 420, 20);
 		add(tfSearch);
 		tfSearch.setColumns(10);
@@ -313,43 +317,13 @@ public class CustomerOverview extends JPanel {
 		lblSearch.setBounds(10, 464, 75, 14);
 		add(lblSearch);
 		lblSearch.setVisible(false);
-	}
 		
-//		try {
-//			tableModel.addCustomer(controller.getList());
-//		} catch (DBMissingException | DBException e1) {
-//			System.out.println(e1.toString());
-//		} 
-//	}
-//		      public void changedUpdate(DocumentEvent documentEvent) {
-//		    	  searchCustomers();
-//		      }
-//		      public void insertUpdate(DocumentEvent documentEvent) {
-//		    	  searchCustomers();
-//		      }
-//		      public void removeUpdate(DocumentEvent documentEvent) {
-//		    	  searchCustomers();
-//		      }
-//		    };
-//		tfSearch.getDocument().addDocumentListener(documentListener);
-//		
-//		tfSearch.setBounds(95, 461, 420, 20);
-//		add(tfSearch);
-//		tfSearch.setColumns(10);
-//		tfSearch.setEnabled(false);
-//		tfSearch.setVisible(false);
-//		
-//		lblSearch = new JLabel("Search...");
-//		lblSearch.setBounds(10, 464, 75, 14);
-//		add(lblSearch);
-//		lblSearch.setVisible(false);
-//		
-//		try {
-//			tableModel.addCustomer(controller.getList());
-//		} catch (DBMissingException | DBException e1) {
-//			System.out.println(e1.toString());
-//		} 
-//	}
+		try {
+			tableModel.addCustomer(controller.getList());
+		} catch (DBMissingException | DBException e1) {
+			System.out.println(e1.toString());
+		} 
+	}
 	
 	/**
 	 * Enables all text fields on the pane (even the Customer ID), so they can be edited.
@@ -402,9 +376,6 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setText("");
 	}
 	
-	/**
-	 * Hides all text fields and tags at the bottom of the screen, save for the search text field.
-	 */
 	private void hideAll(){
 		this.tfAdress.setVisible(false);
 		this.tfBox.setVisible(false);
@@ -430,9 +401,6 @@ public class CustomerOverview extends JPanel {
 		this.lblZip.setVisible(false);
 	}
 	
-	/**
-	 * Shows all text fields and tags at the bottom of the screen, save for the search text field.
-	 */
 	private void showAll(){	
 		this.tfAdress.setVisible(true);
 		this.tfBox.setVisible(true);
@@ -456,20 +424,6 @@ public class CustomerOverview extends JPanel {
 		this.lblNumber.setVisible(true);
 		this.lblStreet.setVisible(true);
 		this.lblZip.setVisible(true);
-		lblSearch.setVisible(true);
-		tfSearch.setVisible(true);
-		tfSearch.setEnabled(true);
-		
-		/*
-		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
-		CustomerController controller = new CustomerController();
-		try {
-			List<Customer> customerList = controller.search(tfFirstName.getText());
-			// TODO ANDER => smijt dees in jtable
-		} catch (DBMissingException | DBException e1) {
-			// TODO ANDRE => LOG of toon error
-		}
-		*/ 
 	}
 	
 	/**
@@ -504,6 +458,17 @@ public class CustomerOverview extends JPanel {
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
 		this.tfSearch.setEnabled(true);
+		
+		/*
+		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
+		CustomerController controller = new CustomerController();
+		try {
+			List<Customer> customerList = controller.search(tfFirstName.getText());
+			// TODO ANDER => smijt dees in jtable
+		} catch (DBMissingException | DBException e1) {
+			// TODO ANDRE => LOG of toon error
+		}
+		*/ 
 	}
 	
 	/**
@@ -581,10 +546,6 @@ public class CustomerOverview extends JPanel {
 		}
 	}
 	
-	/**
-	 * Searchs the database for customers, using the provided string as a filter.
-	 * @param stringToSearch The filter to be used in the search
-	 */
 	private void searchCustomers(){
 		try {
 			tableModel.replaceCustomers(controller.search(tfSearch.getText()));
