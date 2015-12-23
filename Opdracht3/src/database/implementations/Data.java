@@ -19,9 +19,11 @@ public class Data<T extends ModelBase> implements DataService<T> {
 
 	private List<T> internalList;
 	private Class<T> classType;
+	private DataReadWriteService<T> dataService;
 
 	public Data(Class<T> classType) {
 		this.classType = classType;
+		dataService = DataSourceFactory.getSource(classType);
 	}
 
 
@@ -34,7 +36,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	}
 
 	public List<T> getListFromStream() throws DBException, DBMissingException {
-		return DataSourceFactory.getSource(classType).readDB();
+		return dataService.readDB();
 	}
 
 	@Override
@@ -43,12 +45,14 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		return entityList.stream().filter(e -> e.getId() == id).findFirst().get();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void add(T entity) throws DBMissingException, DBException {
+	public void add(ModelBase entity) throws DBMissingException, DBException {
+		if (!entity.getClass().equals(this.classType)) throw new DBException("Wrong type in add");
 		List<T> tobList = this.getAll();
 		if (!tobList.contains(entity)) {
-			tobList.add(entity);
-			DataSourceFactory.getSource(classType).writeDB(this.internalList);
+			tobList.add((T)entity);
+			dataService.writeDB(this.internalList);
 		}
 	}
 	
@@ -63,7 +67,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> tobList = this.getAll();
 		if (tobList.contains(entity)) {
 			tobList.remove(entity);
-			DataSourceFactory.getSource(classType).writeDB(this.internalList);
+			dataService.writeDB(this.internalList);
 		}
 	}
 

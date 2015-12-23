@@ -9,7 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
 
 import common.DBException;
 import common.DBMissingException;
@@ -35,6 +38,10 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
@@ -70,6 +77,8 @@ public class CustomerOverview extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws DBException 
+	 * @throws DBMissingException 
 	 */
 	public CustomerOverview() {
 		customerList = new ArrayList<>();
@@ -217,9 +226,6 @@ public class CustomerOverview extends JPanel {
 					}
 					defaultMode();
 				}
-				else if (btnRegister.getText() == "Search"){
-					searchCustomers(tfSearch.getText());
-				}
 			}
 		});
 		btnRegister.setBounds(384, 566, 89, 23);
@@ -278,6 +284,7 @@ public class CustomerOverview extends JPanel {
 		add(btnLaunchFactory);
 		
 		tfSearch = new JTextField();
+		DocumentListener documentListener = new DocumentListener() {
 		tfSearch.setBounds(95, 461, 420, 20);
 		add(tfSearch);
 		tfSearch.setColumns(10);
@@ -288,6 +295,41 @@ public class CustomerOverview extends JPanel {
 		lblSearch.setBounds(10, 464, 75, 14);
 		add(lblSearch);
 		lblSearch.setVisible(false);
+		
+		try {
+			tableModel.addCustomer(controller.getList());
+		} catch (DBMissingException | DBException e1) {
+			System.out.println(e1.toString());
+		} 
+	}
+		      public void changedUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void insertUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void removeUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		    };
+		tfSearch.getDocument().addDocumentListener(documentListener);
+		
+		tfSearch.setBounds(95, 461, 420, 20);
+		add(tfSearch);
+		tfSearch.setColumns(10);
+		tfSearch.setEnabled(false);
+		tfSearch.setVisible(false);
+		
+		lblSearch = new JLabel("Search...");
+		lblSearch.setBounds(10, 464, 75, 14);
+		add(lblSearch);
+		lblSearch.setVisible(false);
+		
+		try {
+			tableModel.addCustomer(controller.getList());
+		} catch (DBMissingException | DBException e1) {
+			System.out.println(e1.toString());
+		} 
 	}
 	
 	/**
@@ -385,6 +427,28 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setVisible(true);
 		
 		this.lblAddress.setVisible(true);
+		lblSearch.setVisible(true);
+		tfSearch.setVisible(true);
+		tfSearch.setEnabled(true);
+		
+		//Change the button layout and behavior
+		this.btnRegister.setVisible(false);
+		this.btnSearch.setText("Cancel");
+		this.lblSearch.setVisible(true);
+		this.tfSearch.setVisible(true);
+		this.tfSearch.setEnabled(true);
+		
+		/*
+		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
+		CustomerController controller = new CustomerController();
+		try {
+			List<Customer> customerList = controller.search(tfFirstName.getText());
+			// TODO ANDER => smijt dees in jtable
+		} catch (DBMissingException | DBException e1) {
+			// TODO ANDRE => LOG of toon error
+		}
+		*/ 
+	}
 		this.lblBox.setVisible(true);
 		this.lblCity.setVisible(true);
 		this.lblCountry.setVisible(true);
@@ -406,6 +470,7 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setEnabled(false);
 		
 		//Change the button layout and behavior
+		btnRegister.setVisible(true);
 		btnRegister.setText("Save");
 		btnSearch.setText("Cancel");
 	}
@@ -423,7 +488,7 @@ public class CustomerOverview extends JPanel {
 		tfSearch.setEnabled(true);
 		
 		//Change the button layout and behavior
-		this.btnRegister.setText("Search");
+		this.btnRegister.setVisible(false);
 		this.btnSearch.setText("Cancel");
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
@@ -444,6 +509,7 @@ public class CustomerOverview extends JPanel {
 		tfSearch.setEnabled(false);
 		
 		//Reset button layout and behavior
+		btnRegister.setVisible(true);
 		btnRegister.setText("New...");
 		btnSearch.setText("Search...");
 	}
@@ -508,9 +574,9 @@ public class CustomerOverview extends JPanel {
 	 * Searchs the database for customers, using the provided string as a filter.
 	 * @param stringToSearch The filter to be used in the search
 	 */
-	private void searchCustomers(String stringToSearch){
+	private void searchCustomers(){
 		try {
-			tableModel.replaceCustomers(controller.search(stringToSearch));
+			tableModel.replaceCustomers(controller.search(tfSearch.getText()));
 		} catch (DBMissingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -54,7 +54,7 @@ public class DataStrategy<T extends ModelBase> implements DataService<T> {
 	}
 
 	@Override
-	public void add(T entity) throws DBMissingException, DBException {
+	public void add(ModelBase entity) throws DBMissingException, DBException {
 		DataService<T> service = getService();
 		service.add(entity);
 	}

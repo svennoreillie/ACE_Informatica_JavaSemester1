@@ -2,6 +2,11 @@ package database.implementations;
 
 import static org.junit.Assert.*;
 
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,33 +14,78 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import common.DBException;
 import common.DBMissingException;
+import model.Address;
 import model.Person;
+import model.Shop;
 
 public class TestTextDatabase {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	private Path testModelPath = Paths.get("model.Address.db");
+	private DatabaseText<Address> testDB = new DatabaseText<Address>(Address.class);
 
 	@Before
 	public void setUp() throws Exception {
+		Files.createFile(testModelPath);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		Files.deleteIfExists(testModelPath);
 	}
+	
+	@Rule
+    public ExpectedException thrown= ExpectedException.none();
+	
 
 	@Test
-	public void test() throws DBMissingException, DBException {
-		TextDatabase<Person> db = new TextDatabase<Person>(Person.class);
+	public void testPathCreation() {
+		String testString = "model.Address.db";
+		assertEquals(testModelPath, testDB.getDbPath());
+		assertEquals(testString, testDB.getDbPath().toString());
+		
+		DatabaseText<Person> personGen = new DatabaseText<Person>(Person.class);
+		String personString = "model.Person.db";
+		Path visitPath = Paths.get(personString);
+		assertEquals(visitPath, personGen.getDbPath());
+		assertEquals(personString, personGen.getDbPath().toString());
+		
+		DatabaseText<Shop> shopGen = new DatabaseText<Shop>(Shop.class);
+		String shopString = "model.Shop.db";
+		Path addressPath = Paths.get(shopString);
+		assertEquals(addressPath, shopGen.getDbPath());
+		assertEquals(shopString, shopGen.getDbPath().toString());
+	}
+	
+	@Test(expected=EOFException.class)
+	public void testErrorOnEmptyFile() throws DBException, DBMissingException, IOException {
+		//remove path created by setup of test
+		Files.deleteIfExists(testModelPath);
+		testDB.getInputStream();
+	}
+	
+	@Test
+	public void testAutoCreateNonExistingPath() throws DBException, DBMissingException, IOException {
+		//remove path created by setup of test
+		Files.deleteIfExists(testModelPath);
+		
+		try {
+			testDB.getInputStream();
+		} catch (EOFException e) {
+			//We expect this because file is empty
+		}
+		assertTrue(Files.exists(testModelPath));
+	}
+	
+	@Test
+	public void testWriteRead() throws DBMissingException, DBException {
+		DatabaseText<Person> db = new DatabaseText<Person>(Person.class);
 		List<Person> persons = new ArrayList<Person>();
 		Person p1 = new Person();
 		p1.setId(1);
@@ -54,6 +104,11 @@ public class TestTextDatabase {
 		persons.add(p3);
 		
 		db.writeDB(persons);
+		
+		List<Person> read = db.readDB();
+		assertEquals(3,  read.size());
+		Person readP = read.get(0);
+		assertEquals(p1, readP);
 	}
 
 }
