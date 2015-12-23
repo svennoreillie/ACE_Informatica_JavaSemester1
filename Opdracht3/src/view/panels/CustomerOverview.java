@@ -285,6 +285,24 @@ public class CustomerOverview extends JPanel {
 		
 		tfSearch = new JTextField();
 		DocumentListener documentListener = new DocumentListener() {
+
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}};
 		tfSearch.setBounds(95, 461, 420, 20);
 		add(tfSearch);
 		tfSearch.setColumns(10);
@@ -295,42 +313,43 @@ public class CustomerOverview extends JPanel {
 		lblSearch.setBounds(10, 464, 75, 14);
 		add(lblSearch);
 		lblSearch.setVisible(false);
-		
-		try {
-			tableModel.addCustomer(controller.getList());
-		} catch (DBMissingException | DBException e1) {
-			System.out.println(e1.toString());
-		} 
 	}
-		      public void changedUpdate(DocumentEvent documentEvent) {
-		    	  searchCustomers();
-		      }
-		      public void insertUpdate(DocumentEvent documentEvent) {
-		    	  searchCustomers();
-		      }
-		      public void removeUpdate(DocumentEvent documentEvent) {
-		    	  searchCustomers();
-		      }
-		    };
-		tfSearch.getDocument().addDocumentListener(documentListener);
 		
-		tfSearch.setBounds(95, 461, 420, 20);
-		add(tfSearch);
-		tfSearch.setColumns(10);
-		tfSearch.setEnabled(false);
-		tfSearch.setVisible(false);
-		
-		lblSearch = new JLabel("Search...");
-		lblSearch.setBounds(10, 464, 75, 14);
-		add(lblSearch);
-		lblSearch.setVisible(false);
-		
-		try {
-			tableModel.addCustomer(controller.getList());
-		} catch (DBMissingException | DBException e1) {
-			System.out.println(e1.toString());
-		} 
-	}
+//		try {
+//			tableModel.addCustomer(controller.getList());
+//		} catch (DBMissingException | DBException e1) {
+//			System.out.println(e1.toString());
+//		} 
+//	}
+//		      public void changedUpdate(DocumentEvent documentEvent) {
+//		    	  searchCustomers();
+//		      }
+//		      public void insertUpdate(DocumentEvent documentEvent) {
+//		    	  searchCustomers();
+//		      }
+//		      public void removeUpdate(DocumentEvent documentEvent) {
+//		    	  searchCustomers();
+//		      }
+//		    };
+//		tfSearch.getDocument().addDocumentListener(documentListener);
+//		
+//		tfSearch.setBounds(95, 461, 420, 20);
+//		add(tfSearch);
+//		tfSearch.setColumns(10);
+//		tfSearch.setEnabled(false);
+//		tfSearch.setVisible(false);
+//		
+//		lblSearch = new JLabel("Search...");
+//		lblSearch.setBounds(10, 464, 75, 14);
+//		add(lblSearch);
+//		lblSearch.setVisible(false);
+//		
+//		try {
+//			tableModel.addCustomer(controller.getList());
+//		} catch (DBMissingException | DBException e1) {
+//			System.out.println(e1.toString());
+//		} 
+//	}
 	
 	/**
 	 * Enables all text fields on the pane (even the Customer ID), so they can be edited.
@@ -427,16 +446,19 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setVisible(true);
 		
 		this.lblAddress.setVisible(true);
+		this.lblBox.setVisible(true);
+		this.lblCity.setVisible(true);
+		this.lblCountry.setVisible(true);
+		this.lblCustomerId.setVisible(true);
+		this.lblEmail.setVisible(true);
+		this.lblFirstName.setVisible(true);
+		this.lblLastName.setVisible(true);
+		this.lblNumber.setVisible(true);
+		this.lblStreet.setVisible(true);
+		this.lblZip.setVisible(true);
 		lblSearch.setVisible(true);
 		tfSearch.setVisible(true);
 		tfSearch.setEnabled(true);
-		
-		//Change the button layout and behavior
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Cancel");
-		this.lblSearch.setVisible(true);
-		this.tfSearch.setVisible(true);
-		this.tfSearch.setEnabled(true);
 		
 		/*
 		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
@@ -448,17 +470,6 @@ public class CustomerOverview extends JPanel {
 			// TODO ANDRE => LOG of toon error
 		}
 		*/ 
-	}
-		this.lblBox.setVisible(true);
-		this.lblCity.setVisible(true);
-		this.lblCountry.setVisible(true);
-		this.lblCustomerId.setVisible(true);
-		this.lblEmail.setVisible(true);
-		this.lblFirstName.setVisible(true);
-		this.lblLastName.setVisible(true);
-		this.lblNumber.setVisible(true);
-		this.lblStreet.setVisible(true);
-		this.lblZip.setVisible(true);
 	}
 	
 	/**
