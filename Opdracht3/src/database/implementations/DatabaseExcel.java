@@ -208,23 +208,23 @@ public class DatabaseExcel<T extends ModelBase> implements DataReadWriteService<
 		// C#)
 		switch (classTypeString) {
 		case "model.Person":
-			return new DataStrategy<Person>(Person.class);
+			return DataStrategy.getDataService(Person.class);
 		case "model.Address":
-			return new DataStrategy<Address>(Address.class);
+			return DataStrategy.getDataService(Address.class);
 		case "model.Customer":
-			return new DataStrategy<Customer>(Customer.class);
+			return DataStrategy.getDataService(Customer.class);
 		case "model.Item":
-			return new DataStrategy<Item>(Item.class);
+			return DataStrategy.getDataService(Item.class);
 		case "model.Shop":
-			return new DataStrategy<Shop>(Shop.class);
+			return DataStrategy.getDataService(Shop.class);
 		case "model.Uitlening":
-			return new DataStrategy<Uitlening>(Uitlening.class);
+			return DataStrategy.getDataService(Uitlening.class);
 		case "model.subItems.Cd":
-			return new DataStrategy<Cd>(Cd.class);
+			return DataStrategy.getDataService(Cd.class);
 		case "model.subItems.Dvd":
-			return new DataStrategy<Dvd>(Dvd.class);
+			return DataStrategy.getDataService(Dvd.class);
 		case "model.subItems.Game":
-			return new DataStrategy<Game>(Game.class);
+			return DataStrategy.getDataService(Game.class);
 		default:
 			return null;
 		}

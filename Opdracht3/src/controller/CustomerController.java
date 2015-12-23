@@ -7,13 +7,13 @@ import java.util.stream.Stream;
 import common.DBException;
 import common.DBMissingException;
 import common.factories.CustomerFactory;
-import database.DataStrategy;
+import database.*;
 import model.Customer;
 
 public class CustomerController {
 
-	private DataStrategy<Customer> customerData = new DataStrategy<Customer>(Customer.class);
-	
+	private DataService<Customer> customerData = DataStrategy.getDataService(Customer.class);
+
 	
 	public CustomerController() {
 
