@@ -5,7 +5,7 @@ import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
 public class DataSourceFactory {
-	private static DataSource _type = DataSource.Text;
+	private static DataSource _type = DataSource.EXCEL;
 
 	public static void setType(DataSource type) {
 		_type = type;
@@ -14,14 +14,14 @@ public class DataSourceFactory {
 	public static <T extends ModelBase> DataReadWriteService<T> getSource(Class<T> classType) {
 		switch (_type) {
 		case Text:
-			return new TextDatabase<T>(classType);
+			return new DatabaseText<T>(classType);
 		case SQL:
-			return new SQLDatabase<T>();
+			return new DatabaseSQL<T>();
 		case EXCEL:
-			return new ExcelDatabase<T>(classType);
+			return new DatabaseExcel<T>(classType);
 		}
 		
-		return new TextDatabase<T>(classType);
+		return new DatabaseText<T>(classType);
 	}
 
 }

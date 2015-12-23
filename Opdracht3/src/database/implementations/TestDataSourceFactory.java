@@ -1,4 +1,4 @@
-package database.tests;
+package database.implementations;
 
 import static org.junit.Assert.*;
 
@@ -9,15 +9,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import database.helpers.DataSource;
-import database.implementations.DataSourceFactory;
-import database.implementations.ExcelDatabase;
-import database.implementations.SQLDatabase;
-import database.implementations.TextDatabase;
 import database.internalInterface.DataReadWriteService;
 import model.Address;
 import model.Shop;
 
-public class DataSourceFactoryTest {
+public class TestDataSourceFactory {
 
 	
 	@Test
@@ -26,7 +22,7 @@ public class DataSourceFactoryTest {
 		DataReadWriteService<Address> addressRWS = DataSourceFactory.getSource(Address.class);
 		
 		assertNotNull(addressRWS);
-		assertSame(SQLDatabase.class, addressRWS.getClass());
+		assertSame(DatabaseSQL.class, addressRWS.getClass());
 	}
 	
 	@Test
@@ -35,7 +31,7 @@ public class DataSourceFactoryTest {
 		DataReadWriteService<Address> addressRWS = DataSourceFactory.getSource(Address.class);
 		
 		assertNotNull(addressRWS);
-		assertSame(TextDatabase.class, addressRWS.getClass());
+		assertSame(DatabaseText.class, addressRWS.getClass());
 	}
 	
 	@Test
@@ -44,7 +40,7 @@ public class DataSourceFactoryTest {
 		DataReadWriteService<Address> addressRWS = DataSourceFactory.getSource(Address.class);
 		
 		assertNotNull(addressRWS);
-		assertSame(ExcelDatabase.class, addressRWS.getClass());
+		assertSame(DatabaseExcel.class, addressRWS.getClass());
 	}
 
 }
