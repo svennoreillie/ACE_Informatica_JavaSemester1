@@ -261,7 +261,8 @@ public class CustomerOverview extends JPanel {
 				}
 				else{
 					try{
-						fillForm(customerList.get(tableCustomers.getSelectedRow()));
+//						fillForm(customerList.get(tableCustomers.getSelectedRow()));
+						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
 					}
 					catch (Exception e){
 						System.err.println(e);
