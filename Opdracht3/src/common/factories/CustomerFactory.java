@@ -9,12 +9,15 @@ import model.Person;
 public class CustomerFactory {
 
 	public static Customer createCustomer(int id){
-		final Random rand = new Random();
+//		final Random rand = new Random();
 		Customer customer = null;
 		
 		// Make a person and address to put into a Customer
-		Person person = PersonFactory.getPerson(rand, id);
-		Address address = AddressFactory.getAddress(rand, id);
+//		Person person = PersonFactory.getPerson(rand, id);
+//		Address address = AddressFactory.getAddress(rand, id);
+		
+		Person person = PersonFactory.getPerson();
+		Address address = AddressFactory.getAddress();
 		
 		// Make an e-mail address using the customer's details
 		StringBuffer sbuff = new StringBuffer();

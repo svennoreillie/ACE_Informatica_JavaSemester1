@@ -458,17 +458,6 @@ public class CustomerOverview extends JPanel {
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
 		this.tfSearch.setEnabled(true);
-		
-		/*
-		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
-		CustomerController controller = new CustomerController();
-		try {
-			List<Customer> customerList = controller.search(tfFirstName.getText());
-			// TODO ANDER => smijt dees in jtable
-		} catch (DBMissingException | DBException e1) {
-			// TODO ANDRE => LOG of toon error
-		}
-		*/ 
 	}
 	
 	/**
