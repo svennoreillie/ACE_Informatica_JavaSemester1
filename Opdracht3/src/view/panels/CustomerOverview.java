@@ -250,19 +250,17 @@ public class CustomerOverview extends JPanel {
 					try {
 						detail = new CustomerDetail(controller.getList().get(tableCustomers.getSelectedRow()));
 						MainWindowChangedFiringSource.getInstance().fireChanged(detail);
-					} catch (DBMissingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (DBException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					} catch (DBMissingException | DBException e1) {
+						System.out.println(e1.toString());
+					} 
 
 				}
 				else{
 					try{
-//						fillForm(customerList.get(tableCustomers.getSelectedRow()));
 						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+					}
+					catch (IndexOutOfBoundsException ioob){
+						ioob.printStackTrace();
 					}
 					catch (Exception e){
 						System.err.println(e);

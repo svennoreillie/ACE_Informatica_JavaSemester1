@@ -44,7 +44,7 @@ public class CustomerDetail extends JPanel {
 		lblAddressLine1.setBounds(10, 61, 580, 14);
 		StringBuffer sb = new StringBuffer();
 		sb.append(customer.getAddress().getStreet() + " " + customer.getAddress().getNumber());
-		if (customer.getAddress().getBox() != ""){
+		if (!customer.getAddress().getBox().trim().isEmpty()){
 			sb.append(", box " + customer.getAddress().getBox());
 		}
 		String address = sb.toString();
