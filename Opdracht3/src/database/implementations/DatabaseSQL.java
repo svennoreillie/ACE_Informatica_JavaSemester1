@@ -21,11 +21,6 @@ import common.DBMissingException;
 import database.DataService;
 import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-import jxl.write.WriteException;
 import model.ModelBase;
 
 public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>implements DataReadWriteService<T> {
