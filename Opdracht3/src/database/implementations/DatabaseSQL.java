@@ -3,6 +3,7 @@ package database.implementations;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,21 +40,74 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 	@Override
 	public List<T> readDB() throws DBMissingException, DBException {
 		try {
-			String dbURL = "jdbc:derby:resources/database;create=true";
-			Connection conn = DriverManager.getConnection(dbURL);
+			Connection conn = this.createConnection();
 			Statement statement = conn.createStatement();
-			boolean rs = statement
-					.execute("CREATE TABLE users (id INTEGER PRIMARY KEY, name VARCHAR(30), email VARCHAR(50))");
+			ResultSet results = statement.executeQuery("SELECT FROM " + this.classType.getName());
 
-			// verder kijken op :
-			// http://www.tutorialspoint.com/jdbc/jdbc-sample-code.htm
+			// load structure of T
+			List<ReflectionPropertyHelper> genericFieldArray = getFields();
+			List<T> returnList = new ArrayList<T>();
 
+			while (results.next()) {
+				T instance = this.classType.newInstance();
+				for (ReflectionPropertyHelper property : genericFieldArray) {
+					Object value = null;
+					Method set = property.getSetter();
+					String colName = property.getName();
+					switch (property.getPropertyType().getName()) {
+					case "java.lang.String":
+						value = results.getString(colName);
+						break;
+					case "int":
+						value = results.getInt(colName);
+						break;
+					case "boolean":
+						value = results.getBoolean(colName);
+						break;
+					case "java.math.BigDecimal":
+						value = results.getBigDecimal(colName);
+						break;
+					case "java.lang.Double":
+						value = results.getDouble(colName);
+						break;
+					default:
+						//ModelBase case
+						if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
+							// get from dedicated DataService
+							DataService<? extends ModelBase> strategy = GetDedicatedDataService(property.getPropertyType().getName());
+							int id = results.getInt(colName);
+							ModelBase reference = strategy.get(id);
+							set.invoke(instance, property.getPropertyType().cast(reference));
+							value = null;
+						}
+						break;
+					}
+					if (value != null) set.invoke(instance, value);
+				}
+				returnList.add(instance);
+			}
+			
+			results.close();
+			statement.close();
 			conn.close();
+			
+			return returnList;
 		} catch (SQLException e) {
+			throw new DBException("Error reading from SQL database " + this.classType.getName(), e);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		//TODO :: exceptions gooien
 		return null;
 	}
 
@@ -66,6 +120,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 				Connection conn = this.createConnection();
 				Statement clearStatement = conn.createStatement();
 				clearStatement.executeQuery("DELETE FROM " + this.classType.getName());
+				clearStatement.close();
 				conn.close();
 			} catch (SQLException e) {
 				System.out.println("Failure clearing db before write => " + e.toString());
@@ -74,7 +129,6 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
 
-			
 			String insertQuery = "INSER INTO " + this.classType.getName() + " VALUES ";
 			for (T item : list) {
 				String rowQuery = "";
@@ -82,8 +136,11 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 					Object value;
 					try {
 						if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
-							// found property is a ModelBase => lookup id to write in this table
-							// leave storing of the found ModelBase to an instance of DatabaseSQL with type of found ModelBase
+							// found property is a ModelBase => lookup id to
+							// write in this table
+							// leave storing of the found ModelBase to an
+							// instance of DatabaseSQL with type of found
+							// ModelBase
 							String classTypeString = property.getPropertyType().getName();
 							// ugly helper method to create a DataService, could
 							// not find a way to do it generic
@@ -102,8 +159,9 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 						}
 
 						if (value != null) {
-							if (rowQuery.length() > 0) rowQuery += ", ";
-							
+							if (rowQuery.length() > 0)
+								rowQuery += ", ";
+
 							switch (value.getClass().getName()) {
 							case "java.lang.String":
 								rowQuery += ("\"" + value.toString() + "\"");
@@ -127,14 +185,17 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 						// TODO:: logging
 					}
 				}
-				
+
 				insertQuery += "(" + rowQuery + ")";
 			}
-			
-			//TODO :: exec query
 
+			Connection conn = this.createConnection();
+			Statement clearStatement = conn.createStatement();
+			clearStatement.executeQuery(insertQuery);
+			clearStatement.close();
+			conn.close();
 		} catch (Exception e) {
-			throw new DBException("Error writing to SQL database", e);
+			throw new DBException("Error writing to SQL database " + this.classType.getName(), e);
 		}
 	}
 
@@ -198,6 +259,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 			try {
 				Statement statement = conn.createStatement();
 				statement.execute(createTableQry);
+				statement.close();
 			} catch (SQLException e) {
 				if (e.getSQLState() == "X0Y32") {
 					// table already exists => all is well
