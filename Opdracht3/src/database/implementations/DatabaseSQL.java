@@ -1,18 +1,12 @@
 package database.implementations;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +17,7 @@ import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
-public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>implements DataReadWriteService<T> {
+public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> implements DataReadWriteService<T> {
 
 	public DatabaseSQL(Class<T> classType) {
 		super(classType);
