@@ -1,6 +1,8 @@
 package database.implementations;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,16 +17,22 @@ import java.util.List;
 
 import common.DBException;
 import common.DBMissingException;
+import database.DataService;
 import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import model.ModelBase;
 
 public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>implements DataReadWriteService<T> {
 
 	public DatabaseSQL(Class<T> classType) {
 		super(classType);
-		
-		//Create the table in the database
+
+		// Create the table in the database
 		this.createTable();
 	}
 
@@ -51,8 +59,83 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 
 	@Override
 	public void writeDB(List<T> list) throws DBMissingException, DBException {
-		// TODO Auto-generated method stub
+		try {
+			// clear entire table
+			// TODO:: improve this, worst idea ever
+			try {
+				Connection conn = this.createConnection();
+				Statement clearStatement = conn.createStatement();
+				clearStatement.executeQuery("DELETE FROM " + this.classType.getName());
+				conn.close();
+			} catch (SQLException e) {
+				System.out.println("Failure clearing db before write => " + e.toString());
+			}
 
+			// load structure of T
+			List<ReflectionPropertyHelper> genericFieldArray = getFields();
+
+			
+			String insertQuery = "INSER INTO " + this.classType.getName() + " VALUES ";
+			for (T item : list) {
+				String rowQuery = "";
+				for (ReflectionPropertyHelper property : genericFieldArray) {
+					Object value;
+					try {
+						if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
+							// found property is a ModelBase => lookup id to write in this table
+							// leave storing of the found ModelBase to an instance of DatabaseSQL with type of found ModelBase
+							String classTypeString = property.getPropertyType().getName();
+							// ugly helper method to create a DataService, could
+							// not find a way to do it generic
+							DataService<? extends ModelBase> strategy = GetDedicatedDataService(classTypeString);
+
+							// get the value of this property for the current
+							// item in the list & save to other DataService
+							ModelBase model = (ModelBase) property.getGetter().invoke(item);
+							strategy.add(model);
+							// save id of this item in our own excel
+							value = model.getId();
+						} else {
+							// normal property, get the object for this item in
+							// the list
+							value = property.getGetter().invoke(item);
+						}
+
+						if (value != null) {
+							if (rowQuery.length() > 0) rowQuery += ", ";
+							
+							switch (value.getClass().getName()) {
+							case "java.lang.String":
+								rowQuery += ("\"" + value.toString() + "\"");
+								break;
+							case "boolean":
+								if ((boolean) value) {
+									rowQuery += "TRUE";
+								} else {
+									rowQuery += "FALSE";
+								}
+								break;
+							default:
+								rowQuery += value.toString();
+								break;
+							}
+						}
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						// TODO :: logging
+					} catch (InvocationTargetException e) {
+						// error invoking the getter => just continue
+						// TODO:: logging
+					}
+				}
+				
+				insertQuery += "(" + rowQuery + ")";
+			}
+			
+			//TODO :: exec query
+
+		} catch (Exception e) {
+			throw new DBException("Error writing to SQL database", e);
+		}
 	}
 
 	private Connection createConnection() throws SQLException {
@@ -85,7 +168,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 						column += "INTEGER";
 						break;
 					case "boolean":
-						column += "SMALLINT";
+						column += "BOOLEAN";
 						break;
 					case "java.math.BigDecimal":
 						column += "DECIMAL";
@@ -117,7 +200,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 				statement.execute(createTableQry);
 			} catch (SQLException e) {
 				if (e.getSQLState() == "X0Y32") {
-					//table already exists => all is well
+					// table already exists => all is well
 				} else {
 					throw e;
 				}
