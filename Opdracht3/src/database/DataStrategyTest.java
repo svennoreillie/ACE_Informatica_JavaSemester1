@@ -11,16 +11,16 @@ public class DataStrategyTest {
 	@Test
 	public void testGenericClass() throws Throwable {
 		Data<Shop> shop = new Data<Shop>(Shop.class);
-		DataStrategy<Shop> shopData = new DataStrategy<Shop>(Shop.class);
-		assertSame(shop.getClass(), shopData.getService().getClass());
+		DataService<Shop> shopData = DataStrategy.getDataService(Shop.class);
+		assertSame(shop.getClass(), ((DataStrategy<Shop>)shopData).getService().getClass());
 		
 		Data<Person> person = new Data<Person>(Person.class);
-		DataStrategy<Person> personData = new DataStrategy<Person>(Person.class);
-		assertSame(person.getClass(), personData.getService().getClass());
+		DataService<Person> personData = DataStrategy.getDataService(Person.class);
+		assertSame(person.getClass(), ((DataStrategy<Person>)personData).getService().getClass());
 		
 		Data<Address> address = new Data<Address>(Address.class);
-		DataStrategy<Address> addressData = new DataStrategy<Address>(Address.class);
-		assertSame(address.getClass(), addressData.getService().getClass());
+		DataService<Address> addressData = DataStrategy.getDataService(Address.class);
+		assertSame(address.getClass(), ((DataStrategy<Address>)addressData).getService().getClass());
 	}
 
 }

@@ -1,6 +1,5 @@
 package database;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,34 +10,45 @@ import common.DBMissingException;
 import database.implementations.Data;
 import model.ModelBase;
 
-public class DataStrategy<T extends ModelBase> implements DataService<T> {
+public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 
 	private Class<T> classType;
+	private static Map<Class<? extends ModelBase>, DataService<? extends ModelBase>> map;
 	
-	public DataStrategy(Class<T> classType) {
+	
+	private DataStrategy(Class<T> classType) {
 		this.classType = classType;
 	}
 	
-	private Map<Class<T>, DataService<T>> map;
 	
-	protected DataService<T> getService() {
+	@SuppressWarnings("unchecked")
+	public static <T extends ModelBase> DataService<T> getDataService(Class<T> classType) {
 		Data<T> dataImplementation = null;
 		try {
 			
 			if (map == null)
-				map = new HashMap<Class<T>, DataService<T>>();
-			if (map.containsKey(this.classType)) {
-				return map.get(this.classType);
+				map = new HashMap<Class<? extends ModelBase>, DataService<? extends ModelBase>>();
+			if (map.containsKey(classType)) {
+				return (DataService<T>)map.get(classType);
 			}
 
-			dataImplementation = new Data<T>(this.classType);
-			map.put(this.classType, dataImplementation);
+			dataImplementation = new Data<T>(classType);
+			map.put(classType, dataImplementation);
 
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return dataImplementation;
+	}
+
+	
+	@SuppressWarnings("unchecked")
+	protected DataService<T> getService() throws DBMissingException {
+		if (map.containsKey(this.classType)) {
+			return (DataService<T>)map.get(this.classType);
+		}
+		throw new DBMissingException("DataService niet gevonden");
 	}
 
 	@Override
