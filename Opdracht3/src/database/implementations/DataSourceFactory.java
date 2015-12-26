@@ -16,7 +16,7 @@ public class DataSourceFactory {
 		case Text:
 			return new DatabaseText<T>(classType);
 		case SQL:
-			return new DatabaseSQL<T>();
+			return new DatabaseSQL<T>(classType);
 		case EXCEL:
 			return new DatabaseExcel<T>(classType);
 		}

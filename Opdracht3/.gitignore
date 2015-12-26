@@ -1,2 +1,14 @@
 /bin/
 /target/
+/resources/database
+/plugins
+/lib
+/icons
+/restore.sh
+/squirrel-sql.bat
+/squirrel-sql.jar
+/squirrel-sql.sh
+/update-log4j.properties
+/addpath.bat
+/derby.log
+/log4j.properties
