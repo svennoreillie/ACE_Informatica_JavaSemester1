@@ -64,10 +64,13 @@ public class CustomerDetail extends JPanel {
 		tglbtnNewsletter = new JToggleButton("Newsletter");
 		if (customer.getSpam()){
 			tglbtnNewsletter.setText("Newsletter ON");
+			spamControl.activerenSpam(customer);
+			
 		}
 		else{
 			tglbtnNewsletter.setText("Newsletter OFF");
-		}
+			spamControl.stopSpam(customer);
+			}
 		tglbtnNewsletter.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

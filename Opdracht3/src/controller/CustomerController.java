@@ -37,4 +37,8 @@ public class CustomerController {
 			customerData.add(CustomerFactory.createCustomer(i));
 		}
 	}
+	
+	public void updateCustomer(Customer cust) throws DBMissingException, DBException{
+		customerData.update(cust);
+	}
 }
