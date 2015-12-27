@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
 
@@ -100,44 +101,17 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public List<Uitlening> alleUitleningenVanCd() {
-		List<Uitlening> Cds = new ArrayList<Uitlening>();
-		
-		for(Uitlening u : uitleningen){
-			Item i = u.getUitgeleendItem();
-			if(i instanceof Cd){
-				Cds.add(u);
-			}
-		}
-		
-		return Cds;
+		return uitleningen.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Cd.class)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Uitlening> alleUitleningenVanDvd() {
-		List<Uitlening> dvds = new ArrayList<Uitlening>();
-		
-		for(Uitlening u : uitleningen){
-			Item i = u.getUitgeleendItem();
-			if(i instanceof Dvd){
-				dvds.add(u);
-			}
-		}
-		
-		return dvds;
+		return uitleningen.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Dvd.class)).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<Uitlening> alleUitleningenVanGame() {
-		List<Uitlening> games = new ArrayList<Uitlening>();
-		
-		for(Uitlening u : uitleningen){
-			Item i = u.getUitgeleendItem();
-			if(i instanceof Game){
-				games.add(u);
-			}
-		}
-		
-		return games;
+		return uitleningen.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Game.class)).collect(Collectors.toList());
 	}
 
 	@Override
