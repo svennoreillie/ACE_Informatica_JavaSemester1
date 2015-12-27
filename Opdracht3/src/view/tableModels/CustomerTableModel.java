@@ -80,6 +80,7 @@ public class CustomerTableModel extends AbstractTableModel {
 		return columnsNames[column];
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class getColumnClass(int c){
 		return getValueAt(0, c).getClass();
 	}

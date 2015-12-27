@@ -2,20 +2,14 @@ package database.implementations;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;
-import database.DataStrategy;
 import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
 import jxl.*;
@@ -24,18 +18,15 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
-import jxl.write.biff.RowsExceededException;
-import model.subItems.*;
 import model.*;
 
-public class DatabaseExcel<T extends ModelBase> implements DataReadWriteService<T> {
+public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> implements DataReadWriteService<T> {
 
-	private final Class<T> classType;
 	private final String className;
 	private final File file;
 
 	public DatabaseExcel(Class<T> classType) {
-		this.classType = classType;
+		super(classType);
 		this.className = classType.getName();
 		this.file = new File(this.className + ".xls");
 	}
@@ -200,73 +191,6 @@ public class DatabaseExcel<T extends ModelBase> implements DataReadWriteService<
 		} catch (IOException | WriteException e) {
 			throw new DBException("Error writing to Excel database", e);
 		}
-	}
-
-	private DataService<? extends ModelBase> GetDedicatedDataService(String classTypeString) {
-		// ugly helper to instantiate a new DataService of the correct type
-		// might be a better solution for it (without converting all of it to
-		// C#)
-		switch (classTypeString) {
-		case "model.Person":
-			return DataStrategy.getDataService(Person.class);
-		case "model.Address":
-			return DataStrategy.getDataService(Address.class);
-		case "model.Customer":
-			return DataStrategy.getDataService(Customer.class);
-		case "model.Item":
-			return DataStrategy.getDataService(Item.class);
-		case "model.Shop":
-			return DataStrategy.getDataService(Shop.class);
-		case "model.Uitlening":
-			return DataStrategy.getDataService(Uitlening.class);
-		case "model.subItems.Cd":
-			return DataStrategy.getDataService(Cd.class);
-		case "model.subItems.Dvd":
-			return DataStrategy.getDataService(Dvd.class);
-		case "model.subItems.Game":
-			return DataStrategy.getDataService(Game.class);
-		default:
-			return null;
-		}
-	}
-
-	private List<ReflectionPropertyHelper> properties;
-
-	private List<ReflectionPropertyHelper> getFields() {
-		if (properties == null) {
-
-			properties = new ArrayList<ReflectionPropertyHelper>();
-
-			// iterate all methods found in T
-			for (Method m : this.classType.getMethods()) {
-				if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {
-					// if the name starts with get and has no parameters we
-					// assume it is a getter
-					ReflectionPropertyHelper helper = new ReflectionPropertyHelper();
-					try {
-						String getName = m.getName();
-						helper.setName(getName.substring(3, getName.length()));
-						helper.setGetter(m);
-						helper.setPropertyType(m.getReturnType());
-
-						// look for a setter
-						if (helper.getName().equals("Class"))
-							continue;
-						Method setter = this.classType.getMethod("set" + helper.getName(), helper.getPropertyType());
-						helper.setSetter(setter);
-
-						// add to list
-						properties.add(helper);
-					} catch (Exception e) {
-						System.out.println(e.toString());
-						// setter not available, skip property
-					}
-				}
-			}
-			properties = properties.stream().sorted().collect(Collectors.toList());
-		}
-
-		return properties;
 	}
 
 }
