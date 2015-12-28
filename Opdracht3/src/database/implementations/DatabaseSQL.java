@@ -31,7 +31,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 		try {
 			Connection conn = this.createConnection();
 			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery("SELECT FROM " + this.classType.getName());
+			ResultSet results = statement.executeQuery("SELECT FROM " + getTableName());
 
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
@@ -82,7 +82,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			
 			return returnList;
 		} catch (SQLException e) {
-			throw new DBException("Error reading from SQL database " + this.classType.getName(), e);
+			throw new DBException("Error reading from SQL database " + getTableName(), e);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,7 +108,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			try {
 				Connection conn = this.createConnection();
 				Statement clearStatement = conn.createStatement();
-				clearStatement.executeQuery("DELETE FROM " + this.classType.getName());
+				clearStatement.executeQuery("DELETE FROM " + getTableName());
 				clearStatement.close();
 				conn.close();
 			} catch (SQLException e) {
@@ -118,7 +118,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
 
-			String insertQuery = "INSER INTO " + this.classType.getName() + " VALUES ";
+			String insertQuery = "INSERT INTO " + getTableName() + " VALUES ";
 			for (T item : list) {
 				String rowQuery = "";
 				for (ReflectionPropertyHelper property : genericFieldArray) {
@@ -175,8 +175,10 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 					}
 				}
 
-				insertQuery += "(" + rowQuery + ")";
+				insertQuery += "(" + rowQuery + "),";
 			}
+			
+			insertQuery = insertQuery.substring(0, insertQuery.length() - 1);
 
 			Connection conn = this.createConnection();
 			Statement clearStatement = conn.createStatement();
@@ -184,11 +186,18 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			clearStatement.close();
 			conn.close();
 		} catch (Exception e) {
-			throw new DBException("Error writing to SQL database " + this.classType.getName(), e);
+			throw new DBException("Error writing to SQL database " + getTableName(), e);
 		}
 	}
 
-	private Connection createConnection() throws SQLException {
+	protected String getTableName() {
+		String className = this.classType.getName();
+		int index =className.lastIndexOf('.');
+		className = className.substring(index + 1);
+		return className;
+	}
+
+	protected Connection createConnection() throws SQLException {
 		String dbURL = "jdbc:derby:resources/database;create=true";
 		Connection conn = DriverManager.getConnection(dbURL);
 		return conn;
@@ -203,8 +212,9 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			List<ReflectionPropertyHelper> fields = this.getFields();
 			for (ReflectionPropertyHelper property : fields) {
 				String column = "";
-				if (property.getName() == "Id") {
+				if (property.getName().equalsIgnoreCase("Id")) {
 					// continue, automatically added to fields
+					continue;
 				} else if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
 					column = property.getName() + " INTEGER";
 				} else {
@@ -236,10 +246,13 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 
 			// Create table query
 			String createTableQry = "CREATE TABLE ";
-			createTableQry += this.classType.getName();
+			createTableQry += getTableName();
 			createTableQry += " (";
+			int i = 0;
 			for (String string : columnsList) {
+				if (i > 0) createTableQry += ",";
 				createTableQry += string;
+				i++;
 			}
 			createTableQry += ")";
 
@@ -250,7 +263,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 				statement.execute(createTableQry);
 				statement.close();
 			} catch (SQLException e) {
-				if (e.getSQLState() == "X0Y32") {
+				if (e.getSQLState().equalsIgnoreCase("X0Y32")) {
 					// table already exists => all is well
 				} else {
 					throw e;
