@@ -71,7 +71,7 @@ public class CustomerOverview extends JPanel {
 	private CustomerController controller = new CustomerController();
 	
 	// TODO ANDRE:
-	// -IndexOutOfBoundsException when selecting an item in the customer table
+	// -IndexOutOfBoundsException when selecting an item in the customer table woop
 
 	/**
 	 * Create the panel.
