@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
+import common.DBException;
+import common.DBMissingException;
 import controller.SpamRegistratieController;
 import controller.event.MainWindowChangedFiringSource;
 import model.Customer;
@@ -29,8 +31,10 @@ public class CustomerDetail extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws DBException 
+	 * @throws DBMissingException 
 	 */
-	public CustomerDetail(Customer customer) {
+	public CustomerDetail(Customer customer) throws DBMissingException, DBException {
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -75,11 +79,27 @@ public class CustomerDetail extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (tglbtnNewsletter.getText() == "Newsletter ON"){
-					spamControl.stopSpam(customer);
+					try {
+						spamControl.stopSpam(customer);
+					} catch (DBMissingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					tglbtnNewsletter.setText("Newsletter OFF");
 				}
 				else if (tglbtnNewsletter.getText() == "Newsletter OFF"){
-					spamControl.activerenSpam(customer);
+					try {
+						spamControl.activerenSpam(customer);
+					} catch (DBMissingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					tglbtnNewsletter.setText("Newsletter ON");
 				}
 			}
