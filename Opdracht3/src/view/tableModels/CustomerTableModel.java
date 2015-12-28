@@ -23,11 +23,15 @@ public class CustomerTableModel extends AbstractTableModel {
 
 	public void addCustomer(Customer customer){
 		data.add(customer);
-		fireTableRowsInserted(data.size()-1, data.size()-1);
+		updateTable();
 	}
 	
 	public void addCustomer(List<Customer> search) {
 		data.addAll(search);
+		updateTable();
+	}
+	
+	public void updateTable(){
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	

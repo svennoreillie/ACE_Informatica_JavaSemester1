@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.text.Document;
 
 import common.DBException;
@@ -277,7 +278,9 @@ public class CustomerOverview extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
 					controller.createCustomers();
-					tableModel.addCustomer(controller.getList()); 
+					tableModel.updateTable();
+					tableCustomers.repaint();
+					scrollPane.setViewportView(tableCustomers);
 				} catch (DBMissingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -525,8 +528,10 @@ public class CustomerOverview extends JPanel {
 			newAdd.setZip(tfZip.getText());
 			
 			Customer newCust = new Customer();
+			newCust.setEmail(tfEmail.getText());
 			newCust.setPerson(newPers);
 			newCust.setAddress(newAdd);
+//			newCust.setId(controller.getList().size()+1);
 			
 			controller.addCustomer(newCust);
 			tableModel.addCustomer(newCust);

@@ -29,12 +29,15 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(Customer customer) throws DBMissingException, DBException{
+//		customer.setId(customerData.getAll().size()+1);
 		customerData.add(customer);
 	}
 	
 	public void createCustomers() throws DBMissingException, DBException{
 		for (int i = 0; i < 10; i++){
-			customerData.add(CustomerFactory.createCustomer(i));
+			int id = customerData.getAll().size() + 1;
+			customerData.add(CustomerFactory.createCustomer(id));
+//			customerData.add(CustomerFactory.createCustomer());
 		}
 	}
 	
