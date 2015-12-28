@@ -3,10 +3,8 @@ package testing;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import common.AntiMagicStrings;
 import model.Address;
 import model.Customer;
 import model.Person;
