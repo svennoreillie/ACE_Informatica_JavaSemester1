@@ -16,8 +16,7 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 	private DataService<T> dataBase;
 	
 	public WinkelController(Class<T> entity) {
-		
-		 dataBase = new DataStrategy<T>(entity);
+		 dataBase = DataStrategy.getDataService(entity);
 	}
 	
 	@Override
@@ -33,7 +32,8 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 				}
 			}
 			if (!duplicatedEntity) {
-				DataStrategy<Customer> dataCustomer = new DataStrategy<Customer>(Customer.class);
+				DataService<Customer> dataCustomer = DataStrategy.getDataService(Customer.class);
+
 				List<Customer> customerList = dataCustomer.getAll();
 				for(Customer customerOfList : customerList){
 					if (customerOfList.getSpam()) {

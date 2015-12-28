@@ -13,8 +13,9 @@ import model.Customer;
 
 public class CustomerController {
 
-	private DataService<Customer> customerData = new DataStrategy<Customer>(Customer.class);
 	
+	private DataService<Customer> customerData = DataStrategy.getDataService(Customer.class);
+
 	
 	public CustomerController() {
 
