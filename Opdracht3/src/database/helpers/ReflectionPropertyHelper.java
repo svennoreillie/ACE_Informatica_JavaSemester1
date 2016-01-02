@@ -2,12 +2,12 @@ package database.helpers;
 
 import java.lang.reflect.Method;
 
-public class ReflectionPropertyHelper implements Comparable {
+public class ReflectionPropertyHelper implements Comparable<Object> {
 	
 	private String name;
 	private Method getter;
 	private Method setter;
-	private Class propertyType;
+	private Class<?> propertyType;
 	
 	
 	public String getName() {
@@ -28,10 +28,10 @@ public class ReflectionPropertyHelper implements Comparable {
 	public void setSetter(Method setter) {
 		this.setter = setter;
 	}
-	public Class getPropertyType() {
+	public Class<?> getPropertyType() {
 		return propertyType;
 	}
-	public void setPropertyType(Class propertyType) {
+	public void setPropertyType(Class<?> propertyType) {
 		this.propertyType = propertyType;
 	}
 	
