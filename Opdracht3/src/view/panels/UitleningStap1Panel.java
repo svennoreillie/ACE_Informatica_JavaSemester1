@@ -79,25 +79,27 @@ public class UitleningStap1Panel extends JPanel{
 		
 		//UitleningTableModel tableModel = new UitleningTableModel();
 		tableModel = new UitleningTableModel();
-		table = new JTable(new DefaultTableModel(
+		/*table = new JTable(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"Description", "Select"
 			}
-		));
+		));*/
+		
+		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		
-		Cd cd = new Cd("testCd",new BigDecimal(5),5.0,EnumTypeCd.SOFTWARE);
+		/*Cd cd = new Cd("testCd",new BigDecimal(5),5.0,EnumTypeCd.SOFTWARE);
 		Dvd dvd = new Dvd("testDvd",new BigDecimal(5),5.0,EnumTypeDvd.FILM);
 		Game game = new Game("testGame",new BigDecimal(5),5.0,EnumTypeGame.MASSIVEMULTIPLAYERONLINE);
 		List<Item> items = new ArrayList<>();
 		items.add(cd);
 		items.add(dvd);
 		items.add(game);
-		setItems(items);
-		//WinkelController<Item> controller = new WinkelController<Item>(Item.class);
-		//setItems(controller.getAllSortedByName());
+		setItems(items);*/
+		WinkelController<Item> controller = new WinkelController<Item>(Item.class);
+		setItems(controller.getAllSortedByName());
 	}
 	
 	public void setItems(List<Item> items){
