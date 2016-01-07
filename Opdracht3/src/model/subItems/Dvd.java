@@ -31,6 +31,11 @@ public class Dvd extends model.Item {
 		setDvdType(type);	
 	}
 	
+	public Dvd() {
+		super();
+		setDvdType(EnumTypeDvd.values()[0]);
+	}
+	
 	@Override
 	public String toString() {
 		return "Dvd [dvdType=" + dvdType + ", " + super.toString() + "]";

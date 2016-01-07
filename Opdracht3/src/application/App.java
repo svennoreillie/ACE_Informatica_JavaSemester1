@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import controller.ReceiptController;
@@ -22,7 +24,7 @@ import view.panels.CustomerOverview;
 import view.panels.testpanels.BluePanel;
 
 public class App {
-	public static void main(String[] args){
+	public static void main(String[] args) throws DBMissingException, DBException{
 		
 		/*List<Item> items = new ArrayList<>();
 		

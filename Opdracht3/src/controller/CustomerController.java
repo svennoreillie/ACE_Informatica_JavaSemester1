@@ -7,13 +7,11 @@ import java.util.stream.Stream;
 import common.DBException;
 import common.DBMissingException;
 import common.factories.CustomerFactory;
-import database.DataService;
-import database.DataStrategy;
+import database.*;
 import model.Customer;
 
 public class CustomerController {
 
-	
 	private DataService<Customer> customerData = DataStrategy.getDataService(Customer.class);
 
 	
@@ -31,12 +29,19 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(Customer customer) throws DBMissingException, DBException{
+//		customer.setId(customerData.getAll().size()+1);
 		customerData.add(customer);
 	}
 	
 	public void createCustomers() throws DBMissingException, DBException{
 		for (int i = 0; i < 10; i++){
-			customerData.add(CustomerFactory.createCustomer(i));
+			int id = customerData.getAll().size() + 1;
+			customerData.add(CustomerFactory.getCustomer());
+//			customerData.add(CustomerFactory.createCustomer());
 		}
+	}
+	
+	public void updateCustomer(Customer cust) throws DBMissingException, DBException{
+		customerData.update(cust);
 	}
 }
