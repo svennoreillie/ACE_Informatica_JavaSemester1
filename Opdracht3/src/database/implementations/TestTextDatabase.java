@@ -20,6 +20,7 @@ import org.junit.rules.ExpectedException;
 
 import common.DBException;
 import common.DBMissingException;
+import database.helpers.DataSource;
 import model.Address;
 import model.Person;
 import model.Shop;
@@ -29,10 +30,14 @@ public class TestTextDatabase {
 	private Path testModelPath = Paths.get("model.Address.db");
 	private DatabaseText<Address> testDB = new DatabaseText<Address>(Address.class);
 
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		DataSourceFactory.setType(DataSource.Text);
+	}
+	
 	@Before
 	public void setUp() throws Exception {
 		Files.createFile(testModelPath);
-		
 	}
 
 	@After

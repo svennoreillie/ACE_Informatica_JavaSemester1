@@ -32,6 +32,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			Connection conn = this.createConnection();
 			Statement statement = conn.createStatement();
 			ResultSet results = statement.executeQuery("SELECT FROM " + this.classType.getName());
+			ResultSet results = statement.executeQuery("SELECT * FROM " + getTableName());
 
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
