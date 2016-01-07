@@ -37,7 +37,7 @@ public class TestExcelDatabase {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		DataSourceFactory.setType(DataSource.EXCEL);
+		DataSourceFactory.setType(DataSource.Excel);
 	}
 	
 	@After

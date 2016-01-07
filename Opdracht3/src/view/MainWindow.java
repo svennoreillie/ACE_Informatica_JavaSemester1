@@ -2,16 +2,22 @@ package view;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apache.derby.iapi.store.raw.data.DataFactory;
+
 import controller.event.WindowChangedService;
+import database.DataStrategy;
+import database.helpers.DataSource;
+import database.implementations.DataSourceFactory;
 import view.panels.*;
 
 import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
-public class MainWindow extends JFrame implements WindowChangedService{
+public class MainWindow extends JFrame implements WindowChangedService {
 
 	/**
 	 * 
@@ -32,7 +38,6 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		contentPanel.setLayout(gbl);
 		buttonPanel = new ButtonPanel();
 		setButtonPanel(buttonPanel);
-		
 
 		this.setContentPane(contentPanel);
 		this.setSize(800, 630);
@@ -41,6 +46,8 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
+
+	
 
 	private void setViewPanel(JPanel panel) {
 		GridBagConstraints gbc_viewPanel = new GridBagConstraints();
@@ -55,13 +62,13 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		gbc_buttonPanel.gridy = 0;
 		gbc_buttonPanel.gridx = 0;
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
-		
+
 		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		
+
 		contentPanel.add(buttonPanel, gbc_buttonPanel);
 	}
-	
-	public void changeViewPanel(JPanel panel) {	
+
+	public void changeViewPanel(JPanel panel) {
 		contentPanel.removeAll();
 		setButtonPanel(buttonPanel);
 		setViewPanel(panel);
@@ -72,5 +79,5 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	public void fireChanged(JPanel panel) {
 		changeViewPanel(panel);
 	}
-	
+
 }

@@ -4,10 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import controller.ReceiptController;
 import controller.event.MainWindowChangedFiringSource;
+import database.helpers.DataSource;
+import database.implementations.DataSourceFactory;
 import model.BodyDecorator;
 import model.ConcreteReceipt;
 import model.FooterDecorator;
@@ -24,21 +28,21 @@ import view.panels.testpanels.BluePanel;
 public class App {
 	public static void main(String[] args){
 		
-		/*List<Item> items = new ArrayList<>();
-		
-		items.add(new Cd("testCd", new BigDecimal(3.0), 3.0, EnumTypeCd.SOFTWARE));
-		items.add(new Dvd("testDvd", new BigDecimal(3.0), 3.0, EnumTypeDvd.FILM));
-		
-		ConcreteReceipt CReceipt = new ConcreteReceipt();
-		CReceipt.setItems(items);
-		
-		Receipt receipt = CReceipt;
-		
-		ReceiptController.printReceipt(receipt);*/
+		int choice = JOptionPane.showOptionDialog(null, //Component parentComponent
+                "Kies een database type", //Object message,
+                "Db?", //String title
+                JOptionPane.YES_NO_OPTION, //int optionType
+                JOptionPane.INFORMATION_MESSAGE, //int messageType
+                null, //Icon icon,
+                DataSource.values(), //Object[] options,
+                null);//Object initialValue 
+		if (choice == -1) return;
+		DataSourceFactory.setType(DataSource.values()[choice]);
 
 		MainWindow mainWindow = new MainWindow();
 		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
 		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
 
 	}
+
 }
