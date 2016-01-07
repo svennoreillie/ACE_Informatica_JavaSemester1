@@ -317,7 +317,7 @@ public class CustomerOverview extends JPanel {
 		lblSearch.setVisible(false);
 		
 		try {
-			tableModel.addCustomer(controller.getList());
+			tableModel.updateTable();
 		} catch (DBMissingException | DBException e1) {
 			System.out.println(e1.toString());
 		} 
@@ -531,13 +531,13 @@ public class CustomerOverview extends JPanel {
 //			newCust.setId(controller.getList().size()+1);
 			
 			controller.addCustomer(newCust);
-			tableModel.addCustomer(newCust);
+			tableModel.updateTable();
 		}
 	}
 	
 	private void searchCustomers(){
 		try {
-			tableModel.replaceCustomers(controller.search(tfSearch.getText()));
+			tableModel.updateTable(tfSearch.getText());
 		} catch (DBMissingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
