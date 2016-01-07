@@ -86,6 +86,17 @@ public class ButtonPanel extends JPanel {
 		customerOverviewButton.addActionListener(listener);
 		customerOverviewButton.setActionCommand(EventEnum.CUSTOMEROVERVIEWBUTTONEVENT);
 		add(customerOverviewButton,gbc);
+		
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=5;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		customerOverviewButton = new Button("Rent");
+		customerOverviewButton.addActionListener(listener);
+		customerOverviewButton.setActionCommand(EventEnum.RENTBUTTON1);
+		add(customerOverviewButton,gbc);
+		
+		
 	
 	}
 }
