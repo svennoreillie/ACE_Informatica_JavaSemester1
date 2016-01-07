@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,9 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 		} catch (IOException e) {
 			throw new DBMissingException("Excel not found");
 		} catch (BiffException e) {
-			throw new DBException("Error trying to read from Excel database", e);
+			//Clear excel file and return null
+			this.file.delete();
+			return null;
 		} catch (InstantiationException | IllegalAccessException e1) {
 			throw new DBException("Cannot instantiate the generic T", e1);
 		} finally {
