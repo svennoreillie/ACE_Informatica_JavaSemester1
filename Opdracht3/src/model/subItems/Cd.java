@@ -29,6 +29,11 @@ public class Cd extends Item {
 		setCdType(type);
 	}
 
+	public Cd() {
+		super();
+		setCdType(EnumTypeCd.values()[0]);
+	}
+
 	@Override
 	public String toString() {
 		return "Cd [cdTtype= " + cdTtype + ", " + super.toString() + "]";

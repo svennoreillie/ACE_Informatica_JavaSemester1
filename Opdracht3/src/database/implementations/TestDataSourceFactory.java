@@ -36,7 +36,7 @@ public class TestDataSourceFactory {
 	
 	@Test
 	public void testGetServiceExcel() {
-		DataSourceFactory.setType(DataSource.EXCEL);
+		DataSourceFactory.setType(DataSource.Excel);
 		DataReadWriteService<Address> addressRWS = DataSourceFactory.getSource(Address.class);
 		
 		assertNotNull(addressRWS);

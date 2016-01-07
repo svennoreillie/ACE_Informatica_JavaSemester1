@@ -3,9 +3,15 @@ package view.tableModels;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.swing.table.AbstractTableModel;
 
+import common.DBException;
+import common.DBMissingException;
+import database.DataService;
+import database.DataStrategy;
 import model.Customer;
 
 
@@ -13,29 +19,32 @@ public class CustomerTableModel extends AbstractTableModel {
 	/**
 	 * 
 	 */
+	private DataService<Customer> customerDB = DataStrategy.getDataService(Customer.class);
+	
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Spam"};
+	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Newsletter"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){
 		data = new LinkedList<Customer>();
 	}
-
-	public void addCustomer(Customer customer){
-		data.add(customer);
-		fireTableRowsInserted(data.size()-1, data.size()-1);
-	}
 	
-	public void addCustomer(List<Customer> search) {
-		data.addAll(search);
-		fireTableRowsInserted(data.size()-1, data.size()-1);
-	}
-	
-	public void replaceCustomers(List<Customer> customers){
+	public void updateTable() throws DBMissingException, DBException{
 		data.clear();
-		addCustomer(customers);
+		data.addAll(customerDB.getAll());
+		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
+	public void updateTable(String searchString) throws DBMissingException, DBException{
+		data.clear();
+		data.addAll(search(searchString));
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+	private List<Customer> search(String searchString) throws DBMissingException, DBException {
+		return customerDB.getFiltered(cust -> cust.filter(searchString));
+	}
+
 	@Override
 	public int getColumnCount() {
 		return columnsNames.length;
@@ -85,5 +94,5 @@ public class CustomerTableModel extends AbstractTableModel {
 		return getValueAt(0, c).getClass();
 	}
 
-
+	
 }

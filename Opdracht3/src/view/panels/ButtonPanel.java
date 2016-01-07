@@ -2,19 +2,12 @@ package view.panels;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import common.enums.EventEnum;
 import controller.event.MainWindowChangedFiringSource;
-import view.MainWindow;
 import view.custom.Button;
-import view.panels.testpanels.BluePanel;
-import view.panels.testpanels.RedPanel;
-import view.panels.testpanels.YellowPanel;
 
 public class ButtonPanel extends JPanel {
 
@@ -94,6 +87,17 @@ public class ButtonPanel extends JPanel {
 		customerOverviewButton.addActionListener(listener);
 		customerOverviewButton.setActionCommand(EventEnum.CUSTOMEROVERVIEWBUTTONEVENT);
 		add(customerOverviewButton,gbc);
+		
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=5;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		customerOverviewButton = new Button("Rent");
+		customerOverviewButton.addActionListener(listener);
+		customerOverviewButton.setActionCommand(EventEnum.RENTBUTTON1);
+		add(customerOverviewButton,gbc);
+		
+		
 	
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;

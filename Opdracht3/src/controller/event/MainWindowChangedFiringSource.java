@@ -11,6 +11,8 @@ import common.enums.EventEnum;
 import view.panels.AddItemPanel;
 import view.panels.CustomerOverview;
 import view.panels.RentalStatusPanel;
+import view.panels.UitleningStap1Panel;
+import view.panels.UitleningStap2Panel;
 import view.panels.testpanels.BluePanel;
 import view.panels.testpanels.RedPanel;
 import view.panels.testpanels.YellowPanel;
@@ -77,6 +79,12 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 			break;
 		case ADDITEMBUTTONEVENT:
 			fireChanged(new AddItemPanel());
+			break;
+		case RENTBUTTON1:
+			fireChanged(new UitleningStap1Panel());
+			break;
+		case RENTBUTTON2:
+			fireChanged(new UitleningStap2Panel());
 			break;
 		default:
 			break;

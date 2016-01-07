@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import common.DBException;
 import common.DBMissingException;
@@ -64,6 +65,13 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 	}
 
 	@Override
+	public List<T> getFiltered(Predicate<? super T> predicate)
+			throws NoSuchElementException, DBMissingException, DBException {
+		DataService<T> service = getService();
+		return service.getFiltered(predicate);
+	}
+	
+	@Override
 	public void add(ModelBase entity) throws DBMissingException, DBException {
 		DataService<T> service = getService();
 		service.add(entity);
@@ -71,6 +79,8 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 	
 	@Override
 	public void update(T entity) throws DBMissingException, DBException {
+		if (entity.getId() != 0) throw new DBException("Id found, insert should contain 0 or null as Id");
+		
 		DataService<T> service = getService();
 		service.update(entity);
 	}
@@ -80,4 +90,7 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 		DataService<T> service = getService();
 		service.remove(entity);
 	}
+
+
+	
 }

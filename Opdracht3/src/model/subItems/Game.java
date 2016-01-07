@@ -3,6 +3,7 @@ package model.subItems;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import common.enums.EnumTypeGame;
 import model.Item;
@@ -21,6 +22,11 @@ public class Game extends model.Item {
 	public Game(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag , EnumTypeGame gameType) {
 		super(titel, verhuurPrijsInEuro, verhuurPrijsPerDag);
 		setGameType(gameType);
+	}
+	
+	public Game() {
+		super();
+		setGameType(EnumTypeGame.values()[0]);
 	}
 
 	@Override
