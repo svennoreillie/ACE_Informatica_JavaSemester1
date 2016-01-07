@@ -2,6 +2,7 @@ package database;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import common.DBException;
 import common.DBMissingException;
@@ -49,4 +50,14 @@ public interface DataService<T extends ModelBase> {
 	 * @throws DBException
 	 */
 	void remove(T entity) throws DBMissingException, DBException;
+
+	/**
+	 * Gets a list of T using a predicate to filter
+	 * @param predicate to filter on
+	 * @return filtered list of T
+	 * @throws NoSuchElementException
+	 * @throws DBMissingException
+	 * @throws DBException
+	 */
+	List<T> getFiltered(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException;
 }

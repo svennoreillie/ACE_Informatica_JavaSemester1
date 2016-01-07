@@ -49,7 +49,6 @@ public class TestSQLDatabase {
 		
 		dropTable(customerDb);
 		customerDb.createTable();
-		
 	}
 
 	private void dropTable(DatabaseSQL<? extends ModelBase> db) throws SQLException {
