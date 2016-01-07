@@ -5,7 +5,8 @@ public enum EventEnum {
 	CUSTOMEROVERVIEWBUTTONEVENT("customerOverviewButtonEvent"),
 	BLUEBUTTONEVENT("blueButtonEvent"),
 	YELLOWBUTTONEVENT("yellowButtonEvent"),
-	REDBUTTONEVENT("redButtonEvent");
+	REDBUTTONEVENT("redButtonEvent"), 
+	ADDITEMBUTTONEVENT("addItemButtonEvent");
 	
 	
 	private String actionCommand;

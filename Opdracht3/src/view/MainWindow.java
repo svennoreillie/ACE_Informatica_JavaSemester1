@@ -10,6 +10,8 @@ import view.panels.*;
 import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
+import javax.swing.JButton;
+import java.awt.Insets;
 
 public class MainWindow extends JFrame implements WindowChangedService{
 
@@ -33,6 +35,7 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		buttonPanel = new ButtonPanel();
 		setButtonPanel(buttonPanel);
 		
+			
 
 		this.setContentPane(contentPanel);
 		this.setSize(800, 630);

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import common.enums.EventEnum;
+import view.panels.AddItemPanel;
 import view.panels.CustomerOverview;
 import view.panels.RentalStatusPanel;
 import view.panels.testpanels.BluePanel;
@@ -73,6 +74,9 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 			break;
 		case HUURSTATUSBUTTONEVENT:
 			fireChanged(new RentalStatusPanel());
+			break;
+		case ADDITEMBUTTONEVENT:
+			fireChanged(new AddItemPanel());
 			break;
 		default:
 			break;
