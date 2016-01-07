@@ -52,15 +52,12 @@ public class TestExcelDatabase {
 	public void testExcelCreate() throws DBMissingException, DBException {
 		List<Person> persons = new ArrayList<Person>();
 		Person p1 = new Person();
-		p1.setId(1);
 		p1.setFirstName("Sven");
 		p1.setLastName("Awesome");
 		Person p2 = new Person();
-		p2.setId(2);
 		p2.setFirstName("Peter");
 		p2.setLastName("Dude");
 		Person p3 = new Person();
-		p3.setId(3);
 		p3.setFirstName("Andre");
 		p3.setLastName("Doc");
 		persons.add(p1);
