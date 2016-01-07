@@ -90,7 +90,7 @@ public class UitleningStap1Panel extends JPanel{
 		
 		Cd cd = new Cd("testCd",new BigDecimal(5),5.0,EnumTypeCd.SOFTWARE);
 		Dvd dvd = new Dvd("testDvd",new BigDecimal(5),5.0,EnumTypeDvd.FILM);
-		Game game = new Game("testGame",new BigDecimal(5),5.0,EnumTypeGame.MASSIVEMULTIPLAYERONLINE);
+		Game game = new Game("testGame",new BigDecimal(5),5.0,EnumTypeGame.MASSIVEONLINEMULTIPLAYER);
 		List<Item> items = new ArrayList<>();
 		items.add(cd);
 		items.add(dvd);
