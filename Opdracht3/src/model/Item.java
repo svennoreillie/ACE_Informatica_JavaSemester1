@@ -17,6 +17,22 @@ abstract public class Item extends ModelBase {
 	private Double verhuurPrijsPerDag;
 	private boolean isUitgeleend;
 	
+	
+	public Item(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag) {
+		this.setTitel(titel);
+		this.setVerhuurPrijs(verhuurPrijsInEuro);
+		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
+		this.isUitgeleend = false;
+	}
+	
+	public Item() {
+		this.setTitel("");
+		this.setVerhuurPrijsPerDag(0d);
+		this.setVerhuurPrijs(new BigDecimal("0"));
+		this.isUitgeleend = false;
+	}
+	
+	
 	public int getBoetePrijsPerDag() {
 		return boetePrijsPerDag;
 	}
@@ -50,19 +66,7 @@ abstract public class Item extends ModelBase {
 		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
 	
-	public Item(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag) {
-		this.setTitel(titel);
-		this.setVerhuurPrijs(verhuurPrijsInEuro);
-		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
-		this.isUitgeleend = false;
-	}
 	
-	public Item(){
-		this.setTitel("");
-		this.setVerhuurPrijsPerDag(0d);
-		this.setVerhuurPrijs(new BigDecimal("0"));
-		this.isUitgeleend = false;
-	}
 	
 	@Override
 	public int hashCode() {
