@@ -9,15 +9,18 @@ public class BodyDecorator extends ReceiptDecorator {
 	}
 	
 	@Override
-	public void describe() {
-		receipt.describe();
+	public String getDescription() {
+		String description = receipt.getDescription();
 		String body="";
 		
 		for(Item i : getItems()){
 			body+=i.getTitel() +"\t" +i.getVerhuurPrijsPerDag()+"\n";
 		}
+		body+="--------\n";
 		
-		System.out.println(body);
+		return description+body;
+		
+		//System.out.println(body);
 	}
 
 

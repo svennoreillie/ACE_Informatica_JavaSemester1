@@ -9,19 +9,18 @@ public class FooterDecorator extends ReceiptDecorator{
 	}
 	
 	@Override
-	public void describe() {
-		receipt.describe();
-		footer();
+	public String getDescription() {
+		return receipt.getDescription()+ getFooter();
 	}
 	
-	public void footer(){
+	public String getFooter(){
 		String footer="";
 		
-		footer+=getTotal()+"\n";
-		footer+=getTaxes()+"\n";
+		footer+="Totaal: "+getTotal()+"\n";
+		footer+="Btw: "+getTaxes()+"\n";
 		footer+="Volgende zondag zijn wij open van 8.00 tot 12.00\nDank u voor je aankoop";
 		
-		System.out.println(footer);
+		return footer;
 	}
 
 	

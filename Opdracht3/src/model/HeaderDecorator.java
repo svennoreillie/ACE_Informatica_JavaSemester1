@@ -19,18 +19,19 @@ public class HeaderDecorator extends ReceiptDecorator{
 	}
 	
 	@Override
-	public void describe() {
-		receipt.describe();
-		header();
+	public String getDescription() {
+		String description = receipt.getDescription();
+		return description + getHeader();
 	}
 	
-	public void header(){
+	private String getHeader(){
 		String header = "";
 		header +=  date.getDayOfMonth() + "/" + date.getMonthOfYear() + "/" + date.getYear()+"\n";
-		header += date.getHourOfDay() + ":" + date.getMinuteOfHour() + ":" + date.getSecondOfMinute();
+		header += date.getHourOfDay() + ":" + date.getMinuteOfHour() + ":" + date.getSecondOfMinute()+"\n";
+		header += "--------\n";
 		
 		
-		System.out.println(header);
+		return header;
 	}
 
 

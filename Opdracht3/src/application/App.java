@@ -6,6 +6,7 @@ import java.util.List;
 
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
+import controller.ReceiptController;
 import controller.event.MainWindowChangedFiringSource;
 import model.BodyDecorator;
 import model.ConcreteReceipt;
@@ -33,10 +34,12 @@ public class App {
 		
 		Receipt receipt = CReceipt;
 		
-		receipt = new HeaderDecorator(receipt);
+		ReceiptController.printReceipt(receipt);
+		
+		/*receipt = new HeaderDecorator(receipt);
 		receipt = new BodyDecorator(receipt);
 		receipt = new FooterDecorator(receipt);
-		receipt.describe();
+		receipt.describe();*/
 		
 		
 		MainWindow mainWindow = new MainWindow();
