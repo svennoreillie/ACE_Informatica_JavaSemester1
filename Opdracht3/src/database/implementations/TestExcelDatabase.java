@@ -18,6 +18,7 @@ import org.junit.Test;
 import common.DBException;
 import common.DBMissingException;
 import common.factories.CustomerFactory;
+import database.helpers.DataSource;
 import common.factories.*;
 import model.*;
 
@@ -34,6 +35,11 @@ public class TestExcelDatabase {
 	private Path testCustomerPath = Paths.get("model.Customer.xls");
 	private DatabaseExcel<Customer> customerDb = new DatabaseExcel<Customer>(Customer.class);
 
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		DataSourceFactory.setType(DataSource.EXCEL);
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		Files.deleteIfExists(testPersonPath);
