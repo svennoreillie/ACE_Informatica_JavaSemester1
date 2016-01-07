@@ -24,7 +24,7 @@ import view.panels.testpanels.BluePanel;
 public class App {
 	public static void main(String[] args){
 		
-		List<Item> items = new ArrayList<>();
+		/*List<Item> items = new ArrayList<>();
 		
 		items.add(new Cd("testCd", new BigDecimal(3.0), 3.0, EnumTypeCd.SOFTWARE));
 		items.add(new Dvd("testDvd", new BigDecimal(3.0), 3.0, EnumTypeDvd.FILM));
@@ -34,18 +34,11 @@ public class App {
 		
 		Receipt receipt = CReceipt;
 		
-		ReceiptController.printReceipt(receipt);
-		
-		/*receipt = new HeaderDecorator(receipt);
-		receipt = new BodyDecorator(receipt);
-		receipt = new FooterDecorator(receipt);
-		receipt.describe();*/
-		
-		
+		ReceiptController.printReceipt(receipt);*/
+
 		MainWindow mainWindow = new MainWindow();
 		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
 		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
-		
-		
+
 	}
 }
