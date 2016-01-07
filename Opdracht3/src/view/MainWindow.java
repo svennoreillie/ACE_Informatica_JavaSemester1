@@ -16,9 +16,12 @@ import database.*;
 import model.Customer;
 import model.Item;
 import model.Uitlening;
+import model.subItems.*;
 import view.panels.*;
 
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 
@@ -31,7 +34,9 @@ public class MainWindow extends JFrame implements WindowChangedService {
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
-	private DataService<Item> dataBaseItem = DataStrategy.getDataService(Item.class);
+	private DataService<Cd> dataBaseCd = DataStrategy.getDataService(Cd.class);
+	private DataService<Dvd> dataBaseDvd = DataStrategy.getDataService(Dvd.class);
+	private DataService<Game> dataBaseGame = DataStrategy.getDataService(Game.class);
 	private DataService<Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
 	private DataService<Uitlening> dataBaseUitlening = DataStrategy.getDataService(Uitlening.class);
 
@@ -54,11 +59,27 @@ public class MainWindow extends JFrame implements WindowChangedService {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
-		if (dataBaseItem.getAll().isEmpty()){
+		
+		if (dataBaseCd.getAll().isEmpty() && dataBaseDvd.getAll().isEmpty() && dataBaseGame.getAll().isEmpty()) {
+			List<Item> itemList = new ArrayList<Item>();
 			for (int i = 0; i < 80; i++){
-				dataBaseItem.add(ItemFactory.getItem());
+				itemList.add(ItemFactory.getItem());
+			}
+			for (Item item : itemList) {
+				switch (item.getClass().toString()) {
+				case "Cd":
+					dataBaseCd.add(item);
+					break;
+				case "Dvd":
+					dataBaseDvd.add(item);
+					break;
+				case "Game":
+					dataBaseGame.add(item);
+					break;
+				}
 			}
 		}
+
 		if (dataBaseCustomer.getAll().isEmpty()){
 			for (int i = 0; i < 30; i++){
 				dataBaseCustomer.add(CustomerFactory.getCustomer());
