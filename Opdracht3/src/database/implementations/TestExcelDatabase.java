@@ -100,7 +100,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItems() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);
@@ -122,7 +122,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItemsRead() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);

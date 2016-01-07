@@ -8,15 +8,13 @@ import model.Person;
 
 public class CustomerFactory {
 
-	public static Customer createCustomer(int id){
-		final Random rand = new Random();
+	public static Customer getCustomer(){
+		Random rand = new Random();
 		Customer customer = null;
 		
 		// Make a person and address to put into a Customer
-		Person person = PersonFactory.getPerson(rand, id);
-		Address address = AddressFactory.getAddress(rand, id);
-//		Person person = PersonFactory.getPerson();
-//		Address address = AddressFactory.getAddress();
+		Person person = PersonFactory.getPerson(rand);
+		Address address = AddressFactory.getAddress(rand);
 		
 		// Make an e-mail address using the customer's details
 		StringBuffer sbuff = new StringBuffer();
@@ -28,7 +26,6 @@ public class CustomerFactory {
 		// Instantiate the new Customer
 		try {
 			customer = new Customer(person, address, email);
-			customer.setId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

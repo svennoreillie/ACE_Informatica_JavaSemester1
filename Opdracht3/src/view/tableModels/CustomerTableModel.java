@@ -14,7 +14,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Spam"};
+	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Newsletter"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){

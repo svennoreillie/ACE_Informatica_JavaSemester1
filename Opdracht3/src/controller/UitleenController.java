@@ -66,12 +66,12 @@ public class UitleenController implements UitleenService {
 		uitlening.setBeginVerhuurDatum(beginVerhuurDatum);
 		
 		uitleningen.add(uitlening);
-		item.setUitgeleend(true);
+		item.setisUitgeleend(true);
 	}
 
 	@Override
 	public boolean isHuidigItemMomenteelUitgeleend(Item item) {
-		return item.isUitgeleend();
+		return item.getisUitgeleend();
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public void uitleningVanEenItemStoppen(Uitlening uitlening) {
-		uitlening.getUitgeleendItem().setUitgeleend(false);
+		uitlening.getUitgeleendItem().setisUitgeleend(false);
 		uitleningen.remove(uitlening);	
 	}
 
@@ -150,7 +150,7 @@ public class UitleenController implements UitleenService {
 	public void uitleningVanMeerdereItemsStoppen(List<Uitlening> teStoppenItemlijst) {
 		for(Uitlening u:teStoppenItemlijst){
 			uitleningen.remove(u);
-			u.getUitgeleendItem().setUitgeleend(false);
+			u.getUitgeleendItem().setisUitgeleend(false);
 		}
 	}
 

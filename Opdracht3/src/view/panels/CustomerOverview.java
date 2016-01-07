@@ -71,9 +71,6 @@ public class CustomerOverview extends JPanel {
 	private JLabel lblSearch;
 	private CustomerController controller = new CustomerController();
 	
-	// TODO ANDRE:
-	// -IndexOutOfBoundsException when selecting an item in the customer table woop
-
 	/**
 	 * Create the panel.
 	 * @throws DBException 
@@ -108,13 +105,13 @@ public class CustomerOverview extends JPanel {
 		add(tfLastName);
 		
 		lblEmail = new JLabel("E-mail");
-		lblEmail.setBounds(355, 402, 46, 14);
+		lblEmail.setBounds(311, 405, 46, 14);
 		add(lblEmail);
 		
 		tfEmail = new JTextField();
 		tfEmail.setEnabled(false);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(430, 399, 160, 20);
+		tfEmail.setBounds(411, 402, 160, 20);
 		add(tfEmail);
 		
 		lblAddress = new JLabel("Adress");
@@ -181,12 +178,12 @@ public class CustomerOverview extends JPanel {
 		add(separator);
 		
 		lblCustomerId = new JLabel("Customer ID");
-		lblCustomerId.setBounds(355, 430, 65, 14);
+		lblCustomerId.setBounds(311, 433, 90, 14);
 		add(lblCustomerId);
 		
 		tfCustomerID = new JTextField();
 		tfCustomerID.setEnabled(false);
-		tfCustomerID.setBounds(430, 427, 160, 20);
+		tfCustomerID.setBounds(411, 430, 160, 20);
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		

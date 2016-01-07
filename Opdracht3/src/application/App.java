@@ -3,6 +3,8 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.DBException;
+import common.DBMissingException;
 import controller.event.MainWindowChangedFiringSource;
 import model.Item;
 import model.Shop;
@@ -11,7 +13,7 @@ import view.panels.CustomerOverview;
 import view.panels.testpanels.BluePanel;
 
 public class App {
-	public static void main(String[] args){
+	public static void main(String[] args) throws DBMissingException, DBException{
 		/*Shop shop = new Shop();
 		List<Item> items = new ArrayList<Item>();
 		
