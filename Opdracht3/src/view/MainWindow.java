@@ -34,13 +34,13 @@ public class MainWindow extends JFrame implements WindowChangedService {
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
-<<<<<<< HEAD
+
 	private DataService<Cd> dataBaseCd = DataStrategy.getDataService(Cd.class);
 	private DataService<Dvd> dataBaseDvd = DataStrategy.getDataService(Dvd.class);
 	private DataService<Game> dataBaseGame = DataStrategy.getDataService(Game.class);
-=======
+
 	private DataService<Item> dataBaseItem = DataStrategy.getDataService(Item.class);
->>>>>>> refs/remotes/Sven/development
+
 	private DataService<Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
 	private DataService<Uitlening> dataBaseUitlening = DataStrategy.getDataService(Uitlening.class);
 
@@ -63,7 +63,7 @@ public class MainWindow extends JFrame implements WindowChangedService {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
-<<<<<<< HEAD
+
 		
 		if (dataBaseCd.getAll().isEmpty() && dataBaseDvd.getAll().isEmpty() && dataBaseGame.getAll().isEmpty()) {
 			List<Item> itemList = new ArrayList<Item>();
@@ -94,7 +94,7 @@ public class MainWindow extends JFrame implements WindowChangedService {
 			for (int i = 0; i < 50; i++) {
 				dataBaseUitlening.add(UitleningFactory.getUitlening());
 			}
-=======
+
 
 		if (dataBaseItem.getAll().isEmpty()){
 			for (int i = 0; i < 80; i++){
@@ -110,9 +110,10 @@ public class MainWindow extends JFrame implements WindowChangedService {
 			for (int i = 0; i < 50; i++) {
 				dataBaseUitlening.add(UitleningFactory.getUitlening());
 			}
-			
->>>>>>> refs/remotes/Sven/development
 		}
+		
+		}
+		
 	}
 
 	
