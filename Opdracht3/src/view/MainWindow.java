@@ -71,20 +71,27 @@ public class MainWindow extends JFrame implements WindowChangedService {
 				itemList.add(ItemFactory.getItem());
 			}
 			for (Item item : itemList) {
+
 				switch (item.getClass().toString()) {
-				case "Cd":
+				case "class model.subItems.Cd":
 					dataBaseCd.add(item);
 					break;
-				case "Dvd":
+				case "class model.subItems.Dvd":
 					dataBaseDvd.add(item);
 					break;
-				case "Game":
+				case "class model.subItems.Game":
 					dataBaseGame.add(item);
 					break;
 				}
 			}
 		}
 
+
+//		if (dataBaseItem.getAll().isEmpty()){
+//			for (int i = 0; i < 80; i++){
+//				dataBaseItem.add(ItemFactory.getItem());
+//			}
+//		}
 		if (dataBaseCustomer.getAll().isEmpty()){
 			for (int i = 0; i < 30; i++){
 				dataBaseCustomer.add(CustomerFactory.getCustomer());
@@ -94,27 +101,10 @@ public class MainWindow extends JFrame implements WindowChangedService {
 			for (int i = 0; i < 50; i++) {
 				dataBaseUitlening.add(UitleningFactory.getUitlening());
 			}
-
-
-		if (dataBaseItem.getAll().isEmpty()){
-			for (int i = 0; i < 80; i++){
-				dataBaseItem.add(ItemFactory.getItem());
-			}
-		}
-		if (dataBaseCustomer.getAll().isEmpty()){
-			for (int i = 0; i < 30; i++){
-				dataBaseCustomer.add(CustomerFactory.getCustomer());
-			}
-		}
-		if (dataBaseUitlening.getAll().isEmpty()) {
-			for (int i = 0; i < 50; i++) {
-				dataBaseUitlening.add(UitleningFactory.getUitlening());
-			}
-		}
+		}		
+}
 		
-		}
-		
-	}
+	
 
 	
 
