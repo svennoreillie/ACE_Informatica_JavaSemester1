@@ -28,7 +28,7 @@ import view.panels.CustomerOverview;
 import view.panels.testpanels.BluePanel;
 
 public class App {
-	public static void main(String[] args){
+	public static void main(String[] args) throws DBMissingException, DBException{
 		
 		int choice = JOptionPane.showOptionDialog(null, //Component parentComponent
                 "Kies een database type", //Object message,
