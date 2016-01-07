@@ -79,7 +79,7 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 	
 
 	@Override
-	public void addAll(List<ModelBase> entities) throws DBMissingException, DBException {
+	public void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException {
 		DataService<T> service = getService();
 		service.addAll(entities);
 	}

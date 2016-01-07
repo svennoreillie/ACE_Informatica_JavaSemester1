@@ -39,8 +39,6 @@ public class MainWindow extends JFrame implements WindowChangedService {
 	private DataService<Dvd> dataBaseDvd = DataStrategy.getDataService(Dvd.class);
 	private DataService<Game> dataBaseGame = DataStrategy.getDataService(Game.class);
 
-	private DataService<Item> dataBaseItem = DataStrategy.getDataService(Item.class);
-
 	private DataService<Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
 	private DataService<Uitlening> dataBaseUitlening = DataStrategy.getDataService(Uitlening.class);
 
@@ -93,14 +91,18 @@ public class MainWindow extends JFrame implements WindowChangedService {
 //			}
 //		}
 		if (dataBaseCustomer.getAll().isEmpty()){
-			for (int i = 0; i < 30; i++){
-				dataBaseCustomer.add(CustomerFactory.getCustomer());
+			List<Customer> custList = new ArrayList<Customer>();
+			for (int i = 0; i < 10; i++){
+				custList.add(CustomerFactory.getCustomer());
 			}
+			dataBaseCustomer.addAll(custList);
 		}
 		if (dataBaseUitlening.getAll().isEmpty()) {
-			for (int i = 0; i < 50; i++) {
-				dataBaseUitlening.add(UitleningFactory.getUitlening());
+			List<Uitlening> uitleningList = new ArrayList<Uitlening>();
+			for (int i = 0; i < 20; i++) {
+				uitleningList.add(UitleningFactory.getUitlening());
 			}
+			dataBaseUitlening.addAll(uitleningList);
 		}		
 }
 		
