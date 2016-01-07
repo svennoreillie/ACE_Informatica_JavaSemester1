@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,13 +80,30 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 						case "boolean":
 							set.invoke(instance, Boolean.parseBoolean(content));
 							break;
+						case "java.math.BigDecimal":
+							set.invoke(instance, new BigDecimal(content));
+                            break;
+						case "java.lang.Double":
+							set.invoke(instance, Double.parseDouble(content));
+                            break;
 						default:
 							if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
-								// get from dedicated dataservice
-								DataService<? extends ModelBase> strategy = GetDedicatedDataService(
-										property.getPropertyType().getName());
-								ModelBase reference = strategy.get(Integer.parseInt(content));
-								set.invoke(instance, property.getPropertyType().cast(reference));
+								if (Modifier.isAbstract( property.getPropertyType().getModifiers() )) {
+									String[] splittedContent = content.split(" ");
+									String classType = splittedContent[0];
+									int id = Integer.parseInt(splittedContent[1]);
+									
+									DataService<? extends ModelBase> strategy = GetDedicatedDataService(classType);
+									ModelBase reference = strategy.get(id);
+									set.invoke(instance, property.getPropertyType().cast(reference));
+
+								} else {
+									// get from dedicated dataservice
+									DataService<? extends ModelBase> strategy = GetDedicatedDataService(
+											property.getPropertyType().getName());
+									ModelBase reference = strategy.get(Integer.parseInt(content));
+									set.invoke(instance, property.getPropertyType().cast(reference));
+								}
 							}
 							break;
 						}
@@ -111,7 +130,7 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 			this.file.delete();
 			return null;
 		} catch (InstantiationException | IllegalAccessException e1) {
-			throw new DBException("Cannot instantiate the generic T", e1);
+			throw new DBException("Cannot instantiate the generic T " + this.className, e1);
 		} finally {
 			if (workbook != null)
 				workbook.close();
@@ -153,17 +172,24 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 							// leave storing of the found ModelBase to an
 							// instance of ExcelDatabase with type of found
 							// ModelBase
-							String classTypeString = property.getPropertyType().getName();
-							// ugly helper method to create a DataService, could
-							// not find a way to do it generic
-							DataService<? extends ModelBase> strategy = GetDedicatedDataService(classTypeString);
+
 
 							// get the value of this property for the current
 							// item in the list & save to other DataService
 							ModelBase model = (ModelBase) property.getGetter().invoke(item);
-							strategy.add(model);
-							// save id of this item in our own excel
-							value = model.getId();
+
+								// ugly helper method to create a DataService, could
+								// not find a way to do it generic
+								DataService<? extends ModelBase> strategy = GetDedicatedDataService(model.getClass().getName());
+
+								strategy.add(model);
+								// save id of this item in our own excel
+								value = model.getId();
+								if (Modifier.isAbstract( property.getPropertyType().getModifiers() )) {
+									//Could be the abstract item class => prefix with classtype
+									value = model.getClass().getName() + " " + value;
+								} 
+							
 						} else {
 							// normal property, get the object for this item in
 							// the list

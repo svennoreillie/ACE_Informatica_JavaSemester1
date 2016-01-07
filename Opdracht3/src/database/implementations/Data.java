@@ -95,7 +95,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	}
 	
 	@Override
-	public void addAll(List<ModelBase> entities) throws DBMissingException, DBException {
+	public void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException {
 		if (entities == null || entities.isEmpty()) throw new DBException("Entity list is null or empty");
 		if (!this.classType.isAssignableFrom(entities.get(0).getClass()))
 			throw new DBException("Wrong type in add");
