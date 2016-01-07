@@ -1,10 +1,15 @@
 package view.panels;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
 
 import model.Item;
+import model.subItems.Cd;
+import model.subItems.Dvd;
+import model.subItems.Game;
 import view.custom.Button;
 import view.tableModels.UitleningTableModel;
 
@@ -12,7 +17,11 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import common.enums.EnumTypeCd;
+import common.enums.EnumTypeDvd;
+import common.enums.EnumTypeGame;
 import common.enums.EventEnum;
+import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
 
 import javax.swing.JScrollPane;
@@ -22,9 +31,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class UitleningStap1Panel extends JPanel{
 	
-	List<Item> items;
+	private List<Item> items;
 	private JTextField textField;
 	private JTable table;
+	private UitleningTableModel tableModel;
 	
 	public UitleningStap1Panel() {
 		setSize(600,600);
@@ -66,17 +76,33 @@ public class UitleningStap1Panel extends JPanel{
 //				"Description", "Selected"
 //			}
 //		));\
-		UitleningTableModel tableModel = new UitleningTableModel();
-		table = new JTable(tableModel);
+		
+		//UitleningTableModel tableModel = new UitleningTableModel();
+		tableModel = new UitleningTableModel();
+		table = new JTable(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Description", "Select"
+			}
+		));
 		scrollPane.setViewportView(table);
 		
+		Cd cd = new Cd("testCd",new BigDecimal(5),5.0,EnumTypeCd.SOFTWARE);
+		Dvd dvd = new Dvd("testDvd",new BigDecimal(5),5.0,EnumTypeDvd.FILM);
+		Game game = new Game("testGame",new BigDecimal(5),5.0,EnumTypeGame.MASSIVEMULTIPLAYERONLINE);
+		List<Item> items = new ArrayList<>();
+		items.add(cd);
+		items.add(dvd);
+		items.add(game);
+		setItems(items);
+		//WinkelController<Item> controller = new WinkelController<Item>(Item.class);
+		//setItems(controller.getAllSortedByName());
 	}
 	
 	public void setItems(List<Item> items){
 		this.items = items;
-		for(Item i : items){
-			//table.set
-		}
+		tableModel.addItems(items);
 		
 	}
 }

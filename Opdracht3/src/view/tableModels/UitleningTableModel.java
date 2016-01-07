@@ -27,8 +27,11 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	public void addItems(List<Item> items){
-		this.items.addAll(items);
-		fireTableRowsInserted(items.size()-1, items.size()-1);
+		//this.items.addAll(items);
+		//fireTableRowsInserted(items.size()-1, items.size()-1);
+		for(Item i:items){
+			addItem(i);
+		}
 	}
 	
 	@Override
@@ -48,11 +51,13 @@ public class UitleningTableModel extends AbstractTableModel{
 		
 		switch(column){
 		case 0:
-			value = item.getId();
+			value = item.getTitel();
 			break;
 		case 1:
-			item.getisUitgeleend();
+			//value = false;
+			value = item.getisUitgeleend();
 			break;
+		
 		}
 		
 		return value;
