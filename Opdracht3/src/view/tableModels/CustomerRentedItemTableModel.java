@@ -1,9 +1,15 @@
 package view.tableModels;
 
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import common.DBException;
+import common.DBMissingException;
+import database.DataService;
+import database.DataStrategy;
 import model.Customer;
 import model.Item;
 import model.Uitlening;
@@ -17,11 +23,25 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 	private static final String[] columnsNames = {"Item ID", "Title", "Return date"};
 	//private final LinkedList<Customer> data;
 	private final LinkedList<Uitlening> data;
+	private DataService<Uitlening> uitleningDB = DataStrategy.getDataService(Uitlening.class);
 	
 	public CustomerRentedItemTableModel() {
 		data = new LinkedList<Uitlening>();
 	}
 	
+	public void updateTable(String search) throws DBMissingException, DBException{
+		data.clear();
+		data.addAll(search(search));
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+
+	private Collection<? extends Uitlening> search(String search) {
+		// TODO Andre: filter op Customer
+		// Uitlening-lijst wordt éénmaal ingeladen bij het opstarten
+		return null;
+	}
+
 	@Override
 	public int getColumnCount() {
 		return columnsNames.length;

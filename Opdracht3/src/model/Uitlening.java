@@ -100,6 +100,4 @@ public class Uitlening extends ModelBase implements Cloneable{
 		
 		return u;
 	}
-	
-
 }
