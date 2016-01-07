@@ -31,8 +31,11 @@ public class MainWindow extends JFrame implements WindowChangedService {
 
 	private JPanel contentPanel;
 	private ButtonPanel buttonPanel;
+	private DataService<Item> dataBaseItem = DataStrategy.getDataService(Item.class);
+	private DataService<Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
+	private DataService<Uitlening> dataBaseUitlening = DataStrategy.getDataService(Uitlening.class);
 
-	public MainWindow() {
+	public MainWindow() throws DBMissingException, DBException {
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 200, 600 };
 		gbl.rowHeights = new int[] { 0 };
@@ -50,6 +53,24 @@ public class MainWindow extends JFrame implements WindowChangedService {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		
+
+		if (dataBaseItem.getAll().isEmpty()){
+			for (int i = 0; i < 80; i++){
+				dataBaseItem.add(ItemFactory.getItem());
+			}
+		}
+		if (dataBaseCustomer.getAll().isEmpty()){
+			for (int i = 0; i < 30; i++){
+				dataBaseCustomer.add(CustomerFactory.getCustomer());
+			}
+		}
+		if (dataBaseUitlening.getAll().isEmpty()) {
+			for (int i = 0; i < 50; i++) {
+				dataBaseUitlening.add(UitleningFactory.getUitlening());
+			}
+			
+		}
 	}
 
 	

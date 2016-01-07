@@ -23,11 +23,6 @@ public class CustomerController {
 		return customerData.getAll();
 	}
 	
-	public List<Customer> search(String searchString) throws DBMissingException, DBException {
-		Stream<Customer> customerStream = customerData.getAll().stream();
-		return customerStream.filter(cust -> cust.filter(searchString)).collect(Collectors.toList());
-	}
-	
 	public void addCustomer(Customer customer) throws DBMissingException, DBException{
 //		customer.setId(customerData.getAll().size()+1);
 		customerData.add(customer);
@@ -35,9 +30,7 @@ public class CustomerController {
 	
 	public void createCustomers() throws DBMissingException, DBException{
 		for (int i = 0; i < 10; i++){
-			int id = customerData.getAll().size() + 1;
 			customerData.add(CustomerFactory.getCustomer());
-//			customerData.add(CustomerFactory.createCustomer());
 		}
 	}
 	

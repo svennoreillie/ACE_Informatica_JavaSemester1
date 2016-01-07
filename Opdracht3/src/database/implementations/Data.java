@@ -19,7 +19,6 @@ import database.DataService;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;
 
-
 public class Data<T extends ModelBase> implements DataService<T> {
 
 	private List<T> internalList;
@@ -31,11 +30,10 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		dataService = DataSourceFactory.getSource(classType);
 	}
 
-
 	@Override
 	public List<T> getAll() throws DBMissingException, DBException {
 		if (this.internalList == null) {
-			this.internalList = getListFromStream(); 
+			this.internalList = getListFromStream();
 		}
 		return this.internalList;
 	}
@@ -49,55 +47,65 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> entityList = this.getAll();
 		return entityList.stream().filter(e -> e.getId() == id).findFirst().get();
 	}
-	
+
 	@Override
-	public List<T> getFiltered(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException {
+	public List<T> getFiltered(Predicate<? super T> predicate)
+			throws NoSuchElementException, DBMissingException, DBException {
 		return this.getAll().stream().filter(predicate).collect(Collectors.toList());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(ModelBase entity) throws DBMissingException, DBException {
-		if (!this.classType.isAssignableFrom(entity.getClass())) throw new DBException("Wrong type in add");
-		if (entity.getId() != 0) throw new DBException("Id found, insert should contain 0 as Id");
+		if (!this.classType.isAssignableFrom(entity.getClass()))
+			throw new DBException("Wrong type in add");
 
-		//Search next id
 		List<T> list = this.getAll();
-		Optional<T> possibleItem = list.stream().max(new Comparator<T>() {
-			@Override
-			public int compare(T o1, T o2) {
-				return o1.getId() - o2.getId();
+		
+		if (entity.getId() == 0) {
+			// Search next id
+			Optional<T> possibleItem = list.stream().max(new Comparator<T>() {
+				@Override
+				public int compare(T o1, T o2) {
+					return o1.getId() - o2.getId();
+				}
+			});
+
+			if (possibleItem.isPresent()) {
+				T item = possibleItem.get();
+				entity.setId(item.getId() + 1);
+			} else {
+				entity.setId(1);
 			}
-		});
-		
-		if (possibleItem.isPresent()) {
-			T item = possibleItem.get();
-			entity.setId(item.getId() + 1);
 		} else {
-			entity.setId(1);
+			if (list.contains(entity)) {
+				list.remove(entity);
+			}
 		}
-		
+
 		if (!list.contains(entity)) {
-			list.add((T)entity);
+			list.add((T) entity);
 			dataService.writeDB(this.internalList);
 		}
 	}
-	
+
 	@Override
 	public void update(T entity) throws DBMissingException, DBException {
-		if (entity.getId() == 0) throw new DBException("Id 0 found => update should have id to look for");
+		if (entity.getId() == 0)
+			throw new DBException("Id 0 found => update should have id to look for");
 
 		List<T> list = this.getAll();
 		if (list.contains(entity)) {
 			list.remove(entity);
-			list.add((T)entity);
+			list.add((T) entity);
 			dataService.writeDB(this.internalList);
 		}
 	}
 
 	@Override
 	public void remove(T entity) throws DBMissingException, DBException {
-		if (entity.getId() == 0) throw new DBException("Id 0 found => delete should have id to look for");
+		if (entity.getId() == 0)
+			throw new DBException("Id 0 found => delete should have id to look for");
 		List<T> list = this.getAll();
 		if (list.contains(entity)) {
 			list.remove(entity);
@@ -105,5 +113,4 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		}
 	}
 
-	
 }
