@@ -35,6 +35,7 @@ public class TestExcelDatabase {
 	private Path testCustomerPath = Paths.get("model.Customer.xls");
 	private DatabaseExcel<Customer> customerDb = new DatabaseExcel<Customer>(Customer.class);
 
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		DataSourceFactory.setType(DataSource.Excel);
@@ -93,7 +94,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItems() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);
@@ -115,7 +116,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItemsRead() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);

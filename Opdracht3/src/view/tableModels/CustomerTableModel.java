@@ -14,7 +14,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Spam"};
+	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Newsletter"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){
@@ -23,11 +23,15 @@ public class CustomerTableModel extends AbstractTableModel {
 
 	public void addCustomer(Customer customer){
 		data.add(customer);
-		fireTableRowsInserted(data.size()-1, data.size()-1);
+		updateTable();
 	}
 	
 	public void addCustomer(List<Customer> search) {
 		data.addAll(search);
+		updateTable();
+	}
+	
+	public void updateTable(){
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
@@ -84,6 +88,4 @@ public class CustomerTableModel extends AbstractTableModel {
 	public Class getColumnClass(int c){
 		return getValueAt(0, c).getClass();
 	}
-
-
 }

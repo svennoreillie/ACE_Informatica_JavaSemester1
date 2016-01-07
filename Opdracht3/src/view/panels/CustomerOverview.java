@@ -11,20 +11,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelEvent;
 import javax.swing.text.Document;
 
 import common.DBException;
 import common.DBMissingException;
-import common.factories.AddressFactory;
-import common.factories.CustomerFactory;
-import common.factories.PersonFactory;
 import controller.CustomerController;
 import controller.event.MainWindowChangedFiringSource;
 import model.Address;
 import model.Customer;
 import model.Person;
-import view.MainWindow;
 import view.tableModels.CustomerTableModel;
 
 import java.awt.Font;
@@ -74,7 +70,7 @@ public class CustomerOverview extends JPanel {
 	private JTextField tfSearch;
 	private JLabel lblSearch;
 	private CustomerController controller = new CustomerController();
-
+	
 	/**
 	 * Create the panel.
 	 * @throws DBException 
@@ -109,13 +105,13 @@ public class CustomerOverview extends JPanel {
 		add(tfLastName);
 		
 		lblEmail = new JLabel("E-mail");
-		lblEmail.setBounds(355, 402, 46, 14);
+		lblEmail.setBounds(311, 405, 46, 14);
 		add(lblEmail);
 		
 		tfEmail = new JTextField();
 		tfEmail.setEnabled(false);
 		tfEmail.setColumns(10);
-		tfEmail.setBounds(430, 399, 160, 20);
+		tfEmail.setBounds(411, 402, 160, 20);
 		add(tfEmail);
 		
 		lblAddress = new JLabel("Adress");
@@ -182,12 +178,12 @@ public class CustomerOverview extends JPanel {
 		add(separator);
 		
 		lblCustomerId = new JLabel("Customer ID");
-		lblCustomerId.setBounds(355, 430, 65, 14);
+		lblCustomerId.setBounds(311, 433, 90, 14);
 		add(lblCustomerId);
 		
 		tfCustomerID = new JTextField();
 		tfCustomerID.setEnabled(false);
-		tfCustomerID.setBounds(430, 427, 160, 20);
+		tfCustomerID.setBounds(411, 430, 160, 20);
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
@@ -247,12 +243,21 @@ public class CustomerOverview extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(arg0.getClickCount() == 2){
-					CustomerDetail detail = new CustomerDetail(customerList.get(tableCustomers.getSelectedRow()));
-					MainWindowChangedFiringSource.getInstance().fireChanged(detail);
+					CustomerDetail detail;
+					try {
+						detail = new CustomerDetail(controller.getList().get(tableCustomers.getSelectedRow()));
+						MainWindowChangedFiringSource.getInstance().fireChanged(detail);
+					} catch (DBMissingException | DBException e1) {
+						System.out.println(e1.toString());
+					} 
+
 				}
 				else{
 					try{
-						fillForm(customerList.get(tableCustomers.getSelectedRow()));
+						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+					}
+					catch (IndexOutOfBoundsException ioob){
+						ioob.printStackTrace();
 					}
 					catch (Exception e){
 						System.err.println(e);
@@ -270,7 +275,9 @@ public class CustomerOverview extends JPanel {
 			public void mouseClicked(MouseEvent arg0) {
 				try {
 					controller.createCustomers();
-					tableModel.addCustomer(controller.getList()); 
+					tableModel.updateTable();
+					tableCustomers.repaint();
+					scrollPane.setViewportView(tableCustomers);
 				} catch (DBMissingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -449,17 +456,6 @@ public class CustomerOverview extends JPanel {
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
 		this.tfSearch.setEnabled(true);
-		
-		/*
-		// TODO ANDRE => zet dit eenmalig in uw privates + instantieer via ctor
-		CustomerController controller = new CustomerController();
-		try {
-			List<Customer> customerList = controller.search(tfFirstName.getText());
-			// TODO ANDER => smijt dees in jtable
-		} catch (DBMissingException | DBException e1) {
-			// TODO ANDRE => LOG of toon error
-		}
-		*/ 
 	}
 	
 	/**
@@ -529,8 +525,10 @@ public class CustomerOverview extends JPanel {
 			newAdd.setZip(tfZip.getText());
 			
 			Customer newCust = new Customer();
+			newCust.setEmail(tfEmail.getText());
 			newCust.setPerson(newPers);
 			newCust.setAddress(newAdd);
+//			newCust.setId(controller.getList().size()+1);
 			
 			controller.addCustomer(newCust);
 			tableModel.addCustomer(newCust);

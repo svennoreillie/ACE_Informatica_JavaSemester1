@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import controller.ReceiptController;

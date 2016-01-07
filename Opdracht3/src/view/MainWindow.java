@@ -5,12 +5,17 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.apache.derby.iapi.store.raw.data.DataFactory;
 
+
+import common.*;
+import common.factories.*;
 import controller.event.WindowChangedService;
-import database.DataStrategy;
+
 import database.helpers.DataSource;
-import database.implementations.DataSourceFactory;
+import database.*;
+import model.Customer;
+import model.Item;
+import model.Uitlening;
 import view.panels.*;
 
 import java.awt.GridBagLayout;

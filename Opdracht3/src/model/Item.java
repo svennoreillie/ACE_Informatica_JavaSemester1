@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import model.ModelBase;
@@ -19,10 +20,14 @@ abstract public class Item extends ModelBase {
 	public int getBoetePrijsPerDag() {
 		return boetePrijsPerDag;
 	}
-	public boolean isUitgeleend() {
+	public void setBoetePrijsPerDag(int boete) {
+		//Hier doen we niets
+		
+	}
+	public boolean getisUitgeleend() {
 		return isUitgeleend;
 	}
-	public void setUitgeleend(boolean isUitgeleend) {
+	public void setisUitgeleend(boolean isUitgeleend) {
 		this.isUitgeleend = isUitgeleend;
 	}
 	public String getTitel() {
@@ -49,6 +54,14 @@ abstract public class Item extends ModelBase {
 		this.setTitel(titel);
 		this.setVerhuurPrijs(verhuurPrijsInEuro);
 		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
+		this.isUitgeleend = false;
+	}
+	
+	public Item(){
+		this.setTitel("");
+		this.setVerhuurPrijsPerDag(0d);
+		this.setVerhuurPrijs(new BigDecimal("0"));
+		this.isUitgeleend = false;
 	}
 	
 	@Override

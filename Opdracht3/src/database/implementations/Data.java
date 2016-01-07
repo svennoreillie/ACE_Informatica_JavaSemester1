@@ -58,7 +58,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(ModelBase entity) throws DBMissingException, DBException {
-		if (!entity.getClass().equals(this.classType)) throw new DBException("Wrong type in add");
+		if (!this.classType.isAssignableFrom(entity.getClass())) throw new DBException("Wrong type in add");
 		if (entity.getId() != 0) throw new DBException("Id found, insert should contain 0 as Id");
 
 		//Search next id
