@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class FooterDecorator extends ReceiptDecorator{
 
 	public FooterDecorator(Receipt receipt) {
@@ -13,7 +15,15 @@ public class FooterDecorator extends ReceiptDecorator{
 	}
 	
 	public void footer(){
-		System.out.println("this is the footer");
+		String footer="";
+		
+		footer+=getTotal()+"\n";
+		footer+=getTaxes()+"\n";
+		footer+="Volgende zondag zijn wij open van 8.00 tot 12.00\nDank u voor je aankoop";
+		
+		System.out.println(footer);
 	}
+
+	
 
 }
