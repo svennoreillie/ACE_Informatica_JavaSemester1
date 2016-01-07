@@ -31,7 +31,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 		try {
 			Connection conn = this.createConnection();
 			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery("SELECT FROM " + getTableName());
+			ResultSet results = statement.executeQuery("SELECT * FROM " + getTableName());
 
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
@@ -108,7 +108,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			try {
 				Connection conn = this.createConnection();
 				Statement clearStatement = conn.createStatement();
-				clearStatement.executeQuery("DELETE FROM " + getTableName());
+				clearStatement.execute("DELETE FROM " + getTableName());
 				clearStatement.close();
 				conn.close();
 			} catch (SQLException e) {
@@ -118,7 +118,14 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
 
-			String insertQuery = "INSERT INTO " + getTableName() + " VALUES ";
+			String insertQuery = "INSERT INTO " + getTableName() + " (";
+			int colIndex = 0;
+			for (ReflectionPropertyHelper property : genericFieldArray) {
+				if (colIndex != 0) insertQuery += ", ";
+				insertQuery += property.getName();
+				colIndex++;
+			}
+			insertQuery += ") VALUES ";
 			for (T item : list) {
 				String rowQuery = "";
 				for (ReflectionPropertyHelper property : genericFieldArray) {
@@ -153,7 +160,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 
 							switch (value.getClass().getName()) {
 							case "java.lang.String":
-								rowQuery += ("\"" + value.toString() + "\"");
+								rowQuery += ("'" + value.toString() + "'");
 								break;
 							case "boolean":
 								if ((boolean) value) {
@@ -182,7 +189,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 
 			Connection conn = this.createConnection();
 			Statement clearStatement = conn.createStatement();
-			clearStatement.executeQuery(insertQuery);
+			clearStatement.execute(insertQuery);
 			clearStatement.close();
 			conn.close();
 		} catch (Exception e) {
@@ -203,7 +210,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T> impl
 		return conn;
 	}
 
-	private void createTable() {
+	protected void createTable() {
 		try {
 			List<String> columnsList = new ArrayList<String>();
 			columnsList.add("Id INTEGER PRIMARY KEY");
