@@ -101,7 +101,7 @@ public class ButtonPanel extends JPanel {
 	
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
-		gbc.gridy=5;
+		gbc.gridy=6;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		addItemButton = new Button("Add Item");
 		addItemButton.addActionListener(listener);
