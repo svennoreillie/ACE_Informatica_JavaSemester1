@@ -1,8 +1,12 @@
 package application;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.enums.EnumTypeCd;
+import common.enums.EnumTypeDvd;
+import controller.ReceiptController;
 import controller.event.MainWindowChangedFiringSource;
 import model.BodyDecorator;
 import model.ConcreteReceipt;
@@ -11,46 +15,30 @@ import model.HeaderDecorator;
 import model.Item;
 import model.Receipt;
 import model.Shop;
+import model.subItems.Cd;
+import model.subItems.Dvd;
 import view.MainWindow;
 import view.panels.CustomerOverview;
 import view.panels.testpanels.BluePanel;
 
 public class App {
 	public static void main(String[] args){
-		/*Shop shop = new Shop();
-		List<Item> items = new ArrayList<Item>();
 		
-		for(int i = 0; i<200;i++){
-			Item item;
-			
-			if(i<100){
-				item=
-				item.setId(i);
-				item.setType(ItemType.FILM);
-				item.setTitel("Film " + i);
-				item.setVerhuurPrijs(new BigDecimal(3));
-			}else if(i<200){
-				item.setId(i);
-				item.setType(ItemType.GAME);
-				item.setTitel("Game " + (i-100));
-				item.setVerhuurPrijs(new BigDecimal(3));
-			}
-			
-			//items.add(item);
-		}
+		/*List<Item> items = new ArrayList<>();
 		
-		shop.setItems(items);*/
-		Receipt receipt = new ConcreteReceipt();
-		receipt = new HeaderDecorator(receipt);
-		receipt = new BodyDecorator(receipt);
-		receipt = new FooterDecorator(receipt);
-		receipt.describe();
+		items.add(new Cd("testCd", new BigDecimal(3.0), 3.0, EnumTypeCd.SOFTWARE));
+		items.add(new Dvd("testDvd", new BigDecimal(3.0), 3.0, EnumTypeDvd.FILM));
 		
+		ConcreteReceipt CReceipt = new ConcreteReceipt();
+		CReceipt.setItems(items);
 		
+		Receipt receipt = CReceipt;
+		
+		ReceiptController.printReceipt(receipt);*/
+
 		MainWindow mainWindow = new MainWindow();
 		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
 		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
-		
-		
+
 	}
 }

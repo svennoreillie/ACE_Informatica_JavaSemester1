@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class FooterDecorator extends ReceiptDecorator{
 
 	public FooterDecorator(Receipt receipt) {
@@ -7,13 +9,20 @@ public class FooterDecorator extends ReceiptDecorator{
 	}
 	
 	@Override
-	public void describe() {
-		receipt.describe();
-		footer();
+	public String getDescription() {
+		return receipt.getDescription()+ getFooter();
 	}
 	
-	public void footer(){
-		System.out.println("this is the footer");
+	public String getFooter(){
+		String footer="";
+		
+		footer+="Totaal: "+getTotal()+"\n";
+		footer+="Btw: "+getTaxes()+"\n";
+		footer+="Volgende zondag zijn wij open van 8.00 tot 12.00\nDank u voor je aankoop";
+		
+		return footer;
 	}
+
+	
 
 }
