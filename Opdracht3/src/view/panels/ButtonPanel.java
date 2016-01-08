@@ -16,7 +16,7 @@ public class ButtonPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	Button blueButton;
+	Button itemManagement;
 	Button yellowButton;
 	Button redButton;
 	Button rentalStatusButton;
@@ -42,10 +42,10 @@ public class ButtonPanel extends JPanel {
 		gbc.gridx=1;
 		gbc.gridy=0;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		blueButton = new Button("Blue");
-		blueButton.addActionListener(listener);
-		blueButton.setActionCommand(EventEnum.BLUEBUTTONEVENT);
-		add(blueButton,gbc);
+		itemManagement = new Button("Item Management");
+		itemManagement.addActionListener(listener);
+		itemManagement.setActionCommand(EventEnum.ITEMMANAGEMENT);
+		add(itemManagement,gbc);
 		
 		
 		gbc = new GridBagConstraints();
