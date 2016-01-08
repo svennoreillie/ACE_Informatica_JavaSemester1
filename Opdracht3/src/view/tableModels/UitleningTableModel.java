@@ -14,7 +14,7 @@ public class UitleningTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final String[] columnsNames = {"Description" , "Selected"};
+	private static final String[] columnsNames = {"Description" , "Select"};
 	private final LinkedList<Item> items;
 	
 	public UitleningTableModel() {
@@ -27,8 +27,10 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	public void addItems(List<Item> items){
+		this.items.clear();
 		this.items.addAll(items);
-		fireTableRowsInserted(items.size()-1, items.size()-1);
+		fireTableRowsInserted(0,this.items.size()-1);
+		
 	}
 	
 	@Override
@@ -48,11 +50,13 @@ public class UitleningTableModel extends AbstractTableModel{
 		
 		switch(column){
 		case 0:
-			value = item.getId();
+			value = item.getTitel();
 			break;
 		case 1:
-			item.getisUitgeleend();
+			//value = false;
+			value = item.getisUitgeleend();
 			break;
+		
 		}
 		
 		return value;
@@ -62,5 +66,17 @@ public class UitleningTableModel extends AbstractTableModel{
 	public String getColumnName(int column){
 		return columnsNames[column];
 	}
+	
+	@Override
+	public Class getColumnClass(int column){
+		switch(column){
+		case 0:
+			return String.class;
+		
+		default:
+			return Boolean.class;
+		}
+	}
+	
 	
 }

@@ -20,18 +20,18 @@ public class Cd extends Item {
 		return cdTtype;
 	}
 
-	public void setCdType(EnumTypeCd setType) {
-			this.cdTtype = setType;
+	public void setType(EnumTypeCd setType) {
+		this.cdTtype = setType;
 	}
-	
+
 	public Cd(String titel, BigDecimal verhuurPrijsInEuro, Double verhuurPrijsPerDag, EnumTypeCd type) {
 		super(titel, verhuurPrijsInEuro, verhuurPrijsPerDag);
-		setCdType(type);
+		setType(type);
 	}
 
 	public Cd() {
 		super();
-		setCdType(EnumTypeCd.values()[0]);
+		setType(EnumTypeCd.values()[0]);
 	}
 
 	@Override
@@ -60,5 +60,5 @@ public class Cd extends Item {
 			return false;
 		return true;
 	}
-	
+
 }

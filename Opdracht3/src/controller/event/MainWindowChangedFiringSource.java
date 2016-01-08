@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import common.enums.EventEnum;
 import view.panels.AddItemPanel;
 import view.panels.CustomerOverview;
+import view.panels.ItemManagementPanel;
 import view.panels.RentalStatusPanel;
 import view.panels.UitleningStap1Panel;
 import view.panels.UitleningStap2Panel;
@@ -65,8 +66,8 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		case REDBUTTONEVENT:
 			fireChanged(new RedPanel());
 			break;
-		case BLUEBUTTONEVENT:
-			fireChanged(new BluePanel());
+		case ITEMMANAGEMENT:
+			fireChanged(new ItemManagementPanel());
 			break;
 		case YELLOWBUTTONEVENT:
 			fireChanged(new YellowPanel());

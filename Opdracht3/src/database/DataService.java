@@ -36,6 +36,14 @@ public interface DataService<T extends ModelBase> {
 	void add(ModelBase entity) throws DBMissingException, DBException;
 	
 	/**
+	 * Add a collection of items to the database
+	 * @param entities
+	 * @throws DBMissingException
+	 * @throws DBException
+	 */
+	void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException;
+	
+	/**
 	 * Add an item to the database
 	 * @param entity
 	 * @throws DBMissingException

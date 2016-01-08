@@ -62,6 +62,16 @@ public class Data<T extends ModelBase> implements DataService<T> {
 
 		List<T> list = this.getAll();
 		
+		searchNextId(entity, list);
+
+		if (!list.contains(entity)) {
+			list.add((T) entity);
+			this.internalList = list;
+			dataService.writeDB(this.internalList);
+		}
+	}
+
+	private void searchNextId(ModelBase entity, List<T> list) {
 		if (entity.getId() == 0) {
 			// Search next id
 			Optional<T> possibleItem = list.stream().max(new Comparator<T>() {
@@ -82,11 +92,26 @@ public class Data<T extends ModelBase> implements DataService<T> {
 				list.remove(entity);
 			}
 		}
+	}
+	
+	@Override
+	public void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException {
+		if (entities == null || entities.isEmpty()) throw new DBException("Entity list is null or empty");
+		if (!this.classType.isAssignableFrom(entities.get(0).getClass()))
+			throw new DBException("Wrong type in add");
 
-		if (!list.contains(entity)) {
-			list.add((T) entity);
-			dataService.writeDB(this.internalList);
+		List<T> list = this.getAll();
+		
+		for (ModelBase entity : entities) {
+			searchNextId(entity, list);
+			if (!list.contains(entity)) {
+				list.add((T) entity);
+			}
 		}
+		
+		this.internalList = list;
+		dataService.writeDB(this.internalList);
+
 	}
 
 	@Override
@@ -98,6 +123,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		if (list.contains(entity)) {
 			list.remove(entity);
 			list.add((T) entity);
+			this.internalList = list;
 			dataService.writeDB(this.internalList);
 		}
 	}
@@ -112,5 +138,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			dataService.writeDB(this.internalList);
 		}
 	}
+
+	
 
 }

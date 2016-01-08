@@ -12,7 +12,7 @@ public class Game extends model.Item {
 
 	private EnumTypeGame gameType;
 	
-	public EnumTypeGame getDvdType() {
+	public EnumTypeGame getGameType() {
 		return gameType;
 	}
 

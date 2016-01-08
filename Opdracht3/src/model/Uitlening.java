@@ -1,12 +1,14 @@
 package model;
 
-import java.util.Date;
 
 import org.joda.time.DateTime;
 
 
 public class Uitlening extends ModelBase implements Cloneable{
 
+	public Uitlening() {
+		
+	}
 	
 	private DateTime beginVerhuurDatum;
 	private int verhuurPeriodeInDagen;

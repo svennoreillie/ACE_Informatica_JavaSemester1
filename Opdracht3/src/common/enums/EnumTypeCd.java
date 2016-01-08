@@ -1,7 +1,21 @@
 package common.enums;
 
 public enum EnumTypeCd {
-	MUZIEK,
-	GAMES,
-	SOFTWARE
+	MUZIEK("Muziek"),
+	GAMES("Games"),
+	SOFTWARE("Software");
+	
+	private String type;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	private EnumTypeCd (String type){
+		this.setType(type);
+	}
 }

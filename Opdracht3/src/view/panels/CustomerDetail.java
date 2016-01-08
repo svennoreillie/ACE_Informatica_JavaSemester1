@@ -11,6 +11,7 @@ import common.DBMissingException;
 import controller.SpamRegistratieController;
 import controller.event.MainWindowChangedFiringSource;
 import model.Customer;
+import view.tableModels.CustomerRentedItemTableModel;
 
 import javax.swing.JSeparator;
 import java.awt.Font;
@@ -119,8 +120,8 @@ public class CustomerDetail extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 270, 580, 285);
 		add(scrollPane);
-		
-		tableCustomerRentedItems = new JTable();
+		CustomerRentedItemTableModel tableModel = new CustomerRentedItemTableModel();
+		tableCustomerRentedItems = new JTable(tableModel);
 		scrollPane.setViewportView(tableCustomerRentedItems);
 		
 		JButton btnClose = new JButton("Close");
