@@ -48,9 +48,10 @@ import java.awt.event.InputMethodEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JComboBox;
+
 public class AddItemPanel extends JPanel{
 	/**
-	 * 
+	 * Authors Peter Vervoort and Geert Van Weyenbergh
 	 */
 	private static final long serialVersionUID = -467240657158316693L;
 	private JTextField txtField_ItemTitel;
@@ -144,5 +145,11 @@ public class AddItemPanel extends JPanel{
 		txtField_Uitleenprijs.setBounds(150, 165, 193, 20);
 		add(txtField_Uitleenprijs);
 		txtField_Uitleenprijs.setColumns(10);
+			
+		
 	}
+	private void enableAll(){
+		//enables all text fields
+		this.txtField_Uitleenprijs.setEnabled(true);	
+		}
 }
