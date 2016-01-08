@@ -40,8 +40,3 @@ public class ItemFactory {
 		return item;
 	}
 }
-//
-//double RoundTo2Decimals(double val) {
-//    DecimalFormat df2 = new DecimalFormat("###.##");
-//return Double.valueOf(df2.format(val));
-//}

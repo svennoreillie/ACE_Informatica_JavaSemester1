@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import common.AntiMagicStrings;
 import common.DBException;
 import common.DBMissingException;
 import common.enums.*;
@@ -123,19 +124,19 @@ public class ItemManagementPanel extends JPanel {
 				boolean input = true;
 				String titel = txt_Titel.getText();
 				if (titel == "") {
-					JOptionPane.showMessageDialog(null, "Title is invalid!");
+					JOptionPane.showMessageDialog(null, AntiMagicStrings.TitleInvalid);
 					input = false;
 				}
 
 				if (cmb_Soort.getSelectedIndex() == -1 || cmb_Type.getSelectedIndex() == -1) {
-					JOptionPane.showMessageDialog(null, "Combo box selection(s) are invallid!");
+					JOptionPane.showMessageDialog(null, AntiMagicStrings.ComboBoxSelectionInvalid);
 					input = false;
 				}
 				double uitleenprijs = 0;
 				try {
 					uitleenprijs = Double.parseDouble(txt_Uitleenprijs.getText());
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "The loan rate is invalid!");
+					JOptionPane.showMessageDialog(null, AntiMagicStrings.LoanRateInvalid);
 					input = false;
 				}
 				if (input) {
