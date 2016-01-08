@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -91,12 +92,13 @@ public class WinkelController<T extends Item> implements WinkelService <T>{
 	public List<T> searchByStringPart(String searchString) {
 		try {
 			List<T> baseList = dataBase.getAll();
+			List<T> returnList = new ArrayList<T>();
 			for (T t : baseList) {
-				if (!t.getTitel().contains(searchString)) {
-					baseList.remove(t);
+				if (t.getTitel().contains(searchString)) {
+					returnList.add(t);
 				}
 			}
-			return baseList;
+			return returnList;
 			
 		} catch (DBMissingException e) {
 			JOptionPane.showMessageDialog(null, AntiMagicStrings.DBReadError);

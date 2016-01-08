@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,10 +13,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import common.DBException;
+import common.DBMissingException;
 import common.enums.*;
 import controller.WinkelController;
+import database.DataService;
+import database.DataStrategy;
+import model.Customer;
 import model.subItems.Cd;
 import model.subItems.Dvd;
+import model.subItems.Game;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -136,21 +143,62 @@ public class ItemManagementPanel extends JPanel {
 					switch (cmb_Soort.getSelectedItem().toString()) {
 					case "CD":
 						Cd cd = new Cd(titel,bd,uitleenprijs,EnumTypeCd.valueOf(cmb_Type.getSelectedItem().toString()));
-						//TODO observer ...
-						WinkelController<Cd> winkelController = new WinkelController<Cd>(Cd.class);
-						winkelController.AddItemToStore(cd);
+						WinkelController<Cd> winkelControllerCd = new WinkelController<Cd>(Cd.class);
+						if (winkelControllerCd.searchByStringPart(titel).isEmpty()){
+							try {
+								sendNewsLetter(titel);
+							} catch (DBMissingException e) {
+								e.printStackTrace();
+							} catch (DBException e) {
+								e.printStackTrace();
+							}
+						};
+						winkelControllerCd.AddItemToStore(cd);
 						break;
 					case "DVD":
 						Dvd dvd = new Dvd(titel,bd,uitleenprijs,EnumTypeDvd.valueOf(cmb_Type.getSelectedItem().toString()));
+						WinkelController<Dvd> winkelControllerDvd = new WinkelController<Dvd>(Dvd.class);
+						if (winkelControllerDvd.searchByStringPart(titel).isEmpty()){
+							try {
+								sendNewsLetter(titel);
+							} catch (DBMissingException e) {
+								e.printStackTrace();
+							} catch (DBException e) {
+			
+								e.printStackTrace();
+							}
+						};
+						winkelControllerDvd.AddItemToStore(dvd);
 						break;
 					case "GAME":
-
+						Game game = new Game(titel,bd,uitleenprijs,EnumTypeGame.valueOf(cmb_Type.getSelectedItem().toString()));
+						WinkelController<Game> winkelControllerGame = new WinkelController<Game>(Game.class);
+						if (winkelControllerGame.searchByStringPart(titel).isEmpty()){
+							try {
+								sendNewsLetter(titel);
+							} catch (DBMissingException e) {
+								e.printStackTrace();
+							} catch (DBException e) {
+			
+								e.printStackTrace();
+							}
+						};
+						winkelControllerGame.AddItemToStore(game);
 						break;
 					}
 				}
-
-
 			}
 		});
+	}
+	
+	private void sendNewsLetter (String titel) throws DBMissingException, DBException{
+		DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class); 
+		List<Customer> customerList =  dataBaseCustomer.getAll();
+		for (Customer customer : customerList) {
+			if (customer.getSpam()) {
+				System.out.println("Newsletter sent to " + customer.getPerson().getFirstName() + " " + customer.getPerson().getLastName());
+			}
+		}
+		
 	}
 }
