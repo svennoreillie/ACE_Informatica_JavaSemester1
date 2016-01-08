@@ -12,4 +12,9 @@ public class AntiMagicStrings {
 	public static final String DateInThePast = "Date can't be in the past";
 	public static final String NegativeNumberOfDays = "The number of days can't be negative";
 	public static final String ItemAlreadyRentedDuringPeriod = "The item is already rented during the entered period";
+	public static final String TitleInvalid = "Title is invalid!";
+	public static final String ComboBoxSelectionInvalid ="Combo box selection is invallid!";
+	public static final String LoanRateInvalid ="The loan rate is invalid!";
+	public static final String FactoriesDidntWork= "The factories didn't fully complete";
+	
 }
