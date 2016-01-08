@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.9" icons="true" automaticImage="JPEG">  
+  <object id="1" language="java" name="controller.UitleenService" project="Opdracht3" 
+    file="/Opdracht3/src/controller/UitleenService.java" binary="false" label="uitleenService" type="interface" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="161" y="0"/>  
+  </object>  
+  <object id="2" language="java" name="controller.BoeteController" project="Opdracht3" 
+    file="/Opdracht3/src/controller/BoeteController.java" binary="false" label="boeteController" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="406" y="0"/>    
+    <execution id="3">      
+      <position height="63" width="112" x="236" y="208"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="63" width="112" x="114" y="116"/>    
+    </execution>  
+  </object>  
+  <object id="9" language="java" name="controller.UitleenController" project="Opdracht3" 
+    file="/Opdracht3/src/controller/UitleenController.java" binary="false" label="uitleenController1" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="355" y="0"/>    
+    <execution id="5">      
+      <position height="21" width="118" x="352" y="229"/>    
+    </execution>  
+  </object>  
+  <object id="10" language="java" name="controller.BoeteService" project="Opdracht3" 
+    file="/Opdracht3/src/controller/BoeteService.java" binary="false" label="boeteService" type="interface" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="187" y="0"/>    
+    <execution id="8">      
+      <position height="21" width="99" x="352" y="137"/>    
+    </execution>  
+  </object>  
+  <object id="11" language="java" name="controller.CustomerController" project="Opdracht3" 
+    file="/Opdracht3/src/controller/CustomerController.java" binary="false" label="customerController" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="462" y="0"/>  
+  </object>  
+  <object id="12" language="java" name="controller.ControllerException" project="Opdracht3" 
+    file="/Opdracht3/src/controller/ControllerException.java" binary="false" label="controllerException" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="815" y="0"/>  
+  </object>  
+  <object id="13" language="java" name="controller.SpamRegistratieController" project="Opdracht3" 
+    file="/Opdracht3/src/controller/SpamRegistratieController.java" binary="false" label="spamRegistratieController" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="735" y="0"/>    
+    <execution id="14">      
+      <position height="63" width="174" x="733" y="247"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="controller.SpamRegistratieService" project="Opdracht3" 
+    file="/Opdracht3/src/controller/SpamRegistratieService.java" binary="false" label="spamRegistratieService" 
+    type="interface" autoSize="true">    
+    <position height="-1" width="-1" x="884" y="0"/>    
+    <execution id="16">      
+      <position height="21" width="161" x="911" y="268"/>    
+    </execution>  
+  </object>  
+  <note id="18">    
+    <position height="100" width="200" x="440" y="160"/>    
+    <text><![CDATA[****
+Sequence Diagram - Test
+
+****]]>
+    </text>  
+  </note>  
+  <message id="4" operation="UitleenController()" asynchronous="false">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </message>  
+  <message id="7" operation="berekenBoeteWaarde(model.Uitlening):java.math.BigDecimal" asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="15" operation="activerenSpam(model.Customer):void" asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>
+</sequence-diagram>
