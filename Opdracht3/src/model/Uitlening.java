@@ -99,4 +99,15 @@ public class Uitlening extends ModelBase implements Cloneable{
 		
 		return u;
 	}
+
+	public boolean filter(String searchString) {
+		if (String.valueOf(this.getKlantDieUitleent().getId()).contains(searchString)) return true;
+		return false;
+	}
+//	
+//	public boolean filter(String searchString) {
+//		if (this.getFirstName().contains(searchString)) return true;
+//		if (this.getLastName().contains(searchString)) return true;
+//		return false;
+//	}
 }

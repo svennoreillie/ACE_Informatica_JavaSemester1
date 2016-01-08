@@ -3,6 +3,7 @@ package view.tableModels;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -21,12 +22,13 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = 7495138998386409899L;
 	private static final String[] columnsNames = {"Item ID", "Title", "Return date"};
-	//private final LinkedList<Customer> data;
 	private final LinkedList<Uitlening> data;
 	private DataService<Uitlening> uitleningDB = DataStrategy.getDataService(Uitlening.class);
+	private Customer customer;
 	
-	public CustomerRentedItemTableModel() {
+	public CustomerRentedItemTableModel(Customer cust) {
 		data = new LinkedList<Uitlening>();
+		customer = cust;
 	}
 	
 	public void updateTable(String search) throws DBMissingException, DBException{
@@ -35,13 +37,16 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
-
-	private Collection<? extends Uitlening> search(String search) {
-		// TODO Andre: filter op Customer
-		// Uitlening-lijst wordt éénmaal ingeladen bij het opstarten
-		return null;
+	private List<Uitlening> search(String searchString) throws DBMissingException, DBException {
+		return uitleningDB.getFiltered(uitl -> uitl.filter(searchString));
 	}
-
+	
+	public void updateTable() throws NoSuchElementException, DBMissingException, DBException{
+		data.clear();
+		data.addAll(uitleningDB.getFiltered(uitl -> uitl.filter(String.valueOf(customer.getId()))));
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
 	@Override
 	public int getColumnCount() {
 		return columnsNames.length;

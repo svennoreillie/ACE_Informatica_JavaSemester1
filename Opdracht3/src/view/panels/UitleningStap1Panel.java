@@ -101,7 +101,6 @@ public class UitleningStap1Panel extends JPanel{
 		WinkelController<Item> controller = new WinkelController<Item>(Item.class);
 		setItems(controller.getAllSortedByName());
 	}
-	}
 	
 	public void setItems(List<Item> items){
 		this.items = items;

@@ -120,8 +120,13 @@ public class CustomerDetail extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 270, 580, 285);
 		add(scrollPane);
-		CustomerRentedItemTableModel tableModel = new CustomerRentedItemTableModel();
+		CustomerRentedItemTableModel tableModel = new CustomerRentedItemTableModel(customer);
 		tableCustomerRentedItems = new JTable(tableModel);
+		try {
+			tableModel.updateTable();
+		} catch (DBMissingException | DBException e1) {
+			System.out.println(e1.toString());
+		} 
 		scrollPane.setViewportView(tableCustomerRentedItems);
 		
 		JButton btnClose = new JButton("Close");
