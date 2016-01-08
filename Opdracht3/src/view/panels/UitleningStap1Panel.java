@@ -97,7 +97,7 @@ public class UitleningStap1Panel extends JPanel{
 		items.add(cd);
 		items.add(dvd);
 		items.add(game);
-		setItems(items);*/
+			setItems(items);*/
 		WinkelController<Item> controller = new WinkelController<Item>(Item.class);
 		setItems(controller.getAllSortedByName());
 	}
