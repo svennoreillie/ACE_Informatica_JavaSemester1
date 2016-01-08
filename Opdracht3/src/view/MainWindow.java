@@ -85,11 +85,6 @@ public class MainWindow extends JFrame implements WindowChangedService {
 		}
 
 
-//		if (dataBaseItem.getAll().isEmpty()){
-//			for (int i = 0; i < 80; i++){
-//				dataBaseItem.add(ItemFactory.getItem());
-//			}
-//		}
 		if (dataBaseCustomer.getAll().isEmpty()){
 			List<Customer> custList = new ArrayList<Customer>();
 			for (int i = 0; i < 10; i++){
@@ -99,7 +94,7 @@ public class MainWindow extends JFrame implements WindowChangedService {
 		}
 		if (dataBaseUitlening.getAll().isEmpty()) {
 			List<Uitlening> uitleningList = new ArrayList<Uitlening>();
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 30; i++) {
 				uitleningList.add(UitleningFactory.getUitlening());
 			}
 			dataBaseUitlening.addAll(uitleningList);

@@ -86,6 +86,9 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 						case "java.lang.Double":
 							set.invoke(instance, Double.parseDouble(content));
                             break;
+						case "org.joda.time.DateTime":
+							set.invoke(instance, org.joda.time.DateTime.parse(content));
+							break;
 						default:
 							if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
 								if (Modifier.isAbstract( property.getPropertyType().getModifiers() )) {
