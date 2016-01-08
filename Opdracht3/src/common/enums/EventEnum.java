@@ -5,7 +5,7 @@ public enum EventEnum {
 	CUSTOMEROVERVIEWBUTTONEVENT("customerOverviewButtonEvent"),
 	RENTBUTTON1("rentButtonEvent1"),
 	RENTBUTTON2("rentButtonEvent2"),
-	BLUEBUTTONEVENT("blueButtonEvent"),
+	ITEMMANAGEMENT("itemManagement"),
 	YELLOWBUTTONEVENT("yellowButtonEvent"),
 	REDBUTTONEVENT("redButtonEvent");
 	
