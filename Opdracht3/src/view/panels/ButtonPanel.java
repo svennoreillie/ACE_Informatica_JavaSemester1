@@ -21,6 +21,7 @@ public class ButtonPanel extends JPanel {
 	Button redButton;
 	Button rentalStatusButton;
 	Button customerOverviewButton;
+	Button addItemButton;
 
 	public ButtonPanel() {
 		super();
@@ -98,5 +99,13 @@ public class ButtonPanel extends JPanel {
 		
 		
 	
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=6;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		addItemButton = new Button("Add Item");
+		addItemButton.addActionListener(listener);
+		addItemButton.setActionCommand(EventEnum.ADDITEMBUTTONEVENT);
+		add(addItemButton,gbc);
 	}
 }
