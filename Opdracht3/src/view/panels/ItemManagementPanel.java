@@ -17,6 +17,7 @@ import common.AntiMagicStrings;
 import common.DBException;
 import common.DBMissingException;
 import common.enums.*;
+import controller.SpamRegistratieController;
 import controller.WinkelController;
 import database.DataService;
 import database.DataStrategy;
@@ -139,67 +140,48 @@ public class ItemManagementPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, AntiMagicStrings.LoanRateInvalid);
 					input = false;
 				}
+				
 				if (input) {
 					BigDecimal bd = new BigDecimal(String.valueOf(uitleenprijs));
+					SpamRegistratieController spamreg = new SpamRegistratieController();
 					switch (cmb_Soort.getSelectedItem().toString()) {
 					case "CD":
 						Cd cd = new Cd(titel,bd,uitleenprijs,EnumTypeCd.valueOf(cmb_Type.getSelectedItem().toString()));
 						WinkelController<Cd> winkelControllerCd = new WinkelController<Cd>(Cd.class);
-						if (winkelControllerCd.searchByStringPart(titel).isEmpty()){
-							try {
-								sendNewsLetter(titel);
-							} catch (DBMissingException e) {
-								e.printStackTrace();
-							} catch (DBException e) {
-								e.printStackTrace();
-							}
-						};
+						winkelControllerCd.addObserver(spamreg);
 						winkelControllerCd.AddItemToStore(cd);
 						break;
 					case "DVD":
 						Dvd dvd = new Dvd(titel,bd,uitleenprijs,EnumTypeDvd.valueOf(cmb_Type.getSelectedItem().toString()));
 						WinkelController<Dvd> winkelControllerDvd = new WinkelController<Dvd>(Dvd.class);
-						if (winkelControllerDvd.searchByStringPart(titel).isEmpty()){
-							try {
-								sendNewsLetter(titel);
-							} catch (DBMissingException e) {
-								e.printStackTrace();
-							} catch (DBException e) {
-			
-								e.printStackTrace();
-							}
-						};
+						winkelControllerDvd.addObserver(spamreg);
 						winkelControllerDvd.AddItemToStore(dvd);
 						break;
 					case "GAME":
 						Game game = new Game(titel,bd,uitleenprijs,EnumTypeGame.valueOf(cmb_Type.getSelectedItem().toString()));
 						WinkelController<Game> winkelControllerGame = new WinkelController<Game>(Game.class);
-						if (winkelControllerGame.searchByStringPart(titel).isEmpty()){
-							try {
-								sendNewsLetter(titel);
-							} catch (DBMissingException e) {
-								e.printStackTrace();
-							} catch (DBException e) {
-			
-								e.printStackTrace();
-							}
-						};
+						winkelControllerGame.addObserver(spamreg);
 						winkelControllerGame.AddItemToStore(game);
 						break;
 					}
 				}
+				txt_Titel.setText(null);
+				cmb_Soort.setSelectedIndex(-1);
+				cmb_Type.setSelectedIndex(-1);
+				txt_Uitleenprijs.setText(null);
+				JOptionPane.showMessageDialog(null, AntiMagicStrings.ItemAdded);
 			}
 		});
 	}
 	
-	private void sendNewsLetter (String titel) throws DBMissingException, DBException{
-		DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class); 
-		List<Customer> customerList =  dataBaseCustomer.getAll();
-		for (Customer customer : customerList) {
-			if (customer.getSpam()) {
-				System.out.println("Newsletter sent to " + customer.getPerson().getFirstName() + " " + customer.getPerson().getLastName());
-			}
-		}
-		
-	}
+//	private void sendNewsLetter (String titel) throws DBMissingException, DBException{
+//		DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class); 
+//		List<Customer> customerList =  dataBaseCustomer.getAll();
+//		for (Customer customer : customerList) {
+//			if (customer.getSpam()) {
+//				System.out.println("Newsletter sent to " + customer.getPerson().getFirstName() + " " + customer.getPerson().getLastName());
+//			}
+//		}
+//		
+//	}
 }
