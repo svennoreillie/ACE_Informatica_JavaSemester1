@@ -23,9 +23,19 @@ public class CustomerFactory {
 		sbuff.append("@" + address.getCity().toLowerCase() + ".be");
 		String email = new String(sbuff);
 		
+		//set spam
+		boolean spam;
+		if (rand.nextInt(21) % 2 == 0) {
+			spam = true;
+		}
+		else {
+			spam = false;
+		} 
+		
+		
 		// Instantiate the new Customer
 		try {
-			customer = new Customer(person, address, email);
+			customer = new Customer(person, address, email, spam);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
