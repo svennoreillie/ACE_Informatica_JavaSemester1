@@ -1,11 +1,16 @@
 package view.tableModels;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.table.AbstractTableModel;
 
 import model.Item;
+import model.subItems.Cd;
+import model.subItems.Dvd;
+import model.subItems.Game;
 
 public class UitleningTableModel extends AbstractTableModel{
 
@@ -26,9 +31,67 @@ public class UitleningTableModel extends AbstractTableModel{
 		fireTableRowsInserted(items.size()-1, items.size()-1);
 	}
 	
-	public void addItems(List<Item> items){
+	public void setItems(List<Item> items){
+		
+		List<Item> allItemsSorted = items.stream().sorted(new Comparator<Item>(){
+
+			@Override
+			public int compare(Item item1, Item item2) {
+				int result;
+				result = item1.getTitel().compareTo(item2.getTitel());
+				
+				if(result==0){
+					if(item1 instanceof  Cd){
+						if(item2 instanceof  Cd){
+							result = 0;
+						}
+						
+						if(item2 instanceof Dvd){
+							result = -1;
+						}
+						
+						if(item2 instanceof  Game){
+							result = -1;
+						}
+					}
+					
+					if(item1 instanceof Dvd){
+						if(item2 instanceof  Cd){
+							result = 1;
+						}
+						
+						if(item2 instanceof Dvd){
+							result = 0;
+						}
+						
+						if(item2 instanceof  Game){
+							result = -1;
+						}
+					}
+					
+					if(item1 instanceof Game){
+						if(item2 instanceof  Cd){
+							result = 1;
+						}
+						
+						if(item2 instanceof Dvd){
+							result = 1;
+						}
+						
+						if(item2 instanceof  Game){
+							result = 0;
+						}
+					}
+				}
+				
+				return result;
+			}
+			
+		}).collect(Collectors.toList());
+		
+		
 		this.items.clear();
-		this.items.addAll(items);
+		this.items.addAll(allItemsSorted);
 		fireTableRowsInserted(0,this.items.size()-1);
 		
 	}
