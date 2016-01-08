@@ -77,6 +77,13 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 		service.add(entity);
 	}
 	
+
+	@Override
+	public void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException {
+		DataService<T> service = getService();
+		service.addAll(entities);
+	}
+	
 	@Override
 	public void update(T entity) throws DBMissingException, DBException {
 		if (entity.getId() != 0) throw new DBException("Id found, insert should contain 0 or null as Id");
@@ -90,6 +97,8 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 		DataService<T> service = getService();
 		service.remove(entity);
 	}
+
+
 
 
 	

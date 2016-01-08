@@ -15,6 +15,7 @@ import database.DataStrategy;
 import model.Customer;
 import model.Item;
 import model.Uitlening;
+import model.subItems.*;
 
 
 
@@ -23,31 +24,42 @@ public class UitleningFactory {
 	
 	
 	public static Uitlening getUitlening () throws DBMissingException, DBException{
-	
-		Random rand = new Random();
-		final Uitlening uitlening = new Uitlening();
+			Random rand = new Random();
+			final Uitlening uitlening = new Uitlening();
 		
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_MONTH, -1*rand.nextInt(31));
-		DateTime dateTime = new DateTime(calendar);
-		uitlening.setBeginVerhuurDatum(dateTime);
-		
-		uitlening.setVerhuurPeriodeInDagen(rand.nextInt(7));
-		
-		DataService <Item> dataBaseItem = DataStrategy.getDataService(Item.class);
-		List<Item>allItems = dataBaseItem.getAll();
-		List<Item>nietUitgeleendeItems = new ArrayList<>();
-		for (Item item : allItems) {
-			if(!item.getisUitgeleend()){
-			nietUitgeleendeItems.add(item);
-			}
+			try{
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DAY_OF_MONTH, -1*rand.nextInt(31));
+			DateTime dateTime = new DateTime(calendar);
+			uitlening.setBeginVerhuurDatum(dateTime);
+			
+			uitlening.setVerhuurPeriodeInDagen(rand.nextInt(7));
+			
+			DataService <Cd> dataBaseCd = DataStrategy.getDataService(Cd.class);
+			DataService <Dvd> dataBaseDvd = DataStrategy.getDataService(Dvd.class);
+			DataService <Game> dataBaseGame = DataStrategy.getDataService(Game.class);
+			List<Item>allItems = new ArrayList<Item>();
+			allItems.addAll(dataBaseCd.getAll());
+			allItems.addAll(dataBaseDvd.getAll());
+			allItems.addAll(dataBaseGame.getAll());
+//			List<Item>nietUitgeleendeItems = new ArrayList<>();
+//			for (Item item : allItems) {
+//				if(!item.getisUitgeleend()){
+//				nietUitgeleendeItems.add(item);
+//				}
+//			}
+			uitlening.setUitgeleendItem(allItems.get(rand.nextInt(allItems.size())));
+			
+			DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
+			List<Customer> allCustomer = dataBaseCustomer.getAll();
+			uitlening.setKlantDieUitleent(allCustomer.get(rand.nextInt(allCustomer.size())));
+			uitlening.getUitgeleendItem().setisUitgeleend(true);
+			
 		}
-		uitlening.setUitgeleendItem(allItems.get(rand.nextInt(allItems.size())));
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		
-		DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
-		List<Customer> allCustomer = dataBaseCustomer.getAll();
-		uitlening.setKlantDieUitleent(allCustomer.get(rand.nextInt(allCustomer.size())));
-
 		return uitlening;
 	}
 }
