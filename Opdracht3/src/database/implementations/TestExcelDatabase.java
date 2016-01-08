@@ -18,6 +18,7 @@ import org.junit.Test;
 import common.DBException;
 import common.DBMissingException;
 import common.factories.CustomerFactory;
+import database.helpers.DataSource;
 import common.factories.*;
 import model.*;
 
@@ -34,6 +35,12 @@ public class TestExcelDatabase {
 	private Path testCustomerPath = Paths.get("model.Customer.xls");
 	private DatabaseExcel<Customer> customerDb = new DatabaseExcel<Customer>(Customer.class);
 
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		DataSourceFactory.setType(DataSource.Excel);
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		Files.deleteIfExists(testPersonPath);
@@ -45,15 +52,12 @@ public class TestExcelDatabase {
 	public void testExcelCreate() throws DBMissingException, DBException {
 		List<Person> persons = new ArrayList<Person>();
 		Person p1 = new Person();
-		p1.setId(1);
 		p1.setFirstName("Sven");
 		p1.setLastName("Awesome");
 		Person p2 = new Person();
-		p2.setId(2);
 		p2.setFirstName("Peter");
 		p2.setLastName("Dude");
 		Person p3 = new Person();
-		p3.setId(3);
 		p3.setFirstName("Andre");
 		p3.setLastName("Doc");
 		persons.add(p1);
@@ -87,7 +91,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItems() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);
@@ -109,7 +113,7 @@ public class TestExcelDatabase {
 	public void testExcelCreateSubItemsRead() throws DBMissingException, DBException {
 		List<Customer> customers = customerDb.readDB();
 		
-		Customer c = CustomerFactory.createCustomer(1);
+		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
 		customerDb.writeDB(customers);

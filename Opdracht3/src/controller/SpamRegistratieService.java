@@ -1,15 +1,12 @@
 package controller;
 
+import common.DBException;
+import common.DBMissingException;
 import model.Customer;
 
 public interface SpamRegistratieService {
 
-	public class SpamRegistratieController {
-
-	}
-
-	public void activerenSpam (Customer customer);
+	public void activerenSpam (Customer customer) throws DBMissingException, DBException;
 	
-	public void stopSpam (Customer customer);
-	
+	public void stopSpam (Customer customer) throws DBMissingException, DBException;
 }
