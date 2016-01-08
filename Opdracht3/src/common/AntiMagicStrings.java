@@ -16,5 +16,6 @@ public class AntiMagicStrings {
 	public static final String ComboBoxSelectionInvalid ="Combo box selection is invallid!";
 	public static final String LoanRateInvalid ="The loan rate is invalid!";
 	public static final String FactoriesDidntWork= "The factories didn't fully complete";
+	public static final String ItemAdded = "Item successfull added";
 	
 }
