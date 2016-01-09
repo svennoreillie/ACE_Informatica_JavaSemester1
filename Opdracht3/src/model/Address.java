@@ -3,7 +3,7 @@ package model;
 /**
  * Contains the adress details of a customer.
  * 
- * @author Andre
+ * @author André Nóbrega
  *
  */
 public class Address extends ModelBase {

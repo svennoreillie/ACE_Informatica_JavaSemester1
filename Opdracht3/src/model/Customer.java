@@ -8,7 +8,7 @@ import common.AntiMagicStrings;
 /**
  * A customer's details, including name, address, e-mail and an unique ID.
  * 
- * @author Andre
+ * @author André Nóbrega
  *
  */
 public class Customer extends ModelBase {

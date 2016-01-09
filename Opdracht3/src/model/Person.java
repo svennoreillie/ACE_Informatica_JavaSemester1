@@ -3,7 +3,7 @@ package model;
 /**
  * Contains the name of a customer.
  * 
- * @author Andre
+ * @author André Nóbrega
  *
  */
 public class Person extends ModelBase {
