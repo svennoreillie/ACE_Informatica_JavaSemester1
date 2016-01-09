@@ -93,14 +93,14 @@ public class ButtonPanel extends JPanel {
 		
 		
 	
-		gbc = new GridBagConstraints();
-		gbc.gridx=1;
-		gbc.gridy=3;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
-		addItemButton = new Button("Add Item");
-		addItemButton.addActionListener(listener);
-		addItemButton.setActionCommand(EventEnum.ADDITEMBUTTONEVENT);
-		add(addItemButton,gbc);
+//		gbc = new GridBagConstraints();
+//		gbc.gridx=1;
+//		gbc.gridy=3;
+//		gbc.fill=GridBagConstraints.HORIZONTAL;
+//		addItemButton = new Button("Add Item");
+//		addItemButton.addActionListener(listener);
+//		addItemButton.setActionCommand(EventEnum.ADDITEMBUTTONEVENT);
+//		add(addItemButton,gbc);
 		
 		
 		gbc = new GridBagConstraints();

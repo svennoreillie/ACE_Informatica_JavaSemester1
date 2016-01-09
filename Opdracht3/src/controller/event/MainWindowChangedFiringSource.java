@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import common.enums.EventEnum;
-import view.panels.AddItemPanel;
+
 import view.panels.CustomerOverview;
 import view.panels.ItemManagementPanel;
 import view.panels.UitleningStap1Panel;
@@ -65,9 +65,9 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		case CUSTOMEROVERVIEWBUTTONEVENT:
 			fireChanged(new CustomerOverview());
 			break;
-		case ADDITEMBUTTONEVENT:
-			fireChanged(new AddItemPanel());
-			break;
+//		case ADDITEMBUTTONEVENT:
+//			fireChanged(new AddItemPanel());
+//			break;
 		case RENTBUTTON1:
 			fireChanged(new UitleningStap1Panel());
 			break;
