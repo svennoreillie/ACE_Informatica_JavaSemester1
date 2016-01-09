@@ -54,6 +54,12 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 					case "boolean":
 						value = results.getBoolean(colName);
 						break;
+					case "java.lang.Boolean":
+						value = results.getBoolean(colName);
+						break;
+					case "java.lang.Integer":
+						value = results.getInt(colName);
+						break;
 					case "java.math.BigDecimal":
 						value = results.getBigDecimal(colName);
 						break;
@@ -166,11 +172,12 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 							strategy.add(model);
 							// save id of this item in our own excel
 							value = model.getId();
-							
-							if (Modifier.isAbstract( property.getPropertyType().getModifiers() )) {
-								//Could be the abstract item class => prefix with classtype
+
+							if (Modifier.isAbstract(property.getPropertyType().getModifiers())) {
+								// Could be the abstract item class => prefix
+								// with classtype
 								value = model.getClass().getName() + " " + value;
-							} 
+							}
 						} else {
 							// normal property, get the object for this item in
 							// the list
@@ -192,8 +199,30 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 									rowQuery += "FALSE";
 								}
 								break;
-							default:
+							case "java.lang.Boolean":
+								if ((boolean) value) {
+									rowQuery += "TRUE";
+								} else {
+									rowQuery += "FALSE";
+								}
+								break;
+							case "int":
 								rowQuery += value.toString();
+								break;
+							case "java.lang.Integer":
+								rowQuery += value.toString();
+								break;
+							case "java.math.BigDecimal":
+								rowQuery += value.toString();
+								break;
+							case "java.lang.Double":
+								rowQuery += value.toString();
+								break;
+							case "org.joda.time.DateTime":
+								rowQuery += value.toString();
+								break;
+							default:
+								rowQuery += ("'" + value.toString() + "'");
 								break;
 							}
 						}
@@ -267,6 +296,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 						column += "FLOAT";
 						break;
 					default:
+						column += "VARCHAR(250)";
 						break;
 					}
 				}
