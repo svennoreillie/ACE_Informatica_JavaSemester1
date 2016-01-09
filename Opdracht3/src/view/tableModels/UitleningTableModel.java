@@ -164,7 +164,7 @@ public class UitleningTableModel extends AbstractTableModel{
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	if(columnIndex == 4 && !items.get(rowIndex).getisUitgeleend()) 
+    	if(columnIndex == 4 && !itemsToShow.get(rowIndex).getisUitgeleend()) 
     		return true;
     	else 
     		return false;
