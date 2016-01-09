@@ -1,10 +1,8 @@
 package controller;
 
-import java.util.Date;
+
 import java.util.List;
-
 import org.joda.time.DateTime;
-
 import model.Customer;
 import model.Item;
 import model.Uitlening;

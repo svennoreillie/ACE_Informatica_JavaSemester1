@@ -1,7 +1,10 @@
 package view.tableModels;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import javax.swing.table.AbstractTableModel;
 import common.DBException;
@@ -16,20 +19,22 @@ import model.Uitlening;
  * @author André Nóbrega
  *
  */
-public class CustomerRentedItemTableModel extends AbstractTableModel{
+public class ItemReturnTableModel extends AbstractTableModel{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7495138998386409899L;
-	private static final String[] columnsNames = {"Item ID", "Title", "Return date"};
+	private static final String[] columnsNames = {"Item ID", "Title", "Return date", "Returning"};
 	private final LinkedList<Uitlening> data;
 	private DataService<Uitlening> uitleningDB = DataStrategy.getDataService(Uitlening.class);
+	private final Map<Uitlening,Boolean> itemSelectedMap;
 	private Customer customer;
 	
-	public CustomerRentedItemTableModel(Customer cust) {
+	public ItemReturnTableModel(Customer cust) {
 		data = new LinkedList<Uitlening>();
 		customer = cust;
+		itemSelectedMap = new HashMap<>();
 	}
 	
 	public void updateTable(String search) throws DBMissingException, DBException{
@@ -46,6 +51,20 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 		data.clear();
 		data.addAll(uitleningDB.getFiltered(uitl -> uitl.filter(String.valueOf(customer.getId()))));
 		fireTableRowsInserted(data.size()-1, data.size()-1);
+
+		for(Uitlening uitlening : data){
+		itemSelectedMap.put(uitlening, false);
+		}
+	}
+	
+	public List<Uitlening> getSelectedItems(){
+		List<Uitlening> selectedItems = new ArrayList<>();
+		for(Uitlening uitlening:itemSelectedMap.keySet()){
+			if(itemSelectedMap.get(uitlening)){
+				selectedItems.add(uitlening);
+			}
+		}
+		return selectedItems;	
 	}
 	
 	@Override
@@ -71,8 +90,12 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 		case 2:
 			value = uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
 			break;
+		case 3:
+			value = itemSelectedMap.get(uitlening);
+			break;
 		default:
 			System.err.println("Error on column index");
+			break;
 		}
 		
 		if (value == null){
@@ -83,12 +106,37 @@ public class CustomerRentedItemTableModel extends AbstractTableModel{
 	}
 	
 	@Override
-	public String getColumnName(int column){
-		return columnsNames[column];
+	public Class getColumnClass(int column){
+		switch(column){
+		case 0:
+			return String.class;
+		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return Boolean.class;
+		default:
+			return null;
+		}
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Class getColumnClass(int c){
-		return getValueAt(0, c).getClass();
+	 @Override
+	    public boolean isCellEditable(int rowIndex, int columnIndex) {
+	    	if(columnIndex == 3) 
+	    		return true;
+	    	else 
+	    		return false;
+	    }
+	
+	@Override 
+	public void setValueAt(Object aValue,int row,int column){
+		//
+		itemSelectedMap.replace(data.get(row),!itemSelectedMap.get(data.get(row)));
+	}
+	
+	@Override
+	public String getColumnName(int column){
+		return columnsNames[column];
 	}
 }

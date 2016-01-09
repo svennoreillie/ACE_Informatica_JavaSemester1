@@ -1,15 +1,17 @@
 package model.subItems;
 
-import java.math.BigDecimal;
-import java.util.Date;
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
 
-import common.enums.EnumTypeCd;
-import common.enums.EnumTypeDvd;
+import java.math.BigDecimal;
 import common.enums.EnumTypeGame;
-import model.Item;
 
 public class Game extends model.Item {
 
+	private static final long serialVersionUID = 6019194465189255343L;
 	private EnumTypeGame gameType;
 	
 	public EnumTypeGame getGameType() {

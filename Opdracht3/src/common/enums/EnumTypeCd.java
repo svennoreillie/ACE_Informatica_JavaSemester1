@@ -1,5 +1,11 @@
 package common.enums;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 public enum EnumTypeCd {
 	MUZIEK("Muziek"),
 	GAMES("Games"),

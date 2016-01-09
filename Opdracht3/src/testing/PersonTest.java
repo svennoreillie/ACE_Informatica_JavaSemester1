@@ -7,6 +7,11 @@ import org.junit.Test;
 
 import model.Person;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class PersonTest {
 	
 	private Person test;

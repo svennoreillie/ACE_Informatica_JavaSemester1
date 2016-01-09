@@ -1,5 +1,11 @@
 package database;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;

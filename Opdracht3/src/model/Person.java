@@ -3,11 +3,12 @@ package model;
 /**
  * Contains the name of a customer.
  * 
- * @author Andre
+ * @author André Nóbrega
  *
  */
 public class Person extends ModelBase {
 	
+	private static final long serialVersionUID = -6476871479678450068L;
 	private String firstName;
 	private String lastName;
 	

@@ -11,9 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.text.Document;
-
 import common.DBException;
 import common.DBMissingException;
 import controller.CustomerController;
@@ -22,23 +19,16 @@ import model.Address;
 import model.Customer;
 import model.Person;
 import view.tableModels.CustomerTableModel;
-
 import java.awt.Font;
 import javax.swing.JSeparator;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
-import javax.swing.JCheckBox;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
 	private JTextField tfFirstName;
@@ -66,7 +56,6 @@ public class CustomerOverview extends JPanel {
 	private JButton btnSearch;
 	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
-	private ArrayList<Customer> customerList;
 	private JTextField tfSearch;
 	private JLabel lblSearch;
 	private CustomerController controller = new CustomerController();
@@ -77,8 +66,6 @@ public class CustomerOverview extends JPanel {
 	 * @throws DBMissingException 
 	 */
 	public CustomerOverview() {
-		customerList = new ArrayList<>();
-		
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
@@ -250,7 +237,6 @@ public class CustomerOverview extends JPanel {
 					} catch (DBMissingException | DBException e1) {
 						System.out.println(e1.toString());
 					} 
-
 				}
 				else{
 					try{

@@ -1,5 +1,11 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie & Vervoort Peter
+ *
+ */
+
 import database.helpers.DataSource;
 import database.internalInterface.DataReadWriteService;
 import model.ModelBase;

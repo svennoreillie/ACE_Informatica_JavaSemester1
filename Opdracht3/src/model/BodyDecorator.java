@@ -1,11 +1,5 @@
 package model;
 
-/**
- * 
- * @author Huybrechts
- *
- */
-
 public class BodyDecorator extends ReceiptDecorator {
 
 	public BodyDecorator(Receipt receipt) {

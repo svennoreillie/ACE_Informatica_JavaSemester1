@@ -1,5 +1,11 @@
 package common.enums;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 public enum EnumTypeGame {
 	FIRSTPERSONSHOOTER("First Person Shooter"),
 	MASSIVEONLINEMULTIPLAYER("Massive Online Multiplayer"),

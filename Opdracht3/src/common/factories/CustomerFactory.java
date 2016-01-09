@@ -1,7 +1,12 @@
 package common.factories;
 
-import java.util.Random;
+/**
+ * 
+ * @author André Nóbrega & Vervoort Peter
+ *
+ */
 
+import java.util.Random;
 import model.Address;
 import model.Customer;
 import model.Person;

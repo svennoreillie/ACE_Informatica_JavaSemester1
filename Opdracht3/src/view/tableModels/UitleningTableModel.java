@@ -7,9 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.swing.table.AbstractTableModel;
-
 import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
@@ -24,11 +22,7 @@ import model.subItems.Game;
 
 public class UitleningTableModel extends AbstractTableModel{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 944470687021694124L;
 	private static final String[] columnsNames = {"Description","Type","Id","Rentable","Select"};
 	private final LinkedList<Item> items;
 	private final Map<Item,Boolean> itemSelectedMap;

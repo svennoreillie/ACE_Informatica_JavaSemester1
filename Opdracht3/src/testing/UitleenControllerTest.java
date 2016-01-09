@@ -5,12 +5,10 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import common.enums.EnumTypeGame;
