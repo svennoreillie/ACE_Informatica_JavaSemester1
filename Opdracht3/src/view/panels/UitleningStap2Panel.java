@@ -1,20 +1,40 @@
+
 package view.panels;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import model.Item;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
 
-public class UitleningStap2Panel extends JPanel{
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
-	private static final long serialVersionUID = 3539818115246464092L;
+public class UitleningStap2Panel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6900153860626626189L;
 	private JTextField textField;
 	private JTable table;
 	private JTextField textField_1;
 	
-	public UitleningStap2Panel(){
+	private List<Item> items;
+	
+ 	public UitleningStap2Panel(){
+ 		items = new ArrayList<Item>();
+ 		
 		setSize(600,600);
 		setLayout(null);
 		
@@ -48,4 +68,7 @@ public class UitleningStap2Panel extends JPanel{
 		add(btnConfirm);
 	}
 	
+	public void setItems(List<Item> items){
+		this.items = items;
+	}
 }

@@ -1,9 +1,19 @@
 package controller;
 
+
+
+
 import model.BodyDecorator;
 import model.FooterDecorator;
 import model.HeaderDecorator;
 import model.Receipt;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public class ReceiptController {
 	
 	public static void printReceipt(Receipt receipt){
@@ -15,3 +25,4 @@ public class ReceiptController {
 	
 	
 }
+

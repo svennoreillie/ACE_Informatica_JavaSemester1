@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class FooterDecorator extends ReceiptDecorator{
 

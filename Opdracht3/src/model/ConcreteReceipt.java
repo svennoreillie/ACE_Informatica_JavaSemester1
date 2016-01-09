@@ -1,7 +1,14 @@
+
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class ConcreteReceipt implements Receipt {
 		

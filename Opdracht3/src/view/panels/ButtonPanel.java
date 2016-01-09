@@ -13,6 +13,12 @@ import controller.WindowController;
 import controller.event.MainWindowChangedFiringSource;
 import view.custom.Button;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public class ButtonPanel extends JPanel {
 	
 	private class ButtonPanelKeyDispatcher implements KeyEventDispatcher {

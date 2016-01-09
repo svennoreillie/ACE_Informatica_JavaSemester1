@@ -1,6 +1,13 @@
+
 package model;
 
 import org.joda.time.DateTime;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class HeaderDecorator extends ReceiptDecorator{
 
