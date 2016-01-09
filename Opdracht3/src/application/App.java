@@ -5,13 +5,12 @@ package application;
 import javax.swing.JOptionPane;
 import common.DBException;
 import common.DBMissingException;
-import controller.event.MainWindowChangedFiringSource;
 import database.helpers.DataSource;
 import database.implementations.DataSourceFactory;
-import view.MainWindow;
-import view.panels.CustomerOverview;
+import view.LoadingWindow;
 
 public class App {
+	
 	public static void main(String[] args) throws DBMissingException, DBException{
 		
 		int choice = JOptionPane.showOptionDialog(null, //Component parentComponent
@@ -25,10 +24,12 @@ public class App {
 		if (choice == -1) return;
 		DataSourceFactory.setType(DataSource.values()[choice]);
 
-		MainWindow mainWindow = new MainWindow();
-		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
-		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
-
+		LoadingWindow bootscreen = new LoadingWindow();
+		bootscreen.start();
 	}
+	
+	
+	
+
 
 }

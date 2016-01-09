@@ -110,7 +110,7 @@ public class TestTextDatabase {
 		persons.add(p2);
 		persons.add(p3);
 		
-		db.writeDB(persons);
+		db.writeDB(persons, false);
 		
 		List<Person> read = db.readDB();
 		assertEquals(3,  read.size());

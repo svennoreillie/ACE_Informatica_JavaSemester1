@@ -46,7 +46,7 @@ public class DatabaseText<T extends ModelBase> implements DataReadWriteService<T
 	}
 
 	@Override
-	public void writeDB(List<T> list) throws DBMissingException, DBException {
+	public void writeDB(List<T> list, Boolean update) throws DBMissingException, DBException {
 		ObjectOutputStream stream = this.getOutputStream();
 		for (T entity : list) {
 			try {

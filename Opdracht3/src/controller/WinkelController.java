@@ -51,6 +51,7 @@ public class WinkelController<T extends Item> implements WinkelService <T>, Subj
 			e.printStackTrace();
 		}	
 	}
+	
 
 	@Override
 	public void RemoveItemToStore(T entity) {

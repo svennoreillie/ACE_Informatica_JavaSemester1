@@ -13,5 +13,5 @@ import model.ModelBase;
 
 public interface DataReadWriteService<T extends ModelBase> {
 	List<T> readDB() throws DBMissingException, DBException;
-	void writeDB(List<T> list) throws DBMissingException, DBException;
+	void writeDB(List<T> list, Boolean update) throws DBMissingException, DBException;
 }
