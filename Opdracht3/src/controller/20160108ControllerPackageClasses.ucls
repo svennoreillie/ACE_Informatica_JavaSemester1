@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="controller.BoeteController" project="Opdracht3" 
     file="/Opdracht3/src/controller/BoeteController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="58" width="189" x="290" y="74"/>    
+    <position height="53" width="146" x="321" y="61"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <interface id="2" language="java" name="controller.BoeteService" project="Opdracht3" 
     file="/Opdracht3/src/controller/BoeteService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="503" y="32"/>    
+    <position height="-1" width="-1" x="549" y="33"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -86,7 +86,7 @@
   </class>  
   <interface id="10" language="java" name="controller.SpamRegistratieService" project="Opdracht3" 
     file="/Opdracht3/src/controller/SpamRegistratieService.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="730" y="144"/>    
+    <position height="-1" width="-1" x="761" y="33"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
