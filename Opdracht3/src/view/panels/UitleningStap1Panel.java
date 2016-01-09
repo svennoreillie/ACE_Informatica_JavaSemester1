@@ -60,16 +60,20 @@ public class UitleningStap1Panel extends JPanel{
 				
 				switch(i){
 				case 0:
-					tableModel.setItems(allItems);
+					//tableModel.setItems(allItems);
+					tableModel.setItemsToShow(Item.class);
 					break;
 				case 1:
-					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Cd.class);
 					break;
 				case 2:
-					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Dvd.class)).collect(Collectors.toList()));
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Dvd.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Dvd.class);
 					break;
 				case 3:
-					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Game.class)).collect(Collectors.toList()));
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Game.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Game.class);
 					break;
 				default:
 					tableModel.setItems(allItems);
@@ -94,6 +98,7 @@ public class UitleningStap1Panel extends JPanel{
 		add(lblSearch);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(193, 8, 134, 20);
 		add(textField);
 		textField.setColumns(10);
@@ -119,6 +124,7 @@ public class UitleningStap1Panel extends JPanel{
 		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());
 		
 		setAllItems(allItems);
+		tableModel.setItemsToShow(Item.class);
 	}
 	
 	public void setAllItems(List<Item> items){

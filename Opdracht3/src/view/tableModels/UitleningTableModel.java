@@ -24,10 +24,12 @@ public class UitleningTableModel extends AbstractTableModel{
 	private static final String[] columnsNames = {"Description","Type","Id","Rentable","Select"};
 	private final LinkedList<Item> items;
 	private final Map<Item,Boolean> itemSelectedMap;
+	private final LinkedList<Item> itemsToShow;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
 		itemSelectedMap = new HashMap<>();
+		itemsToShow = new LinkedList<Item>();
 	}
 	
 	public void setItems(List<Item> items){
@@ -80,7 +82,6 @@ public class UitleningTableModel extends AbstractTableModel{
 						}
 					}
 				}
-				
 				return result;
 			}
 		    }).collect(Collectors.toList());
@@ -91,23 +92,27 @@ public class UitleningTableModel extends AbstractTableModel{
 		for(Item item : items){
 			itemSelectedMap.put(item, false);
 		}
-		fireTableRowsInserted(0,this.items.size()-1);
+		//fireTableRowsInserted(0,this.items.size()-1);
+	}
+	
+	public void setItemsToShow(Class type){		
+		itemsToShow.clear();
+		List<Item> itemsToShow;
+		if(type==Item.class){
+			itemsToShow=items;
+		}else{
+			itemsToShow = items.stream().filter(item -> item.getClass().equals(type)).collect(Collectors.toList());
+			
+		}
+		this.itemsToShow.addAll(itemsToShow);
+		
+		fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
 	}
 	
 	@Override
-	public int getColumnCount() {
-		return columnsNames.length;
-	}
-
-	@Override
-	public int getRowCount() {
-		return items.size();
-	}
-
-	@Override
 	public Object getValueAt(int row, int column) {
 		Object value = null;
-		Item item = items.get(row);
+		Item item = itemsToShow.get(row);
 		
 		switch(column){
 		case 0:
@@ -140,11 +145,6 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	@Override
-	public String getColumnName(int column){
-		return columnsNames[column];
-	}
-	
-	@Override
 	public Class getColumnClass(int column){
 		switch(column){
 		case 0:
@@ -162,11 +162,6 @@ public class UitleningTableModel extends AbstractTableModel{
 		}
 	}
 	
-	@Override 
-	public void setValueAt(Object aValue,int row,int column){
-		itemSelectedMap.replace(items.get(row),!itemSelectedMap.get(items.get(row)));
-	}
-	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
     	if(columnIndex == 4 && !items.get(rowIndex).getisUitgeleend()) 
@@ -175,5 +170,24 @@ public class UitleningTableModel extends AbstractTableModel{
     		return false;
     }
 	
+	@Override 
+	public void setValueAt(Object aValue,int row,int column){
+		itemSelectedMap.replace(itemsToShow.get(row),!itemSelectedMap.get(items.get(row)));
+	}
 	
+	@Override
+	public String getColumnName(int column){
+		return columnsNames[column];
+	}
+	
+	@Override
+	public int getColumnCount() {
+		return columnsNames.length;
+	}
+
+	@Override
+	public int getRowCount() {
+		return itemsToShow.size();
+	}
+
 }
