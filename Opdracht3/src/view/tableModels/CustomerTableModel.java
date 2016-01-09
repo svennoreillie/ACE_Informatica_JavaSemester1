@@ -92,7 +92,5 @@ public class CustomerTableModel extends AbstractTableModel {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class getColumnClass(int c){
 		return getValueAt(0, c).getClass();
-	}
-
-	
+	}	
 }

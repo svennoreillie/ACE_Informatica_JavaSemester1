@@ -71,7 +71,6 @@ public class CustomerOverview extends JPanel {
 	private JButton btnSearch;
 	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
-	private ArrayList<Customer> customerList;
 	private JTextField tfSearch;
 	private JLabel lblSearch;
 	private CustomerController controller = new CustomerController();
@@ -82,8 +81,6 @@ public class CustomerOverview extends JPanel {
 	 * @throws DBMissingException 
 	 */
 	public CustomerOverview() {
-		customerList = new ArrayList<>();
-		
 		Dimension dimension = new Dimension(600, 600);
 		this.setSize(dimension);
 		setLayout(null);
