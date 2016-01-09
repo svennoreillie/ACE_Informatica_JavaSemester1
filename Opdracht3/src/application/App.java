@@ -25,7 +25,6 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import view.MainWindow;
 import view.panels.CustomerOverview;
-import view.panels.testpanels.BluePanel;
 
 public class App {
 	public static void main(String[] args) throws DBMissingException, DBException{

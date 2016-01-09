@@ -1,13 +1,10 @@
 package common.enums;
 
 public enum EventEnum {
-	HUURSTATUSBUTTONEVENT("huurstatusButtonEvent"),
 	CUSTOMEROVERVIEWBUTTONEVENT("customerOverviewButtonEvent"),
 	RENTBUTTON1("rentButtonEvent1"),
 	RENTBUTTON2("rentButtonEvent2"),
 	ITEMMANAGEMENT("itemManagement"),
-	YELLOWBUTTONEVENT("yellowButtonEvent"),
-	REDBUTTONEVENT("redButtonEvent"), 
 	ADDITEMBUTTONEVENT("addItemButtonEvent");
 	
 	
