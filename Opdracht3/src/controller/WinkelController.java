@@ -107,9 +107,7 @@ public class WinkelController<T extends Item> implements WinkelService <T>, Subj
 		return null;
 	}
 
-<<<<<<< HEAD
-	
-=======
+
 	@Override
 	public void addObserver(Observer o) {
 		observers.add(o);
@@ -126,5 +124,4 @@ public class WinkelController<T extends Item> implements WinkelService <T>, Subj
 		}
 		
 	}
->>>>>>> refs/remotes/origin/development
 }
