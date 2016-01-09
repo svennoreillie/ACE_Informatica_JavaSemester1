@@ -55,24 +55,6 @@ public class ItemTeruggave2 extends JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		itemTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					Uitlening selectedItem = controller.getList().get(itemTable.getSelectedRow());
-					if (!isItemBeingReturned(selectedItem)) {
-						checkItem(selectedItem);
-						addItemToReturnList(selectedItem);
-					}
-					else{
-						uncheckItem(selectedItem);
-						removeItemFromReturnList(selectedItem);
-					}
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
 		scrollPane.setViewportView(itemTable);
 		
 		JLabel lblSelectReturnedItems = new JLabel("Select returned items:");
@@ -90,24 +72,5 @@ public class ItemTeruggave2 extends JPanel {
 		
 	}
 
-	private void addItemToReturnList(Uitlening uitlening){
-		uitleningenLijst.add(uitlening);
-	}
-	
-	private void removeItemFromReturnList(Uitlening uitlening){
-		uitleningenLijst.remove(uitlening);
-	}
-	
-	private boolean isItemBeingReturned(Uitlening item){
-		return item.getWordtGedeponeerd();
-	}
-	
-
-	private void checkItem(Uitlening uitlening) {
-		uitlening.setWordtGedeponeerd(true);
-	}
-	private void uncheckItem(Uitlening uitlening) {
-		uitlening.setWordtGedeponeerd(false);
-	}
 
 }

@@ -47,6 +47,14 @@ public class ItemReturnTableModel extends AbstractTableModel{
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
+	public void checkGedeponeerd(int row){
+		
+	}
+	
+	public void uncheckGedeponeerd(int row){
+		
+	}
+	
 	@Override
 	public int getColumnCount() {
 		return columnsNames.length;
@@ -59,6 +67,7 @@ public class ItemReturnTableModel extends AbstractTableModel{
 	public Object getValueAt(int row, int column) {
 		Object value = null;
 		Uitlening uitlening = data.get(row);
+		boolean wordtGedeponeerd = false;
 		
 		switch(column){
 		case 0:
@@ -71,10 +80,11 @@ public class ItemReturnTableModel extends AbstractTableModel{
 			value = uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
 			break;
 		case 3:
-			value = uitlening.getWordtGedeponeerd();
+			value = wordtGedeponeerd;
 			break;
 		default:
 			System.err.println("Error on column index");
+			break;
 		}
 		
 		if (value == null){

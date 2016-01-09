@@ -14,7 +14,6 @@ public class Uitlening extends ModelBase implements Cloneable{
 	private int verhuurPeriodeInDagen;
 	private Item uitgeleendItem;
 	private Customer klantDieUitleent;
-	private boolean wordtGedeponeerd = false;
 	
 	
 	//TODO setter in try catch blok met in de catch gebruik maken van antiMagicString returns
@@ -41,12 +40,6 @@ public class Uitlening extends ModelBase implements Cloneable{
 	}
 	public void setKlantDieUitleent(Customer klantDieUitleent) {
 		this.klantDieUitleent = klantDieUitleent;
-	}
-	public boolean getWordtGedeponeerd() {
-		return wordtGedeponeerd;
-	}
-	public void setWordtGedeponeerd(boolean wordtGedeponeerd) {
-		this.wordtGedeponeerd = wordtGedeponeerd;
 	}
 	
 	//TODO  clean up
@@ -103,7 +96,6 @@ public class Uitlening extends ModelBase implements Cloneable{
 		u.setKlantDieUitleent(getKlantDieUitleent());
 		u.setUitgeleendItem(getUitgeleendItem());
 		u.setVerhuurPeriodeInDagen(getVerhuurPeriodeInDagen());
-		u.setWordtGedeponeerd(false);
 		
 		return u;
 	}
