@@ -77,36 +77,6 @@ public class ButtonPanel extends JPanel {
 		gbc.gridx=1;
 		gbc.gridy=1;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		redButton = new Button("Red");
-		redButton.addActionListener(listener);
-		redButton.setActionCommand(EventEnum.REDBUTTONEVENT);
-		add(redButton,gbc);
-		
-		
-		gbc = new GridBagConstraints();
-		gbc.gridx=1;
-		gbc.gridy=2;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
-		yellowButton = new Button("Yellow");
-		yellowButton.addActionListener(listener);
-		yellowButton.setActionCommand(EventEnum.YELLOWBUTTONEVENT);
-		add(yellowButton,gbc);
-		
-		
-		gbc = new GridBagConstraints();
-		gbc.gridx=1;
-		gbc.gridy=3;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
-		rentalStatusButton=new Button("Huur status");
-		rentalStatusButton.addActionListener(listener);
-		rentalStatusButton.setActionCommand(EventEnum.HUURSTATUSBUTTONEVENT);
-		add(rentalStatusButton,gbc);
-		
-		
-		gbc = new GridBagConstraints();
-		gbc.gridx=1;
-		gbc.gridy=4;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
 		customerOverviewButton = new Button("Customer overview");
 		customerOverviewButton.addActionListener(listener);
 		customerOverviewButton.setActionCommand(EventEnum.CUSTOMEROVERVIEWBUTTONEVENT);
@@ -114,7 +84,7 @@ public class ButtonPanel extends JPanel {
 		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
-		gbc.gridy=5;
+		gbc.gridy=2;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		customerOverviewButton = new Button("Rent");
 		customerOverviewButton.addActionListener(listener);
@@ -125,7 +95,7 @@ public class ButtonPanel extends JPanel {
 	
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
-		gbc.gridy=6;
+		gbc.gridy=3;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		addItemButton = new Button("Add Item");
 		addItemButton.addActionListener(listener);
@@ -135,7 +105,7 @@ public class ButtonPanel extends JPanel {
 		
 		gbc = new GridBagConstraints();
 		gbc.gridx=1;
-		gbc.gridy=7;
+		gbc.gridy=4;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		dropDbTables = new Button("DROP SQL Tables");
 		dropDbTables.addMouseListener(new MouseAdapter() {

@@ -1,8 +1,10 @@
 package view.panels;
 
-import java.math.BigDecimal;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -17,9 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import common.enums.EnumTypeCd;
-import common.enums.EnumTypeDvd;
-import common.enums.EnumTypeGame;
 import common.enums.EventEnum;
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
@@ -27,16 +26,24 @@ import controller.event.MainWindowChangedFiringSource;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import common.enums.EnumItemTypeItems;
+import javax.swing.JCheckBox;
 
 public class UitleningStap1Panel extends JPanel{
 	
-	private List<Item> items;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4382671641959396105L;
+
+	private List<Item> allItems;
 	private JTextField textField;
 	private JTable table;
 	private UitleningTableModel tableModel;
 	
 	public UitleningStap1Panel() {
+		tableModel = new UitleningTableModel();
+		
 		setSize(600,600);
 		setLayout(null);
 		
@@ -44,8 +51,45 @@ public class UitleningStap1Panel extends JPanel{
 		lblType.setBounds(10, 11, 46, 14);
 		add(lblType);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"All", "Cd", "Dvd", "Game"}));
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i=comboBox.getSelectedIndex();
+				
+				switch(i){
+				case 0:
+					//tableModel.setItems(allItems);
+					tableModel.setItemsToShow(Item.class);
+					break;
+				case 1:
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Cd.class);
+					break;
+				case 2:
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Dvd.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Dvd.class);
+					break;
+				case 3:
+					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Game.class)).collect(Collectors.toList()));
+					tableModel.setItemsToShow(Game.class);
+					break;
+				default:
+					tableModel.setItems(allItems);
+				}
+					
+				
+			}
+		});
+		String[] values= new String[EnumItemTypeItems.values().length+1];
+		values[0]="ALL";
+		
+		for(int i=0;i<EnumItemTypeItems.values().length;i++){
+			values[i+1]=EnumItemTypeItems.values()[i].toString();
+		}
+		
+		comboBox.setModel(new DefaultComboBoxModel<String>(values));
 		comboBox.setBounds(46, 8, 81, 20);
 		add(comboBox);
 		
@@ -54,6 +98,7 @@ public class UitleningStap1Panel extends JPanel{
 		add(lblSearch);
 		
 		textField = new JTextField();
+		textField.setEnabled(false);
 		textField.setBounds(193, 8, 134, 20);
 		add(textField);
 		textField.setColumns(10);
@@ -68,43 +113,23 @@ public class UitleningStap1Panel extends JPanel{
 		scrollPane.setBounds(10, 41, 580, 517);
 		add(scrollPane);
 		
-//		table = new JTable();
-//		table.setModel(new DefaultTableModel(
-//			new Object[][] {
-//			},
-//			new String[] {
-//				"Description", "Selected"
-//			}
-//		));\
 		
-		//UitleningTableModel tableModel = new UitleningTableModel();
-		tableModel = new UitleningTableModel();
-		/*table = new JTable(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Description", "Select"
-			}
-		));*/
-		
+
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		
-		/*Cd cd = new Cd("testCd",new BigDecimal(5),5.0,EnumTypeCd.SOFTWARE);
-		Dvd dvd = new Dvd("testDvd",new BigDecimal(5),5.0,EnumTypeDvd.FILM);
-		Game game = new Game("testGame",new BigDecimal(5),5.0,EnumTypeGame.MASSIVEONLINEMULTIPLAYER);
-		List<Item> items = new ArrayList<>();
-		items.add(cd);
-		items.add(dvd);
-		items.add(game);
-			setItems(items);*/
-		WinkelController<Item> controller = new WinkelController<Item>(Item.class);
-		setItems(controller.getAllSortedByName());
+		List<Item> allItems = new ArrayList<Item>();
+		allItems.addAll(new WinkelController<Game>(Game.class).getAllSortedByName());
+		allItems.addAll(new WinkelController<Cd>(Cd.class).getAllSortedByName());
+		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());
+		
+		setAllItems(allItems);
+		tableModel.setItemsToShow(Item.class);
 	}
 	
-	public void setItems(List<Item> items){
-		this.items = items;
-		tableModel.addItems(items);
+	public void setAllItems(List<Item> items){
+		this.allItems = items;
+		tableModel.setItems(items);
 		
 	}
 }

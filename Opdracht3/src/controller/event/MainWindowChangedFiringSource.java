@@ -11,12 +11,8 @@ import common.enums.EventEnum;
 import view.panels.AddItemPanel;
 import view.panels.CustomerOverview;
 import view.panels.ItemManagementPanel;
-import view.panels.RentalStatusPanel;
 import view.panels.UitleningStap1Panel;
 import view.panels.UitleningStap2Panel;
-import view.panels.testpanels.BluePanel;
-import view.panels.testpanels.RedPanel;
-import view.panels.testpanels.YellowPanel;
 
 public class MainWindowChangedFiringSource implements WindowChangedFiringService,ActionListener{
 
@@ -63,20 +59,11 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		}
 		
 		switch (eventEnum) {
-		case REDBUTTONEVENT:
-			fireChanged(new RedPanel());
-			break;
 		case ITEMMANAGEMENT:
 			fireChanged(new ItemManagementPanel());
 			break;
-		case YELLOWBUTTONEVENT:
-			fireChanged(new YellowPanel());
-			break;
 		case CUSTOMEROVERVIEWBUTTONEVENT:
 			fireChanged(new CustomerOverview());
-			break;
-		case HUURSTATUSBUTTONEVENT:
-			fireChanged(new RentalStatusPanel());
 			break;
 		case ADDITEMBUTTONEVENT:
 			fireChanged(new AddItemPanel());
