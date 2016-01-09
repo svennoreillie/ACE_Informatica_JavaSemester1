@@ -1,4 +1,9 @@
 package database.implementations;
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
 
 import java.io.EOFException;
 import java.io.IOException;

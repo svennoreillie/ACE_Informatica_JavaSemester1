@@ -19,7 +19,6 @@ public class CustomerTest {
 	private Customer customer;
 	private Person person;
 	private Address adress;
-	private int id;
 	private String email;
 	
 	@Before
@@ -34,7 +33,6 @@ public class CustomerTest {
 	@Test
 	public void testCustomer() {
 		Customer customer2;
-		
 		person = new Person("First", "Last");
 		adress = new Address("Straat", "huisnummer01", "bus01", "postcode1234", "Gemeente", "Belgium");
 		email = "test@test.test";

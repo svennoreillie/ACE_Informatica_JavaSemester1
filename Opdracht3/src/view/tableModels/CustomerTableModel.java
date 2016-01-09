@@ -2,12 +2,7 @@ package view.tableModels;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.swing.table.AbstractTableModel;
-
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;

@@ -1,31 +1,28 @@
 package view.panels;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.BigDecimal;
-import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import common.AntiMagicStrings;
-import common.DBException;
-import common.DBMissingException;
 import common.enums.*;
 import controller.SpamRegistratieController;
 import controller.WinkelController;
-import database.DataService;
-import database.DataStrategy;
-import model.Customer;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

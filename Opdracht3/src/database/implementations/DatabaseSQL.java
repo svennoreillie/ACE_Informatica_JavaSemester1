@@ -1,5 +1,11 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

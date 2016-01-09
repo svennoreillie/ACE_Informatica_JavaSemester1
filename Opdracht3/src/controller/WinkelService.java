@@ -1,8 +1,13 @@
 package controller;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import java.util.List;
 import model.Item;
-
 
 public interface WinkelService<T extends Item> {
 	

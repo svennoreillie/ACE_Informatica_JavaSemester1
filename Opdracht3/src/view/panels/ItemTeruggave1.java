@@ -28,6 +28,8 @@ import java.awt.event.MouseEvent;
  *
  */
 public class ItemTeruggave1 extends JPanel {
+
+	private static final long serialVersionUID = 2005501532857087964L;
 	private JLabel lblCustomer;
 	private JLabel lblName;
 	private JLabel lblAddressLine1;

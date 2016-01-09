@@ -1,17 +1,17 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie & Vervoort Peter
+ *
+ */
+
 import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
 import database.helpers.DataSource;
 import database.internalInterface.DataReadWriteService;
 import model.Address;
-import model.Shop;
+
 
 public class TestDataSourceFactory {
 

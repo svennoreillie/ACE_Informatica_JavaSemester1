@@ -1,21 +1,17 @@
-/**
- * 
- */
 package model.subItems;
 
 import java.math.BigDecimal;
-import java.util.Date;
-
-import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
-import model.Item;
 
 /**
- * @author Peter
+ * 
+ * @author Vervoort Peter
  *
  */
+
 public class Dvd extends model.Item {
 
+	private static final long serialVersionUID = -4229997050252388319L;
 	private EnumTypeDvd dvdType;
 	
 	public EnumTypeDvd getDvdType() {
