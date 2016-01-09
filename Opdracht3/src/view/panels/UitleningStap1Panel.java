@@ -4,16 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/svennoreillie/development
 import javax.swing.JPanel;
-<<<<<<< HEAD
+
 
 import model.Customer;
-=======
->>>>>>> refs/remotes/svennoreillie/development
 import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
@@ -24,19 +19,12 @@ import view.tableModels.UitleningTableModel;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-<<<<<<< HEAD
 
-=======
 import common.enums.EventEnum;
->>>>>>> refs/remotes/svennoreillie/development
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
-<<<<<<< HEAD
 import database.DataService;
 import database.DataStrategy;
-
-=======
->>>>>>> refs/remotes/svennoreillie/development
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
@@ -44,15 +32,12 @@ import javax.swing.JTable;
 import common.DBException;
 import common.DBMissingException;
 import common.enums.EnumItemTypeItems;
-<<<<<<< HEAD
 
 /**
  * 
  * @author Huybrechts
  *
  */
-=======
->>>>>>> refs/remotes/svennoreillie/development
 
 public class UitleningStap1Panel extends JPanel{
 	

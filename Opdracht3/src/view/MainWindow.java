@@ -14,10 +14,6 @@ import common.*;
 import common.factories.*;
 import controller.WinkelController;
 import controller.event.WindowChangedService;
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/svennoreillie/development
 import database.*;
 import model.Customer;
 import model.Item;
@@ -29,15 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-<<<<<<< HEAD
-
-/**
- * 
- * @author Huybrechts
- *
- */
-=======
->>>>>>> refs/remotes/svennoreillie/development
 
 public class MainWindow extends JFrame implements WindowChangedService {
 
