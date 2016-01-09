@@ -64,12 +64,15 @@ public class TestSQLDatabase {
                 Person p1 = new Person();
                 p1.setFirstName("Sven");
                 p1.setLastName("Awesome");
+                p1.setId(1);
                 Person p2 = new Person();
                 p2.setFirstName("Peter");
                 p2.setLastName("Dude");
+                p2.setId(2);
                 Person p3 = new Person();
                 p3.setFirstName("Andre");
                 p3.setLastName("Doc");
+                p3.setId(3);
                 persons.add(p1);
                 persons.add(p2);
                 persons.add(p3);
@@ -89,7 +92,9 @@ public class TestSQLDatabase {
                 List<Customer> customers = new ArrayList<Customer>();
 
                 for (int i = 0; i < 10; i++) {
-                        customers.add(CustomerFactory.getCustomer());
+                	Customer c = CustomerFactory.getCustomer();
+                	c.setId(i+1);
+                        customers.add(c);
                 }
 
                 customerDb.writeDB(customers, false);

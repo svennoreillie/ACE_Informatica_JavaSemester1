@@ -79,13 +79,13 @@ public class TestExcelDatabase {
 		assertNotNull(customers);
 		assertEquals(0, customers.size());
 		
-		List<Address> addresses = addressDb.readDB();
-		assertNotNull(addresses);
-		assertEquals(0, addresses.size());
-		
-		List<Person> persons = personDb.readDB();
-		assertNotNull(persons);
-		assertEquals(0, persons.size());
+//		List<Address> addresses = addressDb.readDB();
+//		assertNotNull(addresses);
+//		assertEquals(0, addresses.size());
+//		
+//		List<Person> persons = personDb.readDB();
+//		assertNotNull(persons);
+//		assertEquals(0, persons.size());
 	}
 	
 	@Test
@@ -101,13 +101,13 @@ public class TestExcelDatabase {
 		assertTrue(f.exists());
 		assertFalse(f.isDirectory());
 		
-		 f = new File(addressString);
-		assertTrue(f.exists());
-		assertFalse(f.isDirectory());
-		
-		 f = new File(personString);
-		assertTrue(f.exists());
-		assertFalse(f.isDirectory());
+//		 f = new File(addressString);
+//		assertTrue(f.exists());
+//		assertFalse(f.isDirectory());
+//		
+//		 f = new File(personString);
+//		assertTrue(f.exists());
+//		assertFalse(f.isDirectory());
 	}
 	
 	@Test
