@@ -12,6 +12,7 @@ import javax.swing.event.DocumentListener;
 import common.DBException;
 import common.DBMissingException;
 import controller.CustomerController;
+import controller.event.MainWindowChangedFiringSource;
 import model.Customer;
 import view.tableModels.CustomerTableModel;
 
@@ -33,6 +34,7 @@ public class ItemTeruggave1 extends JPanel {
 	private JLabel lblAddressLine2;
 	private JLabel lblCustomerId;
 	private JLabel lblEmail;
+	private JButton btnNext;
 	private JTextField tfSearchCustomer;
 	private JTable tableCustomers;
 	private CustomerTableModel tableModel;
@@ -90,7 +92,16 @@ public class ItemTeruggave1 extends JPanel {
 		    };
 		tfSearchCustomer.getDocument().addDocumentListener(documentListener);
 		
-		JButton btnNext = new JButton("Next >");
+		btnNext = new JButton("Next >");
+		btnNext.setEnabled(false);
+		btnNext.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ItemTeruggave2 uitleningLijst;
+				uitleningLijst = new ItemTeruggave2(customer);
+				MainWindowChangedFiringSource.getInstance().fireChanged(uitleningLijst);
+			}
+		});
 		btnNext.setBounds(501, 566, 89, 23);
 		add(btnNext);
 		
@@ -173,5 +184,7 @@ public class ItemTeruggave1 extends JPanel {
 		this.lblName.setText(custToDisplay.getPerson().getFirstName() + " " + custToDisplay.getPerson().getLastName());
 		
 		showLabels();
+		customer = custToDisplay;
+		btnNext.setEnabled(true);
 	}
 }

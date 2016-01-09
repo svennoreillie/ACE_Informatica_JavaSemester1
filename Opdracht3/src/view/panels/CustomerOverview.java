@@ -252,7 +252,6 @@ public class CustomerOverview extends JPanel {
 					} catch (DBMissingException | DBException e1) {
 						System.out.println(e1.toString());
 					} 
-
 				}
 				else{
 					try{

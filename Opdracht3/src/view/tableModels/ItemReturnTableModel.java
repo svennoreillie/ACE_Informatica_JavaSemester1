@@ -71,7 +71,7 @@ public class ItemReturnTableModel extends AbstractTableModel{
 			value = uitlening.getBeginVerhuurDatum().plusDays(uitlening.getVerhuurPeriodeInDagen());
 			break;
 		case 3:
-			value = false;
+			value = uitlening.getWordtGedeponeerd();
 			break;
 		default:
 			System.err.println("Error on column index");
