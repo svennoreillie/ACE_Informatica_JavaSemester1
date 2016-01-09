@@ -31,7 +31,8 @@
   </class>  
   <class id="4" language="java" name="controller.UitleenController" project="Opdracht3" 
     file="/Opdracht3/src/controller/UitleenController.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="58" width="139" x="149" y="229"/>    
+    <position height="58" width="145" x="143" y="229"/>    
+    <background red="255" green="128" blue="255"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -133,6 +134,7 @@
   <interface id="15" language="java" name="controller.ObserverInterfaces.Observer" project="Opdracht3" 
     file="/Opdracht3/src/controller/ObserverInterfaces/Observer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="58" width="145" x="143" y="298"/>    
+    <background red="255" green="128" blue="255"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
