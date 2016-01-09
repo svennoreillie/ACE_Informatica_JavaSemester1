@@ -141,6 +141,7 @@ public class UitleningStap1Panel extends JPanel{
 		
 		try{
 			List<Uitlening> uitlenignen = DataStrategy.getDataService(Uitlening.class).getAll();
+			//DataStrategy.getDataService(Uitlening.class).remove(entity);
 			tableModel.setUitleningen(uitlenignen);
 		} catch(DBMissingException | DBException e1){
 			
