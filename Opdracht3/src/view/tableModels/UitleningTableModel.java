@@ -172,7 +172,7 @@ public class UitleningTableModel extends AbstractTableModel{
 	
 	@Override 
 	public void setValueAt(Object aValue,int row,int column){
-		itemSelectedMap.replace(itemsToShow.get(row),!itemSelectedMap.get(items.get(row)));
+		itemSelectedMap.replace(itemsToShow.get(row),!itemSelectedMap.get(itemsToShow.get(row)));
 	}
 	
 	@Override
