@@ -95,7 +95,11 @@ public class ItemTeruggave1 extends JPanel {
 		add(btnNext);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.addMouseListener(new MouseAdapter() {
+		scrollPane.setBounds(10, 167, 580, 380);
+		add(scrollPane);
+		tableModel = new CustomerTableModel();
+		tableCustomers = new JTable(tableModel);
+		tableCustomers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
@@ -109,10 +113,6 @@ public class ItemTeruggave1 extends JPanel {
 				}
 			}
 		});
-		scrollPane.setBounds(10, 167, 580, 380);
-		add(scrollPane);
-		tableModel = new CustomerTableModel();
-		tableCustomers = new JTable(tableModel);
 		try {
 			tableModel.updateTable();
 		} catch (DBMissingException e) {
@@ -130,7 +130,6 @@ public class ItemTeruggave1 extends JPanel {
 	private void hideLabels(){
 		lblAddressLine1.setVisible(false);
 		lblAddressLine2.setVisible(false);
-		lblCustomer.setVisible(false);
 		lblCustomerId.setVisible(false);
 		lblEmail.setVisible(false);
 		lblName.setVisible(false);
@@ -139,7 +138,6 @@ public class ItemTeruggave1 extends JPanel {
 	private void showLabels(){
 		lblAddressLine1.setVisible(true);
 		lblAddressLine2.setVisible(true);
-		lblCustomer.setVisible(true);
 		lblCustomerId.setVisible(true);
 		lblEmail.setVisible(true);
 		lblName.setVisible(true);
@@ -168,7 +166,7 @@ public class ItemTeruggave1 extends JPanel {
 		
 		this.lblAddressLine2.setText(custToDisplay.getAddress().getZip() + " " + custToDisplay.getAddress().getCity().toUpperCase() + " " + custToDisplay.getAddress().getCountry());
 		
-		this.lblCustomerId.setText(String.valueOf(custToDisplay.getId()));
+		this.lblCustomerId.setText("Customer ID: " + String.valueOf(custToDisplay.getId()));
 		
 		this.lblEmail.setText(custToDisplay.getEmail());
 		
