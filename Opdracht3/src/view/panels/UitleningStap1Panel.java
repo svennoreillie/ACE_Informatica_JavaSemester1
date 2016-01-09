@@ -7,7 +7,9 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import model.Customer;
 import model.Item;
+import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
@@ -20,10 +22,15 @@ import javax.swing.JTextField;
 
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
+import database.DataService;
+import database.DataStrategy;
 
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
+
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EnumItemTypeItems;
 
 /**
@@ -130,7 +137,16 @@ public class UitleningStap1Panel extends JPanel{
 		List<Item> allItems = new ArrayList<Item>();
 		allItems.addAll(new WinkelController<Game>(Game.class).getAllSortedByName());
 		allItems.addAll(new WinkelController<Cd>(Cd.class).getAllSortedByName());
-		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());
+		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());		
+		
+		try{
+			List<Uitlening> uitlenignen = DataStrategy.getDataService(Uitlening.class).getAll();
+			tableModel.setUitleningen(uitlenignen);
+		} catch(DBMissingException | DBException e1){
+			
+		}
+		
+		
 		
 		setAllItems(allItems);
 		tableModel.setItemsToShow(Item.class);

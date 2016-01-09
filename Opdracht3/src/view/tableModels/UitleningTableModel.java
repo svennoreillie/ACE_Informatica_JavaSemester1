@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
 
 import model.Item;
+import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
@@ -32,11 +33,13 @@ public class UitleningTableModel extends AbstractTableModel{
 	private final LinkedList<Item> items;
 	private final Map<Item,Boolean> itemSelectedMap;
 	private final LinkedList<Item> itemsToShow;
+	private final LinkedList<Item> uitgeleendeItems;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
 		itemSelectedMap = new HashMap<>();
 		itemsToShow = new LinkedList<Item>();
+		uitgeleendeItems = new LinkedList<Item>();
 	}
 	
 	public void setItems(List<Item> items){
@@ -102,6 +105,11 @@ public class UitleningTableModel extends AbstractTableModel{
 		//fireTableRowsInserted(0,this.items.size()-1);
 	}
 	
+	public void setUitleningen(List<Uitlening> uitleningen){
+		for(Uitlening u:uitleningen){
+			uitgeleendeItems.add(u.getUitgeleendItem());
+		}
+	}
 	
 	@SuppressWarnings("rawtypes")
 	public void setItemsToShow(Class type){		
@@ -111,7 +119,6 @@ public class UitleningTableModel extends AbstractTableModel{
 			itemsToShow=items;
 		}else{
 			itemsToShow = items.stream().filter(item -> item.getClass().equals(type)).collect(Collectors.toList());
-			
 		}
 		this.itemsToShow.addAll(itemsToShow);
 		
@@ -154,7 +161,7 @@ public class UitleningTableModel extends AbstractTableModel{
 			value = item.getId();
 			break;
 		case 3:
-			value = !item.getisUitgeleend();
+			value = !uitgeleendeItems.contains(itemsToShow.get(row));
 			break;
 		case 4:
 			value=itemSelectedMap.get(item);
@@ -184,7 +191,11 @@ public class UitleningTableModel extends AbstractTableModel{
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	if(columnIndex == 4 && !itemsToShow.get(rowIndex).getisUitgeleend()) 
+    	/*if(columnIndex == 4 && !itemsToShow.get(rowIndex).getisUitgeleend()) 
+    		return true;
+    	else 
+    		return false;*/
+    	if(columnIndex == 4 && !uitgeleendeItems.contains(itemsToShow.get(rowIndex))) 
     		return true;
     	else 
     		return false;
