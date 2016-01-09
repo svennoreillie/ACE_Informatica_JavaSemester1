@@ -4,28 +4,40 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import common.DBException;
 import common.DBMissingException;
+import controller.ReceiptController;
 import controller.UitleenController;
+import controller.event.MainWindowChangedFiringSource;
+import model.ConcreteReceipt;
 import model.Customer;
+import model.Item;
 import model.Uitlening;
 import view.tableModels.ItemReturnTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class ItemTeruggave2 extends JPanel {
 	private JTable itemTable;
 	private ItemReturnTableModel tableModel;
-	private ArrayList<Uitlening> uitleningenLijst = new ArrayList<Uitlening>();
 	private UitleenController controller = new UitleenController();
 
 	/**
@@ -38,7 +50,7 @@ public class ItemTeruggave2 extends JPanel {
 		setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 48, 580, 507);
+		scrollPane.setBounds(10, 36, 580, 519);
 		add(scrollPane);
 		
 		tableModel = new ItemReturnTableModel(customer);
@@ -57,20 +69,48 @@ public class ItemTeruggave2 extends JPanel {
 		}
 		scrollPane.setViewportView(itemTable);
 		
-		JLabel lblSelectReturnedItems = new JLabel("Select returned items:");
+		JLabel lblSelectReturnedItems = new JLabel("Select returned item(s):");
 		lblSelectReturnedItems.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSelectReturnedItems.setBounds(10, 11, 568, 14);
 		add(lblSelectReturnedItems);
 		
-		JButton btnNext = new JButton("Next >");
-		btnNext.setBounds(501, 566, 89, 23);
-		add(btnNext);
+		JButton btnCheckout = new JButton("Checkout");
+		btnCheckout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				ArrayList<Item> returnedItems = new ArrayList<Item>();
+				for (Uitlening uitlening : tableModel.getSelectedItems()) {
+					returnedItems.add(uitlening.getUitgeleendItem());
+				}
+				
+				ConcreteReceipt receipt = new ConcreteReceipt();
+				receipt.setItems(returnedItems);
+				ReceiptController.printReceipt(receipt);
+				
+				controller.uitleningVanMeerdereItemsStoppen(tableModel.getSelectedItems());
+				JOptionPane.showMessageDialog(null, "Receipt has been printed, check console for details");
+				backToItemReturnOverview();
+			}
+		});
+		btnCheckout.setBounds(501, 566, 89, 23);
+		add(btnCheckout);
 		
 		JButton btnBack = new JButton("< Back");
+		btnBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				backToItemReturnOverview();
+			}
+		});
 		btnBack.setBounds(402, 566, 89, 23);
 		add(btnBack);
 		
 	}
-
+	
+	private void backToItemReturnOverview() {
+		ItemTeruggave1 uitleningLijst = new ItemTeruggave1();
+		MainWindowChangedFiringSource.getInstance().fireChanged(uitleningLijst);
+	}
 
 }

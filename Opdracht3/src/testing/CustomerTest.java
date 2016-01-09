@@ -9,6 +9,11 @@ import model.Address;
 import model.Customer;
 import model.Person;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerTest {
 
 	private Customer customer;

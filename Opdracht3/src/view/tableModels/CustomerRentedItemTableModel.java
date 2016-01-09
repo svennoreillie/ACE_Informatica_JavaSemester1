@@ -15,6 +15,11 @@ import model.Customer;
 import model.Item;
 import model.Uitlening;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerRentedItemTableModel extends AbstractTableModel{
 	
 	/**

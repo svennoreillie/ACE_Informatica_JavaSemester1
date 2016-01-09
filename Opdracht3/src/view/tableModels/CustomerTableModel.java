@@ -14,7 +14,11 @@ import database.DataService;
 import database.DataStrategy;
 import model.Customer;
 
-
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerTableModel extends AbstractTableModel {
 	/**
 	 * 
