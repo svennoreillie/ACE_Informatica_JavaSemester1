@@ -8,10 +8,8 @@ import javax.swing.JPanel;
 import common.*;
 import common.factories.*;
 import controller.WinkelController;
-import controller.WinkelService;
 import controller.event.WindowChangedService;
 
-import database.helpers.DataSource;
 import database.*;
 import model.Customer;
 import model.Item;
@@ -24,8 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-import java.awt.Insets;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class MainWindow extends JFrame implements WindowChangedService {
 

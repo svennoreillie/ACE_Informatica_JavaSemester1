@@ -15,6 +15,13 @@ import view.panels.ItemTeruggave1;
 import view.panels.UitleningStap1Panel;
 import view.panels.UitleningStap2Panel;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
+
 public class MainWindowChangedFiringSource implements WindowChangedFiringService,ActionListener{
 
 	

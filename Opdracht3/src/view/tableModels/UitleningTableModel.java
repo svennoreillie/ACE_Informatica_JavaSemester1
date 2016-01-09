@@ -15,6 +15,12 @@ import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public class UitleningTableModel extends AbstractTableModel{
 
 	/**
@@ -96,6 +102,8 @@ public class UitleningTableModel extends AbstractTableModel{
 		//fireTableRowsInserted(0,this.items.size()-1);
 	}
 	
+	
+	@SuppressWarnings("rawtypes")
 	public void setItemsToShow(Class type){		
 		itemsToShow.clear();
 		List<Item> itemsToShow;
@@ -155,6 +163,7 @@ public class UitleningTableModel extends AbstractTableModel{
 		return value;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Class getColumnClass(int column){
 		switch(column){

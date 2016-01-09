@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import common.enums.EventEnum;
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
 
@@ -27,7 +25,12 @@ import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import common.enums.EnumItemTypeItems;
-import javax.swing.JCheckBox;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class UitleningStap1Panel extends JPanel{
 	
@@ -102,12 +105,6 @@ public class UitleningStap1Panel extends JPanel{
 		textField.setBounds(193, 8, 134, 20);
 		add(textField);
 		textField.setColumns(10);
-		
-		/*Button btnNext = new Button("Next");
-		btnNext.addActionListener(MainWindowChangedFiringSource.getInstance());
-		btnNext.setActionCommand(EventEnum.RENTBUTTON2);
-		btnNext.setBounds(501, 566, 89, 23);
-		add(btnNext);*/
 		
 		Button btnNext = new Button("Next");
 		btnNext.setBounds(501, 566, 89, 23);

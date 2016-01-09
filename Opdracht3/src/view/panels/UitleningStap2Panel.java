@@ -14,7 +14,17 @@ import java.util.List;
 
 import javax.swing.JButton;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public class UitleningStap2Panel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6900153860626626189L;
 	private JTextField textField;
 	private JTable table;
 	private JTextField textField_1;
