@@ -11,6 +11,7 @@ import common.enums.EventEnum;
 
 import view.panels.CustomerOverview;
 import view.panels.ItemManagementPanel;
+import view.panels.ItemTeruggave1;
 import view.panels.UitleningStap1Panel;
 import view.panels.UitleningStap2Panel;
 
@@ -65,9 +66,9 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		case CUSTOMEROVERVIEWBUTTONEVENT:
 			fireChanged(new CustomerOverview());
 			break;
-//		case ADDITEMBUTTONEVENT:
-//			fireChanged(new AddItemPanel());
-//			break;
+		case RETURNITEMBUTTONEVENT:
+			fireChanged(new ItemTeruggave1());
+			break;
 		case RENTBUTTON1:
 			fireChanged(new UitleningStap1Panel());
 			break;
