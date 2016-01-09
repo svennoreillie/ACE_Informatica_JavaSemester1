@@ -21,6 +21,11 @@ import javax.swing.JScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerDetail extends JPanel {
 	/**
 	 * 

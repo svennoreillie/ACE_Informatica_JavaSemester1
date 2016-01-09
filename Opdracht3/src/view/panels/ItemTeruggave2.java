@@ -30,6 +30,11 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class ItemTeruggave2 extends JPanel {
 	private JTable itemTable;
 	private ItemReturnTableModel tableModel;

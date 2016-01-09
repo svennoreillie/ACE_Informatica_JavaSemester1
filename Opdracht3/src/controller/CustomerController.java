@@ -10,6 +10,11 @@ import common.factories.CustomerFactory;
 import database.*;
 import model.Customer;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerController {
 
 	private DataService<Customer> customerData = DataStrategy.getDataService(Customer.class);
@@ -24,7 +29,6 @@ public class CustomerController {
 	}
 	
 	public void addCustomer(Customer customer) throws DBMissingException, DBException{
-//		customer.setId(customerData.getAll().size()+1);
 		customerData.add(customer);
 	}
 	
