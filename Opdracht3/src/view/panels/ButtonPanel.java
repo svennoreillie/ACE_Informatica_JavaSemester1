@@ -10,12 +10,16 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
-import common.DBException;
-import common.DBMissingException;
 import common.enums.EventEnum;
 import controller.WindowController;
 import controller.event.MainWindowChangedFiringSource;
 import view.custom.Button;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class ButtonPanel extends JPanel {
 	
