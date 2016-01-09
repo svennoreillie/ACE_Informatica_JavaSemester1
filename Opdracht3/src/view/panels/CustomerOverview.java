@@ -39,6 +39,11 @@ import java.awt.event.InputMethodEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerOverview extends JPanel {
 	private static final long serialVersionUID = 3080524381208533700L;
 	private JTextField tfFirstName;
