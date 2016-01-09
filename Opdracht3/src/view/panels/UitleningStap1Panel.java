@@ -103,10 +103,22 @@ public class UitleningStap1Panel extends JPanel{
 		add(textField);
 		textField.setColumns(10);
 		
-		Button btnNext = new Button("Next");
+		/*Button btnNext = new Button("Next");
 		btnNext.addActionListener(MainWindowChangedFiringSource.getInstance());
 		btnNext.setActionCommand(EventEnum.RENTBUTTON2);
 		btnNext.setBounds(501, 566, 89, 23);
+		add(btnNext);*/
+		
+		Button btnNext = new Button("Next");
+		btnNext.setBounds(501, 566, 89, 23);
+		btnNext.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UitleningStap2Panel panel = new UitleningStap2Panel();
+				panel.setItems(getSelectedItems());
+				MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+			}
+		});
 		add(btnNext);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -131,5 +143,9 @@ public class UitleningStap1Panel extends JPanel{
 		this.allItems = items;
 		tableModel.setItems(items);
 		
+	}
+
+	public List<Item> getSelectedItems(){
+		return tableModel.getSelectedItem();
 	}
 }

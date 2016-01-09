@@ -17,6 +17,8 @@ import view.panels.UitleningStap2Panel;
 
 public class MainWindowChangedFiringSource implements WindowChangedFiringService,ActionListener{
 
+	
+	
 	private List<WindowChangedService> listeners;
 	private static MainWindowChangedFiringSource instance;
 	

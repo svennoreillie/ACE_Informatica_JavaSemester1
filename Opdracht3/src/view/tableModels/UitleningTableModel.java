@@ -1,5 +1,6 @@
 package view.tableModels;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -107,6 +108,16 @@ public class UitleningTableModel extends AbstractTableModel{
 		this.itemsToShow.addAll(itemsToShow);
 		
 		fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
+	}
+	
+	public List<Item> getSelectedItem(){
+		List<Item> selectedItems = new ArrayList<>();
+		for(Item item:itemSelectedMap.keySet()){
+			if(itemSelectedMap.get(item)){
+				selectedItems.add(item);
+			}
+		}
+		return selectedItems;
 	}
 	
 	@Override
