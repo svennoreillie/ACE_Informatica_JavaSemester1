@@ -16,6 +16,7 @@ import common.DBMissingException;
 import database.DataService;
 import database.helpers.ReflectionPropertyHelper;
 import database.internalInterface.DataReadWriteService;
+import model.Item;
 import model.ModelBase;
 
 public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>implements DataReadWriteService<T> {
@@ -23,6 +24,10 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 	public DatabaseSQL(Class<T> classType) {
 		super(classType);
 
+		if (this.classType == Item.class) {
+			System.err.println();
+		}
+		
 		// Create the table in the database
 		this.createTable();
 	}
@@ -124,10 +129,11 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 	}
 
 	@Override
-	public void writeDB(List<T> list) throws DBMissingException, DBException {
+	public void writeDB(List<T> list, Boolean update) throws DBMissingException, DBException {
+		String insertQuery = "";
 		try {
 			// clear entire table
-			// TODO:: improve this, worst idea ever
+			// TODO:: improve this, worst idea everv
 			try {
 				Connection conn = this.createConnection();
 				Statement clearStatement = conn.createStatement();
@@ -141,7 +147,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 			// load structure of T
 			List<ReflectionPropertyHelper> genericFieldArray = getFields();
 
-			String insertQuery = "INSERT INTO " + getTableName() + " (";
+			insertQuery = "INSERT INTO " + getTableName() + " (";
 			int colIndex = 0;
 			for (ReflectionPropertyHelper property : genericFieldArray) {
 				if (colIndex != 0)
@@ -161,15 +167,26 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 							// leave storing of the found ModelBase to an
 							// instance of DatabaseSQL with type of found
 							// ModelBase
-							String classTypeString = property.getPropertyType().getName();
+							
+							// get the value of this property for the current
+							ModelBase model = (ModelBase) property.getGetter().invoke(item);
+							
+							//Get classtype of instance, if it exists
+							if (model == null) continue;
+							String classTypeString = model.getClass().getName();
 							// ugly helper method to create a DataService, could
 							// not find a way to do it generic
 							DataService<? extends ModelBase> strategy = GetDedicatedDataService(classTypeString);
 
-							// get the value of this property for the current
+							
 							// item in the list & save to other DataService
-							ModelBase model = (ModelBase) property.getGetter().invoke(item);
-							strategy.add(model);
+							if (update) {
+								strategy.update(model);
+							} else {
+								strategy.add(model);
+							}
+							
+							
 							// save id of this item in our own excel
 							value = model.getId();
 
@@ -219,7 +236,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 								rowQuery += value.toString();
 								break;
 							case "org.joda.time.DateTime":
-								rowQuery += value.toString();
+								rowQuery += ("'" + value.toString() + "'");
 								break;
 							default:
 								rowQuery += ("'" + value.toString() + "'");
@@ -245,7 +262,7 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 			clearStatement.close();
 			conn.close();
 		} catch (Exception e) {
-			throw new DBException("Error writing to SQL database " + getTableName(), e);
+			throw new DBException("Error writing to SQL database " + getTableName() + "---" + insertQuery, e);
 		}
 	}
 
@@ -275,7 +292,13 @@ public class DatabaseSQL<T extends ModelBase> extends ReflectionDatabase<T>imple
 					// continue, automatically added to fields
 					continue;
 				} else if (ModelBase.class.isAssignableFrom(property.getPropertyType())) {
-					column = property.getName() + " INTEGER";
+					if (Modifier.isAbstract(property.getPropertyType().getModifiers())) {
+						// Could be the abstract item class => prefix
+						// with classtype
+						column = property.getName() + " VARCHAR(250)";
+					} else {
+						column = property.getName() + " INTEGER";
+					}
 				} else {
 					// normal property
 					column = property.getName() + " ";

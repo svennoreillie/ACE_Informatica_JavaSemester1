@@ -82,7 +82,7 @@ public class TestSQLDatabase {
                 persons.add(p2);
                 persons.add(p3);
 
-                personDb.writeDB(persons);
+                personDb.writeDB(persons, false);
 
                 List <Person> persoonslijst = personDb.readDB();
                 assertTrue(persoonslijst.contains(p1));
@@ -100,7 +100,7 @@ public class TestSQLDatabase {
                         customers.add(CustomerFactory.getCustomer());
                 }
 
-                customerDb.writeDB(customers);
+                customerDb.writeDB(customers, false);
 
                 List <Customer> customersReturned = customerDb.readDB();
                 assertEquals(10, customersReturned.size());

@@ -64,7 +64,7 @@ public class TestExcelDatabase {
 		persons.add(p2);
 		persons.add(p3);
 		
-		personDb.writeDB(persons);
+		personDb.writeDB(persons, false);
 		
 		File f = new File(personString);
 		assertTrue(f.exists());
@@ -94,7 +94,7 @@ public class TestExcelDatabase {
 		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
-		customerDb.writeDB(customers);
+		customerDb.writeDB(customers, false);
 		
 		File f = new File(customerString);
 		assertTrue(f.exists());
@@ -116,7 +116,7 @@ public class TestExcelDatabase {
 		Customer c = CustomerFactory.getCustomer();
 		customers.add(c);
 		
-		customerDb.writeDB(customers);
+		customerDb.writeDB(customers, false);
 		
 		customers = customerDb.readDB();
 		assertNotNull(customers);

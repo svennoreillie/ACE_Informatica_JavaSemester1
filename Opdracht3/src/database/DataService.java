@@ -45,11 +45,11 @@ public interface DataService<T extends ModelBase> {
 	
 	/**
 	 * Add an item to the database
-	 * @param entity
+	 * @param model
 	 * @throws DBMissingException
 	 * @throws DBException
 	 */
-	void update(T entity) throws DBMissingException, DBException;
+	void update(ModelBase model) throws DBMissingException, DBException;
 
 	/**
 	 * Removes an item from the database

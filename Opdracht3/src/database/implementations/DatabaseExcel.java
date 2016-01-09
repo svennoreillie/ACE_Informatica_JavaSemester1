@@ -141,7 +141,7 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 	}
 
 	@Override
-	public void writeDB(List<T> list) throws DBMissingException, DBException {
+	public void writeDB(List<T> list, Boolean update) throws DBMissingException, DBException {
 		WritableWorkbook workbook = null;
 		try {
 			// create excel
@@ -185,7 +185,11 @@ public class DatabaseExcel<T extends ModelBase> extends ReflectionDatabase<T> im
 								// not find a way to do it generic
 								DataService<? extends ModelBase> strategy = GetDedicatedDataService(model.getClass().getName());
 
-								strategy.add(model);
+								if (update) {
+									strategy.update(model);
+								} else {
+									strategy.add(model);
+								}
 								// save id of this item in our own excel
 								value = model.getId();
 								if (Modifier.isAbstract( property.getPropertyType().getModifiers() )) {
