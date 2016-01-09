@@ -269,28 +269,6 @@ public class CustomerOverview extends JPanel {
 		});
 		scrollPane.setViewportView(tableCustomers);
 		
-		JButton btnLaunchFactory = new JButton("Launch factory");
-		btnLaunchFactory.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				try {
-					controller.createCustomers();
-					tableModel.updateTable();
-					tableCustomers.repaint();
-					scrollPane.setViewportView(tableCustomers);
-				} catch (DBMissingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DBException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-			
-		btnLaunchFactory.setBounds(10, 566, 139, 23);
-		add(btnLaunchFactory);
-		
 		tfSearch = new JTextField();
 		DocumentListener documentListener = new DocumentListener() {
 		      public void changedUpdate(DocumentEvent documentEvent) {
@@ -528,7 +506,6 @@ public class CustomerOverview extends JPanel {
 			newCust.setEmail(tfEmail.getText());
 			newCust.setPerson(newPers);
 			newCust.setAddress(newAdd);
-//			newCust.setId(controller.getList().size()+1);
 			
 			controller.addCustomer(newCust);
 			tableModel.updateTable();
