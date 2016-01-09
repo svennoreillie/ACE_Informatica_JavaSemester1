@@ -1,5 +1,11 @@
 package controller;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import common.DBException;
 import common.DBMissingException;
 import model.Customer;

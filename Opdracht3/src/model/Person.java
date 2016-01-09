@@ -8,6 +8,7 @@ package model;
  */
 public class Person extends ModelBase {
 	
+	private static final long serialVersionUID = -6476871479678450068L;
 	private String firstName;
 	private String lastName;
 	

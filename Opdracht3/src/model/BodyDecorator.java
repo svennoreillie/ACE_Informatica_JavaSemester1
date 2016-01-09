@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 public class BodyDecorator extends ReceiptDecorator {
 
 	public BodyDecorator(Receipt receipt) {

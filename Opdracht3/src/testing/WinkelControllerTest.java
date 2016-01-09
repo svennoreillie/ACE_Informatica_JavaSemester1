@@ -1,7 +1,12 @@
 package testing;
 
-import static org.junit.Assert.*;
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
 
+import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import org.junit.Before;
 import org.junit.Test;

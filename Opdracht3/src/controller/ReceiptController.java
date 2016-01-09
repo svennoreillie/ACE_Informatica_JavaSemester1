@@ -1,7 +1,5 @@
 package controller;
 
-import java.math.BigDecimal;
-
 import model.BodyDecorator;
 import model.FooterDecorator;
 import model.HeaderDecorator;

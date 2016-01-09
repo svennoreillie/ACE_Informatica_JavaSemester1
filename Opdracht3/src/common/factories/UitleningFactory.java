@@ -2,12 +2,9 @@ package common.factories;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-
 import org.joda.time.DateTime;
-
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;

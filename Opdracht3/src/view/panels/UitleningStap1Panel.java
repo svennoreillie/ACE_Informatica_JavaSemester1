@@ -4,30 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.swing.JPanel;
-
 import model.Item;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 import view.custom.Button;
 import view.tableModels.UitleningTableModel;
-
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-
 import common.enums.EventEnum;
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
-
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 import common.enums.EnumItemTypeItems;
-import javax.swing.JCheckBox;
 
 public class UitleningStap1Panel extends JPanel{
 	

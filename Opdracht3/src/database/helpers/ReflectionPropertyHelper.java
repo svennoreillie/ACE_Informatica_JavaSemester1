@@ -1,5 +1,11 @@
 package database.helpers;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import java.lang.reflect.Method;
 
 public class ReflectionPropertyHelper implements Comparable<Object> {

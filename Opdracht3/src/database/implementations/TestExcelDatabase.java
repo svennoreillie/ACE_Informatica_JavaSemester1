@@ -1,5 +1,11 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -8,18 +14,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import common.DBException;
 import common.DBMissingException;
 import common.factories.CustomerFactory;
 import database.helpers.DataSource;
-import common.factories.*;
 import model.*;
 
 public class TestExcelDatabase {

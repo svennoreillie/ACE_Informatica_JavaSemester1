@@ -1,10 +1,11 @@
 package model;
 
-
 import org.joda.time.DateTime;
 
-
 public class Uitlening extends ModelBase implements Cloneable{
+
+	private static final long serialVersionUID = -6613770275145515508L;
+
 
 	public Uitlening() {
 		

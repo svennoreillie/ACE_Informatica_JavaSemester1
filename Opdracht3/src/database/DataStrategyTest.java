@@ -1,8 +1,13 @@
 package database;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import static org.junit.Assert.*;
 import org.junit.Test;
-
 import database.implementations.Data;
 import model.*;
 

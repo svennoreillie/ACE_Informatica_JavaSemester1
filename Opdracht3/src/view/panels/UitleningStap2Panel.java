@@ -8,6 +8,8 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 
 public class UitleningStap2Panel extends JPanel{
+
+	private static final long serialVersionUID = 3539818115246464092L;
 	private JTextField textField;
 	private JTable table;
 	private JTextField textField_1;

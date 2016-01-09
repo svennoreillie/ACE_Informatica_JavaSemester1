@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 
 public class HeaderDecorator extends ReceiptDecorator{

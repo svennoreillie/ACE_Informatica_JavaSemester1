@@ -1,11 +1,13 @@
 package model;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Date;
-
 import model.ModelBase;
-
 
 abstract public class Item extends ModelBase {
 
@@ -32,13 +34,10 @@ abstract public class Item extends ModelBase {
 		this.isUitgeleend = false;
 	}
 	
-	
 	public int getBoetePrijsPerDag() {
 		return boetePrijsPerDag;
 	}
-	public void setBoetePrijsPerDag(int boete) {
-		//Hier doen we niets
-		
+	public void setBoetePrijsPerDag(int boete) {	
 	}
 	public boolean getisUitgeleend() {
 		return isUitgeleend;
@@ -58,15 +57,12 @@ abstract public class Item extends ModelBase {
 	public void setVerhuurPrijs(BigDecimal verhuurPrijs) {
 		this.verhuurPrijsInEuro = verhuurPrijs;
 	}
-	
 	public Double getVerhuurPrijsPerDag() {
 		return verhuurPrijsPerDag;
 	}
 	public void setVerhuurPrijsPerDag(Double verhuurPrijsPerDag) {
 		this.verhuurPrijsPerDag = verhuurPrijsPerDag;
 	}
-	
-	
 	
 	@Override
 	public int hashCode() {
