@@ -122,14 +122,23 @@ public class UitleenController implements UitleenService {
 	@Override
 	public void uitleningVanEenItemStoppen(Uitlening uitlening) {
 		uitlening.getUitgeleendItem().setisUitgeleend(false);
-		uitleningenLijst.remove(uitlening);	
+		uitleningenLijst.remove(uitlening);
+		
+		try {
+			DataStrategy.getDataService(Uitlening.class).remove(uitlening);
+		} catch (DBMissingException e) {
+			// Magicstring goes here
+			e.printStackTrace();
+		} catch (DBException e) {
+			// Magicstring goes here
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void uitleningVanMeerdereItemsStoppen(List<Uitlening> teStoppenItemlijst) {
 		for(Uitlening u:teStoppenItemlijst){
-			uitleningenLijst.remove(u);
-			u.getUitgeleendItem().setisUitgeleend(false);
+			uitleningVanEenItemStoppen(u);
 		}
 	}
 

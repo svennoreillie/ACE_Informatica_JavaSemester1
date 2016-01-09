@@ -97,8 +97,7 @@ public class ItemTeruggave1 extends JPanel {
 		btnNext.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ItemTeruggave2 uitleningLijst;
-				uitleningLijst = new ItemTeruggave2(customer);
+				ItemTeruggave2 uitleningLijst = new ItemTeruggave2(customer);
 				MainWindowChangedFiringSource.getInstance().fireChanged(uitleningLijst);
 			}
 		});
