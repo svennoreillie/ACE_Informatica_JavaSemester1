@@ -7,7 +7,8 @@ public enum EventEnum {
 	RENTBUTTON2("rentButtonEvent2"),
 	ITEMMANAGEMENT("itemManagement"),
 	YELLOWBUTTONEVENT("yellowButtonEvent"),
-	REDBUTTONEVENT("redButtonEvent");
+	REDBUTTONEVENT("redButtonEvent"), 
+	ADDITEMBUTTONEVENT("addItemButtonEvent");
 	
 	
 	private String actionCommand;

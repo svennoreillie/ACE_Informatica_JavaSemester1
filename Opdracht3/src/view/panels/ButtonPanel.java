@@ -2,14 +2,37 @@ package view.panels;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EventEnum;
+import controller.WindowController;
 import controller.event.MainWindowChangedFiringSource;
 import view.custom.Button;
 
 public class ButtonPanel extends JPanel {
+	
+	private class ButtonPanelKeyDispatcher implements KeyEventDispatcher {
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+            	if (e.isAltDown()) {
+            		dropDbTables.setVisible(true);
+            	}
+            } else {
+            	dropDbTables.setVisible(false);
+            }
+
+            return false;
+        }
+    }
 
 	/**
 	 * 
@@ -21,6 +44,8 @@ public class ButtonPanel extends JPanel {
 	Button redButton;
 	Button rentalStatusButton;
 	Button customerOverviewButton;
+	Button addItemButton;
+	Button dropDbTables;
 
 	public ButtonPanel() {
 		super();
@@ -98,5 +123,33 @@ public class ButtonPanel extends JPanel {
 		
 		
 	
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=6;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		addItemButton = new Button("Add Item");
+		addItemButton.addActionListener(listener);
+		addItemButton.setActionCommand(EventEnum.ADDITEMBUTTONEVENT);
+		add(addItemButton,gbc);
+		
+		
+		gbc = new GridBagConstraints();
+		gbc.gridx=1;
+		gbc.gridy=7;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		dropDbTables = new Button("DROP SQL Tables");
+		dropDbTables.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				WindowController controller = new WindowController();
+				controller.dropDB();
+			}
+		});
+		dropDbTables.setVisible(false);
+		add(dropDbTables,gbc);
+		
+		
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new ButtonPanelKeyDispatcher());
 	}
 }

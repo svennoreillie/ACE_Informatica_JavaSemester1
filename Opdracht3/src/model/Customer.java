@@ -34,6 +34,18 @@ public class Customer extends ModelBase {
 		}
 	}
 	
+	public Customer(Person person, Address address, String email, boolean spam) throws Exception{
+		try{
+			setPerson(person);
+			setAddress(address);
+			setEmail(email);
+			setSpam(spam);
+		}
+		catch (Exception e){
+			throw e;
+		}
+	}
+	
 	public Customer(){
 		
 	}
