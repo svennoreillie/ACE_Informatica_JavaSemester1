@@ -1,8 +1,10 @@
 package view.tableModels;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.swing.table.AbstractTableModel;
@@ -21,9 +23,11 @@ public class UitleningTableModel extends AbstractTableModel{
 	
 	private static final String[] columnsNames = {"Description" , "Select"};
 	private final LinkedList<Item> items;
+	private final Map<Item,Boolean> itemSelectedMap;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
+		itemSelectedMap = new HashMap<>();
 	}
 	
 	public void addItem(Item item){
@@ -32,9 +36,7 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	public void setItems(List<Item> items){
-		
 		List<Item> allItemsSorted = items.stream().sorted(new Comparator<Item>(){
-
 			@Override
 			public int compare(Item item1, Item item2) {
 				int result;
@@ -86,14 +88,15 @@ public class UitleningTableModel extends AbstractTableModel{
 				
 				return result;
 			}
-			
-		}).collect(Collectors.toList());
-		
+		    }).collect(Collectors.toList());
 		
 		this.items.clear();
 		this.items.addAll(allItemsSorted);
-		fireTableRowsInserted(0,this.items.size()-1);
 		
+		for(Item item : items){
+			itemSelectedMap.put(item, false);
+		}
+		fireTableRowsInserted(0,this.items.size()-1);
 	}
 	
 	@Override
@@ -113,15 +116,21 @@ public class UitleningTableModel extends AbstractTableModel{
 		
 		switch(column){
 		case 0:
-			value = item.getTitel();
+			String c="";
+			
+			if(item instanceof Cd){
+				c="Cd";
+			}if(item instanceof Dvd){
+				c="Dvd";
+			}if(item instanceof Game){
+				c="Game";
+			}
+			value = item.getTitel()+'/'+c+'/'+item.getId();
 			break;
 		case 1:
-			//value = false;
-			value = item.getisUitgeleend();
+			value=itemSelectedMap.get(item);
 			break;
-		
 		}
-		
 		return value;
 	}
 	
@@ -135,11 +144,31 @@ public class UitleningTableModel extends AbstractTableModel{
 		switch(column){
 		case 0:
 			return String.class;
-		
-		default:
+		case 1:
 			return Boolean.class;
+		default:
+			return null;
 		}
 	}
+	
+	@Override 
+	public void setValueAt(Object aValue,int row,int column){
+		Item itemToReplace = items.get(row);
+		Boolean oldBoolean = itemSelectedMap.get(itemToReplace);
+		Boolean newBoolean = !oldBoolean;
+		
+		 //itemSelectedMap.replace(items.get(row),!itemSelectedMap.get(items.get(row)));
+		itemSelectedMap.replace(itemToReplace, newBoolean);
+		fireTableCellUpdated(row, column);
+	}
+	
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+       if(columnIndex == 1) 
+        	return true;
+       else 
+    	   return false;
+    }
 	
 	
 }

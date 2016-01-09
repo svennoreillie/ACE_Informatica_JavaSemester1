@@ -2,10 +2,7 @@ package view.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import common.enums.EnumTypeCd;
-import common.enums.EnumTypeDvd;
-import common.enums.EnumTypeGame;
 import common.enums.EventEnum;
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
@@ -32,11 +26,16 @@ import controller.event.MainWindowChangedFiringSource;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import common.enums.EnumItemTypeItems;
+import javax.swing.JCheckBox;
 
 public class UitleningStap1Panel extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4382671641959396105L;
+
 	private List<Item> allItems;
 	private JTextField textField;
 	private JTable table;
@@ -52,7 +51,7 @@ public class UitleningStap1Panel extends JPanel{
 		lblType.setBounds(10, 11, 46, 14);
 		add(lblType);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.addActionListener(new ActionListener() {
 			
 			@Override
@@ -60,23 +59,20 @@ public class UitleningStap1Panel extends JPanel{
 				int i=comboBox.getSelectedIndex();
 				
 				switch(i){
-				case 1:
+				case 0:
 					tableModel.setItems(allItems);
 					break;
-				case 2:
-					//cd
+				case 1:
 					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
 					break;
-				case 3:
-					//dvd
+				case 2:
 					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Dvd.class)).collect(Collectors.toList()));
 					break;
-				case 4:
-					//game
+				case 3:
 					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Game.class)).collect(Collectors.toList()));
 					break;
 				default:
-					tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
+					tableModel.setItems(allItems);
 				}
 					
 				
@@ -89,7 +85,7 @@ public class UitleningStap1Panel extends JPanel{
 			values[i+1]=EnumItemTypeItems.values()[i].toString();
 		}
 		
-		comboBox.setModel(new DefaultComboBoxModel(values));
+		comboBox.setModel(new DefaultComboBoxModel<String>(values));
 		comboBox.setBounds(46, 8, 81, 20);
 		add(comboBox);
 		
