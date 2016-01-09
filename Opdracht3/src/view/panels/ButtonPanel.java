@@ -99,7 +99,7 @@ public class ButtonPanel extends JPanel {
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		returnItemButton = new Button("Returns");
 		returnItemButton.addActionListener(listener);
-		returnItemButton.setActionCommand(EventEnum.ADDITEMBUTTONEVENT);
+		returnItemButton.setActionCommand(EventEnum.RETURNITEMBUTTONEVENT);
 		add(returnItemButton,gbc);
 		
 		

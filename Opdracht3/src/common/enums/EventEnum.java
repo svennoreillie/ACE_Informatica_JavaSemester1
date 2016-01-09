@@ -5,7 +5,7 @@ public enum EventEnum {
 	RENTBUTTON1("rentButtonEvent1"),
 	RENTBUTTON2("rentButtonEvent2"),
 	ITEMMANAGEMENT("itemManagement"),
-	ADDITEMBUTTONEVENT("addItemButtonEvent");
+	RETURNITEMBUTTONEVENT("returnItemButtonEvent");
 	
 	
 	private String actionCommand;
