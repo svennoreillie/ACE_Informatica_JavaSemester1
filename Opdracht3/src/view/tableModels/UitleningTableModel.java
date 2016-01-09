@@ -21,18 +21,13 @@ public class UitleningTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final String[] columnsNames = {"Description" , "Select"};
+	private static final String[] columnsNames = {"Description","Type","Id","Rentable","Select"};
 	private final LinkedList<Item> items;
 	private final Map<Item,Boolean> itemSelectedMap;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
 		itemSelectedMap = new HashMap<>();
-	}
-	
-	public void addItem(Item item){
-		items.add(item);
-		fireTableRowsInserted(items.size()-1, items.size()-1);
 	}
 	
 	public void setItems(List<Item> items){
@@ -116,6 +111,9 @@ public class UitleningTableModel extends AbstractTableModel{
 		
 		switch(column){
 		case 0:
+			value = item.getTitel();
+			break;
+		case 1:
 			String c="";
 			
 			if(item instanceof Cd){
@@ -125,9 +123,16 @@ public class UitleningTableModel extends AbstractTableModel{
 			}if(item instanceof Game){
 				c="Game";
 			}
-			value = item.getTitel()+'/'+c+'/'+item.getId();
+			
+			value = c;
 			break;
-		case 1:
+		case 2:
+			value = item.getId();
+			break;
+		case 3:
+			value = !item.getisUitgeleend();
+			break;
+		case 4:
 			value=itemSelectedMap.get(item);
 			break;
 		}
@@ -145,6 +150,12 @@ public class UitleningTableModel extends AbstractTableModel{
 		case 0:
 			return String.class;
 		case 1:
+			return String.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
 			return Boolean.class;
 		default:
 			return null;
@@ -153,21 +164,15 @@ public class UitleningTableModel extends AbstractTableModel{
 	
 	@Override 
 	public void setValueAt(Object aValue,int row,int column){
-		Item itemToReplace = items.get(row);
-		Boolean oldBoolean = itemSelectedMap.get(itemToReplace);
-		Boolean newBoolean = !oldBoolean;
-		
-		 //itemSelectedMap.replace(items.get(row),!itemSelectedMap.get(items.get(row)));
-		itemSelectedMap.replace(itemToReplace, newBoolean);
-		fireTableCellUpdated(row, column);
+		itemSelectedMap.replace(items.get(row),!itemSelectedMap.get(items.get(row)));
 	}
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-       if(columnIndex == 1) 
-        	return true;
-       else 
-    	   return false;
+    	if(columnIndex == 4 && !items.get(rowIndex).getisUitgeleend()) 
+    		return true;
+    	else 
+    		return false;
     }
 	
 	
