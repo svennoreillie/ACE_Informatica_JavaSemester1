@@ -1,21 +1,17 @@
 package view.tableModels;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
 import javax.swing.table.AbstractTableModel;
-
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;
 import database.DataStrategy;
 import model.Customer;
-import model.Item;
 import model.Uitlening;
 
 /**

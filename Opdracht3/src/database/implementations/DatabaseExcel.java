@@ -1,15 +1,19 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;

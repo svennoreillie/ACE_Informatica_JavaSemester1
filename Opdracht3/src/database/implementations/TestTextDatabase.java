@@ -1,7 +1,12 @@
 package database.implementations;
 
-import static org.junit.Assert.*;
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
 
+import static org.junit.Assert.*;
 import java.io.EOFException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,15 +14,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import common.DBException;
 import common.DBMissingException;
 import database.helpers.DataSource;

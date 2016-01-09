@@ -4,16 +4,18 @@
 package model.subItems;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import common.enums.EnumTypeCd;
 import model.Item;
 
 /**
- * @author Peter
+ * 
+ * @author Vervoort Peter
  *
  */
 public class Cd extends Item {
 
+
+	private static final long serialVersionUID = -3347605248365779050L;
 	private EnumTypeCd cdTtype;
 
 	public EnumTypeCd getType() {

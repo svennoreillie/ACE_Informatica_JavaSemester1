@@ -1,14 +1,17 @@
 package testing;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
-
 import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import common.enums.EnumTypeGame;
 import controller.BoeteController;
 import model.Uitlening;

@@ -1,9 +1,14 @@
+
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class ConcreteReceipt implements Receipt {
 		

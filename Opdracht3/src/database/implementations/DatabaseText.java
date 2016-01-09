@@ -1,19 +1,15 @@
-/**
- * @Autor: Sven Noreillie, Peter Vervoort
- * @Team: Team13
- * @Date: 31/10/2015
- * @Project: KroegenTocht
- * @Purpose: Service die Input en output stream creert, enige reden van bestaan is zodat dit
- * 			gemocked zou kunnen worden in unittests
- */
-
 package database.implementations;
+
+/**
+ * 
+ * @author Sven Noreillie & Vervoort Peter
+ *
+ */
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.ParameterizedType;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

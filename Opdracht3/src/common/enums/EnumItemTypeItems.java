@@ -1,5 +1,11 @@
 package common.enums;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 public enum EnumItemTypeItems {
 	CD("CD"),
 	DVD("DVD"),

@@ -4,17 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 
+
+import model.Customer;
 import model.Item;
+import model.Uitlening;
 import model.subItems.Cd;
 import model.subItems.Dvd;
 import model.subItems.Game;
 import view.custom.Button;
 import view.tableModels.UitleningTableModel;
-
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -22,12 +23,21 @@ import javax.swing.JTextField;
 import common.enums.EventEnum;
 import controller.WinkelController;
 import controller.event.MainWindowChangedFiringSource;
-
+import database.DataService;
+import database.DataStrategy;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
+
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EnumItemTypeItems;
-import javax.swing.JCheckBox;
+
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class UitleningStap1Panel extends JPanel{
 	
@@ -104,9 +114,15 @@ public class UitleningStap1Panel extends JPanel{
 		textField.setColumns(10);
 		
 		Button btnNext = new Button("Next");
-		btnNext.addActionListener(MainWindowChangedFiringSource.getInstance());
-		btnNext.setActionCommand(EventEnum.RENTBUTTON2);
 		btnNext.setBounds(501, 566, 89, 23);
+		btnNext.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UitleningStap2Panel panel = new UitleningStap2Panel();
+				panel.setItems(getSelectedItems());
+				MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+			}
+		});
 		add(btnNext);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -121,7 +137,17 @@ public class UitleningStap1Panel extends JPanel{
 		List<Item> allItems = new ArrayList<Item>();
 		allItems.addAll(new WinkelController<Game>(Game.class).getAllSortedByName());
 		allItems.addAll(new WinkelController<Cd>(Cd.class).getAllSortedByName());
-		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());
+		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());		
+		
+		try{
+			List<Uitlening> uitlenignen = DataStrategy.getDataService(Uitlening.class).getAll();
+			//DataStrategy.getDataService(Uitlening.class).remove(entity);
+			tableModel.setUitleningen(uitlenignen);
+		} catch(DBMissingException | DBException e1){
+			
+		}
+		
+		
 		
 		setAllItems(allItems);
 		tableModel.setItemsToShow(Item.class);
@@ -131,5 +157,9 @@ public class UitleningStap1Panel extends JPanel{
 		this.allItems = items;
 		tableModel.setItems(items);
 		
+	}
+
+	public List<Item> getSelectedItems(){
+		return tableModel.getSelectedItem();
 	}
 }

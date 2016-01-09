@@ -1,5 +1,11 @@
 package controller;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import java.math.BigDecimal;
 import model.Uitlening;
 

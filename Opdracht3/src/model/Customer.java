@@ -1,9 +1,4 @@
-/**
- * 
- */
 package model;
-
-import common.AntiMagicStrings;
 
 /**
  * A customer's details, including name, address, e-mail and an unique ID.
@@ -11,17 +6,14 @@ import common.AntiMagicStrings;
  * @author André Nóbrega
  *
  */
+
 public class Customer extends ModelBase {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5251642987943748923L;
 	private Person person;
 	private Address address;
 	private String email;
 	private boolean spam = false;
-	private AntiMagicStrings magicString;
 	
 	public Customer(Person person, Address address, String email) throws Exception{
 		try{

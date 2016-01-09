@@ -1,37 +1,33 @@
 package view;
 
+/**
+ * 
+ * @author Huybrechts Pieter & André Nóbrega & Vervoort Peter
+ *
+ */
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import common.*;
 import common.factories.*;
 import controller.WinkelController;
-import controller.WinkelService;
 import controller.event.WindowChangedService;
-
-import database.helpers.DataSource;
 import database.*;
 import model.Customer;
 import model.Item;
 import model.Uitlening;
 import model.subItems.*;
 import view.panels.*;
-
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-import java.awt.Insets;
 
 public class MainWindow extends JFrame implements WindowChangedService {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPanel;

@@ -1,5 +1,11 @@
 package common;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 public class AntiMagicStrings {
 	public static final String firstNameNull = "Please enter the customer's first name.";
 	public static final String lastNameNull = "Please enter the customer's last name.";

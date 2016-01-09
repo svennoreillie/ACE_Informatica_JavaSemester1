@@ -1,11 +1,9 @@
-/**
- * @Autor: Sven Noreillie, Peter Vervoort
- * @Team: Team13
- * @Date: 26/10/2015
- * @Project: KroegenTocht
- * @Purpose: Exception die aangeeft dat geen database file gevonden of gemaakt kan worden 
- */
 
+/**
+ * 
+ * @author Sven Noreillie & Vervoort Peter
+ *
+ */
 package common;
 
 public class DBMissingException extends Exception {

@@ -1,19 +1,16 @@
 package database.implementations;
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import common.*;
 import database.DataService;
 import database.internalInterface.DataReadWriteService;

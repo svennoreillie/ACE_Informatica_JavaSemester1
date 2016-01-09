@@ -4,8 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-
 import common.DBException;
 import common.DBMissingException;
 import controller.ReceiptController;
@@ -16,16 +14,12 @@ import model.Customer;
 import model.Item;
 import model.Uitlening;
 import view.tableModels.ItemReturnTableModel;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
-
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,6 +30,8 @@ import java.awt.event.MouseEvent;
  *
  */
 public class ItemTeruggave2 extends JPanel {
+
+	private static final long serialVersionUID = -5979908698910919019L;
 	private JTable itemTable;
 	private ItemReturnTableModel tableModel;
 	private UitleenController controller = new UitleenController();
