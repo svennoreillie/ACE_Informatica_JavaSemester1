@@ -73,6 +73,11 @@ public class UitleenController implements UitleenService {
 		
 		uitleningenLijst.add(uitlening);
 		item.setisUitgeleend(true);
+		try {
+			DataStrategy.getDataService(Uitlening.class).add(uitlening);
+		} catch (DBMissingException | DBException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

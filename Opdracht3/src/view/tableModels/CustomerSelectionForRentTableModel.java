@@ -36,6 +36,10 @@ public class CustomerSelectionForRentTableModel extends AbstractTableModel{
 		fireTableRowsInserted(customers.size()-1, customers.size()-1);
 	}
 	
+	public Customer getSelectedCustomer(){
+		return selectedCustomer;
+	}
+	
 	@Override 
 	public void setValueAt(Object aValue,int row,int column){
 		if(selectedCustomer==customers.get(row)){
