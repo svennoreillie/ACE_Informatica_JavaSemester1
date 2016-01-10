@@ -3,6 +3,7 @@ package view.panels;
 /**
  * 
  * @author Vervoort Peter
+ * @author Geert Van Weyenbergh
  *
  */
 
