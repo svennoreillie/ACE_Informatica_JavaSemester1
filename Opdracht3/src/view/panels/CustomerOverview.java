@@ -435,6 +435,9 @@ public class CustomerOverview extends JPanel {
 		this.tfSearch.setEnabled(true);
 	}
 	
+	/**
+	 * Allows to update the data of the currently selected customer.
+	 */
 	private void editMode(){
 		btn1.setText("Edit");
 		btn2.setText("Cancel");
