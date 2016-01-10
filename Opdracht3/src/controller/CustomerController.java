@@ -9,7 +9,7 @@ import model.Customer;
 
 /**
  * 
- * @author André Nóbrega
+ * @author Andrï¿½ Nï¿½brega
  *
  */
 public class CustomerController {
@@ -36,6 +36,9 @@ public class CustomerController {
 	}
 	
 	public void updateCustomer(Customer cust) throws DBMissingException, DBException{
+		Customer originalCustomer = customerData.get(cust.getId());
+		cust.getAddress().setId(originalCustomer.getAddress().getId());
+		cust.getPerson().setId(originalCustomer.getPerson().getId());
 		customerData.update(cust);
 	}
 }

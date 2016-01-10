@@ -21,6 +21,10 @@ public abstract class ReceiptDecorator implements Receipt{
 		return receipt.getItems();
 	}
 	
+	 public List<Uitlening> getUitleningen(){
+		 return receipt.getUitleningen();
+	 };
+	
 	@Override
 	public double getTotal() {
 		return receipt.getTotal();
