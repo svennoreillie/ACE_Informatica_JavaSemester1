@@ -17,7 +17,9 @@ import model.subItems.Game;
 import view.custom.Button;
 import view.tableModels.UitleningTableModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import common.enums.EventEnum;
@@ -26,6 +28,7 @@ import controller.event.MainWindowChangedFiringSource;
 import database.DataService;
 import database.DataStrategy;
 import javax.swing.JScrollPane;
+import javax.print.attribute.standard.JobMessageFromOperator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
@@ -118,9 +121,16 @@ public class UitleningStap1Panel extends JPanel{
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UitleningStap2Panel panel = new UitleningStap2Panel();
-				panel.setItems(getSelectedItems());
-				MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+				
+				if(getSelectedItems()==null || getSelectedItems().isEmpty()){
+					JOptionPane.showMessageDialog(null, "At least one item has to be selected.");
+				}else{
+					UitleningStap2Panel panel = new UitleningStap2Panel();
+					panel.setItems(getSelectedItems());
+					MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+				}
+				
+				
 			}
 		});
 		add(btnNext);
@@ -161,5 +171,9 @@ public class UitleningStap1Panel extends JPanel{
 
 	public List<Item> getSelectedItems(){
 		return tableModel.getSelectedItems();
+	}
+
+	public void setSelectedItems(List<Item> items) {
+		tableModel.setSelectedItems(items);
 	}
 }

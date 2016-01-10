@@ -215,4 +215,12 @@ public class UitleningTableModel extends AbstractTableModel{
 		return itemsToShow.size();
 	}
 
+	public void setSelectedItems(List<Item> items) {
+		for(Item i:items){
+			itemSelectedMap.replace(i, true);
+		}
+		//fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
+		
+	}
+
 }
