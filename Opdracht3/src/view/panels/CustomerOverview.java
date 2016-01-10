@@ -26,7 +26,7 @@ import java.awt.event.MouseEvent;
 
 /**
  * 
- * @author André Nóbrega
+ * @author Andrï¿½ Nï¿½brega
  *
  */
 public class CustomerOverview extends JPanel {
@@ -551,7 +551,11 @@ public class CustomerOverview extends JPanel {
 		
 		Customer newCust = new Customer();
 		newCust.setEmail(tfEmail.getText());
-		newCust.setId(Integer.parseInt(tfCustomerID.getText()));
+		String customerId = tfCustomerID.getText();
+		if (customerId != null) {
+			newCust.setId(Integer.parseInt(customerId));
+		}
+		
 		newCust.setPerson(newPers);
 		newCust.setAddress(newAdd);
 		
