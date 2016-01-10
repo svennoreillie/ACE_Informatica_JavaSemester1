@@ -7,6 +7,12 @@ package model;
  */
 
 import java.math.BigDecimal;
+import java.util.NoSuchElementException;
+
+import common.DBException;
+import common.DBMissingException;
+import common.NotMapped;
+import database.*;
 import model.ModelBase;
 
 abstract public class Item extends ModelBase {
@@ -17,21 +23,18 @@ abstract public class Item extends ModelBase {
 	private final int boetePrijsPerDag = 3;
 	private BigDecimal verhuurPrijsInEuro;
 	private Double verhuurPrijsPerDag;
-	private boolean isUitgeleend;
 	
 	
 	public Item(String titel, BigDecimal verhuurPrijsInEuro,Double verhuurPrijsPerDag) {
 		this.setTitel(titel);
 		this.setVerhuurPrijs(verhuurPrijsInEuro);
 		this.setVerhuurPrijsPerDag(verhuurPrijsPerDag);
-		this.isUitgeleend = false;
 	}
 	
 	public Item() {
 		this.setTitel("");
 		this.setVerhuurPrijsPerDag(0d);
 		this.setVerhuurPrijs(new BigDecimal("0"));
-		this.isUitgeleend = false;
 	}
 	
 	public int getBoetePrijsPerDag() {
@@ -39,11 +42,10 @@ abstract public class Item extends ModelBase {
 	}
 	public void setBoetePrijsPerDag(int boete) {	
 	}
-	public boolean getisUitgeleend() {
-		return isUitgeleend;
-	}
-	public void setisUitgeleend(boolean isUitgeleend) {
-		this.isUitgeleend = isUitgeleend;
+	@NotMapped
+	public boolean getisUitgeleend() throws NoSuchElementException, DBMissingException, DBException {
+		DataService<Uitlening> ds = DataStrategy.getDataService(Uitlening.class);
+		return ds.any(u -> u.getUitgeleendItem().equals(this));
 	}
 	public String getTitel() {
 		return titel;

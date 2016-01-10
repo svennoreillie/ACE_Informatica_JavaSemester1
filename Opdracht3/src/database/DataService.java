@@ -73,4 +73,15 @@ public interface DataService<T extends ModelBase> {
 	 * @throws DBException
 	 */
 	List<T> getFiltered(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException;
+	
+	
+	/**
+	 * Checks in db if an item with given predicate exists
+	 * @param predicate to filter on
+	 * @return Boolean indicating existance
+	 * @throws NoSuchElementException
+	 * @throws DBMissingException
+	 * @throws DBException
+	 */
+	Boolean any(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException;
 }

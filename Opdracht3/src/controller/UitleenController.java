@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
@@ -72,12 +73,16 @@ public class UitleenController implements UitleenService {
 		uitlening.setBeginVerhuurDatum(beginVerhuurDatum);
 		
 		uitleningenLijst.add(uitlening);
-		item.setisUitgeleend(true);
+		//item.setisUitgeleend(true);
 	}
 
 	@Override
 	public boolean isHuidigItemMomenteelUitgeleend(Item item) {
-		return item.getisUitgeleend();
+		try {
+			return item.getisUitgeleend();
+		} catch (NoSuchElementException | DBMissingException | DBException e) {
+			return false;
+		}
 	}
 
 	@Override
@@ -121,7 +126,7 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public void uitleningVanEenItemStoppen(Uitlening uitlening) {
-		uitlening.getUitgeleendItem().setisUitgeleend(false);
+		//uitlening.getUitgeleendItem().setisUitgeleend(false);
 		uitleningenLijst.remove(uitlening);
 		
 		try {

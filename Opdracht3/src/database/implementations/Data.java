@@ -38,12 +38,14 @@ public class Data<T extends ModelBase> implements DataService<T> {
 	public List<T> getListFromStream() throws DBException, DBMissingException {
 		return dataService.readDB();
 	}
+	
 
 	@Override
 	public T get(int id) throws NoSuchElementException, DBMissingException, DBException {
 		List<T> entityList = this.getAll();
 		return entityList.stream().filter(e -> e.getId() == id).findFirst().get();
 	}
+	
 
 	@Override
 	public List<T> getFiltered(Predicate<? super T> predicate)
@@ -51,6 +53,13 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		return this.getAll().stream().filter(predicate).collect(Collectors.toList());
 	}
 
+	
+	@Override
+	public Boolean any(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException {
+		return this.getAll().stream().anyMatch(predicate);
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(ModelBase entity) throws DBMissingException, DBException {
@@ -137,5 +146,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			dataService.writeDB(this.internalList, true);
 		}
 	}
+
+	
 
 }
