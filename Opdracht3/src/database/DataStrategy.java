@@ -78,6 +78,12 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 	}
 	
 	@Override
+	public Boolean any(Predicate<? super T> predicate) throws NoSuchElementException, DBMissingException, DBException {
+		DataService<T> service = getService();
+		return service.any(predicate);
+	}
+	
+	@Override
 	public void add(ModelBase entity) throws DBMissingException, DBException {
 		DataService<T> service = getService();
 		service.add(entity);

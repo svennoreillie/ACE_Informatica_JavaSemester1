@@ -96,6 +96,7 @@ public class LoadingWindow extends JFrame {
 		MainWindowChangedFiringSource.getInstance().addListener(mainWindow);
 		MainWindowChangedFiringSource.getInstance().fireChanged(new CustomerOverview());
 		
+		this.setVisible(false);
 	}
 	
 	private void fillDB() {
@@ -160,10 +161,7 @@ public class LoadingWindow extends JFrame {
 					updateProgress(25, 40, "Customer database filled");
 				}
 				if (dataBaseUitlening.getAll().isEmpty()) {
-					List<Uitlening> uitleningList = new ArrayList<Uitlening>();
-					for (int i = 0; i < 30; i++) {
-						uitleningList.add(UitleningFactory.getUitlening());
-					}
+					List<Uitlening> uitleningList = UitleningFactory.getUitleningen(30);
 					dataBaseUitlening.addAll(uitleningList);
 					updateProgress(30, 30, "Uitlening database filled");
 				}

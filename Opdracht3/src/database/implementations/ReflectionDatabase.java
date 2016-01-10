@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import common.NotMapped;
 import database.DataService;
 import database.DataStrategy;
 import database.helpers.ReflectionPropertyHelper;
@@ -70,6 +71,14 @@ public class ReflectionDatabase<T extends ModelBase> {
 			// iterate all methods found in T
 			for (Method m : this.classType.getMethods()) {
 				if (m.getName().startsWith("get") && m.getParameterTypes().length == 0) {
+					
+					//check not mapped
+					if (m.isAnnotationPresent(NotMapped.class)) {
+						//should not be stored in db
+						continue;
+					}
+					
+					
 					// if the name starts with get and has no parameters we
 					// assume it is a getter
 					ReflectionPropertyHelper helper = new ReflectionPropertyHelper();

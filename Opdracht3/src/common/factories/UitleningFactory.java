@@ -50,7 +50,7 @@ public class UitleningFactory {
 			DataService <Customer> dataBaseCustomer = DataStrategy.getDataService(Customer.class);
 			List<Customer> allCustomer = dataBaseCustomer.getAll();
 			uitlening.setKlantDieUitleent(allCustomer.get(rand.nextInt(allCustomer.size())));
-			uitlening.getUitgeleendItem().setisUitgeleend(true);
+			//uitlening.getUitgeleendItem().setisUitgeleend(true);
 			
 		}
 		catch(Exception e){
@@ -58,5 +58,31 @@ public class UitleningFactory {
 		}
 		
 		return uitlening;
+	}
+	
+	
+	
+	public static List<Uitlening> getUitleningen(int count) throws DBMissingException, DBException {
+		List<Uitlening> uitleningList = new ArrayList<Uitlening>();
+		int sameIdLoop = 0;
+		for (int i = 0; i < count; i++) {
+			Uitlening uitlening = getUitlening();
+			
+			if (uitleningList.stream().anyMatch(u -> u.getUitgeleendItem().equals(uitlening.getUitgeleendItem()))) {
+				//Item already in use
+				//repeat this iteration
+				i--;
+				//increase
+				sameIdLoop++;
+				if (sameIdLoop > 25) {
+					//assuming not enough items exist anymore => create more items first
+					break;
+				}
+			} else {
+				sameIdLoop = 0;
+				uitleningList.add(uitlening);
+			}
+		}
+		return uitleningList;
 	}
 }
