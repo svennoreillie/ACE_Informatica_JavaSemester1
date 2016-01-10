@@ -78,7 +78,7 @@ public class ItemTeruggave2 extends JPanel {
 				}
 				
 				ConcreteReceipt receipt = new ConcreteReceipt();
-				receipt.setItems(returnedItems);
+				receipt.setItems(tableModel.getSelectedItems());
 				ReceiptController.printReceipt(receipt);
 				try {
 					controller.uitleningVanMeerdereItemsStoppen(tableModel.getSelectedItems());
