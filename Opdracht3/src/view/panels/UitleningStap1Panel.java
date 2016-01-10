@@ -160,6 +160,6 @@ public class UitleningStap1Panel extends JPanel{
 	}
 
 	public List<Item> getSelectedItems(){
-		return tableModel.getSelectedItem();
+		return tableModel.getSelectedItems();
 	}
 }
