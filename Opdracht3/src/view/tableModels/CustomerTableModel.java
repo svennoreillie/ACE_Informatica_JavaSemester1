@@ -24,7 +24,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	private DataService<Customer> customerDB = DataStrategy.getDataService(Customer.class);
 	
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"Surname", "First Name", "E-mail", "Newsletter"};
+	private static final String[] columnsNames = {"First Name", "Surname",  "E-mail", "Newsletter"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){
