@@ -82,7 +82,22 @@ public class UitleenController implements UitleenService {
 
 	@Override
 	public boolean isHuidigItemMomenteelUitgeleend(Item item) {
-		return item.getisUitgeleend();
+		try {
+			for(Uitlening u:uitleningData.getAll()){
+				if(u.getUitgeleendItem()==item){
+					return true;
+				}
+			}
+		} catch (DBMissingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return false;
+		
 	}
 
 	@Override
