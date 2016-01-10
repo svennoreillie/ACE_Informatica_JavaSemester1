@@ -52,8 +52,8 @@ public class CustomerOverview extends JPanel {
 	private JLabel lblCountry;
 	private JTextField tfCustomerID;
 	private JLabel lblCustomerId;
-	private JButton btnRegister;
-	private JButton btnSearch;
+	private JButton btn1;
+	private JButton btn2;
 	private CustomerTableModel tableModel;
 	private JTable tableCustomers;
 	private JTextField tfSearch;
@@ -174,31 +174,15 @@ public class CustomerOverview extends JPanel {
 		add(tfCustomerID);
 		tfCustomerID.setColumns(10);
 		
-		btnSearch = new JButton("Search...");
-		btnSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				if (btnSearch.getText() == "Search..."){
-					searchMode();
-				}
-				else if (btnSearch.getText() == "Cancel"){
-					defaultMode();
-				}
-			}
-		});
-		btnSearch.setBounds(501, 566, 89, 23);
-		add(btnSearch);
-		
-		btnRegister = new JButton("New...");
-		btnRegister.addMouseListener(new MouseAdapter() {
+		btn1 = new JButton("New...");
+		btn1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if (btnRegister.getText() == "New..."){
+				if (btn1.getText() == "New..."){
 					registrationMode();
 				}
 				
-				else if (btnRegister.getText() == "Save"){
+				else if (btn1.getText() == "Save"){
 					try {
 						saveCustomer();
 					} catch (DBMissingException e) {
@@ -210,10 +194,39 @@ public class CustomerOverview extends JPanel {
 					}
 					defaultMode();
 				}
+				
+				else if (btn1.getText() == "Edit"){
+					try {
+						editCustomer();
+					} catch (DBMissingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (DBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					defaultMode();
+				}
 			}
 		});
-		btnRegister.setBounds(384, 566, 89, 23);
-		add(btnRegister);
+		btn1.setBounds(384, 566, 89, 23);
+		add(btn1);
+		
+		btn2 = new JButton("Search...");
+		btn2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if (btn2.getText() == "Search..."){
+					searchMode();
+				}
+				else if (btn2.getText() == "Cancel"){
+					defaultMode();
+				}
+			}
+		});
+		btn2.setBounds(501, 566, 89, 23);
+		add(btn2);
 		
 		tfZip = new JTextField();
 		tfZip.setEnabled(false);
@@ -241,6 +254,7 @@ public class CustomerOverview extends JPanel {
 				else{
 					try{
 						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+						editMode();
 					}
 					catch (IndexOutOfBoundsException ioob){
 						ioob.printStackTrace();
@@ -397,9 +411,9 @@ public class CustomerOverview extends JPanel {
 		this.tfCustomerID.setEnabled(false);
 		
 		//Change the button layout and behavior
-		btnRegister.setVisible(true);
-		btnRegister.setText("Save");
-		btnSearch.setText("Cancel");
+		btn1.setVisible(true);
+		btn1.setText("Save");
+		btn2.setText("Cancel");
 	}
 	
 	/**
@@ -415,11 +429,19 @@ public class CustomerOverview extends JPanel {
 		tfSearch.setEnabled(true);
 		
 		//Change the button layout and behavior
-		this.btnRegister.setVisible(false);
-		this.btnSearch.setText("Cancel");
+		this.btn1.setVisible(false);
+		this.btn2.setText("Cancel");
 		this.lblSearch.setVisible(true);
 		this.tfSearch.setVisible(true);
 		this.tfSearch.setEnabled(true);
+	}
+	
+	/**
+	 * Allows to update the data of the currently selected customer.
+	 */
+	private void editMode(){
+		btn1.setText("Edit");
+		btn2.setText("Cancel");
 	}
 	
 	/**
@@ -436,9 +458,9 @@ public class CustomerOverview extends JPanel {
 		tfSearch.setEnabled(false);
 		
 		//Reset button layout and behavior
-		btnRegister.setVisible(true);
-		btnRegister.setText("New...");
-		btnSearch.setText("Search...");
+		btn1.setVisible(true);
+		btn1.setText("New...");
+		btn2.setText("Search...");
 	}
 	
 	/**
@@ -465,36 +487,23 @@ public class CustomerOverview extends JPanel {
 	 * @throws DBMissingException 
 	 */
 	private void saveCustomer() throws DBMissingException, DBException{
-		if (tfAdress.getText().trim().isEmpty()
-				|| tfCity.getText().trim().isEmpty()
-				|| tfCountry.getText().trim().isEmpty()
-				|| tfEmail.getText().trim().isEmpty()
-				|| tfFirstName.getText().trim().isEmpty()
-				|| tfLastName.getText().trim().isEmpty()
-				|| tfNumber.getText().trim().isEmpty()
-				|| tfZip.getText().trim().isEmpty()){
-			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		if (checkForEmptyFields()){
+			
 		}
-		else{
-			Person newPers = new Person();
-			newPers.setFirstName(tfFirstName.getText());
-			newPers.setLastName(tfLastName.getText());
-			
-			Address newAdd = new Address();
-			newAdd.setBox(tfBox.getText());
-			newAdd.setCity(tfCity.getText());
-			newAdd.setCountry(tfCountry.getText());
-			newAdd.setNumber(tfNumber.getText());
-			newAdd.setStreet(tfAdress.getText());
-			newAdd.setZip(tfZip.getText());
-			
-			Customer newCust = new Customer();
-			newCust.setEmail(tfEmail.getText());
-			newCust.setPerson(newPers);
-			newCust.setAddress(newAdd);
-			
-			controller.addCustomer(newCust);
+		else{			
+			controller.addCustomer(getCustomerFromForm());
 			tableModel.updateTable();
+			JOptionPane.showMessageDialog(null, "Customer registered.");
+		}
+	}
+	
+	private void editCustomer() throws DBMissingException, DBException{
+		if (checkForEmptyFields()) {
+			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		} else {
+			controller.updateCustomer(getCustomerFromForm());
+			tableModel.updateTable();
+			JOptionPane.showMessageDialog(null, "Customer updated");
 		}
 	}
 	
@@ -508,5 +517,43 @@ public class CustomerOverview extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean checkForEmptyFields(){
+		if (tfAdress.getText().trim().isEmpty()
+				|| tfCity.getText().trim().isEmpty()
+				|| tfCountry.getText().trim().isEmpty()
+				|| tfEmail.getText().trim().isEmpty()
+				|| tfFirstName.getText().trim().isEmpty()
+				|| tfLastName.getText().trim().isEmpty()
+				|| tfNumber.getText().trim().isEmpty()
+				|| tfZip.getText().trim().isEmpty()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	private Customer getCustomerFromForm(){
+		Person newPers = new Person();
+		newPers.setFirstName(tfFirstName.getText());
+		newPers.setLastName(tfLastName.getText());
+		
+		Address newAdd = new Address();
+		newAdd.setBox(tfBox.getText());
+		newAdd.setCity(tfCity.getText());
+		newAdd.setCountry(tfCountry.getText());
+		newAdd.setNumber(tfNumber.getText());
+		newAdd.setStreet(tfAdress.getText());
+		newAdd.setZip(tfZip.getText());
+		
+		Customer newCust = new Customer();
+		newCust.setEmail(tfEmail.getText());
+		newCust.setId(Integer.parseInt(tfCustomerID.getText()));
+		newCust.setPerson(newPers);
+		newCust.setAddress(newAdd);
+		
+		return newCust;
 	}
 }

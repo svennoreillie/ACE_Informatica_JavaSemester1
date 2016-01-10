@@ -14,11 +14,11 @@ import model.Customer;
  */
 public class CustomerController {
 
-	private DataService<Customer> customerData = DataStrategy.getDataService(Customer.class);
+	private DataService<Customer> customerData;
 
 	
 	public CustomerController() {
-
+		customerData = DataStrategy.getDataService(Customer.class);
 	}
 	
 	public List<Customer> getList() throws DBMissingException, DBException {
