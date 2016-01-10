@@ -552,7 +552,7 @@ public class CustomerOverview extends JPanel {
 		Customer newCust = new Customer();
 		newCust.setEmail(tfEmail.getText());
 		String customerId = tfCustomerID.getText();
-		if (customerId != null) {
+		if (customerId != null || !customerId.isEmpty()) {
 			newCust.setId(Integer.parseInt(customerId));
 		}
 		
