@@ -12,7 +12,7 @@ public class BodyDecorator extends ReceiptDecorator {
 		String body="";
 		
 		for(Item i : getItems()){
-			body+=i.getTitel() +"\t" +i.getVerhuurPrijsPerDag()+"\n";
+			body+=i.getTitel() +"\t" +i.getVerhuurPrijsPerDag()+"/dag\n";
 		}
 		body+="--------\n";
 		
