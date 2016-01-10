@@ -502,7 +502,8 @@ public class CustomerOverview extends JPanel {
 		if (checkForEmptyFields()) {
 			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
 		} else {
-			controller.updateCustomer(getCustomerFromForm());
+			Customer customer = getCustomerFromForm();
+			controller.updateCustomer(customer);
 			tableModel.updateTable();
 			JOptionPane.showMessageDialog(null, "Customer updated");
 		}
@@ -552,7 +553,7 @@ public class CustomerOverview extends JPanel {
 		Customer newCust = new Customer();
 		newCust.setEmail(tfEmail.getText());
 		String customerId = new String();
-		if (!customerId.isEmpty()) {
+		if (customerId.isEmpty()) {
 			customerId = tfCustomerID.getText();
 			newCust.setId(Integer.parseInt(customerId));
 		}
