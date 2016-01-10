@@ -33,8 +33,19 @@ public class CustomerTableModel extends AbstractTableModel {
 	
 	public void updateTable() throws DBMissingException, DBException{
 		data.clear();
-		data.addAll(customerDB.getAll().stream().sorted(new Comparator<Customer>() {
-
+		data.addAll(sortCustomers(customerDB.getAll()));
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+	public void updateTable(String searchString) throws DBMissingException, DBException{
+		data.clear();
+		data.addAll(sortCustomers(search(searchString)));
+		fireTableRowsInserted(data.size()-1, data.size()-1);
+	}
+	
+	private List<Customer> sortCustomers(List<Customer> customers) throws DBMissingException, DBException
+	{
+		return customers.stream().sorted(new Comparator<Customer>() {
 			@Override
 			public int compare(Customer c1, Customer c2) {
 				int val = c1.getPerson().getLastName().compareTo(c2.getPerson().getLastName());
@@ -42,18 +53,15 @@ public class CustomerTableModel extends AbstractTableModel {
 					val = c1.getPerson().getFirstName().compareTo(c2.getPerson().getFirstName());
 				return val;
 			}
-		}).collect(Collectors.toList()));
-		fireTableRowsInserted(data.size()-1, data.size()-1);
-	}
-	
-	public void updateTable(String searchString) throws DBMissingException, DBException{
-		data.clear();
-		data.addAll(search(searchString));
-		fireTableRowsInserted(data.size()-1, data.size()-1);
+		}).collect(Collectors.toList());
 	}
 	
 	private List<Customer> search(String searchString) throws DBMissingException, DBException {
 		return customerDB.getFiltered(cust -> cust.filter(searchString));
+	}
+	
+	public Customer getCustomerAtRow(int row){
+		return data.get(row);
 	}
 
 	@Override

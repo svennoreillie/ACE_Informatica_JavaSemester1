@@ -245,7 +245,8 @@ public class CustomerOverview extends JPanel {
 				if(arg0.getClickCount() == 2){
 					CustomerDetail detail;
 					try {
-						detail = new CustomerDetail(controller.getList().get(tableCustomers.getSelectedRow()));
+						//detail = new CustomerDetail(controller.getList().get(tableCustomers.getSelectedRow()));
+						detail = new CustomerDetail(tableModel.getCustomerAtRow(tableCustomers.getSelectedRow()));
 						MainWindowChangedFiringSource.getInstance().fireChanged(detail);
 					} catch (DBMissingException | DBException e1) {
 						System.out.println(e1.toString());
