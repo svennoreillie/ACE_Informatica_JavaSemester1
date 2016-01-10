@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.JPanel;
 
@@ -17,8 +18,13 @@ import model.subItems.Game;
 import view.custom.Button;
 import view.tableModels.UitleningTableModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.DocumentFilter;
 
 import common.enums.EventEnum;
 import controller.WinkelController;
@@ -26,6 +32,7 @@ import controller.event.MainWindowChangedFiringSource;
 import database.DataService;
 import database.DataStrategy;
 import javax.swing.JScrollPane;
+import javax.print.attribute.standard.JobMessageFromOperator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
@@ -47,7 +54,7 @@ public class UitleningStap1Panel extends JPanel{
 	private static final long serialVersionUID = -4382671641959396105L;
 
 	private List<Item> allItems;
-	private JTextField textField;
+	private JTextField searchTF;
 	private JTable table;
 	private UitleningTableModel tableModel;
 	
@@ -70,35 +77,29 @@ public class UitleningStap1Panel extends JPanel{
 				
 				switch(i){
 				case 0:
-					//tableModel.setItems(allItems);
 					tableModel.setItemsToShow(Item.class);
 					break;
 				case 1:
-					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Cd.class)).collect(Collectors.toList()));
 					tableModel.setItemsToShow(Cd.class);
 					break;
 				case 2:
-					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Dvd.class)).collect(Collectors.toList()));
 					tableModel.setItemsToShow(Dvd.class);
 					break;
 				case 3:
-					//tableModel.setItems(allItems.stream().filter(item -> item.getClass().equals(Game.class)).collect(Collectors.toList()));
 					tableModel.setItemsToShow(Game.class);
 					break;
 				default:
-					tableModel.setItems(allItems);
+					tableModel.setItemsToShow(Item.class);
 				}
 					
-				
+				searchItems();
 			}
 		});
 		String[] values= new String[EnumItemTypeItems.values().length+1];
 		values[0]="ALL";
-		
 		for(int i=0;i<EnumItemTypeItems.values().length;i++){
 			values[i+1]=EnumItemTypeItems.values()[i].toString();
 		}
-		
 		comboBox.setModel(new DefaultComboBoxModel<String>(values));
 		comboBox.setBounds(46, 8, 81, 20);
 		add(comboBox);
@@ -107,20 +108,49 @@ public class UitleningStap1Panel extends JPanel{
 		lblSearch.setBounds(137, 11, 60, 14);
 		add(lblSearch);
 		
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(193, 8, 134, 20);
-		add(textField);
-		textField.setColumns(10);
+		searchTF = new JTextField();
+		DocumentListener documentListener = new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				searchItems();
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				searchItems();
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				searchItems();
+				
+			}
+		};
+		
+		searchTF.getDocument().addDocumentListener(documentListener);
+		searchTF.setBounds(193, 8, 134, 20);
+		//searchTF.setEnabled(false);
+		add(searchTF);
+		searchTF.setColumns(10);
 		
 		Button btnNext = new Button("Next");
 		btnNext.setBounds(501, 566, 89, 23);
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				UitleningStap2Panel panel = new UitleningStap2Panel();
-				panel.setItems(getSelectedItems());
-				MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+				
+				if(getSelectedItems()==null || getSelectedItems().isEmpty()){
+					JOptionPane.showMessageDialog(null, "At least one item has to be selected.");
+				}else{
+					UitleningStap2Panel panel = new UitleningStap2Panel();
+					panel.setItems(getSelectedItems());
+					MainWindowChangedFiringSource.getInstance().fireChanged(panel);
+				}
+				
+				
 			}
 		});
 		add(btnNext);
@@ -156,10 +186,29 @@ public class UitleningStap1Panel extends JPanel{
 	public void setAllItems(List<Item> items){
 		this.allItems = items;
 		tableModel.setItems(items);
-		
 	}
 
 	public List<Item> getSelectedItems(){
-		return tableModel.getSelectedItem();
+		return tableModel.getSelectedItems();
+	}
+
+	public void setSelectedItems(List<Item> items) {
+		tableModel.setSelectedItems(items);
+	}
+	
+	private void searchItems(){
+		try {
+			tableModel.searchTable(searchTF.getText());
+		} catch (NoSuchElementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DBMissingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

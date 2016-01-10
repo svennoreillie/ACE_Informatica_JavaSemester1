@@ -6,8 +6,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.swing.table.AbstractTableModel;
+
+import common.DBException;
+import common.DBMissingException;
+import database.DataStrategy;
+import model.Customer;
 import model.Item;
 import model.Uitlening;
 import model.subItems.Cd;
@@ -23,17 +29,20 @@ import model.subItems.Game;
 public class UitleningTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 944470687021694124L;
-	private static final String[] columnsNames = {"Description","Type","Id","Rentable","Select"};
+	private static final String[] columnsNames = {"Description","Type","Id","Select"};
 	private final LinkedList<Item> items;
 	private final Map<Item,Boolean> itemSelectedMap;
 	private final LinkedList<Item> itemsToShow;
 	private final LinkedList<Item> uitgeleendeItems;
+	@SuppressWarnings({ "rawtypes", "unused" })
+	private Class type;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
 		itemSelectedMap = new HashMap<>();
 		itemsToShow = new LinkedList<Item>();
 		uitgeleendeItems = new LinkedList<Item>();
+		type = Item.class;
 	}
 	
 	public void setItems(List<Item> items){
@@ -103,23 +112,29 @@ public class UitleningTableModel extends AbstractTableModel{
 		for(Uitlening u:uitleningen){
 			uitgeleendeItems.add(u.getUitgeleendItem());
 		}
+		List<Item> itemsToShow;
+		itemsToShow=items.stream().filter(item -> !uitgeleendeItems.contains(item)).collect(Collectors.toList());
+		itemsToShow.clear();
+		this.itemsToShow.addAll(itemsToShow);
+		fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public void setItemsToShow(Class type){		
+	public void setItemsToShow(Class type){	
+		this.type = type;
 		itemsToShow.clear();
 		List<Item> itemsToShow;
 		if(type==Item.class){
-			itemsToShow=items;
+			itemsToShow=items.stream().filter(item -> !uitgeleendeItems.contains(item)).collect(Collectors.toList());
 		}else{
-			itemsToShow = items.stream().filter(item -> item.getClass().equals(type)).collect(Collectors.toList());
+			itemsToShow = items.stream().filter(item -> item.getClass().equals(type)).filter(item -> !uitgeleendeItems.contains(item)).collect(Collectors.toList());
 		}
 		this.itemsToShow.addAll(itemsToShow);
 		
 		fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
 	}
 	
-	public List<Item> getSelectedItem(){
+	public List<Item> getSelectedItems(){
 		List<Item> selectedItems = new ArrayList<>();
 		for(Item item:itemSelectedMap.keySet()){
 			if(itemSelectedMap.get(item)){
@@ -127,6 +142,30 @@ public class UitleningTableModel extends AbstractTableModel{
 			}
 		}
 		return selectedItems;
+	}
+	
+	public void searchTable(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
+		itemsToShow.clear();
+		itemsToShow.addAll(search(searchStr));
+		fireTableRowsInserted(itemsToShow.size()-1, itemsToShow.size()-1);
+	}
+	
+	private List<Item> search(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
+		List<Item> items = new ArrayList<Item>();
+
+		if(type==Item.class){
+			items.addAll(DataStrategy.getDataService(Game.class).getFiltered(game -> game.filter(searchStr)));
+			items.addAll(DataStrategy.getDataService(Cd.class).getFiltered(cd -> cd.filter(searchStr)));
+			items.addAll(DataStrategy.getDataService(Dvd.class).getFiltered(dvd -> dvd.filter(searchStr)));
+		}else if(type==Cd.class){
+			items.addAll(DataStrategy.getDataService(Cd.class).getFiltered(game -> game.filter(searchStr)));
+		}else if(type==Dvd.class){
+			items.addAll(DataStrategy.getDataService(Dvd.class).getFiltered(cd -> cd.filter(searchStr)));
+		}else if(type==Game.class){
+			items.addAll(DataStrategy.getDataService(Game.class).getFiltered(dvd -> dvd.filter(searchStr)));
+		}
+		
+		return items;
 	}
 	
 	@Override
@@ -155,9 +194,6 @@ public class UitleningTableModel extends AbstractTableModel{
 			value = item.getId();
 			break;
 		case 3:
-			value = !uitgeleendeItems.contains(itemsToShow.get(row));
-			break;
-		case 4:
 			value=itemSelectedMap.get(item);
 			break;
 		}
@@ -175,8 +211,6 @@ public class UitleningTableModel extends AbstractTableModel{
 		case 2:
 			return String.class;
 		case 3:
-			return String.class;
-		case 4:
 			return Boolean.class;
 		default:
 			return null;
@@ -185,14 +219,7 @@ public class UitleningTableModel extends AbstractTableModel{
 	
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-    	/*if(columnIndex == 4 && !itemsToShow.get(rowIndex).getisUitgeleend()) 
-    		return true;
-    	else 
-    		return false;*/
-    	if(columnIndex == 4 && !uitgeleendeItems.contains(itemsToShow.get(rowIndex))) 
-    		return true;
-    	else 
-    		return false;
+    	return columnIndex == 3 && !uitgeleendeItems.contains(itemsToShow.get(rowIndex)); 	
     }
 	
 	@Override 
@@ -213,6 +240,12 @@ public class UitleningTableModel extends AbstractTableModel{
 	@Override
 	public int getRowCount() {
 		return itemsToShow.size();
+	}
+
+	public void setSelectedItems(List<Item> items) {
+		for(Item i:items){
+			itemSelectedMap.replace(i, true);
+		}
 	}
 
 }

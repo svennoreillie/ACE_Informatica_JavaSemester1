@@ -101,4 +101,9 @@ abstract public class Item extends ModelBase {
 		return "Item [titel=" + titel + ", verhuurPrijs=" + verhuurPrijsInEuro + "]";
 	}
 	
+	public boolean filter(String searchString){
+		if(this.titel.toLowerCase().contains(searchString.toLowerCase())) return true;
+		return false;
+	}
+	
 }
