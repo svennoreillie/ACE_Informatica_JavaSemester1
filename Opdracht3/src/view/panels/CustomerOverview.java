@@ -254,7 +254,7 @@ public class CustomerOverview extends JPanel {
 				}
 				else{
 					try{
-						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+						fillForm(tableModel.getCustomerAtRow(tableCustomers.getSelectedRow()));
 						editMode();
 					}
 					catch (IndexOutOfBoundsException ioob){
