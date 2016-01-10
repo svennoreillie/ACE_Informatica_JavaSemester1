@@ -54,13 +54,10 @@ public class ItemTeruggave2 extends JPanel {
 		try {
 			tableModel.updateTable();
 		} catch (NoSuchElementException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (DBMissingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (DBException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		scrollPane.setViewportView(itemTable);
@@ -83,8 +80,11 @@ public class ItemTeruggave2 extends JPanel {
 				ConcreteReceipt receipt = new ConcreteReceipt();
 				receipt.setItems(returnedItems);
 				ReceiptController.printReceipt(receipt);
-				
-				controller.uitleningVanMeerdereItemsStoppen(tableModel.getSelectedItems());
+				try {
+					controller.uitleningVanMeerdereItemsStoppen(tableModel.getSelectedItems());
+				} catch (DBMissingException | DBException e1) {
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "Receipt has been printed, check console for details");
 				backToItemReturnOverview();
 			}
