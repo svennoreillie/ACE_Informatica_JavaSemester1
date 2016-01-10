@@ -21,7 +21,7 @@ public class ConcreteReceipt implements Receipt {
 	double total;
 	
 	public ConcreteReceipt() {
-		items = new ArrayList<>();
+		uitleningen = new ArrayList<Uitlening>();
 	}
 	
 	public void setItems(List<Uitlening> uitleningen){
