@@ -1,7 +1,10 @@
 package view.tableModels;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.swing.table.AbstractTableModel;
 import common.DBException;
 import common.DBMissingException;
@@ -21,7 +24,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	private DataService<Customer> customerDB = DataStrategy.getDataService(Customer.class);
 	
 	private static final long serialVersionUID = 1807002911481267147L;
-	private static final String[] columnsNames = {"First Name", "Surname", "E-mail", "Newsletter"};
+	private static final String[] columnsNames = {"Surname", "First Name", "E-mail", "Newsletter"};
 	private final LinkedList<Customer> data;
 	
 	public CustomerTableModel(){
@@ -30,7 +33,16 @@ public class CustomerTableModel extends AbstractTableModel {
 	
 	public void updateTable() throws DBMissingException, DBException{
 		data.clear();
-		data.addAll(customerDB.getAll());
+		data.addAll(customerDB.getAll().stream().sorted(new Comparator<Customer>() {
+
+			@Override
+			public int compare(Customer c1, Customer c2) {
+				int val = c1.getPerson().getLastName().compareTo(c2.getPerson().getLastName());
+				if(val==0)
+					val = c1.getPerson().getFirstName().compareTo(c2.getPerson().getFirstName());
+				return val;
+			}
+		}).collect(Collectors.toList()));
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
@@ -61,10 +73,10 @@ public class CustomerTableModel extends AbstractTableModel {
 		
 		switch(column){
 		case 0:
-			value = customer.getPerson().getFirstName();
+			value = customer.getPerson().getLastName();
 			break;
 		case 1:
-			value = customer.getPerson().getLastName();
+			value = customer.getPerson().getFirstName();
 			break;
 		case 2:
 			value = customer.getEmail();
