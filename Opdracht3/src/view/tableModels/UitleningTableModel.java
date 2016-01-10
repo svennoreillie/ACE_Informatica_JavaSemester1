@@ -34,12 +34,15 @@ public class UitleningTableModel extends AbstractTableModel{
 	private final Map<Item,Boolean> itemSelectedMap;
 	private final LinkedList<Item> itemsToShow;
 	private final LinkedList<Item> uitgeleendeItems;
+	@SuppressWarnings({ "rawtypes", "unused" })
+	private Class type;
 	
 	public UitleningTableModel() {
 		items = new LinkedList<Item>();
 		itemSelectedMap = new HashMap<>();
 		itemsToShow = new LinkedList<Item>();
 		uitgeleendeItems = new LinkedList<Item>();
+		type = Item.class;
 	}
 	
 	public void setItems(List<Item> items){
@@ -117,7 +120,8 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public void setItemsToShow(Class type){		
+	public void setItemsToShow(Class type){	
+		this.type = type;
 		itemsToShow.clear();
 		List<Item> itemsToShow;
 		if(type==Item.class){
@@ -141,16 +145,25 @@ public class UitleningTableModel extends AbstractTableModel{
 	}
 	
 	public void searchTable(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
-		itemsToShow.retainAll(search(searchStr));
+		itemsToShow.clear();
+		itemsToShow.addAll(search(searchStr));
 		fireTableRowsInserted(itemsToShow.size()-1, itemsToShow.size()-1);
 	}
 	
 	private List<Item> search(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
 		List<Item> items = new ArrayList<Item>();
-		
-		items.addAll(DataStrategy.getDataService(Game.class).getFiltered(game -> game.getTitel().contains(searchStr)));
-		items.addAll(DataStrategy.getDataService(Cd.class).getFiltered(game -> game.getTitel().contains(searchStr)));
-		items.addAll(DataStrategy.getDataService(Dvd.class).getFiltered(game -> game.getTitel().contains(searchStr)));
+
+		if(type==Item.class){
+			items.addAll(DataStrategy.getDataService(Game.class).getFiltered(game -> game.filter(searchStr)));
+			items.addAll(DataStrategy.getDataService(Cd.class).getFiltered(cd -> cd.filter(searchStr)));
+			items.addAll(DataStrategy.getDataService(Dvd.class).getFiltered(dvd -> dvd.filter(searchStr)));
+		}else if(type==Cd.class){
+			items.addAll(DataStrategy.getDataService(Cd.class).getFiltered(game -> game.filter(searchStr)));
+		}else if(type==Dvd.class){
+			items.addAll(DataStrategy.getDataService(Dvd.class).getFiltered(cd -> cd.filter(searchStr)));
+		}else if(type==Game.class){
+			items.addAll(DataStrategy.getDataService(Game.class).getFiltered(dvd -> dvd.filter(searchStr)));
+		}
 		
 		return items;
 	}
