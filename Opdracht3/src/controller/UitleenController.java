@@ -2,7 +2,6 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.joda.time.DateTime;
@@ -27,17 +26,17 @@ import model.subItems.Game;
 public class UitleenController implements UitleenService {
 
 	
-	List<Uitlening> uitleningenLijst;
-	private DataService<Uitlening> uitleningData = DataStrategy.getDataService(Uitlening.class);
+	//List<Uitlening> uitleningenLijst;
+	private DataService<Uitlening> uitleningDb;
 	
 	
 	public UitleenController(){
-		uitleningenLijst = new ArrayList<Uitlening>();
+		//uitleningenLijst = new ArrayList<Uitlening>();
+		uitleningDb = DataStrategy.getDataService(Uitlening.class);
 	}
 
 	@Override
-	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException {
-		
+	public void aanmakenVanEenUitlening(Item item, Customer customer, int verhuurPeriodeDagen, DateTime beginVerhuurDatum) throws ControllerException, DBMissingException, DBException {
 		//Checks if date is in the past
 		if(beginVerhuurDatum.getYear()<DateTime.now().getYear() || 
 				beginVerhuurDatum.getMonthOfYear() < DateTime.now().getMonthOfYear() ||
@@ -51,7 +50,7 @@ public class UitleenController implements UitleenService {
 		}
 		
 		//Checks if item is already rented between beginVerhuurDatum and beginVerhuurDatum+verhuurPeriodeDagen
-		for(Uitlening u:uitleningenLijst){
+		for(Uitlening u:getAllUitleningen()){
 			if(u.getUitgeleendItem().equals(item)){
 				List<DateTime> uItemDates = new ArrayList<DateTime>();
 				for(int i = 0 ;i<u.getVerhuurPeriodeInDagen();i++){
@@ -72,10 +71,10 @@ public class UitleenController implements UitleenService {
 		uitlening.setVerhuurPeriodeInDagen(verhuurPeriodeDagen);
 		uitlening.setBeginVerhuurDatum(beginVerhuurDatum);
 		
-		uitleningenLijst.add(uitlening);
+		//uitleningenLijst.add(uitlening);
 		//item.setisUitgeleend(true);
 		try {
-			DataStrategy.getDataService(Uitlening.class).add(uitlening);
+			uitleningDb.add(uitlening);
 		} catch (DBMissingException | DBException e) {
 			e.printStackTrace();
 		}
@@ -84,26 +83,34 @@ public class UitleenController implements UitleenService {
 	@Override
 	public boolean isHuidigItemMomenteelUitgeleend(Item item) {
 		try {
-			return item.getisUitgeleend();
-		} catch (NoSuchElementException | DBMissingException | DBException e) {
-			return false;
+			for(Uitlening u:uitleningDb.getAll()){
+				if(u.getUitgeleendItem()==item){
+					return true;
+				}
+			}
+		} catch (DBMissingException e) {
+			e.printStackTrace();
+		} catch (DBException e) {
+			e.printStackTrace();
 		}
+		
+		return false;
+		
 	}
 
 	@Override
-	public List<Uitlening> uitleningnenVanKlant(Customer customer) {
-		List<Uitlening> items = new ArrayList<Uitlening>();
+	public List<Uitlening> uitleningnenVanKlant(Customer customer) throws DBMissingException, DBException {
+		List<Uitlening> uitleningen = new ArrayList<Uitlening>();
 		
-		for(Uitlening u : uitleningenLijst){
+		for(Uitlening u : getAllUitleningen()){
 			if(u.getKlantDieUitleent().equals(customer)){
-				items.add(u);
+				uitleningen.add(u);
 			}
 		}
-		
-		return items;
+		return uitleningen;
 	}
 
-	@Override
+	/*@Override
 	public List<Uitlening> alleUitleningen() {
 		List<Uitlening> items = new ArrayList<Uitlening>();
 		
@@ -112,41 +119,30 @@ public class UitleenController implements UitleenService {
 		}
 		
 		return items;
+	}*/
+
+	@Override
+	public List<Uitlening> alleUitleningenVanCd() throws DBMissingException, DBException {
+		return getAllUitleningen().stream().filter(u -> u.getUitgeleendItem().getClass().equals(Cd.class)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Uitlening> alleUitleningenVanCd() {
-		return uitleningenLijst.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Cd.class)).collect(Collectors.toList());
+	public List<Uitlening> alleUitleningenVanDvd() throws DBMissingException, DBException {
+		return getAllUitleningen().stream().filter(u -> u.getUitgeleendItem().getClass().equals(Dvd.class)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Uitlening> alleUitleningenVanDvd() {
-		return uitleningenLijst.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Dvd.class)).collect(Collectors.toList());
+	public List<Uitlening> alleUitleningenVanGame() throws DBMissingException, DBException {
+		return getAllUitleningen().stream().filter(u -> u.getUitgeleendItem().getClass().equals(Game.class)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<Uitlening> alleUitleningenVanGame() {
-		return uitleningenLijst.stream().filter(u -> u.getUitgeleendItem().getClass().equals(Game.class)).collect(Collectors.toList());
+	public void uitleningVanEenItemStoppen(Uitlening uitlening) throws DBMissingException, DBException{
+		uitleningDb.remove(uitlening);
 	}
 
 	@Override
-	public void uitleningVanEenItemStoppen(Uitlening uitlening) {
-		//uitlening.getUitgeleendItem().setisUitgeleend(false);
-		uitleningenLijst.remove(uitlening);
-		
-		try {
-			DataStrategy.getDataService(Uitlening.class).remove(uitlening);
-		} catch (DBMissingException e) {
-			// Magicstring goes here
-			e.printStackTrace();
-		} catch (DBException e) {
-			// Magicstring goes here
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void uitleningVanMeerdereItemsStoppen(List<Uitlening> teStoppenItemlijst) {
+	public void uitleningVanMeerdereItemsStoppen(List<Uitlening> teStoppenItemlijst) throws DBMissingException, DBException {
 		for(Uitlening u:teStoppenItemlijst){
 			uitleningVanEenItemStoppen(u);
 		}
@@ -158,12 +154,12 @@ public class UitleenController implements UitleenService {
 	}
 
 	@Override
-	public List<Uitlening> getAllUitleningen() {
-		return uitleningenLijst;
-	}
-	
-	public List<Uitlening> getList() throws DBMissingException, DBException {
-		return uitleningData.getAll();
+	public List<Uitlening> getAllUitleningen() throws DBMissingException, DBException {
+		return uitleningDb.getAll();
 	}
 
+	@Override
+	public List<Uitlening> alleUitleningen() throws DBMissingException, DBException {
+		return getAllUitleningen();
+	}
 }

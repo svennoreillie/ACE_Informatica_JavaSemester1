@@ -1,8 +1,10 @@
 package view.tableModels;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -32,7 +34,15 @@ public class CustomerSelectionForRentTableModel extends AbstractTableModel{
 		customerDB = DataStrategy.getDataService(Customer.class);
 		
 		try {
-			customers.addAll(customerDB.getAll());
+			customers.addAll(customerDB.getAll().stream()
+				.sorted(new Comparator<Customer>() {
+				@Override
+				public int compare(Customer c1, Customer c2) {
+					int val =c1.getPerson().getLastName().compareTo(c2.getPerson().getLastName());
+					if(val==0)
+						val = c1.getPerson().getFirstName().compareTo(c2.getPerson().getFirstName());
+					return val;
+				}}).collect(Collectors.toList()));
 		} catch (DBMissingException | DBException e) {
 			e.printStackTrace();
 		}

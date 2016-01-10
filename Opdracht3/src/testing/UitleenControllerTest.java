@@ -9,6 +9,9 @@ import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import common.DBException;
+import common.DBMissingException;
 import common.enums.EnumTypeCd;
 import common.enums.EnumTypeDvd;
 import common.enums.EnumTypeGame;
@@ -104,7 +107,7 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testIsHuidigItemMomenteelUitgeleendWhenTrue() throws ControllerException {
+	public void testIsHuidigItemMomenteelUitgeleendWhenTrue() throws ControllerException, DBMissingException, DBException {
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
@@ -112,21 +115,21 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testIsHuidigItemMomenteelUitgeleendWhenFalse() throws ControllerException {
+	public void testIsHuidigItemMomenteelUitgeleendWhenFalse() throws ControllerException, DBMissingException, DBException {
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		assertFalse(uitleenController.isHuidigItemMomenteelUitgeleend(game));
 	}
 
 	@Test
-	public void testUitgeleendeItemsVanHuidigeKlantWhenNoneAreRented() {
+	public void testUitgeleendeItemsVanHuidigeKlantWhenNoneAreRented() throws DBMissingException, DBException {
 		List<Item> emptyItemsList = new ArrayList<Item>();
 
 		assertEquals(emptyItemsList, uitleenController.uitleningnenVanKlant(customer));
 	}
 
 	@Test
-	public void testUitgeleendeItemsVanHuidigeKlantWhenHeHasRented() throws ControllerException {
+	public void testUitgeleendeItemsVanHuidigeKlantWhenHeHasRented() throws ControllerException, DBMissingException, DBException {
 		List<Uitlening> itemList = new ArrayList<Uitlening>();
 		itemList.add(gameUitlening);
 		itemList.add(cdUitlening);
@@ -140,13 +143,13 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testAlleUitgeleendeItemsWhenNoneAreRented() {
+	public void testAlleUitgeleendeItemsWhenNoneAreRented() throws DBMissingException, DBException {
 		List<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, uitleenController.alleUitleningen());
 	}
 
 	@Test
-	public void testAlleUitleningen() throws ControllerException {
+	public void testAlleUitleningen() throws ControllerException, DBMissingException, DBException {
 		List<Uitlening> itemList = new ArrayList<>();
 		itemList.add(gameUitlening);
 		itemList.add(cdUitlening);
@@ -160,7 +163,7 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testAlleUitleningenVanCd() throws ControllerException {
+	public void testAlleUitleningenVanCd() throws ControllerException, DBMissingException, DBException {
 		List<Uitlening> itemList = new ArrayList<Uitlening>();
 		itemList.add(cdUitlening);
 
@@ -172,7 +175,7 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testAlleUitgeleendeDvd() throws ControllerException {
+	public void testAlleUitgeleendeDvd() throws ControllerException, DBMissingException, DBException {
 		List<Uitlening> itemList = new ArrayList<Uitlening>();
 		itemList.add(dvdUitlening);
 
@@ -184,7 +187,7 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testAlleUitleningenVanGame() throws ControllerException {
+	public void testAlleUitleningenVanGame() throws ControllerException, DBMissingException, DBException {
 		List<Uitlening> itemList = new ArrayList<Uitlening>();
 		itemList.add(gameUitlening);
 		
@@ -196,13 +199,13 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testAlleUitgeleendeGamesWhenNoneAreRented() {
+	public void testAlleUitgeleendeGamesWhenNoneAreRented() throws DBMissingException, DBException {
 		List<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, uitleenController.alleUitleningenVanGame());
 	}
 
 	@Test
-	public void testUitleningVanEenItemStoppen() throws ControllerException {
+	public void testUitleningVanEenItemStoppen() throws ControllerException, DBMissingException, DBException {
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
@@ -221,7 +224,7 @@ public class UitleenControllerTest {
 	}
 
 	@Test
-	public void testUitleningVanMeerdereItemsStoppen() throws ControllerException {
+	public void testUitleningVanMeerdereItemsStoppen() throws ControllerException, DBMissingException, DBException {
 		uitleenController.aanmakenVanEenUitlening(game, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(cd, customer, 5, dateNow);
 		uitleenController.aanmakenVanEenUitlening(dvd, customer, 5, dateNow);
