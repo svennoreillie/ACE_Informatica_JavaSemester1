@@ -92,7 +92,7 @@ public class UitleningStap1Panel extends JPanel{
 					tableModel.setItemsToShow(Item.class);
 				}
 					
-				
+				searchItems();
 			}
 		});
 		String[] values= new String[EnumItemTypeItems.values().length+1];
@@ -132,7 +132,7 @@ public class UitleningStap1Panel extends JPanel{
 		
 		searchTF.getDocument().addDocumentListener(documentListener);
 		searchTF.setBounds(193, 8, 134, 20);
-		searchTF.setEnabled(false);
+		//searchTF.setEnabled(false);
 		add(searchTF);
 		searchTF.setColumns(10);
 		
