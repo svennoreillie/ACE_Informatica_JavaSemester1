@@ -10,4 +10,6 @@ public interface Receipt {
 	public double getTotal();
 	
 	public double getTaxes();
+
+	List<Uitlening> getUitleningen();
 }

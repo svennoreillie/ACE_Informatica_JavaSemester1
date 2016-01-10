@@ -20,7 +20,7 @@ public class FooterDecorator extends ReceiptDecorator{
 	public String getFooter(){
 		String footer="";
 		
-		footer+="Totaal: "+getTotal()+"\n";
+		footer+="Totaal (+eventuele boetes): "+getTotal()+"\n";
 		footer+="Btw: "+getTaxes()+"\n";
 		footer+="Volgende zondag zijn wij open van 8.00 tot 12.00\nDank u voor je aankoop";
 		
