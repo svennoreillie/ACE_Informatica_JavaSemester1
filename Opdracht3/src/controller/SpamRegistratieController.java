@@ -1,11 +1,15 @@
 package controller;
 
-import java.util.List;
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
 
+import java.util.List;
 import common.DBException;
 import common.DBMissingException;
 import controller.ObserverInterfaces.Observer;
-import controller.ObserverInterfaces.Subject;
 import database.DataService;
 import database.DataStrategy;
 import model.Customer;

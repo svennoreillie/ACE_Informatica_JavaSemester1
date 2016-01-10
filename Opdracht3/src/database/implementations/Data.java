@@ -1,19 +1,16 @@
 package database.implementations;
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import common.*;
 import database.DataService;
 import database.internalInterface.DataReadWriteService;
@@ -61,13 +58,13 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			throw new DBException("Wrong type in add");
 
 		List<T> list = this.getAll();
-		
+
 		searchNextId(entity, list);
 
 		if (!list.contains(entity)) {
 			list.add((T) entity);
 			this.internalList = list;
-			dataService.writeDB(this.internalList);
+			dataService.writeDB(this.internalList, false);
 		}
 	}
 
@@ -87,35 +84,37 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			} else {
 				entity.setId(1);
 			}
-		} else {
-			if (list.contains(entity)) {
-				list.remove(entity);
-			}
 		}
 	}
-	
+
 	@Override
 	public void addAll(List<? extends ModelBase> entities) throws DBMissingException, DBException {
-		if (entities == null || entities.isEmpty()) throw new DBException("Entity list is null or empty");
+		if (entities == null || entities.isEmpty())
+			throw new DBException("Entity list is null or empty");
 		if (!this.classType.isAssignableFrom(entities.get(0).getClass()))
 			throw new DBException("Wrong type in add");
 
 		List<T> list = this.getAll();
-		
+
+		Boolean changes = false;
 		for (ModelBase entity : entities) {
 			searchNextId(entity, list);
 			if (!list.contains(entity)) {
 				list.add((T) entity);
+				changes = true;
 			}
 		}
-		
-		this.internalList = list;
-		dataService.writeDB(this.internalList);
 
+		if (changes) {
+			this.internalList = list;
+			dataService.writeDB(this.internalList, false);
+		}
 	}
 
 	@Override
-	public void update(T entity) throws DBMissingException, DBException {
+	public void update(ModelBase entity) throws DBMissingException, DBException {
+		if (!this.classType.isAssignableFrom(entity.getClass()))
+			throw new DBException("Wrong type in update");
 		if (entity.getId() == 0)
 			throw new DBException("Id 0 found => update should have id to look for");
 
@@ -124,7 +123,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 			list.remove(entity);
 			list.add((T) entity);
 			this.internalList = list;
-			dataService.writeDB(this.internalList);
+			dataService.writeDB(this.internalList, true);
 		}
 	}
 
@@ -135,10 +134,8 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> list = this.getAll();
 		if (list.contains(entity)) {
 			list.remove(entity);
-			dataService.writeDB(this.internalList);
+			dataService.writeDB(this.internalList, true);
 		}
 	}
-
-	
 
 }

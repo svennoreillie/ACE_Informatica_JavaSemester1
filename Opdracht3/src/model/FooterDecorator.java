@@ -1,6 +1,10 @@
 package model;
 
-import java.util.List;
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
 
 public class FooterDecorator extends ReceiptDecorator{
 

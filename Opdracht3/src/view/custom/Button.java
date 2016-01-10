@@ -4,6 +4,12 @@ import javax.swing.JButton;
 
 import common.enums.EventEnum;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public class Button extends JButton{
 
 	/**

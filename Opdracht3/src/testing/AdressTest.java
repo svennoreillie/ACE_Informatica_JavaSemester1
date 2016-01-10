@@ -7,6 +7,11 @@ import org.junit.Test;
 
 import model.Address;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class AdressTest {
 	
 	Address test1;

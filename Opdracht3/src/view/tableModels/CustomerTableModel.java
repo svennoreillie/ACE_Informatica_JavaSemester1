@@ -2,19 +2,18 @@ package view.tableModels;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import javax.swing.table.AbstractTableModel;
-
 import common.DBException;
 import common.DBMissingException;
 import database.DataService;
 import database.DataStrategy;
 import model.Customer;
 
-
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public class CustomerTableModel extends AbstractTableModel {
 	/**
 	 * 
@@ -92,7 +91,5 @@ public class CustomerTableModel extends AbstractTableModel {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class getColumnClass(int c){
 		return getValueAt(0, c).getClass();
-	}
-
-	
+	}	
 }

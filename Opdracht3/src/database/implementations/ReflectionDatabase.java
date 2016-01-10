@@ -1,5 +1,11 @@
 package database.implementations;
 
+/**
+ * 
+ * @author Sven Noreillie & Vervoort Peter
+ *
+ */
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +14,6 @@ import java.util.stream.Collectors;
 import database.DataService;
 import database.DataStrategy;
 import database.helpers.ReflectionPropertyHelper;
-import database.internalInterface.DataReadWriteService;
 import model.Address;
 import model.Customer;
 import model.Item;

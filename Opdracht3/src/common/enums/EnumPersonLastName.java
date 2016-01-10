@@ -1,5 +1,10 @@
 package common.enums;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public enum EnumPersonLastName {
 	JANSENS("Jansens"),
 	JANSSENS("Janssens"),

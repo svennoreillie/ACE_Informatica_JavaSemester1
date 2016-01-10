@@ -1,5 +1,11 @@
 package database;
 
+/**
+ * 
+ * @author Sven Noreillie
+ *
+ */
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +91,7 @@ public final class DataStrategy<T extends ModelBase> implements DataService<T> {
 	}
 	
 	@Override
-	public void update(T entity) throws DBMissingException, DBException {
+	public void update(ModelBase entity) throws DBMissingException, DBException {
 		if (entity.getId() != 0) throw new DBException("Id found, insert should contain 0 or null as Id");
 		
 		DataService<T> service = getService();

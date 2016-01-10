@@ -1,5 +1,11 @@
 package controller.ObserverInterfaces;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import common.DBException;
 import common.DBMissingException;
 

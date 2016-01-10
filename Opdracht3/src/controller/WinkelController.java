@@ -1,8 +1,13 @@
 package controller;
 
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
+
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import common.AntiMagicStrings;
@@ -11,7 +16,6 @@ import common.DBMissingException;
 import controller.ObserverInterfaces.Observer;
 import controller.ObserverInterfaces.Subject;
 import database.*;
-import model.Customer;
 import model.Item;
 import java.util.stream.*;
 
@@ -47,6 +51,7 @@ public class WinkelController<T extends Item> implements WinkelService <T>, Subj
 			e.printStackTrace();
 		}	
 	}
+	
 
 	@Override
 	public void RemoveItemToStore(T entity) {

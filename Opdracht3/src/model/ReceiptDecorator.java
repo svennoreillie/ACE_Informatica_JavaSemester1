@@ -2,6 +2,12 @@ package model;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public abstract class ReceiptDecorator implements Receipt{
 
 	Receipt receipt;

@@ -1,8 +1,12 @@
 package controller;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
+/**
+ * 
+ * @author Vervoort Peter
+ *
+ */
 
+import java.math.BigDecimal;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 

@@ -1,5 +1,11 @@
 package common.enums;
 
+/**
+ * 
+ * @author Huybrechts
+ *
+ */
+
 public enum EventEnum {
 	CUSTOMEROVERVIEWBUTTONEVENT("customerOverviewButtonEvent"),
 	RENTBUTTON1("rentButtonEvent1"),

@@ -1,5 +1,10 @@
 package common.enums;
 
+/**
+ * 
+ * @author André Nóbrega
+ *
+ */
 public enum EnumAddressCity {
 	LEUVEN("3000", "Leuven"),
 	GENT("9000","Gent"),

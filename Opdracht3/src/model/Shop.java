@@ -1,7 +1,6 @@
 package model;
 
 import java.util.List;
-
 import model.Item;
 
 public class Shop extends ModelBase {
