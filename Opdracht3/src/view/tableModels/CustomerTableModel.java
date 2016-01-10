@@ -14,7 +14,7 @@ import model.Customer;
 
 /**
  * 
- * @author André Nóbrega
+ * @author Andrï¿½ Nï¿½brega
  *
  */
 public class CustomerTableModel extends AbstractTableModel {
@@ -33,6 +33,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	
 	public void updateTable() throws DBMissingException, DBException{
 		data.clear();
+		
 		data.addAll(customerDB.getAll());
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
@@ -45,6 +46,7 @@ public class CustomerTableModel extends AbstractTableModel {
 	
 	/*private List<Customer> sortCustomers(List<Customer> customers) throws DBMissingException, DBException
 	{
+		if (customers == null) return null;
 		return customers.stream().sorted(new Comparator<Customer>() {
 			@Override
 			public int compare(Customer c1, Customer c2) {
