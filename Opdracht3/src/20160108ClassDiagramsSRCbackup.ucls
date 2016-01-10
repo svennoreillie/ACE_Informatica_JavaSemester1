@@ -4,159 +4,160 @@
   router="FAN">  
   <class id="1" language="java" name="model.Item" project="Opdracht3" file="/Opdracht3/src/model/Item.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="839" y="982"/>    
+    <position height="-1" width="-1" x="469" y="668"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="2" language="java" name="model.subItems.Cd" project="Opdracht3" 
     file="/Opdracht3/src/model/subItems/Cd.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1177" y="1416"/>    
+    <position height="-1" width="-1" x="736" y="853"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" name="model.subItems.Dvd" project="Opdracht3" 
     file="/Opdracht3/src/model/subItems/Dvd.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="429" y="1393"/>    
+    <position height="-1" width="-1" x="459" y="853"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="4" language="java" name="model.subItems.Game" project="Opdracht3" 
     file="/Opdracht3/src/model/subItems/Game.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="816" y="1414"/>    
+    <position height="-1" width="-1" x="167" y="853"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="model.Address" project="Opdracht3" file="/Opdracht3/src/model/Address.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2282" y="900"/>    
+    <position height="-1" width="-1" x="969" y="871"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="6" language="java" name="model.Customer" project="Opdracht3" file="/Opdracht3/src/model/Customer.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1782" y="1128"/>    
+    <position height="-1" width="-1" x="1102" y="670"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="7" language="java" name="model.Person" project="Opdracht3" file="/Opdracht3/src/model/Person.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1832" y="756"/>    
+    <position height="-1" width="-1" x="1213" y="763"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <interface id="8" language="java" name="model.Receipt" project="Opdracht3" file="/Opdracht3/src/model/Receipt.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="584" y="628"/>    
+    <position height="135" width="134" x="591" y="459"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </interface>  
   <class id="9" language="java" name="model.ReceiptDecorator" project="Opdracht3" 
     file="/Opdracht3/src/model/ReceiptDecorator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="570" y="318"/>    
+    <position height="135" width="154" x="612" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="10" language="java" name="model.Shop" project="Opdracht3" file="/Opdracht3/src/model/Shop.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1100" y="326"/>    
+    <position height="189" width="145" x="856" y="459"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="11" language="java" name="model.Uitlening" project="Opdracht3" file="/Opdracht3/src/model/Uitlening.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1360" y="966"/>    
+    <position height="-1" width="-1" x="856" y="719"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="12" language="java" name="model.BodyDecorator" project="Opdracht3" 
     file="/Opdracht3/src/model/BodyDecorator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="736" y="150"/>    
+    <position height="99" width="143" x="652" y="212"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="13" language="java" name="model.ConcreteReceipt" project="Opdracht3" 
     file="/Opdracht3/src/model/ConcreteReceipt.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="336" y="990"/>    
+    <position height="-1" width="-1" x="279" y="374"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="14" language="java" name="model.FooterDecorator" project="Opdracht3" 
     file="/Opdracht3/src/model/FooterDecorator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="196" y="378"/>    
+    <position height="117" width="149" x="228" y="212"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="15" language="java" name="model.HeaderDecorator" project="Opdracht3" 
     file="/Opdracht3/src/model/HeaderDecorator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="132" y="166"/>    
+    <position height="171" width="153" x="417" y="212"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="16" language="java" name="model.ModelBase" project="Opdracht3" file="/Opdracht3/src/model/ModelBase.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1588" y="234"/>    
+    <position height="-1" width="-1" x="1052" y="391"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <dependency id="17">    
+    <bendpoint x="755" y="459"/>    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <association id="18">    
     <end type="SOURCE" refId="6" navigable="false">      
       <attribute id="19" name="address">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1448" y="-1046"/>      
       </attribute>      
       <multiplicity id="20" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1448" y="-1046"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
@@ -165,10 +166,10 @@
   <association id="21">    
     <end type="SOURCE" refId="11" navigable="false">      
       <attribute id="22" name="uitgeleendItem">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </attribute>      
       <multiplicity id="23" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
@@ -183,16 +184,18 @@
     <end type="TARGET" refId="16"/>  
   </generalization>  
   <generalization id="26">    
+    <bendpoint x="1031" y="459"/>    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="16"/>  
   </generalization>  
   <association id="27">    
+    <bendpoint x="412" y="459"/>    
     <end type="SOURCE" refId="13" navigable="false">      
       <attribute id="28" name="items">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </attribute>      
       <multiplicity id="29" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
@@ -203,6 +206,8 @@
     <end type="TARGET" refId="1"/>  
   </generalization>  
   <generalization id="31">    
+    <bendpoint x="992" y="944"/>    
+    <bendpoint x="992" y="535"/>    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="16"/>  
   </generalization>  
@@ -211,6 +216,7 @@
     <end type="TARGET" refId="8"/>  
   </dependency>  
   <realization id="33">    
+    <bendpoint x="600" y="212"/>    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="8"/>  
   </realization>  
@@ -219,32 +225,35 @@
     <end type="TARGET" refId="9"/>  
   </generalization>  
   <dependency id="35">    
+    <bendpoint x="825" y="212"/>    
+    <bendpoint x="825" y="459"/>    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
   <association id="36">    
     <end type="SOURCE" refId="6" navigable="false">      
       <attribute id="37" name="person">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1448" y="-1046"/>      
       </attribute>      
       <multiplicity id="38" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1448" y="-1046"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="39">    
+    <bendpoint x="1013" y="535"/>    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="16"/>  
   </generalization>  
   <association id="40">    
     <end type="SOURCE" refId="10" navigable="false">      
       <attribute id="41" name="items">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </attribute>      
       <multiplicity id="42" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1392" y="-750"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
@@ -253,10 +262,10 @@
   <association id="43">    
     <end type="SOURCE" refId="11" navigable="false">      
       <attribute id="44" name="klantDieUitleent">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1348" y="-694"/>      
       </attribute>      
       <multiplicity id="45" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-1000" y="-330"/>      
+        <position height="0" width="0" x="-1348" y="-694"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
@@ -267,6 +276,8 @@
     <end type="TARGET" refId="8"/>  
   </realization>  
   <generalization id="47">    
+    <bendpoint x="1284" y="944"/>    
+    <bendpoint x="1284" y="535"/>    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="16"/>  
   </generalization>  
@@ -279,6 +290,7 @@
     <end type="TARGET" refId="16"/>  
   </generalization>  
   <association id="50">    
+    <bendpoint x="621" y="212"/>    
     <end type="SOURCE" refId="9" navigable="false">      
       <attribute id="51" name="receipt">        
         <position height="0" width="0" x="-1012" y="-368"/>      
