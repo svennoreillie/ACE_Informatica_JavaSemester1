@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Item;
+import view.tableModels.CustomerSelectionForRentTableModel;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -51,7 +52,7 @@ public class UitleningStap2Panel extends JPanel{
 		scrollPane.setBounds(10, 36, 580, 524);
 		add(scrollPane);
 		
-		table = new JTable();
+		table = new JTable(new CustomerSelectionForRentTableModel());
 		scrollPane.setViewportView(table);
 		
 		JLabel lblNumberOfDays = new JLabel("Number of Days:");

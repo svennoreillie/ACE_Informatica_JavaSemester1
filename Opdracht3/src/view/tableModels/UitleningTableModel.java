@@ -119,7 +119,7 @@ public class UitleningTableModel extends AbstractTableModel{
 		fireTableRowsInserted(itemsToShow.size()-1,itemsToShow.size()-1);
 	}
 	
-	public List<Item> getSelectedItem(){
+	public List<Item> getSelectedItems(){
 		List<Item> selectedItems = new ArrayList<>();
 		for(Item item:itemSelectedMap.keySet()){
 			if(itemSelectedMap.get(item)){
