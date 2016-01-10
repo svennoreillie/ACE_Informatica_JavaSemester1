@@ -36,6 +36,7 @@ import javax.print.attribute.standard.JobMessageFromOperator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
+import common.AntiMagicStrings;
 import common.DBException;
 import common.DBMissingException;
 import common.enums.EnumItemTypeItems;
@@ -53,7 +54,6 @@ public class UitleningStap1Panel extends JPanel{
 	 */
 	private static final long serialVersionUID = -4382671641959396105L;
 
-	private List<Item> allItems;
 	private JTextField searchTF;
 	private JTable table;
 	private UitleningTableModel tableModel;
@@ -70,7 +70,6 @@ public class UitleningStap1Panel extends JPanel{
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int i=comboBox.getSelectedIndex();
@@ -110,38 +109,29 @@ public class UitleningStap1Panel extends JPanel{
 		
 		searchTF = new JTextField();
 		DocumentListener documentListener = new DocumentListener() {
-			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				searchItems();
-				
 			}
-			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				searchItems();
-				
 			}
-			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
 				searchItems();
-				
 			}
 		};
-		
 		searchTF.getDocument().addDocumentListener(documentListener);
 		searchTF.setBounds(193, 8, 134, 20);
-		//searchTF.setEnabled(false);
-		add(searchTF);
 		searchTF.setColumns(10);
+		add(searchTF);
 		
 		Button btnNext = new Button("Next");
 		btnNext.setBounds(501, 566, 89, 23);
 		btnNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				if(getSelectedItems()==null || getSelectedItems().isEmpty()){
 					JOptionPane.showMessageDialog(null, "At least one item has to be selected.");
 				}else{
@@ -149,8 +139,6 @@ public class UitleningStap1Panel extends JPanel{
 					panel.setItems(getSelectedItems());
 					MainWindowChangedFiringSource.getInstance().fireChanged(panel);
 				}
-				
-				
 			}
 		});
 		add(btnNext);
@@ -159,8 +147,6 @@ public class UitleningStap1Panel extends JPanel{
 		scrollPane.setBounds(10, 41, 580, 517);
 		add(scrollPane);
 		
-		
-
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
 		
@@ -168,24 +154,14 @@ public class UitleningStap1Panel extends JPanel{
 		allItems.addAll(new WinkelController<Game>(Game.class).getAllSortedByName());
 		allItems.addAll(new WinkelController<Cd>(Cd.class).getAllSortedByName());
 		allItems.addAll(new WinkelController<Dvd>(Dvd.class).getAllSortedByName());		
-		
 		try{
 			List<Uitlening> uitlenignen = DataStrategy.getDataService(Uitlening.class).getAll();
-			//DataStrategy.getDataService(Uitlening.class).remove(entity);
 			tableModel.setUitleningen(uitlenignen);
 		} catch(DBMissingException | DBException e1){
-			
+			System.out.println(AntiMagicStrings.DBReadError);
 		}
-		
-		
-		
-		setAllItems(allItems);
+		tableModel.setItems(allItems);
 		tableModel.setItemsToShow(Item.class);
-	}
-	
-	public void setAllItems(List<Item> items){
-		this.allItems = items;
-		tableModel.setItems(items);
 	}
 
 	public List<Item> getSelectedItems(){
@@ -200,14 +176,11 @@ public class UitleningStap1Panel extends JPanel{
 		try {
 			tableModel.searchTable(searchTF.getText());
 		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(AntiMagicStrings.DBReadError);
 		} catch (DBMissingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(AntiMagicStrings.DBReadError);
 		} catch (DBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(AntiMagicStrings.DBReadError);
 		}
 		
 	}

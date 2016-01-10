@@ -165,7 +165,7 @@ public class UitleningTableModel extends AbstractTableModel{
 			items.addAll(DataStrategy.getDataService(Game.class).getFiltered(dvd -> dvd.filter(searchStr)));
 		}
 		
-		return items;
+		return items.stream().filter(item->!uitgeleendeItems.contains(item)).collect(Collectors.toList());
 	}
 	
 	@Override
