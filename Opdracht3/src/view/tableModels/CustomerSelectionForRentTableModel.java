@@ -2,11 +2,13 @@ package view.tableModels;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.table.AbstractTableModel;
 
 import common.DBException;
 import common.DBMissingException;
+import database.DataService;
 import database.DataStrategy;
 import model.Customer;
 import model.Item;
@@ -21,14 +23,16 @@ public class CustomerSelectionForRentTableModel extends AbstractTableModel{
 	private final List<Customer> customers;
 	private final List<Item> uitTeLenenItems;
 	private Customer selectedCustomer;
+	private DataService<Customer> customerDB;
 	
 	public CustomerSelectionForRentTableModel(){
 		customers = new LinkedList<Customer>();
 		uitTeLenenItems = new LinkedList<Item>();
 		selectedCustomer = null;
+		customerDB = DataStrategy.getDataService(Customer.class);
 		
 		try {
-			customers.addAll(DataStrategy.getDataService(Customer.class).getAll());
+			customers.addAll(customerDB.getAll());
 		} catch (DBMissingException | DBException e) {
 			e.printStackTrace();
 		}
@@ -38,6 +42,16 @@ public class CustomerSelectionForRentTableModel extends AbstractTableModel{
 	
 	public Customer getSelectedCustomer(){
 		return selectedCustomer;
+	}
+	
+	public void searchTable(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
+		customers.clear();
+		customers.addAll(search(searchStr));
+		fireTableRowsInserted(customers.size()-1, customers.size()-1);
+	}
+	
+	private List<Customer> search(String searchStr) throws NoSuchElementException, DBMissingException, DBException{
+		return customerDB.getFiltered(cust -> cust.filter(searchStr));
 	}
 	
 	@Override 

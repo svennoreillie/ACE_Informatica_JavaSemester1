@@ -5,9 +5,13 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.joda.time.DateTime;
 
+import common.DBException;
+import common.DBMissingException;
 import controller.UitleenController;
 import controller.event.MainWindowChangedFiringSource;
 import model.Customer;
@@ -53,6 +57,20 @@ public class UitleningStap2Panel extends JPanel{
 		add(lblNaam);
 		
 		searchTF = new JTextField();
+		DocumentListener documentListener = new DocumentListener() {
+			public void changedUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void insertUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      public void removeUpdate(DocumentEvent documentEvent) {
+		    	  searchCustomers();
+		      }
+		      
+		      
+		};
+		searchTF.getDocument().addDocumentListener(documentListener);
 		searchTF.setBounds(56, 11, 86, 20);
 		add(searchTF);
 		searchTF.setColumns(10);
@@ -121,5 +139,15 @@ public class UitleningStap2Panel extends JPanel{
 	
 	public void setItems(List<Item> items){
 		this.items = items;
+	}
+	
+	private void searchCustomers(){
+		try {
+			tableModel.searchTable(searchTF.getText());
+		} catch (DBMissingException e) {
+			e.printStackTrace();
+		} catch (DBException e) {
+			e.printStackTrace();
+		}
 	}
 }
