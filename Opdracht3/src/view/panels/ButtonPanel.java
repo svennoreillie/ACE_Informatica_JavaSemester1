@@ -109,7 +109,7 @@ public class ButtonPanel extends JPanel {
 		gbc.gridx=1;
 		gbc.gridy=4;
 		gbc.fill=GridBagConstraints.HORIZONTAL;
-		dropDbTables = new Button("DROP SQL Tables");
+		dropDbTables = new Button("DROP DB");
 		dropDbTables.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
