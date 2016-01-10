@@ -115,7 +115,7 @@ public class ItemTeruggave1 extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try{
-					fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+					fillForm(tableModel.getCustomerAtRow(tableCustomers.getSelectedRow()));
 				}
 				catch (IndexOutOfBoundsException ioob){
 					ioob.printStackTrace();

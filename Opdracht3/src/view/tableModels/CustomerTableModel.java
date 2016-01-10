@@ -33,17 +33,17 @@ public class CustomerTableModel extends AbstractTableModel {
 	
 	public void updateTable() throws DBMissingException, DBException{
 		data.clear();
-		data.addAll(sortCustomers(customerDB.getAll()));
+		data.addAll(customerDB.getAll());
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
 	public void updateTable(String searchString) throws DBMissingException, DBException{
 		data.clear();
-		data.addAll(sortCustomers(search(searchString)));
+		data.addAll(search(searchString));
 		fireTableRowsInserted(data.size()-1, data.size()-1);
 	}
 	
-	private List<Customer> sortCustomers(List<Customer> customers) throws DBMissingException, DBException
+	/*private List<Customer> sortCustomers(List<Customer> customers) throws DBMissingException, DBException
 	{
 		return customers.stream().sorted(new Comparator<Customer>() {
 			@Override
@@ -54,7 +54,7 @@ public class CustomerTableModel extends AbstractTableModel {
 				return val;
 			}
 		}).collect(Collectors.toList());
-	}
+	}*/
 	
 	private List<Customer> search(String searchString) throws DBMissingException, DBException {
 		return customerDB.getFiltered(cust -> cust.filter(searchString));
@@ -80,10 +80,10 @@ public class CustomerTableModel extends AbstractTableModel {
 		Customer customer = data.get(row);
 		
 		switch(column){
-		case 0:
+		case 1:
 			value = customer.getPerson().getLastName();
 			break;
-		case 1:
+		case 0:
 			value = customer.getPerson().getFirstName();
 			break;
 		case 2:
