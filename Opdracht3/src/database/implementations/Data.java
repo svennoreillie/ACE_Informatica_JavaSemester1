@@ -143,7 +143,7 @@ public class Data<T extends ModelBase> implements DataService<T> {
 		List<T> list = this.getAll();
 		if (list.contains(entity)) {
 			list.remove(entity);
-			dataService.writeDB(this.internalList, true);
+			dataService.writeDB(this.internalList, false);
 		}
 	}
 
