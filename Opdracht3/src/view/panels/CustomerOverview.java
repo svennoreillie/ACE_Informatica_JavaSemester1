@@ -254,6 +254,7 @@ public class CustomerOverview extends JPanel {
 				else{
 					try{
 						fillForm(controller.getList().get(tableCustomers.getSelectedRow()));
+						editMode();
 					}
 					catch (IndexOutOfBoundsException ioob){
 						ioob.printStackTrace();
@@ -478,8 +479,6 @@ public class CustomerOverview extends JPanel {
 		tfLastName.setText(customer.getPerson().getLastName());
 		tfNumber.setText(customer.getAddress().getNumber());
 		tfZip.setText(customer.getAddress().getZip());
-		
-		editMode();
 	}
 	
 	/**
@@ -488,15 +487,8 @@ public class CustomerOverview extends JPanel {
 	 * @throws DBMissingException 
 	 */
 	private void saveCustomer() throws DBMissingException, DBException{
-		if (tfAdress.getText().trim().isEmpty()
-				|| tfCity.getText().trim().isEmpty()
-				|| tfCountry.getText().trim().isEmpty()
-				|| tfEmail.getText().trim().isEmpty()
-				|| tfFirstName.getText().trim().isEmpty()
-				|| tfLastName.getText().trim().isEmpty()
-				|| tfNumber.getText().trim().isEmpty()
-				|| tfZip.getText().trim().isEmpty()){
-			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		if (checkForEmptyFields()){
+			
 		}
 		else{			
 			controller.addCustomer(getCustomerFromForm());
@@ -506,9 +498,13 @@ public class CustomerOverview extends JPanel {
 	}
 	
 	private void editCustomer() throws DBMissingException, DBException{
-		controller.updateCustomer(getCustomerFromForm());
-		tableModel.updateTable();
-		JOptionPane.showMessageDialog(null, "Customer updated");
+		if (checkForEmptyFields()) {
+			JOptionPane.showMessageDialog(null, "Please fill in all required fields");
+		} else {
+			controller.updateCustomer(getCustomerFromForm());
+			tableModel.updateTable();
+			JOptionPane.showMessageDialog(null, "Customer updated");
+		}
 	}
 	
 	private void searchCustomers(){
@@ -520,6 +516,22 @@ public class CustomerOverview extends JPanel {
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	private boolean checkForEmptyFields(){
+		if (tfAdress.getText().trim().isEmpty()
+				|| tfCity.getText().trim().isEmpty()
+				|| tfCountry.getText().trim().isEmpty()
+				|| tfEmail.getText().trim().isEmpty()
+				|| tfFirstName.getText().trim().isEmpty()
+				|| tfLastName.getText().trim().isEmpty()
+				|| tfNumber.getText().trim().isEmpty()
+				|| tfZip.getText().trim().isEmpty()){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 	
